@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | MassavuSports</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">`n</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="Logo" style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;"> Massavu<span>Sports</span>
+            </a>
+            <nav class="nav-links" id="nav-links">
+                <a href="index.html">Home</a>
+                <a href="category.html">Uganda League</a>
+                <a href="category.html">Local News</a>
+                <a href="category.html">Transfers</a>
+            </nav>
+            <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </header>
+
+    <main class="container" style="padding: 4rem 1.5rem; max-width: 800px;">
+        <h1 class="section-title">Contact Us</h1>
+        <div style="background: var(--bg-card); padding: 2.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-top: 1rem;">
+            <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 2rem;">If you have any questions, inquiries, or media requests, please don't hesitate to reach out to us using the information below or by filling out the contact form.</p>
+            
+            <div style="margin-bottom: 3rem;">
+                <h3 style="color: var(--text-primary); margin-bottom: 1rem;"><i class="fa-solid fa-envelope text-accent"></i> Email Us</h3>
+                <p style="font-size: 1.2rem;"><a href="mailto:jachinkusingura60@gmail.com" class="text-secondary" style="text-decoration: underline;">jachinkusingura60@gmail.com</a></p>
+            </div>
+
+            <form onsubmit="event.preventDefault(); alert('Message sent successfully!');">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display:block; margin-bottom:0.5rem; color:var(--text-secondary);">Your Name</label>
+                    <input type="text" required style="width:100%; padding: 0.8rem; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display:block; margin-bottom:0.5rem; color:var(--text-secondary);">Email Address</label>
+                    <input type="email" required style="width:100%; padding: 0.8rem; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display:block; margin-bottom:0.5rem; color:var(--text-secondary);">Message</label>
+                    <textarea required rows="5" style="width:100%; padding: 0.8rem; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: white; resize: vertical;"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+            </form>
+        </div>
+    </main>
+
+    <footer style="background-color: var(--bg-card); padding: 3rem 0; margin-top: 4rem; border-top: 1px solid var(--border-color);">
+        <div class="container" style="text-align: center;">
+            <div class="logo" style="justify-content: center; margin-bottom: 1rem;"><img src="assets/images/logo.png" alt="Logo" style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;"> Massavu<span>Sports</span></div>
+            <p class="text-muted">Your premier source for Ugandan local football news, updates, and highlights.</p>
+            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                <a href="index.html" class="text-secondary">Home</a>
+                <a href="about.html" class="text-secondary">About Us</a>
+                <a href="contact.html" class="text-secondary">Contact Us</a>
+                <a href="disclaimer.html" class="text-secondary">Disclaimer</a>
+                <a href="privacy.html" class="text-secondary">Privacy Policy</a>
+            </div>
+            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
+                <a href="#" style="color: var(--text-muted); font-size: 1.5rem;"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" style="color: var(--text-muted); font-size: 1.5rem;"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#" style="color: var(--text-muted); font-size: 1.5rem;"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+            <p class="text-muted" style="margin-top: 2rem; font-size: 0.9rem;">&copy; 2026 MassavuSports. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

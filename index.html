@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MassavuSports | Professional Sports Events</title>
+    <!-- Performance: pre-establish connections -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="http://127.0.0.1:5000">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="assets/images/logo.png" alt="Logo"
+                    style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;">
+                Massavu<span>Sports</span>
+            </a>
+
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                <input type="text" placeholder="Search events...">
+            </div>
+
+            <nav class="nav-links" id="nav-links">
+                <a href="index.html">Home</a>
+                <a href="category.html?tag=Uganda League">Uganda League</a>
+                <a href="category.html?tag=Local Tournaments">Local Tournaments</a>
+                <a href="category.html?tag=Transfers">Transfers</a>
+            </nav>
+            <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero"
+            style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('assets/images/hero.jpg') no-repeat center center/cover; padding: 7rem 0; text-align: center; border-bottom: 5px solid var(--accent-primary);">
+            <div class="container">
+                <span class="text-accent text-uppercase"
+                    style="font-weight: 700; letter-spacing: 2px; margin-bottom: 1rem; display: block;">Featured
+                    Event</span>
+                <h1
+                    style="color: white; font-size: 3.5rem; margin-bottom: 1.5rem; text-shadow: 2px 2px 8px rgba(0,0,0,0.8);">
+                    National Championship Finals 2026</h1>
+                <p
+                    style="font-size: 1.2rem; color: #f3f4f6; max-width: 700px; margin: 0 auto 2.5rem; text-shadow: 1px 1px 4px rgba(0,0,0,0.8);">
+                    Join us at the National Stadium for the biggest football clash of the year. Gates open at 2:00 PM.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <a href="event.html" class="btn btn-primary">View Event Details</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest Events Grid -->
+        <section class="container" style="padding: 4rem 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+                <h2 class="section-title" style="margin-bottom: 0;">Latest Events</h2>
+                <a href="category.html" class="text-accent" style="font-weight: 600;">View All <i
+                        class="fa-solid fa-arrow-right"></i></a>
+            </div>
+
+            <div class="news-grid">
+                <!-- Data will be populated dynamically from database here -->
+
+                <!-- Template Structure Example:
+                <article class="news-card">
+                    <div class="card-img" style="height: 200px; background: #e5e7eb; border-radius: var(--radius-md) var(--radius-md) 0 0;"></div>
+                    <div class="card-content">
+                        <span class="tag">Tournament</span>
+                        <h3><a href="event.html">Event Title Here</a></h3>
+                        <p class="text-muted" style="margin-top: 0.5rem; font-size: 0.95rem;"><i class="fa-solid fa-location-dot" style="margin-right: 0.5rem;"></i> Venue Location</p>
+                        <div class="card-footer">
+                            <span class="date"><i class="fa-regular fa-calendar"></i> Event Date</span>
+                            <span><i class="fa-regular fa-eye"></i> Views</span>
+                        </div>
+                    </div>
+                </article>
+                -->
+            </div>
+        </section>
+    </main>
+
+    <footer style="background-color: var(--bg-dark); color: white; padding: 3rem 0; margin-top: 4rem;">
+        <div class="container" style="text-align: center;">
+            <div class="logo" style="justify-content: center; margin-bottom: 1rem; color: white;">
+                <img src="assets/images/logo.png" alt="Logo"
+                    style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;">
+                Massavu<span>Sports</span>
+            </div>
+            <p style="color: #9ca3af;">The premier platform for Ugandan local football events.</p>
+            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                <a href="index.html" style="color: #d1d5db;">Home</a>
+                <a href="about.html" style="color: #d1d5db;">About Us</a>
+                <a href="contact.html" style="color: #d1d5db;">Contact Us</a>
+                <a href="disclaimer.html" style="color: #d1d5db;">Disclaimer</a>
+                <a href="privacy.html" style="color: #d1d5db;">Privacy Policy</a>
+            </div>
+            <p style="color: #6b7280; margin-top: 2rem; font-size: 0.9rem;">&copy; 2026 MassavuSports. All rights
+                reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

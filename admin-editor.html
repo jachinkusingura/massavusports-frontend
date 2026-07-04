@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Event | MassavuSports Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Security check -->
+    <script>if (!sessionStorage.getItem('adminToken')) { window.location.replace('admin-login.html'); }</script>
+
+    <style>
+        body {
+            display: flex;
+            background-color: #f3f4f6;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--bg-dark);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        .sidebar-menu {
+            margin-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-sm);
+            color: #d1d5db;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--accent-primary);
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            border: 1px solid #374151;
+            background: transparent;
+            color: var(--accent-danger);
+        }
+
+        .admin-main {
+            margin-left: 250px;
+            padding: 2rem 3rem;
+            flex: 1;
+            width: calc(100% - 250px);
+        }
+
+        .editor-form {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--bg-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: #f9fafb;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            background: white;
+        }
+
+        textarea.form-control {
+            min-height: 250px;
+            resize: vertical;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 2rem;
+            text-align: center;
+            background: #f9fafb;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upload-area:hover {
+            border-color: var(--accent-primary);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .tag-pill {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-hover);
+            padding: 0.3rem 0.6rem;
+            border-radius: var(--radius-sm);
+            margin-right: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .tag-pill i {
+            margin-left: 0.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                padding: 1rem;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .sidebar-menu {
+                display: none;
+            }
+
+            .admin-main {
+                margin-left: 0;
+                width: 100%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">`n
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <a href="index.html" class="logo" style="margin-left: 1rem; color: white;">
+            <img src="assets/images/logo.png" alt="Logo"
+                style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;"> Massavu
+        </a>
+        <nav class="sidebar-menu">
+            <a href="admin.html"><i class="fa-solid fa-chart-line"></i> Dashboard Highlights</a>
+            <a href="#" class="active"><i class="fa-solid fa-newspaper"></i> Post Event</a>
+        </nav>
+        <button class="btn logout-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</button>
+    </aside>
+
+    <main class="admin-main">
+        <header style="margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
+            <a href="admin.html" style="color: var(--text-muted); font-size: 1.2rem;"><i
+                    class="fa-solid fa-arrow-left"></i></a>
+            <div>
+                <h1 style="font-size: 2rem; margin-bottom: 0;">Add New Event</h1>
+            </div>
+        </header>
+
+        <form class="editor-form" id="postForm">
+
+            <div class="form-group">
+                <label for="eventTitle">Event Title</label>
+                <input type="text" id="eventTitle" class="form-control"
+                    placeholder="e.g. Kampala City Regional Qualifiers" required>
+            </div>
+
+            <div class="form-group">
+                <label>Featured Image</label>
+                <div class="upload-area" onclick="document.getElementById('fileUpload').click()">
+                    <i class="fa-solid fa-cloud-arrow-up text-accent"
+                        style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
+                    <p style="color: var(--text-secondary); font-weight: 500;">Click to upload event banner</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">PNG, JPG up to 5MB</p>
+                    <input type="file" id="fileUpload" style="display: none;" accept="image/*">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div class="form-group">
+                    <label for="eventCategory">Category</label>
+                    <select id="eventCategory" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="Uganda League">Uganda League</option>
+                        <option value="Local Tournaments">Local Tournaments</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="eventDate">Event Date & Time</label>
+                    <input type="datetime-local" id="eventDate" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="eventTags">Tags (Press Enter to add)</label>
+                <div id="tagWrapper"
+                    style="border: 1px solid var(--border-color); padding: 0.5rem; border-radius: var(--radius-sm); background: #f9fafb; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+                    <input type="text" id="tagInput" placeholder="Add tag..."
+                        style="border: none; background: transparent; outline: none; flex: 1; min-width: 100px;">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="eventLocation">Location</label>
+                <input type="text" id="eventLocation" class="form-control" placeholder="Stadium or Venue Name">
+            </div>
+
+            <div class="form-group">
+                <label for="eventContent">Event Details & Description</label>
+                <textarea id="eventContent" class="form-control"
+                    placeholder="Describe the event format, teams involved, ticket details, etc..." required></textarea>
+            </div>
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"
+                        style="margin-right: 0.5rem;"></i> Publish Event</button>
+                <button type="button" class="btn btn-dark"><i class="fa-solid fa-floppy-disk"
+                        style="margin-right: 0.5rem;"></i> Save as Draft</button>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            sessionStorage.removeItem('adminToken');
+            window.location.replace('admin-login.html');
+        });
+
+        // Handle file upload preview/text
+        const fileUpload = document.getElementById('fileUpload');
+        const uploadArea = document.querySelector('.upload-area');
+        fileUpload.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                const fileName = e.target.files[0].name;
+                uploadArea.querySelector('p').textContent = fileName;
+            }
+        });
+
+        // Tag handling logic
+        const tagInput = document.getElementById('tagInput');
+        const tagWrapper = document.getElementById('tagWrapper');
+        let tags = [];
+
+        tagInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const tag = tagInput.value.trim();
+                if (tag && !tags.includes(tag)) {
+                    tags.push(tag);
+                    renderTags();
+                }
+                tagInput.value = '';
+            }
+        });
+
+        function renderTags() {
+            // Keep the input
+            const input = document.getElementById('tagInput');
+            tagWrapper.innerHTML = '';
+            tags.forEach(tag => {
+                const span = document.createElement('span');
+                span.className = 'tag-pill';
+                span.innerHTML = `${tag} <i class="fa-solid fa-xmark" onclick="removeTag('${tag}')"></i>`;
+                tagWrapper.appendChild(span);
+            });
+            tagWrapper.appendChild(input);
+            input.focus();
+        }
+
+        window.removeTag = (tag) => {
+            tags = tags.filter(t => t !== tag);
+            renderTags();
+        };
+
+        // Helper: Compress Image
+        async function compressImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+
+                        // Max width 1200px
+                        const MAX_WIDTH = 1200;
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        canvas.toBlob((blob) => {
+                            resolve(new File([blob], file.name, { type: 'image/jpeg' }));
+                        }, 'image/jpeg', 0.7); // 70% quality
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Handle form submission
+        document.getElementById('postForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right: 0.5rem;"></i> Compressing & Publishing...';
+            submitBtn.disabled = true;
+
+            const title = document.getElementById('eventTitle').value;
+            const content = document.getElementById('eventContent').value;
+            const category = document.getElementById('eventCategory').value;
+            let file = fileUpload.files[0];
+
+            if (file) {
+                // Compress if it's an image
+                if (file.type.startsWith('image/')) {
+                    file = await compressImage(file);
+                }
+            }
+
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('content', content);
+            formData.append('status', 'published');
+
+            // Combine category and tags
+            const finalTags = [category, ...tags].filter(t => t);
+            formData.append('tags', JSON.stringify(finalTags));
+
+            if (file) {
+                formData.append('featuredImage', file);
+            }
+
+            try {
+                const token = sessionStorage.getItem('adminToken');
+                const response = await fetch('http://127.0.0.1:5000/api/posts', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Event Posted successfully!');
+                    window.location.href = 'admin.html';
+                } else {
+                    alert('Error: ' + (data.message || 'Failed to post event'));
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Error posting event:', error);
+                alert('An error occurred while posting. Please make sure the backend server is running.');
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>
