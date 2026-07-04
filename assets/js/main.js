@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            let url = 'http://127.0.0.1:5000/api/posts';
+            let url = 'https://massavusports-backend-api.onrender.com/api/posts';
             if (tag) url += `?tag=${encodeURIComponent(tag)}`;
 
             const response = await fetch(url);
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         newsGrid.innerHTML = posts.map(post => {
             const date = new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            const imageUrl = post.featuredImage ? `http://127.0.0.1:5000/public/uploads/${post.featuredImage}` : 'assets/images/hero.jpg';
+            const imageUrl = post.featuredImage ? `https://massavusports-backend-api.onrender.com/public/uploads/${post.featuredImage}` : 'assets/images/hero.jpg';
             const category = post.tags && post.tags.length > 0 ? post.tags[0].name : 'News';
             const truncated = post.content.substring(0, 100) + '...';
 
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             console.log('Fetching post:', id);
-            const response = await fetch(`http://127.0.0.1:5000/api/posts/${id}`);
+            const response = await fetch(`https://massavusports-backend-api.onrender.com/api/posts/${id}`);
             const result = await response.json();
             if (result.status === 'success') {
                 localStorage.setItem(cacheKey, JSON.stringify(result.data.post));
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (locEl) locEl.innerHTML = `<i class="fa-solid fa-location-dot text-accent"></i> ${post.location || 'Local'}`;
 
         if (heroEl) {
-            const src = post.featuredImage ? `http://127.0.0.1:5000/public/uploads/${post.featuredImage}` : 'assets/images/hero.jpg';
+            const src = post.featuredImage ? `https://massavusports-backend-api.onrender.com/public/uploads/${post.featuredImage}` : 'assets/images/hero.jpg';
             heroEl.src = src;
         }
 
