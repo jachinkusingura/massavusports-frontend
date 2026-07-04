@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         newsGrid.innerHTML = posts.map(post => {
             const date = new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            const imageUrl = post.featuredImage ? post.featuredImage : 'assets/images/hero.jpg';
+            const imageUrl = (post.featuredImage && post.featuredImage.startsWith('http')) ? post.featuredImage : 'assets/images/hero.jpg';
             const category = post.tags && post.tags.length > 0 ? post.tags[0].name : 'News';
             const truncated = post.content.substring(0, 100) + '...';
 
@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (locEl) locEl.innerHTML = `<i class="fa-solid fa-location-dot text-accent"></i> ${post.location || 'Local'}`;
 
         if (heroEl) {
-            const src = post.featuredImage ? post.featuredImage : 'assets/images/hero.jpg';
+            const src = (post.featuredImage && post.featuredImage.startsWith('http')) ? post.featuredImage : 'assets/images/hero.jpg';
             heroEl.src = src;
         }
 
