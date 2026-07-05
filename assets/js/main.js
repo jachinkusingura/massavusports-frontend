@@ -151,7 +151,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             return `
                 <article class="news-card">
-                    <div class="card-img" style="height: 200px; background: url('${imageUrl}') no-repeat center center/cover; border-radius: var(--radius-md) var(--radius-md) 0 0;"></div>
+                    <div class="card-img lazy-bg"
+                         data-bg="${imageUrl}"
+                         style="height: 200px; background: #1e293b no-repeat center center/cover; border-radius: var(--radius-md) var(--radius-md) 0 0; transition: opacity 0.4s ease;"
+                    ></div>
                     <div class="card-content">
                         <span class="tag">${category}</span>
                         <h3><a href="event.html?id=${post.id}">${post.title}</a></h3>
@@ -164,6 +167,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 </article>
             `;
         }).join('');
+
+        // Lazy-load background images using IntersectionObserver
+        const lazyImages = newsGrid.querySelectorAll('.lazy-bg');
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const bg = el.dataset.bg;
+                        if (bg) {
+                            const img = new Image();
+                            img.onload = () => {
+                                el.style.backgroundImage = `url('${bg}')`;
+                                el.style.opacity = '1';
+                            };
+                            img.src = bg;
+                        }
+                        obs.unobserve(el);
+                    }
+                });
+            }, { rootMargin: '100px' });
+            lazyImages.forEach(el => {
+                el.style.opacity = '0.4';
+                observer.observe(el);
+            });
+        } else {
+            // Fallback for browsers without IntersectionObserver
+            lazyImages.forEach(el => {
+                el.style.backgroundImage = `url('${el.dataset.bg}')`;
+            });
+        }
     }
 
     async function fetchSinglePost(id) {
@@ -240,6 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (heroEl) {
             const src = (post.featuredImage && post.featuredImage.startsWith('http')) ? post.featuredImage : 'assets/images/hero.jpg';
             heroEl.src = src;
+            heroEl.loading = 'lazy'; // Native lazy loading for hero img
         }
 
         if (tagsEl && post.tags) {
