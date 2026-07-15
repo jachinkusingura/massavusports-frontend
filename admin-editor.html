@@ -214,7 +214,7 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
                 <div class="form-group">
                     <label for="eventCategory">Category</label>
-                    <select id="eventCategory" class="form-control" required>
+                    <select id="eventCategory" class="form-control">
                         <option value="">Select Category</option>
                         <option value="Uganda League">Uganda League</option>
                         <option value="Local Tournaments">Local Tournaments</option>
@@ -259,6 +259,7 @@
     <script>
         const API_BASE = 'https://massavusports-backend-api.onrender.com/api';
         const token = sessionStorage.getItem('adminToken');
+        const uploadArea = document.querySelector('.upload-area');
 
         // Detect edit mode from URL ?id=
         const urlParams = new URLSearchParams(window.location.search);
@@ -270,15 +271,17 @@
             window.location.replace('admin-login.html');
         });
 
-        // Handle file upload preview/text
-        const fileUpload = document.getElementById('fileUpload');
-        const uploadArea = document.querySelector('.upload-area');
-        fileUpload.addEventListener('change', (e) => {
-            if (e.target.files.length > 0) {
-                const fileName = e.target.files[0].name;
-                uploadArea.querySelector('p').textContent = fileName;
-            }
+        // Bind upload area click (always use fresh DOM lookup for fileUpload)
+        uploadArea.addEventListener('click', () => {
+            const fu = document.getElementById('fileUpload');
+            if (fu) fu.click();
         });
+        uploadArea.addEventListener('change', (e) => {
+            if (e.target && e.target.id === 'fileUpload' && e.target.files.length > 0) {
+                const p = uploadArea.querySelector('p');
+                if (p) p.textContent = e.target.files[0].name;
+            }
+        }, true);
 
         // Tag handling logic
         const tagInput = document.getElementById('tagInput');
@@ -315,14 +318,15 @@
             renderTags();
         };
 
-        // Known categories list (for dropdown matching)
+        // Known categories
         const KNOWN_CATEGORIES = ['Uganda League', 'Local Tournaments', 'Transfers'];
 
-        // If edit mode: load post and pre-fill form
+        // EDIT MODE: load post and pre-fill form
         if (isEditMode) {
             document.getElementById('pageTitle').textContent = 'Edit Event';
             document.getElementById('pageSubtitle').textContent = 'Update and republish the post below.';
-            document.querySelector('button[type="submit"]').innerHTML = '<i class="fa-solid fa-paper-plane" style="margin-right: 0.5rem;"></i> Update & Republish';
+            document.querySelector('button[type="submit"]').innerHTML =
+                '<i class="fa-solid fa-paper-plane" style="margin-right:0.5rem;"></i> Update & Republish';
 
             async function loadPostForEdit() {
                 try {
@@ -332,43 +336,29 @@
 
                     const post = result.data.post;
 
-                    // Pre-fill title
                     document.getElementById('eventTitle').value = post.title || '';
-
-                    // Pre-fill content
                     document.getElementById('eventContent').value = post.content || '';
 
-                    // Pre-fill date if available
                     if (post.createdAt) {
-                        const dt = new Date(post.createdAt);
-                        const formatted = dt.toISOString().slice(0, 16);
-                        document.getElementById('eventDate').value = formatted;
+                        document.getElementById('eventDate').value =
+                            new Date(post.createdAt).toISOString().slice(0, 16);
                     }
 
-                    // Pre-fill category and extra tags
                     const postTagNames = post.tags.map(t => t.name);
                     const categoryTag = postTagNames.find(n => KNOWN_CATEGORIES.includes(n)) || '';
                     const extraTags = postTagNames.filter(n => !KNOWN_CATEGORIES.includes(n));
-
                     document.getElementById('eventCategory').value = categoryTag;
-
                     tags = extraTags;
                     if (tags.length > 0) renderTags();
 
-                    // Show existing image in upload area
+                    // Replace upload area with existing image preview
                     if (post.featuredImage) {
                         uploadArea.innerHTML = `
                             <img src="${post.featuredImage}" alt="Current image"
-                                style="max-height: 160px; max-width: 100%; border-radius: 6px; object-fit: cover; margin-bottom: 0.5rem;">
-                            <p style="color: var(--text-muted); font-size: 0.85rem;">Upload a new image to replace, or leave empty to keep current.</p>
-                            <input type="file" id="fileUpload" style="display: none;" accept="image/*">
+                                style="max-height:160px;max-width:100%;border-radius:6px;object-fit:cover;margin-bottom:0.5rem;">
+                            <p style="color:var(--text-muted);font-size:0.85rem;">Upload a new image to replace, or leave empty to keep current.</p>
+                            <input type="file" id="fileUpload" style="display:none;" accept="image/*">
                         `;
-                        uploadArea.onclick = () => document.getElementById('fileUpload').click();
-                        document.getElementById('fileUpload').addEventListener('change', (e) => {
-                            if (e.target.files.length > 0) {
-                                uploadArea.querySelector('p').textContent = e.target.files[0].name;
-                            }
-                        });
                     }
 
                 } catch (err) {
@@ -388,20 +378,12 @@
                     const img = new Image();
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
-                        let width = img.width;
-                        let height = img.height;
+                        let width = img.width, height = img.height;
                         const MAX_WIDTH = 1200;
-                        if (width > MAX_WIDTH) {
-                            height *= MAX_WIDTH / width;
-                            width = MAX_WIDTH;
-                        }
-                        canvas.width = width;
-                        canvas.height = height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, width, height);
-                        canvas.toBlob((blob) => {
-                            resolve(new File([blob], file.name, { type: 'image/jpeg' }));
-                        }, 'image/jpeg', 0.7);
+                        if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                        canvas.width = width; canvas.height = height;
+                        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                        canvas.toBlob(blob => resolve(new File([blob], file.name, { type: 'image/jpeg' })), 'image/jpeg', 0.7);
                     };
                     img.src = e.target.result;
                 };
@@ -409,20 +391,29 @@
             });
         }
 
-        // Handle form submission (create or update)
+        // FORM SUBMIT — create (POST) or update (PUT)
         document.getElementById('postForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-
             const submitBtn = e.target.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right: 0.5rem;"></i> ' + (isEditMode ? 'Updating...' : 'Compressing & Publishing...');
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:0.5rem;"></i> ' +
+                (isEditMode ? 'Updating...' : 'Compressing & Publishing...');
             submitBtn.disabled = true;
 
-            const title = document.getElementById('eventTitle').value;
-            const content = document.getElementById('eventContent').value;
+            const title = document.getElementById('eventTitle').value.trim();
+            const content = document.getElementById('eventContent').value.trim();
             const category = document.getElementById('eventCategory').value;
-            let file = document.getElementById('fileUpload') ? document.getElementById('fileUpload').files[0] : null;
 
+            if (!title || !content) {
+                alert('Title and content are required.');
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+                return;
+            }
+
+            // Always get fileUpload fresh (it may have been replaced by loadPostForEdit)
+            const fileInput = document.getElementById('fileUpload');
+            let file = fileInput ? fileInput.files[0] : null;
             if (file && file.type.startsWith('image/')) {
                 file = await compressImage(file);
             }
@@ -431,29 +422,19 @@
             formData.append('title', title);
             formData.append('content', content);
             formData.append('status', 'published');
-
-            // Combine category + extra tags
             const finalTags = [category, ...tags].filter(t => t);
             formData.append('tags', JSON.stringify(finalTags));
-
-            if (file) {
-                formData.append('featuredImage', file);
-            }
+            if (file) formData.append('featuredImage', file);
 
             try {
-                const url = isEditMode
-                    ? `${API_BASE}/posts/${editPostId}`
-                    : `${API_BASE}/posts`;
+                const url = isEditMode ? `${API_BASE}/posts/${editPostId}` : `${API_BASE}/posts`;
                 const method = isEditMode ? 'PUT' : 'POST';
-
                 const response = await fetch(url, {
                     method,
                     headers: { 'Authorization': `Bearer ${token}` },
                     body: formData
                 });
-
                 const data = await response.json();
-
                 if (response.ok) {
                     alert(isEditMode ? 'Event updated and republished!' : 'Event posted successfully!');
                     window.location.href = 'admin.html';
