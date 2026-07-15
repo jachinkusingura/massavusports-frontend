@@ -187,7 +187,8 @@
             <a href="admin.html" style="color: var(--text-muted); font-size: 1.2rem;"><i
                     class="fa-solid fa-arrow-left"></i></a>
             <div>
-                <h1 style="font-size: 2rem; margin-bottom: 0;">Add New Event</h1>
+                <h1 id="pageTitle" style="font-size: 2rem; margin-bottom: 0;">Add New Event</h1>
+                <p id="pageSubtitle" style="color: var(--text-muted); margin: 0; font-size: 0.9rem;"></p>
             </div>
         </header>
 
@@ -256,6 +257,14 @@
     </main>
 
     <script>
+        const API_BASE = 'https://massavusports-backend-api.onrender.com/api';
+        const token = sessionStorage.getItem('adminToken');
+
+        // Detect edit mode from URL ?id=
+        const urlParams = new URLSearchParams(window.location.search);
+        const editPostId = urlParams.get('id');
+        let isEditMode = !!editPostId;
+
         document.getElementById('logoutBtn').addEventListener('click', () => {
             sessionStorage.removeItem('adminToken');
             window.location.replace('admin-login.html');
@@ -289,7 +298,6 @@
         });
 
         function renderTags() {
-            // Keep the input
             const input = document.getElementById('tagInput');
             tagWrapper.innerHTML = '';
             tags.forEach(tag => {
@@ -307,6 +315,71 @@
             renderTags();
         };
 
+        // Known categories list (for dropdown matching)
+        const KNOWN_CATEGORIES = ['Uganda League', 'Local Tournaments', 'Transfers'];
+
+        // If edit mode: load post and pre-fill form
+        if (isEditMode) {
+            document.getElementById('pageTitle').textContent = 'Edit Event';
+            document.getElementById('pageSubtitle').textContent = 'Update and republish the post below.';
+            document.querySelector('button[type="submit"]').innerHTML = '<i class="fa-solid fa-paper-plane" style="margin-right: 0.5rem;"></i> Update & Republish';
+
+            async function loadPostForEdit() {
+                try {
+                    const res = await fetch(`${API_BASE}/posts/${editPostId}`);
+                    const result = await res.json();
+                    if (!res.ok) throw new Error(result.message || 'Failed to load post');
+
+                    const post = result.data.post;
+
+                    // Pre-fill title
+                    document.getElementById('eventTitle').value = post.title || '';
+
+                    // Pre-fill content
+                    document.getElementById('eventContent').value = post.content || '';
+
+                    // Pre-fill date if available
+                    if (post.createdAt) {
+                        const dt = new Date(post.createdAt);
+                        const formatted = dt.toISOString().slice(0, 16);
+                        document.getElementById('eventDate').value = formatted;
+                    }
+
+                    // Pre-fill category and extra tags
+                    const postTagNames = post.tags.map(t => t.name);
+                    const categoryTag = postTagNames.find(n => KNOWN_CATEGORIES.includes(n)) || '';
+                    const extraTags = postTagNames.filter(n => !KNOWN_CATEGORIES.includes(n));
+
+                    document.getElementById('eventCategory').value = categoryTag;
+
+                    tags = extraTags;
+                    if (tags.length > 0) renderTags();
+
+                    // Show existing image in upload area
+                    if (post.featuredImage) {
+                        uploadArea.innerHTML = `
+                            <img src="${post.featuredImage}" alt="Current image"
+                                style="max-height: 160px; max-width: 100%; border-radius: 6px; object-fit: cover; margin-bottom: 0.5rem;">
+                            <p style="color: var(--text-muted); font-size: 0.85rem;">Upload a new image to replace, or leave empty to keep current.</p>
+                            <input type="file" id="fileUpload" style="display: none;" accept="image/*">
+                        `;
+                        uploadArea.onclick = () => document.getElementById('fileUpload').click();
+                        document.getElementById('fileUpload').addEventListener('change', (e) => {
+                            if (e.target.files.length > 0) {
+                                uploadArea.querySelector('p').textContent = e.target.files[0].name;
+                            }
+                        });
+                    }
+
+                } catch (err) {
+                    alert('Could not load post for editing: ' + err.message);
+                    window.location.href = 'admin.html';
+                }
+            }
+
+            loadPostForEdit();
+        }
+
         // Helper: Compress Image
         async function compressImage(file) {
             return new Promise((resolve) => {
@@ -317,22 +390,18 @@
                         const canvas = document.createElement('canvas');
                         let width = img.width;
                         let height = img.height;
-
-                        // Max width 1200px
                         const MAX_WIDTH = 1200;
                         if (width > MAX_WIDTH) {
                             height *= MAX_WIDTH / width;
                             width = MAX_WIDTH;
                         }
-
                         canvas.width = width;
                         canvas.height = height;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
-
                         canvas.toBlob((blob) => {
                             resolve(new File([blob], file.name, { type: 'image/jpeg' }));
-                        }, 'image/jpeg', 0.7); // 70% quality
+                        }, 'image/jpeg', 0.7);
                     };
                     img.src = e.target.result;
                 };
@@ -340,25 +409,22 @@
             });
         }
 
-        // Handle form submission
+        // Handle form submission (create or update)
         document.getElementById('postForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const submitBtn = e.target.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right: 0.5rem;"></i> Compressing & Publishing...';
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right: 0.5rem;"></i> ' + (isEditMode ? 'Updating...' : 'Compressing & Publishing...');
             submitBtn.disabled = true;
 
             const title = document.getElementById('eventTitle').value;
             const content = document.getElementById('eventContent').value;
             const category = document.getElementById('eventCategory').value;
-            let file = fileUpload.files[0];
+            let file = document.getElementById('fileUpload') ? document.getElementById('fileUpload').files[0] : null;
 
-            if (file) {
-                // Compress if it's an image
-                if (file.type.startsWith('image/')) {
-                    file = await compressImage(file);
-                }
+            if (file && file.type.startsWith('image/')) {
+                file = await compressImage(file);
             }
 
             const formData = new FormData();
@@ -366,7 +432,7 @@
             formData.append('content', content);
             formData.append('status', 'published');
 
-            // Combine category and tags
+            // Combine category + extra tags
             const finalTags = [category, ...tags].filter(t => t);
             formData.append('tags', JSON.stringify(finalTags));
 
@@ -375,28 +441,30 @@
             }
 
             try {
-                const token = sessionStorage.getItem('adminToken');
-                const response = await fetch('https://massavusports-backend-api.onrender.com/api/posts', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    },
+                const url = isEditMode
+                    ? `${API_BASE}/posts/${editPostId}`
+                    : `${API_BASE}/posts`;
+                const method = isEditMode ? 'PUT' : 'POST';
+
+                const response = await fetch(url, {
+                    method,
+                    headers: { 'Authorization': `Bearer ${token}` },
                     body: formData
                 });
 
                 const data = await response.json();
 
                 if (response.ok) {
-                    alert('Event Posted successfully!');
+                    alert(isEditMode ? 'Event updated and republished!' : 'Event posted successfully!');
                     window.location.href = 'admin.html';
                 } else {
-                    alert('Error: ' + (data.message || 'Failed to post event'));
+                    alert('Error: ' + (data.message || 'Failed to save event'));
                     submitBtn.innerHTML = originalBtnText;
                     submitBtn.disabled = false;
                 }
             } catch (error) {
-                console.error('Error posting event:', error);
-                alert('An error occurred while posting. Please make sure the backend server is running.');
+                console.error('Error saving event:', error);
+                alert('An error occurred. Please make sure the backend server is running.');
                 submitBtn.innerHTML = originalBtnText;
                 submitBtn.disabled = false;
             }

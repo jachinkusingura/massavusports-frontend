@@ -385,6 +385,11 @@
             `).join('');
         }
 
+        // Edit Event - redirect to editor with post ID
+        function editEvent(id) {
+            window.location.href = `admin-editor.html?id=${id}`;
+        }
+
         // Delete Event
         async function deleteEvent(id) {
             if (!confirm('Are you sure you want to delete this event?')) return;
