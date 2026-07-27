@@ -92,6 +92,22 @@ document.addEventListener('DOMContentLoaded', () => {
         return raw ? JSON.parse(raw) : [];
     }
 
+    // Helper: Parse date cleanly into local time without UTC offset skews
+    function parseLocalDate(dateVal, utcVal) {
+        if (typeof dateVal === 'string' && dateVal.includes('-')) {
+            const p = dateVal.split('-').map(Number);
+            if (p.length === 3 && p[0] > 2000 && p[1] >= 1 && p[2] >= 1) {
+                return new Date(p[0], p[1] - 1, p[2]);
+            }
+        }
+        if (utcVal) {
+            const u = new Date(utcVal);
+            if (!isNaN(u.getTime())) return u;
+        }
+        if (dateVal instanceof Date) return dateVal;
+        return new Date();
+    }
+
     // Build dynamic fixtures list (Upcoming or Scheduled matches)
     function getAllFixtures() {
         const adminMatches = getStoredAdminMatches();
@@ -99,16 +115,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Merge admin scheduled/LIVE matches
         adminMatches.filter(m => m.status !== 'FT').forEach(m => {
-            const dateObj = m.kickoffUtc ? new Date(m.kickoffUtc) : (m.date ? new Date(m.date) : new Date());
-            const dateKey = dateObj.toDateString();
-            const comp = m.competition || 'Uganda Premier League';
+            const dateObj = parseLocalDate(m.date, m.kickoffUtc);
+            const dateKey = _normDay(dateObj).toDateString();
+            const comp = m.competition ? m.competition.trim() : 'Uganda Premier League';
 
             if (!fixturesByDateComp[dateKey]) fixturesByDateComp[dateKey] = {};
             if (!fixturesByDateComp[dateKey][comp]) {
                 fixturesByDateComp[dateKey][comp] = {
-                    date: dateObj,
+                    date: _normDay(dateObj),
                     league: comp,
-                    flag: comp.includes('Uganda') ? ugandaLogoUrl : null,
+                    flag: leagueFlags[comp] || null,
                     matches: []
                 };
             }
@@ -130,11 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
             Object.values(byComp).forEach(group => dynamicList.push(group));
         });
 
-        if (dynamicList.length > 0) return dynamicList;
-
-        // Default initial fixtures fallback
-        const today = new Date(); today.setHours(0, 0, 0, 0);
-        return [
+        const today = _normDay(new Date());
+        const defaultFixtures = [
             {
                 date: today,
                 league: 'Uganda Premier League',
@@ -143,8 +156,34 @@ document.addEventListener('DOMContentLoaded', () => {
                     { id: 1001, home: { id: 'vipers', name: 'Vipers SC', logo: '' }, away: { id: 'kcca', name: 'KCCA FC', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' },
                     { id: 1002, home: { id: 'villa', name: 'SC Villa', logo: '' }, away: { id: 'express', name: 'Express FC', logo: '' }, scoreH: null, scoreA: null, time: '18:30 EAT', status: 'upcoming' }
                 ]
+            },
+            {
+                date: today,
+                league: 'Ntare League',
+                flag: leagueFlags['Ntare League'],
+                matches: [
+                    { id: 1003, home: { id: 'tyomujuma', name: 'TY Omujuma', logo: '' }, away: { id: 'machandofc', name: 'Machando FC', logo: '' }, scoreH: null, scoreA: null, time: '15:00 EAT', status: 'upcoming' }
+                ]
+            },
+            {
+                date: today,
+                league: 'Chaapa League',
+                flag: leagueFlags['Chaapa League'],
+                matches: [
+                    { id: 1004, home: { id: 'yoboyobo', name: 'Yobo Yobo', logo: '' }, away: { id: 'scrwizi', name: 'SC Rwizi', logo: '' }, scoreH: null, scoreA: null, time: '16:30 EAT', status: 'upcoming' }
+                ]
+            },
+            {
+                date: today,
+                league: 'Kitunga League',
+                flag: leagueFlags['Kitunga League'],
+                matches: [
+                    { id: 1005, home: { id: 'kitunga', name: 'Kitunga Stars', logo: '' }, away: { id: 'ntareLions', name: 'Ntare Lions', logo: '' }, scoreH: null, scoreA: null, time: '17:00 EAT', status: 'upcoming' }
+                ]
             }
         ];
+
+        return [...dynamicList, ...defaultFixtures];
     }
 
     // Build dynamic results list (Finished FT matches)
@@ -153,16 +192,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const resultsByDateComp = {};
 
         adminMatches.filter(m => m.status === 'FT').forEach(m => {
-            const dateObj = m.kickoffUtc ? new Date(m.kickoffUtc) : (m.date ? new Date(m.date) : new Date());
-            const dateKey = dateObj.toDateString();
-            const comp = m.competition || 'Uganda Premier League';
+            const dateObj = parseLocalDate(m.date, m.kickoffUtc);
+            const dateKey = _normDay(dateObj).toDateString();
+            const comp = m.competition ? m.competition.trim() : 'Uganda Premier League';
 
             if (!resultsByDateComp[dateKey]) resultsByDateComp[dateKey] = {};
             if (!resultsByDateComp[dateKey][comp]) {
                 resultsByDateComp[dateKey][comp] = {
-                    date: dateObj,
+                    date: _normDay(dateObj),
                     league: comp,
-                    flag: comp.includes('Uganda') ? ugandaLogoUrl : null,
+                    flag: leagueFlags[comp] || null,
                     matches: []
                 };
             }
@@ -183,10 +222,8 @@ document.addEventListener('DOMContentLoaded', () => {
             Object.values(byComp).forEach(group => dynamicList.push(group));
         });
 
-        if (dynamicList.length > 0) return dynamicList;
-
         const yesterday = daysFromToday(-1);
-        return [
+        const defaultResults = [
             {
                 date: yesterday,
                 league: 'Uganda Premier League',
@@ -194,8 +231,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 matches: [
                     { id: 2001, home: { id: 'bulfc', name: 'BUL FC', logo: '' }, away: { id: 'urafc', name: 'URA FC', logo: '' }, scoreH: 2, scoreA: 1, time: 'FT', status: 'finished' }
                 ]
+            },
+            {
+                date: yesterday,
+                league: 'Ntare League',
+                flag: leagueFlags['Ntare League'],
+                matches: [
+                    { id: 2002, home: { id: 'sckalele', name: 'SC Kalele', logo: '' }, away: { id: 'ensayifc', name: 'Ensayi FC', logo: '' }, scoreH: 1, scoreA: 0, time: 'FT', status: 'finished' }
+                ]
             }
         ];
+
+        return [...dynamicList, ...defaultResults];
     }
 
     const mockStandings = {
@@ -486,9 +533,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         matchesContainer.appendChild(tabBar);
 
+        const normComp = comp.toLowerCase().trim();
+
         // ---- Content by sub-tab ----
         if (activeCompTab === 'fixtures') {
-            const allFx = getAllFixtures().filter(lg => lg.league === comp);
+            const allFx = getAllFixtures().filter(lg => lg.league.toLowerCase().trim() === normComp);
             renderDaySelectorBar(
                 compFixtureDate, allFx,
                 d => { compFixtureDate = _normDay(d); renderView(); },
@@ -504,7 +553,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
         } else if (activeCompTab === 'results') {
-            const allRes = getAllResults().filter(lg => lg.league === comp);
+            const allRes = getAllResults().filter(lg => lg.league.toLowerCase().trim() === normComp);
             renderDaySelectorBar(
                 compResultDate, allRes,
                 d => { compResultDate = _normDay(d); renderView(); },
@@ -521,9 +570,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } else if (activeCompTab === 'table') {
             const standings = getStandingsData();
-            const leagueData = standings[comp];
+            const standingsKey = Object.keys(standings).find(k => k.toLowerCase().trim() === normComp) || comp;
+            const leagueData = standings[standingsKey] || [];
             if (!leagueData || leagueData.length === 0) {
-                matchesContainer.innerHTML += `<div style="text-align:center;padding:3rem;color:#475569;">No standings data available yet.</div>`;
+                matchesContainer.innerHTML += `<div style="text-align:center;padding:3rem;color:#475569;">No standings data available yet for <strong style="color:#facc15;">${comp}</strong>.</div>`;
                 return;
             }
             let html = `<table class="standings-table">
