@@ -1,37 +1,62 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Post Event | MassavuSports Admin</title>
+    <title>Admin | MassavuSports</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-
-    <!-- Security check -->
     <script>if (!sessionStorage.getItem('adminToken')) { window.location.replace('admin-login.html'); }</script>
-
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             display: flex;
-            background-color: #f3f4f6;
+            background-color: #0b1329;
+            color: #f8fafc;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
         }
 
         .sidebar {
-            width: 250px;
-            background: var(--bg-dark);
+            width: 260px;
+            background: #060c1c;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
             height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
-            padding: 2rem 1rem;
+            padding: 2rem 1.25rem;
             display: flex;
             flex-direction: column;
             color: white;
+            z-index: 100;
+        }
+
+        .sidebar .logo {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .sidebar .logo span {
+            color: #facc15;
         }
 
         .sidebar-menu {
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
@@ -40,38 +65,135 @@
         .sidebar-menu a {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            border-radius: var(--radius-sm);
-            color: #d1d5db;
+            gap: 0.85rem;
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
         }
 
-        .sidebar-menu a:hover,
+        .sidebar-menu a i {
+            font-size: 1.1rem;
+            width: 22px;
+            text-align: center;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(250, 204, 21, 0.12);
+            color: #facc15;
+            transform: translateX(3px);
+        }
+
         .sidebar-menu a.active {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--accent-primary);
+            background: #facc15;
+            color: #0b1329;
+            font-weight: 800;
+            box-shadow: 0 4px 14px rgba(250, 204, 21, 0.3);
         }
 
         .logout-btn {
             margin-top: auto;
-            border: 1px solid #374151;
-            background: transparent;
-            color: var(--accent-danger);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #ef4444;
+            color: white;
         }
 
         .admin-main {
-            margin-left: 250px;
-            padding: 2rem 3rem;
+            margin-left: 260px;
+            padding: 2.5rem 3rem;
             flex: 1;
-            width: calc(100% - 250px);
+            width: calc(100% - 260px);
+            min-height: 100vh;
+        }
+
+        .admin-header-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .admin-header-title i {
+            color: #facc15;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            border-bottom: 2px solid #1e293b;
+            padding-bottom: 0.75rem;
+        }
+
+        .admin-tab {
+            padding: 0.75rem 1.35rem;
+            border-radius: 8px;
+            border: 1px solid #2a3a5c;
+            background: #111c38;
+            color: #94a3b8;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .admin-tab:hover {
+            color: #ffffff;
+            background: #18264b;
+            border-color: #3b82f6;
+        }
+
+        .admin-tab.active {
+            background: #facc15;
+            color: #0b1329;
+            border-color: #facc15;
+            box-shadow: 0 4px 14px rgba(250, 204, 21, 0.25);
         }
 
         .editor-form {
-            background: white;
-            padding: 2rem;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            background: #111c38;
+            padding: 2rem 2.25rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            margin-bottom: 2rem;
+        }
+
+        .editor-form h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .form-group {
@@ -80,63 +202,196 @@
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
-            color: var(--bg-dark);
-            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: #e2e8f0;
+            font-weight: 700;
             font-size: 0.95rem;
+            letter-spacing: 0.01em;
         }
 
         .form-control {
             width: 100%;
-            padding: 0.8rem 1rem;
-            background: #f9fafb;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            font-family: var(--font-body);
+            padding: 0.85rem 1rem;
+            background: #080e1e;
+            border: 1.5px solid #2a3a5c;
+            border-radius: 8px;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        .form-control::placeholder {
+            color: #64748b;
+            font-weight: 400;
         }
 
         .form-control:focus {
             outline: none;
-            border-color: var(--accent-primary);
-            background: white;
+            border-color: #facc15;
+            background: #0c152d;
+            box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.2);
+        }
+
+        select.form-control option {
+            background: #0b1329;
+            color: #ffffff;
+            font-size: 0.95rem;
+            padding: 8px;
         }
 
         textarea.form-control {
-            min-height: 250px;
+            min-height: 180px;
             resize: vertical;
         }
 
         .upload-area {
-            border: 2px dashed var(--border-color);
-            border-radius: var(--radius-md);
+            border: 2px dashed #2a3a5c;
+            border-radius: 10px;
             padding: 2rem;
             text-align: center;
-            background: #f9fafb;
+            background: #080e1e;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
+            color: #cbd5e1;
         }
 
         .upload-area:hover {
-            border-color: var(--accent-primary);
-            background: rgba(16, 185, 129, 0.05);
+            border-color: #facc15;
+            background: #0c152d;
+            color: #ffffff;
         }
 
         .tag-pill {
             display: inline-flex;
             align-items: center;
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--accent-hover);
-            padding: 0.3rem 0.6rem;
-            border-radius: var(--radius-sm);
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
             margin-right: 0.5rem;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 700;
+            border: 1px solid rgba(34, 197, 94, 0.3);
         }
 
         .tag-pill i {
             margin-left: 0.5rem;
             cursor: pointer;
+        }
+
+        /* Lineup Builder Styles */
+        .lineup-panel {
+            background: #080e1e;
+            border: 1px solid #2a3a5c;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .lineup-panel h3 {
+            font-size: 1.05rem;
+            color: #facc15;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+        }
+
+        .lineup-panel h3 i {
+            color: #facc15;
+        }
+
+        .player-row {
+            display: grid;
+            grid-template-columns: 60px 1fr 1fr 34px;
+            gap: 0.75rem;
+            align-items: center;
+            margin-bottom: 0.6rem;
+        }
+
+        .player-row input {
+            padding: 0.6rem 0.8rem;
+            background: #0b1329;
+            border: 1px solid #2a3a5c;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .player-row input:focus {
+            outline: none;
+            border-color: #facc15;
+        }
+
+        .remove-player-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #ef4444;
+            border-radius: 6px;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .remove-player-btn:hover {
+            background: #ef4444;
+            color: white;
+        }
+
+        .add-player-btn {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #4ade80;
+            border-radius: 6px;
+            padding: 0.5rem 1.25rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .add-player-btn:hover {
+            background: #22c55e;
+            color: #0b1329;
+        }
+
+        .formation-badge {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            font-size: 0.8rem;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 1.5rem 0;
+        }
+
+        .injury-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 34px;
+            gap: 0.75rem;
+            align-items: center;
+            margin-bottom: 0.5rem;
         }
 
         @media (max-width: 768px) {
@@ -165,142 +420,1515 @@
             }
         }
     </style>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">`n
 </head>
 
 <body>
-
     <aside class="sidebar">
-        <a href="index.html" class="logo" style="margin-left: 1rem; color: white;">
+        <a href="index.html" class="logo" style="margin-left:1rem;color:white;">
             <img src="assets/images/logo.png" alt="Logo"
-                style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;"> Massavu
+                style="height:35px;width:auto;object-fit:contain;margin-right:8px;"> Massavu
         </a>
         <nav class="sidebar-menu">
-            <a href="admin.html"><i class="fa-solid fa-chart-line"></i> Dashboard Highlights</a>
-            <a href="#" class="active"><i class="fa-solid fa-newspaper"></i> Post Event</a>
+            <a href="admin.html"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+            <a href="admin-editor.html?tab=events" id="side-events"><i class="fa-solid fa-newspaper"></i> Post Event</a>
+            <a href="admin-editor.html?tab=matches" id="side-matches"><i class="fa-solid fa-calendar-days"></i>
+                Matches</a>
+            <a href="admin-editor.html?tab=teams" id="side-teams"><i class="fa-solid fa-shield-halved"></i> Teams</a>
+            <a href="admin-editor.html?tab=competitions" id="side-competitions"><i class="fa-solid fa-trophy"></i>
+                Competitions</a>
+            <a href="admin-editor.html?tab=standings" id="side-standings"><i class="fa-solid fa-table"></i>
+                Standings</a>
+            <a href="admin-editor.html?tab=lineups" id="side-lineups"><i class="fa-solid fa-person-running"></i> Players
+                & Lineups</a>
+            <a href="admin-editor.html?tab=settings" id="side-settings"><i class="fa-solid fa-gear"></i> Settings</a>
         </nav>
         <button class="btn logout-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</button>
     </aside>
 
     <main class="admin-main">
-        <header style="margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
-            <a href="admin.html" style="color: var(--text-muted); font-size: 1.2rem;"><i
+        <header style="margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;">
+            <a href="admin.html" style="color:var(--text-muted);font-size:1.2rem;"><i
                     class="fa-solid fa-arrow-left"></i></a>
             <div>
-                <h1 id="pageTitle" style="font-size: 2rem; margin-bottom: 0;">Add New Event</h1>
-                <p id="pageSubtitle" style="color: var(--text-muted); margin: 0; font-size: 0.9rem;"></p>
+                <h1 id="pageTitle" style="font-size:1.8rem;margin-bottom:0;font-weight:800;">Admin Panel</h1>
+                <p id="pageSubtitle" style="color:var(--text-muted);margin:0;font-size:0.85rem;">Manage matches, teams,
+                    standings, rosters & events</p>
             </div>
         </header>
 
-        <form class="editor-form" id="postForm">
+        <!-- Admin Tabs -->
+        <div class="admin-tabs"
+            style="display:flex; gap:0.5rem; overflow-x:auto; padding-bottom:0.5rem; margin-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,0.08);">
+            <button class="admin-tab" id="tab-events" onclick="switchAdminTab('events')"><i
+                    class="fa-solid fa-newspaper"></i> Post Event</button>
+            <button class="admin-tab" id="tab-matches" onclick="switchAdminTab('matches')"><i
+                    class="fa-solid fa-calendar-days"></i> Matches</button>
+            <button class="admin-tab" id="tab-teams" onclick="switchAdminTab('teams')"><i
+                    class="fa-solid fa-shield-halved"></i> Teams</button>
+            <button class="admin-tab" id="tab-competitions" onclick="switchAdminTab('competitions')"><i
+                    class="fa-solid fa-trophy"></i> Competitions</button>
+            <button class="admin-tab" id="tab-standings" onclick="switchAdminTab('standings')"><i
+                    class="fa-solid fa-table"></i> Standings</button>
+            <button class="admin-tab" id="tab-lineups" onclick="switchAdminTab('lineups')"><i
+                    class="fa-solid fa-person-running"></i> Players & Lineups</button>
+            <button class="admin-tab" id="tab-settings" onclick="switchAdminTab('settings')"><i
+                    class="fa-solid fa-gear"></i> Settings</button>
+        </div>
 
-            <div class="form-group">
-                <label for="eventTitle">Event Title</label>
-                <input type="text" id="eventTitle" class="form-control"
-                    placeholder="e.g. Kampala City Regional Qualifiers" required>
+        <!-- ============ TAB: POST EVENT & UPCOMING FIXTURES ============ -->
+        <div id="tab-panel-events">
+            <div class="editor-form">
+                <h2><i class="fa-solid fa-calendar-plus" style="color:#facc15;"></i> Post Event &amp; Upcoming Match
+                    Fixture</h2>
+                <form id="postForm" onsubmit="saveEventPost(event)">
+                    <input type="hidden" id="eventEditId" value="">
+
+                    <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:1.25rem; margin-bottom:1.25rem;">
+                        <div class="form-group" style="margin:0;">
+                            <label for="eventTitle">Event / Fixture Title</label>
+                            <input type="text" id="eventTitle" class="form-control"
+                                placeholder="e.g. Kampala Derby: Express FC vs KCCA FC" required>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label for="eventCategory">Competition / Category</label>
+                            <select id="eventCategory" class="form-control" required></select>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label for="eventDate">Fixture Date &amp; Kickoff Time</label>
+                            <input type="datetime-local" id="eventDate" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:1.25rem; margin-bottom:1.25rem;">
+                        <div class="form-group" style="margin:0;">
+                            <label for="eventHomeTeam">Home Team</label>
+                            <select id="eventHomeTeam" class="form-control"></select>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label for="eventAwayTeam">Away Team</label>
+                            <select id="eventAwayTeam" class="form-control"></select>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label for="eventLocation">Stadium / Venue Name</label>
+                            <input type="text" id="eventLocation" class="form-control"
+                                placeholder="e.g. St. Mary's Stadium, Kitende">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Event Banner / Poster Image (URL or Upload)</label>
+                        <input type="text" id="eventImageUrl" class="form-control"
+                            placeholder="https://... or click upload box below" style="margin-bottom:0.5rem;">
+                        <div class="upload-area" onclick="document.getElementById('fileUpload').click()">
+                            <i class="fa-solid fa-cloud-arrow-up"
+                                style="font-size:2rem; color:#facc15; margin-bottom:0.5rem;"></i>
+                            <p style="color:#ffffff; font-weight:700; margin:0;">Click to upload event poster or banner
+                            </p>
+                            <p style="font-size:0.85rem; color:#94a3b8; margin:4px 0 0;" id="uploadFileName">PNG, JPG up
+                                to 5MB</p>
+                            <input type="file" id="fileUpload" style="display:none;" accept="image/*"
+                                onchange="handleEventImageUpload(this)">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eventContent">Event Details &amp; Match Description</label>
+                        <textarea id="eventContent" class="form-control"
+                            placeholder="Provide details about ticket prices, broadcasting, team news, and match preview..."
+                            required></textarea>
+                    </div>
+
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <button type="submit" id="saveEventBtn" class="admin-tab active"
+                            style="padding:0.85rem 2rem; border:none; cursor:pointer; font-size:0.95rem;">
+                            <i class="fa-solid fa-paper-plane"></i> Publish Event &amp; Fixture
+                        </button>
+                        <button type="button" onclick="resetEventForm()" class="admin-tab"
+                            style="background:#1e293b; color:#cbd5e1; border:1px solid #334155; cursor:pointer;">
+                            <i class="fa-solid fa-xmark"></i> Clear
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            <div class="form-group">
-                <label>Featured Image</label>
-                <div class="upload-area" onclick="document.getElementById('fileUpload').click()">
-                    <i class="fa-solid fa-cloud-arrow-up text-accent"
-                        style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
-                    <p style="color: var(--text-secondary); font-weight: 500;">Click to upload event banner</p>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">PNG, JPG up to 5MB</p>
-                    <input type="file" id="fileUpload" style="display: none;" accept="image/*">
+            <!-- Posted Events & Upcoming Fixtures Directory -->
+            <div
+                style="background:#111c38; border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:2rem; box-shadow:0 10px 30px rgba(0,0,0,0.4);">
+                <h3
+                    style="font-size:1.2rem; margin-bottom:1.5rem; color:#ffffff; font-weight:800; display:flex; align-items:center; gap:0.5rem;">
+                    <i class="fa-solid fa-list-check" style="color:#facc15;"></i>Published Events &amp; Upcoming
+                    Fixtures
+                </h3>
+                <div id="eventsTableContainer">
+                    <p style="color:#cbd5e1; font-size:0.95rem;">Loading events...</p>
                 </div>
             </div>
+        </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <!-- ============ TAB: MANAGE LINEUPS ============ -->
+        <div id="tab-panel-lineups" style="display:none;">
+            <div class="editor-form">
+                <!-- Match Selector -->
                 <div class="form-group">
-                    <label for="eventCategory">Category</label>
-                    <select id="eventCategory" class="form-control">
-                        <option value="">Select Category</option>
-                        <option value="Uganda League">Uganda League</option>
-                        <option value="Local Tournaments">Local Tournaments</option>
-                        <option value="Transfers">Transfers</option>
+                    <label for="matchSelector">Select a Fixture / Match</label>
+                    <select id="matchSelector" class="form-control" onchange="loadMatchLineup(this.value)">
+                        <option value="">-- Choose a match --</option>
+                        <option value="103">Express FC vs KCCA FC (Today 16:00)</option>
+                        <option value="104">URA FC vs Express FC (FT 1-0)</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="eventDate">Event Date & Time</label>
-                    <input type="datetime-local" id="eventDate" class="form-control">
+
+                <!-- Home Team Lineup Form -->
+                <div id="lineup-form-container" style="display:none;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+                        <!-- HOME -->
+                        <div>
+                            <div class="lineup-panel">
+                                <h3><i class="fa-solid fa-shirt"></i> <span id="home-team-label">Home Team</span> —
+                                    Starting XI</h3>
+                                <div
+                                    style="display:grid;grid-template-columns:50px 1fr 1fr;gap:.4rem;margin-bottom:.4rem;">
+                                    <span style="font-size:.75rem;font-weight:700;color:#6b7280;">#</span>
+                                    <span style="font-size:.75rem;font-weight:700;color:#6b7280;">Name</span>
+                                    <span style="font-size:.75rem;font-weight:700;color:#6b7280;">Position</span>
+                                </div>
+                                <div id="home-starting-list"></div>
+                                <button class="add-player-btn" onclick="addPlayerRow('home','starting')"><i
+                                        class="fa-solid fa-plus"></i> Add Player</button>
+                            </div>
+                            <div class="lineup-panel">
+                                <h3><i class="fa-solid fa-arrows-rotate"></i> Home Substitutes</h3>
+                                <div id="home-subs-list"></div>
+                                <button class="add-player-btn" onclick="addPlayerRow('home','subs')"><i
+                                        class="fa-solid fa-plus"></i> Add Sub</button>
+                            </div>
+                            <div class="lineup-panel">
+                                <h3><i class="fa-solid fa-user-tie"></i> Home Coach</h3>
+                                <input type="text" id="home-coach" class="form-control" placeholder="Coach name">
+                            </div>
+                            <div class="lineup-panel">
+                                <h3><i class="fa-solid fa-kit-medical"></i> Home Injuries</h3>
+                                <div id="home-injuries-list"></div>
+                                <button class="add-player-btn" onclick="addInjuryRow('home')"><i
+                                        class="fa-solid fa-plus"></i> Add Injury</button>
+                            </div>
+                        </div>
+                        <!-- AWAY -->
+                        <div>
+                            <div class="lineup-panel">
+                                <h3><i class="fa-solid fa-shirt" style="color:#3b82f6;"></i> <span
+                                        id="away-team-label">Away Team</span> — Starting XI</h3>
+                                <div
+                                    style="display:grid;grid-template-columns:50px 1fr 1fr;gap:.4rem;margin-bottom:.4rem;">
+                                    <span style="font-size:.75rem;font-weight:700;color:#6b7280;">#</span>
+                                    <span style="font-size:.75rem;font-weight:700;color:#6b7280;">Name</span>
+                                    <span style="font-size:.75rem;font-weight:700;color:#6b7280;">Position</span>
+                                </div>
+                                <div id="away-starting-list"></div>
+                                <button class="add-player-btn" onclick="addPlayerRow('away','starting')"><i
+                                        class="fa-solid fa-plus"></i> Add Player</button>
+                            </div>
+                            <div class="lineup-panel">
+                                <h3><i class="fa-solid fa-arrows-rotate"></i> Away Substitutes</h3>
+                                <div id="away-subs-list"></div>
+                                <button class="add-player-btn" onclick="addPlayerRow('away','subs')"><i
+                                        class="fa-solid fa-plus"></i> Add Sub</button>
+                            </div>
+                            <div class="lineup-panel">
+                                <h3><i class="fa-solid fa-user-tie"></i> Away Coach</h3>
+                                <input type="text" id="away-coach" class="form-control" placeholder="Coach name">
+                            </div>
+                            <div class="lineup-panel">
+                                <h3><i class="fa-solid fa-kit-medical"></i> Away Injuries</h3>
+                                <div id="away-injuries-list"></div>
+                                <button class="add-player-btn" onclick="addInjuryRow('away')"><i
+                                        class="fa-solid fa-plus"></i> Add Injury</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formation Row -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:1rem;">
+                        <div class="form-group">
+                            <label for="home-formation">Home Formation</label>
+                            <select id="home-formation" class="form-control">
+                                <option>4-4-2</option>
+                                <option>4-3-3</option>
+                                <option>3-5-2</option>
+                                <option>4-2-3-1</option>
+                                <option>5-4-1</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="away-formation">Away Formation</label>
+                            <select id="away-formation" class="form-control">
+                                <option>4-3-3</option>
+                                <option>4-4-2</option>
+                                <option>3-5-2</option>
+                                <option>4-2-3-1</option>
+                                <option>5-4-1</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;gap:1rem;margin-top:1.5rem;">
+                        <button type="button" class="btn btn-primary" onclick="saveLineup()"><i
+                                class="fa-solid fa-floppy-disk" style="margin-right:.5rem;"></i>Save Lineup</button>
+                        <button type="button" class="btn btn-dark" onclick="clearLineupForm()"><i
+                                class="fa-solid fa-trash" style="margin-right:.5rem;"></i>Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ TAB: RESULTS & AUTO-STANDINGS ============ -->
+        <div id="tab-panel-results" style="display:none;">
+            <!-- Modern Scoreboard Entry Card -->
+            <div
+                style="background: linear-gradient(135deg, rgba(17,30,54,0.95), rgba(6,12,24,0.98)); border: 1px solid rgba(250,204,21,0.25); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+
+                <div
+                    style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:1rem;">
+                    <div>
+                        <h3
+                            style="font-size:1.3rem; color:var(--accent-primary); margin:0; display:flex; align-items:center; gap:8px;">
+                            <i class="fa-solid fa-trophy" style="color:var(--accent-primary);"></i> Match Score &
+                            Standings Engine
+                        </h3>
+                        <p style="color:var(--text-muted); font-size:0.85rem; margin:4px 0 0;">Enter final match scores
+                            to automatically recalculate points, GD, and standings tables in real-time.</p>
+                    </div>
+                    <span
+                        style="background:rgba(250,204,21,0.15); color:var(--accent-primary); padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; border:1px solid rgba(250,204,21,0.3);">Auto
+                        Sync Enabled</span>
+                </div>
+
+                <form id="resultForm" onsubmit="saveMatchResult(event)">
+                    <!-- League & Date Bar -->
+                    <div style="display:grid; grid-template-columns: 2fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem;">
+                        <div class="form-group" style="margin:0;">
+                            <label
+                                style="font-size:0.85rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em;">Select
+                                Competition</label>
+                            <select id="resCompetition" class="form-control"
+                                style="background:#091224; color:var(--text-primary); border:1px solid rgba(255,255,255,0.15); padding:0.75rem; font-weight:600;"
+                                required>
+                                <option value="Uganda Premier League">Uganda Premier League</option>
+                                <option value="FUFA Big League">FUFA Big League</option>
+                                <option value="Ntare League">Ntare League</option>
+                                <option value="Chaapa League">Chaapa League</option>
+                                <option value="Kitunga League">Kitunga League</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label
+                                style="font-size:0.85rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em;">Match
+                                Date</label>
+                            <input type="date" id="resDate" class="form-control"
+                                style="background:#091224; color:var(--text-primary); border:1px solid rgba(255,255,255,0.15); padding:0.75rem;"
+                                required>
+                        </div>
+                    </div>
+
+                    <!-- Scoreboard Match Card UI -->
+                    <div
+                        style="background:#060c18; border:1px solid rgba(255,255,255,0.1); border-radius:var(--radius-md); padding:1.5rem; margin-bottom:1.5rem; display:grid; grid-template-columns: 1fr auto 1fr; gap:1.5rem; align-items:center;">
+
+                        <!-- Home Team Block -->
+                        <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                            <label
+                                style="font-size:0.8rem; font-weight:700; color:var(--accent-primary); text-transform:uppercase;">Home
+                                Team</label>
+                            <input type="text" id="resHomeTeam" class="form-control" placeholder="e.g. Vipers SC"
+                                style="background:#111e36; color:white; font-size:1.1rem; font-weight:700; padding:0.8rem; border:1px solid rgba(255,255,255,0.15);"
+                                required>
+                            <div style="display:flex; align-items:center; gap:0.5rem; margin-top:0.25rem;">
+                                <span style="font-size:0.8rem; color:var(--text-muted);">Goals:</span>
+                                <input type="number" id="resHomeScore" class="form-control" min="0" value="0" required
+                                    style="width:70px; text-align:center; font-size:1.3rem; font-weight:800; background:#091224; color:var(--accent-primary); border:1px solid var(--accent-primary); padding:0.4rem;">
+                            </div>
+                        </div>
+
+                        <!-- VS Badge Center -->
+                        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                            <div
+                                style="width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg, var(--accent-primary), #eab308); color:var(--bg-main); font-weight:900; font-size:1.1rem; display:flex; align-items:center; justify-content:center; box-shadow:0 0 15px rgba(250,204,21,0.4);">
+                                VS</div>
+                            <span
+                                style="font-size:0.75rem; color:var(--text-muted); font-weight:700; margin-top:6px; letter-spacing:0.1em;">FINAL
+                                SCORE</span>
+                        </div>
+
+                        <!-- Away Team Block -->
+                        <div style="display:flex; flex-direction:column; gap:0.5rem; text-align:right;">
+                            <label
+                                style="font-size:0.8rem; font-weight:700; color:#3b82f6; text-transform:uppercase;">Away
+                                Team</label>
+                            <input type="text" id="resAwayTeam" class="form-control" placeholder="e.g. KCCA FC"
+                                style="background:#111e36; color:white; font-size:1.1rem; font-weight:700; padding:0.8rem; border:1px solid rgba(255,255,255,0.15); text-align:right;"
+                                required>
+                            <div
+                                style="display:flex; align-items:center; justify-content:flex-end; gap:0.5rem; margin-top:0.25rem;">
+                                <span style="font-size:0.8rem; color:var(--text-muted);">Goals:</span>
+                                <input type="number" id="resAwayScore" class="form-control" min="0" value="0" required
+                                    style="width:70px; text-align:center; font-size:1.3rem; font-weight:800; background:#091224; color:#3b82f6; border:1px solid #3b82f6; padding:0.4rem;">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div style="display:flex; justify-content:flex-end;">
+                        <button type="submit" class="btn btn-primary"
+                            style="background:linear-gradient(135deg, #facc15, #ca8a04); color:var(--bg-main); font-weight:800; padding:0.9rem 2rem; font-size:1rem; border-radius:var(--radius-md); box-shadow:0 4px 15px rgba(250,204,21,0.3); border:none; cursor:pointer;">
+                            <i class="fa-solid fa-bolt" style="margin-right:8px;"></i> Save Result & Recalculate
+                            Standings
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- List of recorded results -->
+            <div
+                style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:1.5rem;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
+                    <h3
+                        style="font-size:1.1rem; color:var(--text-secondary); margin:0; display:flex; align-items:center; gap:8px;">
+                        <i class="fa-solid fa-clock-rotate-left" style="color:var(--accent-primary);"></i> Recorded
+                        Results Log
+                    </h3>
+                    <span style="font-size:0.8rem; color:var(--text-muted);" id="resultsCountBadge">0 matches</span>
+                </div>
+                <div id="resultsLogContainer">
+                    <p style="color:var(--text-muted); font-size:0.9rem;">No match results logged yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ TAB: MATCHES ============ -->
+        <div id="tab-panel-matches" style="display:none;">
+            <div
+                style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:1.5rem; margin-bottom:2rem;">
+                <h3 style="font-size:1.2rem; margin-bottom:1rem; color:var(--accent-primary);"><i
+                        class="fa-solid fa-calendar-plus" style="margin-right:8px;"></i>Create / Edit Match Fixture</h3>
+
+                <form id="matchManagerForm" onsubmit="saveMatchFixture(event)">
+                    <input type="hidden" id="matchEditId" value="">
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:1rem; margin-bottom:1rem;">
+                        <div class="form-group">
+                            <label>Competition</label>
+                            <select id="matchComp" class="form-control" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Kickoff Time (Local EAT / Stored UTC)</label>
+                            <input type="datetime-local" id="matchKickoff" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Match Status</label>
+                            <select id="matchStatus" class="form-control">
+                                <option value="Scheduled">Scheduled (Upcoming)</option>
+                                <option value="LIVE">LIVE (In Progress)</option>
+                                <option value="FT">Finished (FT)</option>
+                                <option value="Postponed">Postponed</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div
+                        style="display:grid; grid-template-columns: 1fr 90px 90px 1fr; gap:1rem; align-items:end; margin-bottom:1.5rem;">
+                        <div class="form-group" style="margin:0;">
+                            <label>Home Team</label>
+                            <input type="text" id="matchHomeTeamSelect" list="allTeamsDatalist" class="form-control"
+                                placeholder="Select or type Home Team..." required>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label style="text-align:center; display:block;">Home Score</label>
+                            <input type="number" id="matchHomeScoreInput" class="form-control" min="0" value="0"
+                                style="text-align:center;">
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label style="text-align:center; display:block;">Away Score</label>
+                            <input type="number" id="matchAwayScoreInput" class="form-control" min="0" value="0"
+                                style="text-align:center;">
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label>Away Team</label>
+                            <input type="text" id="matchAwayTeamSelect" list="allTeamsDatalist" class="form-control"
+                                placeholder="Select or type Away Team..." required>
+                        </div>
+                    </div>
+                    <datalist id="allTeamsDatalist"></datalist>
+
+                    <div style="display:flex; gap:1rem;">
+                        <button type="submit" class="btn btn-primary" id="saveMatchBtn"><i
+                                class="fa-solid fa-floppy-disk" style="margin-right:6px;"></i>Save Match</button>
+                        <button type="button" class="btn btn-dark" onclick="resetMatchForm()"><i
+                                class="fa-solid fa-rotate-left" style="margin-right:6px;"></i>Cancel / Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Matches Table -->
+            <div
+                style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:1.5rem;">
+                <h3 style="font-size:1.1rem; margin-bottom:1rem; color:var(--text-secondary);"><i
+                        class="fa-solid fa-list" style="margin-right:8px;"></i>All Matches Fixtures List</h3>
+                <div id="matchesTableContainer">
+                    <p style="color:var(--text-muted); font-size:0.9rem;">Loading matches...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ TAB: TEAMS ============ -->
+        <div id="tab-panel-teams" style="display:none;">
+            <div
+                style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:1.5rem; margin-bottom:2rem;">
+                <h3 style="font-size:1.2rem; margin-bottom:1rem; color:var(--accent-primary);"><i
+                        class="fa-solid fa-shield" style="margin-right:8px;"></i>Add / Edit Team</h3>
+
+                <form id="teamForm" onsubmit="saveTeam(event)">
+                    <input type="hidden" id="teamEditId" value="">
+
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; margin-bottom:1.5rem;">
+                        <div class="form-group" style="margin:0;">
+                            <label>Team Name</label>
+                            <input type="text" id="teamName" class="form-control" placeholder="e.g. Express FC"
+                                required>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label>Assigned Competition</label>
+                            <select id="teamCompSelect" class="form-control" required></select>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; gap:1rem;">
+                        <button type="submit" class="btn btn-primary" id="saveTeamBtn"><i class="fa-solid fa-plus"
+                                style="margin-right:6px;"></i>Save Team</button>
+                        <button type="button" class="btn btn-dark" onclick="resetTeamForm()"><i
+                                class="fa-solid fa-xmark" style="margin-right:6px;"></i>Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Teams List -->
+            <div
+                style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:1.5rem;">
+                <h3 style="font-size:1.1rem; margin-bottom:1rem; color:var(--text-secondary);"><i
+                        class="fa-solid fa-list-ul" style="margin-right:8px;"></i>Teams Directory</h3>
+                <div id="teamsTableContainer">
+                    <p style="color:var(--text-muted); font-size:0.9rem;">Loading teams...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ TAB: COMPETITIONS ============ -->
+        <div id="tab-panel-competitions" style="display:none;">
+            <div
+                style="background:#111c38; border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:2rem; margin-bottom:2rem; box-shadow:0 10px 30px rgba(0,0,0,0.4);">
+                <h3
+                    style="font-size:1.3rem; margin-bottom:1.5rem; color:#ffffff; font-weight:800; display:flex; align-items:center; gap:0.5rem; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:0.75rem;">
+                    <i class="fa-solid fa-trophy" style="color:#facc15;"></i>Create / Edit Competition
+                </h3>
+
+                <form id="compForm" onsubmit="saveCompetition(event)">
+                    <input type="hidden" id="compEditId" value="">
+
+                    <div style="display:grid; grid-template-columns: 2fr 1fr 2fr; gap:1.25rem; margin-bottom:1.5rem;">
+                        <div class="form-group" style="margin:0;">
+                            <label>Competition Name</label>
+                            <input type="text" id="compName" class="form-control"
+                                placeholder="e.g. Uganda Premier League" required>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label>Category / Type</label>
+                            <select id="compType" class="form-control">
+                                <option value="League">League Table</option>
+                                <option value="Cup">Tournament / Cup</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label>League Crest Logo (URL or Upload)</label>
+                            <input type="text" id="compLogo" class="form-control"
+                                placeholder="https://... or choose file below">
+                            <input type="file" id="compLogoFile" accept="image/*"
+                                style="margin-top:0.4rem; font-size:0.85rem; color:#cbd5e1;"
+                                onchange="handleCompLogoUpload(this)">
+                        </div>
+                    </div>
+
+                    <div style="display:flex; gap:1rem;">
+                        <button type="submit" id="saveCompBtn" class="admin-tab active"
+                            style="padding:0.75rem 2rem; display:inline-flex; align-items:center; gap:0.5rem; border:none; cursor:pointer;">
+                            <i class="fa-solid fa-plus"></i> Save Competition
+                        </button>
+                        <button type="button" onclick="resetCompForm()" class="admin-tab"
+                            style="background:#1e293b; color:#cbd5e1; border:1px solid #334155; cursor:pointer;">
+                            <i class="fa-solid fa-xmark"></i> Clear
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Competitions Directory -->
+            <div
+                style="background:#111c38; border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:2rem; box-shadow:0 10px 30px rgba(0,0,0,0.4);">
+                <h3
+                    style="font-size:1.2rem; margin-bottom:1.5rem; color:#ffffff; font-weight:800; display:flex; align-items:center; gap:0.5rem;">
+                    <i class="fa-solid fa-layer-group" style="color:#facc15;"></i>Active Competitions Directory
+                </h3>
+                <div id="competitionsTableContainer">
+                    <p style="color:#cbd5e1; font-size:0.95rem;">Loading competitions...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ TAB: STANDINGS ============ -->
+        <div id="tab-panel-standings" style="display:none;">
+            <div
+                style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:1.5rem; margin-bottom:2rem;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
+                    <h3 style="font-size:1.2rem; color:var(--accent-primary); margin:0;"><i class="fa-solid fa-table"
+                            style="margin-right:8px;"></i>League Standings (Auto & Manual Override)</h3>
+                    <button class="btn btn-primary" onclick="recalculateStandingsEngine(); renderStandingsAdminTab();"
+                        style="font-size:0.85rem;"><i class="fa-solid fa-arrows-rotate"
+                            style="margin-right:6px;"></i>Auto-Recalculate All Standings</button>
+                </div>
+
+                <div class="form-group" style="max-width:300px; margin-bottom:1.5rem;">
+                    <label>Filter Competition</label>
+                    <select id="standingsCompFilter" class="form-control" onchange="renderStandingsAdminTab()"></select>
+                </div>
+
+                <div id="adminStandingsContainer">
+                    <p style="color:var(--text-muted); font-size:0.9rem;">Loading standings...</p>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="eventTags">Tags (Press Enter to add)</label>
-                <div id="tagWrapper"
-                    style="border: 1px solid var(--border-color); padding: 0.5rem; border-radius: var(--radius-sm); background: #f9fafb; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
-                    <input type="text" id="tagInput" placeholder="Add tag..."
-                        style="border: none; background: transparent; outline: none; flex: 1; min-width: 100px;">
+            <!-- Manual Override Form Modal Card -->
+            <div
+                style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:1.5rem;">
+                <h3 style="font-size:1.1rem; margin-bottom:1rem; color:var(--text-secondary);"><i
+                        class="fa-solid fa-pen-to-square" style="margin-right:8px;"></i>Manual Team Stats Override</h3>
+
+                <form id="standingsOverrideForm" onsubmit="saveStandingsOverride(event)">
+                    <div
+                        style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; gap:0.75rem; align-items:end; margin-bottom:1rem;">
+                        <div class="form-group" style="margin:0;">
+                            <label>Team</label>
+                            <input type="text" id="ovTeamName" class="form-control" readonly
+                                style="background:#091224;">
+                        </div>
+                        <div class="form-group" style="margin:0;"><label
+                                style="text-align:center;display:block;">P</label><input type="number" id="ovP"
+                                class="form-control" required style="text-align:center;"></div>
+                        <div class="form-group" style="margin:0;"><label
+                                style="text-align:center;display:block;">W</label><input type="number" id="ovW"
+                                class="form-control" required style="text-align:center;"></div>
+                        <div class="form-group" style="margin:0;"><label
+                                style="text-align:center;display:block;">D</label><input type="number" id="ovD"
+                                class="form-control" required style="text-align:center;"></div>
+                        <div class="form-group" style="margin:0;"><label
+                                style="text-align:center;display:block;">L</label><input type="number" id="ovL"
+                                class="form-control" required style="text-align:center;"></div>
+                        <div class="form-group" style="margin:0;"><label
+                                style="text-align:center;display:block;">GF</label><input type="number" id="ovGF"
+                                class="form-control" required style="text-align:center;"></div>
+                        <div class="form-group" style="margin:0;"><label
+                                style="text-align:center;display:block;">GA</label><input type="number" id="ovGA"
+                                class="form-control" required style="text-align:center;"></div>
+                        <div class="form-group" style="margin:0;"><label
+                                style="text-align:center;display:block;">Pts</label><input type="number" id="ovPts"
+                                class="form-control" required
+                                style="text-align:center;font-weight:700;color:var(--accent-primary);"></div>
+                    </div>
+                    <div style="display:flex; gap:1rem;">
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"
+                                style="margin-right:6px;"></i>Save Override</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ============ TAB: SETTINGS ============ -->
+        <div id="tab-panel-settings" style="display:none;">
+            <div
+                style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:1.5rem; margin-bottom:2rem;">
+                <h3 style="font-size:1.2rem; margin-bottom:1rem; color:var(--accent-primary);"><i
+                        class="fa-solid fa-sliders" style="margin-right:8px;"></i>System & Database Sync Settings</h3>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
+                    <div>
+                        <h4 style="font-size:1rem; color:var(--text-secondary); margin-bottom:0.75rem;">Backend API
+                            Connection</h4>
+                        <div class="form-group">
+                            <label>Backend Endpoint</label>
+                            <input type="text" class="form-control"
+                                value="https://massavusports-backend-api.onrender.com/api" readonly
+                                style="background:#091224;">
+                        </div>
+                        <div class="form-group">
+                            <label>Admin Authentication Status</label>
+                            <input type="text" class="form-control" id="authStatusInput" value="Authenticated" readonly
+                                style="background:#091224; color:#22c55e;">
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 style="font-size:1rem; color:var(--text-secondary); margin-bottom:0.75rem;">Data Management
+                        </h4>
+                        <p style="color:var(--text-muted); font-size:0.85rem;">Export persistent state or reset to
+                            default mock seed data.</p>
+                        <div style="display:flex; flex-direction:column; gap:0.75rem;">
+                            <button type="button" class="btn btn-primary" onclick="exportAdminData()"><i
+                                    class="fa-solid fa-download" style="margin-right:6px;"></i>Export System JSON
+                                Backup</button>
+                            <button type="button" class="btn btn-dark" onclick="resetToSeedData()"
+                                style="color:#ef4444; border-color:rgba(239,68,68,0.3);"><i
+                                    class="fa-solid fa-trash-can" style="margin-right:6px;"></i>Reset System Data to
+                                Seed Defaults</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label for="eventLocation">Location</label>
-                <input type="text" id="eventLocation" class="form-control" placeholder="Stadium or Venue Name">
-            </div>
-
-            <div class="form-group">
-                <label for="eventContent">Event Details & Description</label>
-                <textarea id="eventContent" class="form-control"
-                    placeholder="Describe the event format, teams involved, ticket details, etc..." required></textarea>
-            </div>
-
-            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"
-                        style="margin-right: 0.5rem;"></i> Publish Event</button>
-                <button type="button" class="btn btn-dark"><i class="fa-solid fa-floppy-disk"
-                        style="margin-right: 0.5rem;"></i> Save as Draft</button>
-            </div>
-        </form>
+        </div>
     </main>
 
     <script>
-        const API_BASE = 'https://massavusports-backend-api.onrender.com/api';
-        const token = sessionStorage.getItem('adminToken');
-        const uploadArea = document.querySelector('.upload-area');
-
-        // Detect edit mode from URL ?id=
-        const urlParams = new URLSearchParams(window.location.search);
-        const editPostId = urlParams.get('id');
-        let isEditMode = !!editPostId;
-
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            sessionStorage.removeItem('adminToken');
-            window.location.replace('admin-login.html');
-        });
-
-        // Bind upload area click (always use fresh DOM lookup for fileUpload)
-        uploadArea.addEventListener('click', () => {
-            const fu = document.getElementById('fileUpload');
-            if (fu) fu.click();
-        });
-        uploadArea.addEventListener('change', (e) => {
-            if (e.target && e.target.id === 'fileUpload' && e.target.files.length > 0) {
-                const p = uploadArea.querySelector('p');
-                if (p) p.textContent = e.target.files[0].name;
+        // ============================================================
+        //  EVENTS & UPCOMING FIXTURES MANAGER
+        // ============================================================
+        const DEFAULT_EVENTS = [
+            {
+                id: 501,
+                title: 'Kampala Derby: Express FC vs KCCA FC',
+                category: 'Uganda Premier League',
+                date: '2026-07-26T16:00',
+                homeTeam: 'Express FC',
+                awayTeam: 'KCCA FC',
+                location: 'Wankulukuku Stadium',
+                image: 'https://media.api-sports.io/football/leagues/332.png',
+                content: 'Major derby fixture taking place at Wankulukuku. High anticipation for league leadership contention.'
             }
-        }, true);
+        ];
 
-        // Tag handling logic
+        function getStoredEvents() {
+            const raw = localStorage.getItem('massavu_events');
+            return raw ? JSON.parse(raw) : DEFAULT_EVENTS;
+        }
+
+        function handleEventImageUpload(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                document.getElementById('uploadFileName').textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('eventImageUrl').value = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function saveEventPost(e) {
+            e.preventDefault();
+            const editId = document.getElementById('eventEditId').value;
+            const title = document.getElementById('eventTitle').value.trim();
+            const category = document.getElementById('eventCategory').value;
+            const dateStr = document.getElementById('eventDate').value;
+            const homeTeam = document.getElementById('eventHomeTeam').value;
+            const awayTeam = document.getElementById('eventAwayTeam').value;
+            const location = document.getElementById('eventLocation').value.trim();
+            const image = document.getElementById('eventImageUrl').value.trim();
+            const content = document.getElementById('eventContent').value.trim();
+
+            let events = getStoredEvents();
+            let eventId = editId ? parseInt(editId, 10) : Date.now();
+
+            const eventData = {
+                id: eventId,
+                title,
+                category,
+                date: dateStr,
+                homeTeam,
+                awayTeam,
+                location,
+                image,
+                content,
+                timestamp: Date.now()
+            };
+
+            if (editId) {
+                events = events.map(ev => ev.id == editId ? eventData : ev);
+            } else {
+                events.unshift(eventData);
+            }
+            localStorage.setItem('massavu_events', JSON.stringify(events));
+
+            // Also auto-sync as an Upcoming Fixture if teams and date are present
+            if (homeTeam && awayTeam && dateStr) {
+                let matches = getStoredMatches();
+                const fixtureId = `evt_${eventId}`;
+                const kickoffUtc = new Date(dateStr).toISOString();
+                const matchDate = dateStr.split('T')[0];
+
+                const fixtureObj = {
+                    id: fixtureId,
+                    competition: category || 'Uganda Premier League',
+                    date: matchDate,
+                    kickoffUtc,
+                    status: 'Scheduled',
+                    homeTeam,
+                    awayTeam,
+                    homeScore: 0,
+                    awayScore: 0,
+                    venue: location || 'Stadium'
+                };
+
+                const existingIdx = matches.findIndex(m => m.id == fixtureId || (m.homeTeam === homeTeam && m.awayTeam === awayTeam && m.date === matchDate));
+                if (existingIdx >= 0) {
+                    matches[existingIdx] = { ...matches[existingIdx], ...fixtureObj };
+                } else {
+                    matches.unshift(fixtureObj);
+                }
+                localStorage.setItem('massavu_match_results', JSON.stringify(matches));
+            }
+
+            alert(`Event & Fixture "${title}" published and synchronized!`);
+            resetEventForm();
+            renderEventsTable();
+        }
+
+        function resetEventForm() {
+            document.getElementById('postForm').reset();
+            document.getElementById('eventEditId').value = '';
+            document.getElementById('eventImageUrl').value = '';
+            document.getElementById('uploadFileName').textContent = 'PNG, JPG up to 5MB';
+            const btn = document.getElementById('saveEventBtn');
+            if (btn) btn.innerHTML = `<i class="fa-solid fa-paper-plane"></i> Publish Event &amp; Fixture`;
+        }
+
+        window.editEventPost = (id) => {
+            const events = getStoredEvents();
+            const ev = events.find(x => x.id == id);
+            if (!ev) return;
+            document.getElementById('eventEditId').value = ev.id;
+            document.getElementById('eventTitle').value = ev.title || '';
+            document.getElementById('eventCategory').value = ev.category || '';
+            document.getElementById('eventDate').value = ev.date || '';
+            document.getElementById('eventHomeTeam').value = ev.homeTeam || '';
+            document.getElementById('eventAwayTeam').value = ev.awayTeam || '';
+            document.getElementById('eventLocation').value = ev.location || '';
+            document.getElementById('eventImageUrl').value = ev.image || '';
+            document.getElementById('eventContent').value = ev.content || '';
+            const btn = document.getElementById('saveEventBtn');
+            if (btn) btn.innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Update Event #${ev.id}`;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.deleteEventPost = (id) => {
+            if (!confirm('Delete this published event and upcoming fixture?')) return;
+            let events = getStoredEvents().filter(x => x.id != id);
+            localStorage.setItem('massavu_events', JSON.stringify(events));
+
+            let matches = getStoredMatches().filter(m => m.id != `evt_${id}`);
+            localStorage.setItem('massavu_match_results', JSON.stringify(matches));
+
+            renderEventsTable();
+        };
+
+        function renderEventsTable() {
+            const container = document.getElementById('eventsTableContainer');
+            if (!container) return;
+            const events = getStoredEvents();
+            if (events.length === 0) {
+                container.innerHTML = `<p style="color:#cbd5e1; font-size:0.95rem; text-align:center; padding:2rem 0;">No published events or upcoming fixtures yet.</p>`;
+                return;
+            }
+            let html = `<table style="width:100%; border-collapse:separate; border-spacing:0; font-size:0.95rem; border-radius:10px; overflow:hidden; border:1px solid #1e293b;">
+                <thead><tr style="background:#0a1124; border-bottom:2px solid #1e293b; text-align:left; color:#facc15; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.05em;">
+                    <th style="padding:12px 14px;">Banner</th>
+                    <th style="padding:12px 14px;">Event Title &amp; Teams</th>
+                    <th style="padding:12px 14px;">Competition</th>
+                    <th style="padding:12px 14px;">Date / Time</th>
+                    <th style="padding:12px 14px; text-align:center;">Action</th>
+                </tr></thead><tbody>`;
+            events.forEach(ev => {
+                const imgTag = ev.image ? `<img src="${ev.image}" style="height:36px; width:48px; object-fit:cover; border-radius:4px;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';"><i class="fa-solid fa-newspaper" style="display:none; color:#facc15; font-size:1.2rem;"></i>` : `<i class="fa-solid fa-newspaper" style="color:#facc15; font-size:1.2rem;"></i>`;
+                const dateDisplay = ev.date ? new Date(ev.date).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : 'N/A';
+                const matchVs = (ev.homeTeam && ev.awayTeam) ? `<span style="font-size:0.8rem; color:#facc15; display:block; font-weight:700;">${ev.homeTeam} vs ${ev.awayTeam}</span>` : '';
+                html += `<tr style="border-bottom:1px solid #1e293b; background:#111c38;">
+                    <td style="padding:12px 14px;">${imgTag}</td>
+                    <td style="padding:12px 14px;">
+                        <div style="font-weight:700; color:#ffffff;">${ev.title}</div>
+                        ${matchVs}
+                    </td>
+                    <td style="padding:12px 14px;"><span style="background:rgba(250,204,21,0.2); color:#facc15; border:1px solid rgba(250,204,21,0.4); padding:4px 10px; border-radius:6px; font-size:0.8rem; font-weight:800;">${ev.category || 'Event'}</span></td>
+                    <td style="padding:12px 14px; color:#e2e8f0; font-weight:600;">${dateDisplay}</td>
+                    <td style="padding:12px 14px; text-align:center;">
+                        <button onclick="editEventPost(${ev.id})" style="background:rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:700; margin-right:4px;"><i class="fa-solid fa-pen"></i> Edit</button>
+                        <button onclick="deleteEventPost(${ev.id})" style="background:rgba(239,68,68,0.2); color:#f87171; border:1px solid rgba(239,68,68,0.4); padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:700;"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </td>
+                </tr>`;
+            });
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
+        const urlParams = new URLSearchParams(window.location.search);
+        const defaultTab = urlParams.get('tab') || 'events';
+
+        // ---- Tab switching ----
+        function switchAdminTab(tab) {
+            const tabsList = ['events', 'matches', 'teams', 'competitions', 'standings', 'lineups', 'results', 'settings'];
+            tabsList.forEach(t => {
+                const panel = document.getElementById(`tab-panel-${t}`);
+                if (panel) panel.style.display = (t === tab || (t === 'results' && tab === 'standings')) ? 'block' : 'none';
+                const tabBtn = document.getElementById(`tab-${t}`);
+                if (tabBtn) tabBtn.classList.toggle('active', t === tab);
+                const sideLink = document.getElementById(`side-${t}`);
+                if (sideLink) sideLink.classList.toggle('active', t === tab);
+            });
+
+            const titles = {
+                events: 'Post Event & Articles',
+                matches: 'Manage Match Fixtures & Scores',
+                teams: 'Manage Teams Directory',
+                competitions: 'Manage Competitions & Leagues',
+                standings: 'League Standings & Manual Overrides',
+                lineups: 'Match Lineups & Players',
+                settings: 'System & Data Settings'
+            };
+            document.getElementById('pageTitle').textContent = titles[tab] || 'Admin Panel';
+
+            if (tab === 'events') { populateCompDropdowns(); populateTeamSelects(); renderEventsTable(); }
+            if (tab === 'competitions') renderCompetitionsTable();
+            if (tab === 'teams') { populateCompDropdowns(); renderTeamsTable(); }
+            if (tab === 'matches') { populateCompDropdowns(); populateTeamSelects(); renderMatchesTable(); }
+            if (tab === 'standings') { populateCompDropdowns(); recalculateStandingsEngine(); renderStandingsAdminTab(); }
+            if (tab === 'lineups') { populateLineupMatchSelector(); }
+            if (tab === 'results') renderResultsLog();
+        }
+
+        // ============================================================
+        //  COMPETITIONS MANAGER
+        // ============================================================
+        const DEFAULT_COMPETITIONS = [
+            { id: 1, name: 'Uganda Premier League', type: 'League', logo: 'https://media.api-sports.io/football/leagues/332.png' },
+            { id: 2, name: 'FUFA Big League', type: 'League', logo: 'https://media.api-sports.io/football/leagues/333.png' },
+            { id: 3, name: 'Ntare League', type: 'League', logo: 'assets/images/ntare_league_logo.jpg' },
+            { id: 4, name: 'Chaapa League', type: 'League', logo: 'assets/images/chaapa_league_logo.jpg' },
+            { id: 5, name: 'Kitunga League', type: 'League', logo: 'assets/images/kitunga_league_logo.jpg' }
+        ];
+
+        function getStoredCompetitions() {
+            const raw = localStorage.getItem('massavu_competitions');
+            return raw ? JSON.parse(raw) : DEFAULT_COMPETITIONS;
+        }
+
+        function handleCompLogoUpload(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('compLogo').value = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function saveCompetition(e) {
+            e.preventDefault();
+            const name = document.getElementById('compName').value.trim();
+            const type = document.getElementById('compType').value;
+            const logo = document.getElementById('compLogo').value.trim();
+            const editId = document.getElementById('compEditId').value;
+            let comps = getStoredCompetitions();
+            if (editId) {
+                comps = comps.map(c => c.id == editId ? { ...c, name, type, logo } : c);
+            } else {
+                comps.push({ id: Date.now(), name, type, logo });
+            }
+            localStorage.setItem('massavu_competitions', JSON.stringify(comps));
+            alert(`Competition "${name}" saved successfully!`);
+            resetCompForm();
+            renderCompetitionsTable();
+            populateCompDropdowns();
+        }
+
+        function resetCompForm() {
+            document.getElementById('compForm').reset();
+            document.getElementById('compEditId').value = '';
+            const saveBtn = document.getElementById('saveCompBtn');
+            if (saveBtn) saveBtn.innerHTML = `<i class="fa-solid fa-plus"></i> Save Competition`;
+        }
+
+        window.editCompetition = (id) => {
+            const comps = getStoredCompetitions();
+            const c = comps.find(x => x.id == id);
+            if (!c) return;
+            document.getElementById('compEditId').value = c.id;
+            document.getElementById('compName').value = c.name;
+            document.getElementById('compType').value = c.type;
+            document.getElementById('compLogo').value = c.logo || '';
+            const saveBtn = document.getElementById('saveCompBtn');
+            if (saveBtn) saveBtn.innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Update Competition #${c.id}`;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.deleteCompetition = (id) => {
+            if (!confirm('Delete this competition?')) return;
+            let comps = getStoredCompetitions().filter(c => c.id != id);
+            localStorage.setItem('massavu_competitions', JSON.stringify(comps));
+            renderCompetitionsTable();
+            populateCompDropdowns();
+        };
+
+        function renderCompetitionsTable() {
+            const container = document.getElementById('competitionsTableContainer');
+            if (!container) return;
+            const comps = getStoredCompetitions();
+            if (comps.length === 0) {
+                container.innerHTML = `<p style="color:#cbd5e1; font-size:0.95rem; text-align:center; padding:2rem 0;">No competitions configured yet.</p>`;
+                return;
+            }
+            let html = `<table style="width:100%; border-collapse:separate; border-spacing:0; font-size:0.95rem; border-radius:10px; overflow:hidden; border:1px solid #1e293b;">
+                <thead><tr style="background:#0a1124; border-bottom:2px solid #1e293b; text-align:left; color:#facc15; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.05em;">
+                    <th style="padding:12px 14px;">Crest</th><th style="padding:12px 14px;">Competition Name</th>
+                    <th style="padding:12px 14px;">Category</th><th style="padding:12px 14px; text-align:center;">Action</th>
+                </tr></thead><tbody>`;
+            comps.forEach(c => {
+                const imgTag = c.logo ? `<img src="${c.logo}" style="height:32px; width:32px; object-fit:contain; border-radius:4px; vertical-align:middle;" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';"><i class="fa-solid fa-trophy" style="display:none; color:#facc15; font-size:1.2rem;"></i>` : `<i class="fa-solid fa-trophy" style="color:#facc15; font-size:1.2rem;"></i>`;
+                html += `<tr style="border-bottom:1px solid #1e293b; background:#111c38;">
+                    <td style="padding:12px 14px;">${imgTag}</td>
+                    <td style="padding:12px 14px; font-weight:700; color:#ffffff;">${c.name}</td>
+                    <td style="padding:12px 14px;"><span style="background:rgba(250,204,21,0.2); color:#facc15; border:1px solid rgba(250,204,21,0.4); padding:4px 10px; border-radius:6px; font-size:0.8rem; font-weight:800;">${c.type}</span></td>
+                    <td style="padding:12px 14px; text-align:center;">
+                        <button onclick="editCompetition(${c.id})" style="background:rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:700; margin-right:4px;"><i class="fa-solid fa-pen"></i> Edit</button>
+                        <button onclick="deleteCompetition(${c.id})" style="background:rgba(239,68,68,0.2); color:#f87171; border:1px solid rgba(239,68,68,0.4); padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:700;"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </td>
+                </tr>`;
+            });
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
+
+        // ============================================================
+        //  TEAMS MANAGER (Logo URL removed as requested)
+        // ============================================================
+        const DEFAULT_TEAMS = [
+            { id: 101, name: 'BUL FC', competition: 'Uganda Premier League', logo: '' },
+            { id: 102, name: 'Vipers SC', competition: 'Uganda Premier League', logo: '' },
+            { id: 103, name: 'KCCA FC', competition: 'Uganda Premier League', logo: '' },
+            { id: 104, name: 'SC Villa', competition: 'Uganda Premier League', logo: '' },
+            { id: 105, name: 'Kitara FC', competition: 'Uganda Premier League', logo: '' },
+            { id: 106, name: 'NEC FC', competition: 'Uganda Premier League', logo: '' },
+            { id: 107, name: 'Express FC', competition: 'Uganda Premier League', logo: '' },
+            { id: 108, name: 'URA FC', competition: 'Uganda Premier League', logo: '' },
+            { id: 109, name: 'Mbarara City FC', competition: 'Uganda Premier League', logo: '' },
+            { id: 110, name: 'Lugazi FC', competition: 'Uganda Premier League', logo: '' },
+            { id: 111, name: 'UPDF FC', competition: 'Uganda Premier League', logo: '' },
+            { id: 112, name: 'Calvary FC', competition: 'Uganda Premier League', logo: '' },
+            { id: 113, name: 'Buhimba Saints United FC', competition: 'Uganda Premier League', logo: '' },
+            { id: 114, name: 'Entebbe UPPC FC', competition: 'Uganda Premier League', logo: '' },
+            { id: 115, name: 'Police FC', competition: 'Uganda Premier League', logo: '' },
+            { id: 116, name: 'Maroons FC', competition: 'Uganda Premier League', logo: '' }
+        ];
+
+        function getStoredTeams() {
+            const raw = localStorage.getItem('massavu_teams');
+            return raw ? JSON.parse(raw) : DEFAULT_TEAMS;
+        }
+
+        function saveTeam(e) {
+            e.preventDefault();
+            const name = document.getElementById('teamName').value.trim();
+            const competition = document.getElementById('teamCompSelect').value;
+            const editId = document.getElementById('teamEditId').value;
+            let teams = getStoredTeams();
+            if (editId) {
+                teams = teams.map(t => t.id == editId ? { ...t, name, competition } : t);
+            } else {
+                teams.push({ id: Date.now(), name, competition, logo: '' });
+            }
+            localStorage.setItem('massavu_teams', JSON.stringify(teams));
+            alert(`Team "${name}" saved successfully!`);
+            resetTeamForm();
+            renderTeamsTable();
+            populateTeamSelects();
+        }
+
+        function resetTeamForm() {
+            document.getElementById('teamForm').reset();
+            document.getElementById('teamEditId').value = '';
+            const btn = document.getElementById('saveTeamBtn');
+            if (btn) btn.innerHTML = `<i class="fa-solid fa-plus" style="margin-right:6px;"></i>Save Team`;
+        }
+
+        window.editTeam = (id) => {
+            const teams = getStoredTeams();
+            const t = teams.find(x => x.id == id);
+            if (!t) return;
+            document.getElementById('teamEditId').value = t.id;
+            document.getElementById('teamName').value = t.name;
+            document.getElementById('teamCompSelect').value = t.competition;
+            const btn = document.getElementById('saveTeamBtn');
+            if (btn) btn.innerHTML = `<i class="fa-solid fa-pen-to-square" style="margin-right:6px;"></i>Update Team #${t.id}`;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.deleteTeam = (id) => {
+            if (!confirm('Delete this team?')) return;
+            let teams = getStoredTeams().filter(t => t.id != id);
+            localStorage.setItem('massavu_teams', JSON.stringify(teams));
+            renderTeamsTable();
+            populateTeamSelects();
+        };
+
+        function renderTeamsTable() {
+            const container = document.getElementById('teamsTableContainer');
+            if (!container) return;
+            const teams = getStoredTeams();
+            if (teams.length === 0) {
+                container.innerHTML = `<p style="color:#cbd5e1; font-size:0.95rem; text-align:center; padding:2rem 0;">No teams added yet.</p>`;
+                return;
+            }
+            let html = `<table style="width:100%; border-collapse:separate; border-spacing:0; font-size:0.95rem; border-radius:10px; overflow:hidden; border:1px solid #1e293b;">
+                <thead><tr style="background:#0a1124; border-bottom:2px solid #1e293b; text-align:left; color:#facc15; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.05em;">
+                    <th style="padding:12px 14px;">#</th>
+                    <th style="padding:12px 14px;">Team Name</th>
+                    <th style="padding:12px 14px;">Assigned Competition</th>
+                    <th style="padding:12px 14px; text-align:center;">Action</th>
+                </tr></thead><tbody>`;
+            teams.forEach((t, i) => {
+                html += `<tr style="border-bottom:1px solid #1e293b; background:#111c38;">
+                    <td style="padding:12px 14px; color:#facc15; font-weight:800;">${i + 1}</td>
+                    <td style="padding:12px 14px; font-weight:700; color:#ffffff;">${t.name}</td>
+                    <td style="padding:12px 14px;"><span style="background:rgba(250,204,21,0.2); color:#facc15; border:1px solid rgba(250,204,21,0.4); padding:4px 10px; border-radius:6px; font-size:0.8rem; font-weight:800;">${t.competition}</span></td>
+                    <td style="padding:12px 14px; text-align:center;">
+                        <button onclick="editTeam(${t.id})" style="background:rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:700; margin-right:4px;"><i class="fa-solid fa-pen"></i> Edit</button>
+                        <button onclick="deleteTeam(${t.id})" style="background:rgba(239,68,68,0.2); color:#f87171; border:1px solid rgba(239,68,68,0.4); padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:700;"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </td>
+                </tr>`;
+            });
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
+
+        function populateCompDropdowns() {
+            const comps = getStoredCompetitions();
+            const selects = ['resCompetition', 'matchComp', 'teamCompSelect', 'standingsCompFilter', 'eventCategory'];
+            selects.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                const currentVal = el.value;
+                el.innerHTML = comps.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+                if (currentVal && comps.some(c => c.name === currentVal)) el.value = currentVal;
+            });
+        }
+
+        function populateTeamSelects() {
+            const teams = getStoredTeams();
+            const datalist = document.getElementById('allTeamsDatalist');
+            if (datalist) {
+                datalist.innerHTML = teams.map(t => `<option value="${t.name}">`).join('');
+            }
+            const selects = ['eventHomeTeam', 'eventAwayTeam'];
+            const options = teams.map(t => `<option value="${t.name}">${t.name}</option>`).join('');
+            selects.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                const curr = el.value;
+                el.innerHTML = options;
+                if (curr && teams.some(t => t.name === curr)) el.value = curr;
+            });
+        }
+
+        // ============================================================
+        //  MATCHES MANAGER (UTC Storage & Local EAT Display)
+        // ============================================================
+        function getStoredMatches() {
+            const raw = localStorage.getItem('massavu_match_results');
+            return raw ? JSON.parse(raw) : [];
+        }
+
+        function saveMatchFixture(e) {
+            e.preventDefault();
+            const editId = document.getElementById('matchEditId').value;
+            const competition = document.getElementById('matchComp').value;
+            const kickoffLocal = document.getElementById('matchKickoff').value;
+            const status = document.getElementById('matchStatus').value;
+            const home = document.getElementById('matchHomeTeamSelect').value.trim();
+            const away = document.getElementById('matchAwayTeamSelect').value.trim();
+            const scoreH = parseInt(document.getElementById('matchHomeScoreInput').value, 10) || 0;
+            const scoreA = parseInt(document.getElementById('matchAwayScoreInput').value, 10) || 0;
+
+            if (!home || !away) { alert('Please enter both Home and Away team names.'); return; }
+            if (home.toLowerCase() === away.toLowerCase()) { alert('Home team and Away team must be different.'); return; }
+            if (!kickoffLocal) { alert('Please select a valid kickoff date and time.'); return; }
+
+            const dateObj = new Date(kickoffLocal);
+            const pad = n => String(n).padStart(2, '0');
+            const kickoffUtc = dateObj.toISOString();
+            const dateStr = `${dateObj.getFullYear()}-${pad(dateObj.getMonth() + 1)}-${pad(dateObj.getDate())}`;
+            const timeStr = `${pad(dateObj.getHours())}:${pad(dateObj.getMinutes())}`;
+
+            let matches = getStoredMatches();
+            const matchData = {
+                id: editId ? parseInt(editId, 10) : Date.now(),
+                competition,
+                kickoffUtc,
+                date: dateStr,
+                time: timeStr,
+                home,
+                away,
+                scoreH: status === 'FT' ? scoreH : 0,
+                scoreA: status === 'FT' ? scoreA : 0,
+                status
+            };
+
+            if (editId) {
+                matches = matches.map(m => m.id == editId ? matchData : m);
+            } else {
+                matches.unshift(matchData);
+            }
+
+            localStorage.setItem('massavu_match_results', JSON.stringify(matches));
+            recalculateStandingsEngine();
+            alert(`Fixture "${home} vs ${away}" for ${competition} saved successfully!`);
+            resetMatchForm();
+            renderMatchesTable();
+        }
+
+        function resetMatchForm() {
+            document.getElementById('matchManagerForm').reset();
+            document.getElementById('matchEditId').value = '';
+            const saveBtn = document.getElementById('saveMatchBtn');
+            if (saveBtn) saveBtn.innerHTML = `<i class="fa-solid fa-floppy-disk" style="margin-right:6px;"></i>Save Match`;
+        }
+
+        window.editMatchFixture = (id) => {
+            const matches = getStoredMatches();
+            const m = matches.find(x => x.id == id);
+            if (!m) return;
+            document.getElementById('matchEditId').value = m.id;
+            document.getElementById('matchComp').value = m.competition;
+            document.getElementById('matchStatus').value = m.status;
+            document.getElementById('matchHomeTeamSelect').value = m.home;
+            document.getElementById('matchAwayTeamSelect').value = m.away;
+            document.getElementById('matchHomeScoreInput').value = m.scoreH;
+            document.getElementById('matchAwayScoreInput').value = m.scoreA;
+
+            if (m.kickoffUtc) {
+                const d = new Date(m.kickoffUtc);
+                const pad = n => String(n).padStart(2, '0');
+                const localIso = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+                document.getElementById('matchKickoff').value = localIso;
+            } else if (m.date) {
+                const t = m.time || '16:00';
+                document.getElementById('matchKickoff').value = `${m.date}T${t}`;
+            }
+
+            const saveBtn = document.getElementById('saveMatchBtn');
+            if (saveBtn) saveBtn.innerHTML = `<i class="fa-solid fa-pen-to-square" style="margin-right:6px;"></i>Update Fixture #${m.id}`;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.deleteMatchFixture = (id) => {
+            if (!confirm('Delete this match fixture? Standings will auto-recalculate.')) return;
+            let matches = getStoredMatches().filter(m => m.id != id);
+            localStorage.setItem('massavu_match_results', JSON.stringify(matches));
+            recalculateStandingsEngine();
+            renderMatchesTable();
+        };
+
+        function renderMatchesTable() {
+            const container = document.getElementById('matchesTableContainer');
+            if (!container) return;
+            const matches = getStoredMatches();
+            if (matches.length === 0) {
+                container.innerHTML = `<p style="color:#94a3b8; font-size:0.95rem; text-align:center; padding:2rem 0;">No matches scheduled. Use the form above to add one.</p>`;
+                return;
+            }
+            let html = `<table style="width:100%; border-collapse:separate; border-spacing:0; font-size:0.95rem; margin-top:1rem; border-radius:10px; overflow:hidden; border:1px solid #1e293b;">
+                <thead><tr style="background:#0a1124; border-bottom:2px solid #1e293b; text-align:left; color:#facc15; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.05em;">
+                    <th style="padding:12px 14px;">Kickoff (EAT)</th><th style="padding:12px 14px;">Competition</th>
+                    <th style="padding:12px 14px;">Match</th><th style="padding:12px 14px; text-align:center;">Score</th>
+                    <th style="padding:12px 14px; text-align:center;">Status</th><th style="padding:12px 14px; text-align:center;">Action</th>
+                </tr></thead><tbody>`;
+            matches.forEach(m => {
+                const kickoffDate = m.kickoffUtc ? new Date(m.kickoffUtc) : new Date();
+                const eatFormatted = kickoffDate.toLocaleString('en-GB', { timeZone: 'Africa/Nairobi', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) + ' EAT';
+                const statusColor = m.status === 'FT' ? '#4ade80' : m.status === 'LIVE' ? '#f87171' : '#facc15';
+                const statusBg = m.status === 'FT' ? 'rgba(34,197,94,0.2)' : m.status === 'LIVE' ? 'rgba(239,68,68,0.2)' : 'rgba(250,204,21,0.2)';
+                const statusBorder = m.status === 'FT' ? 'rgba(34,197,94,0.4)' : m.status === 'LIVE' ? 'rgba(239,68,68,0.4)' : 'rgba(250,204,21,0.4)';
+                html += `<tr style="border-bottom:1px solid #1e293b; background:#111c38;">
+                    <td style="padding:12px 14px; color:#cbd5e1; font-size:0.85rem; font-weight:600;">${eatFormatted}</td>
+                    <td style="padding:12px 14px; font-weight:700; color:#facc15;">${m.competition}</td>
+                    <td style="padding:12px 14px; font-weight:700; color:#ffffff;">${m.home} <span style="color:#facc15; margin:0 4px; font-weight:800;">vs</span> ${m.away}</td>
+                    <td style="padding:12px 14px; text-align:center; font-weight:800; color:#ffffff;">${m.status === 'FT' ? `<span style="background:#080e1e; border:1px solid #2a3a5c; padding:4px 10px; border-radius:10px; color:#facc15;">${m.scoreH} - ${m.scoreA}</span>` : '<span style="color:#64748b;">-</span>'}</td>
+                    <td style="padding:12px 14px; text-align:center;"><span style="background:${statusBg}; color:${statusColor}; border:1px solid ${statusBorder}; padding:4px 10px; border-radius:6px; font-size:0.78rem; font-weight:800;">${m.status}</span></td>
+                    <td style="padding:12px 14px; text-align:center;">
+                        <button onclick="editMatchFixture(${m.id})" style="background:rgba(59,130,246,0.2); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:700; margin-right:4px;"><i class="fa-solid fa-pen"></i> Edit</button>
+                        <button onclick="deleteMatchFixture(${m.id})" style="background:rgba(239,68,68,0.2); color:#f87171; border:1px solid rgba(239,68,68,0.4); padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:700;"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </td>
+                </tr>`;
+            });
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
+
+        // ============================================================
+        //  STANDINGS TAB & MANUAL OVERRIDE
+        // ============================================================
+        function renderStandingsAdminTab() {
+            const container = document.getElementById('adminStandingsContainer');
+            if (!container) return;
+            const filterComp = document.getElementById('standingsCompFilter') ? document.getElementById('standingsCompFilter').value : 'Uganda Premier League';
+            const rawAuto = localStorage.getItem('massavu_auto_standings');
+            const autoStandings = rawAuto ? JSON.parse(rawAuto) : {};
+            const teamList = autoStandings[filterComp] || [];
+            if (teamList.length === 0) {
+                container.innerHTML = `<p style="color:var(--text-muted); font-size:0.9rem;">No standings for "${filterComp}". Add finished matches (status FT) to populate automatically.</p>`;
+                return;
+            }
+            let html = `<table style="width:100%; border-collapse:separate; border-spacing:0; font-size:0.95rem; margin-bottom:1.5rem; border-radius:10px; overflow:hidden; border:1px solid #1e293b;">
+                <thead><tr style="background:#0a1124; border-bottom:2px solid #1e293b; text-align:left; color:#facc15; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.05em;">
+                    <th style="padding:12px 10px;">#</th><th style="padding:12px 10px;">Team</th>
+                    <th style="padding:12px 10px;">P</th><th style="padding:12px 10px;">W</th><th style="padding:12px 10px;">D</th><th style="padding:12px 10px;">L</th>
+                    <th style="padding:12px 10px;">GD</th><th style="padding:12px 10px;">Pts</th>
+                    <th style="padding:12px 10px; text-align:center;">Manual Override</th>
+                </tr></thead><tbody>`;
+            teamList.forEach((t, idx) => {
+                const name = typeof t.name === 'string' ? t.name : (t.team ? t.team.name : 'Unknown');
+                html += `<tr style="border-bottom:1px solid #1e293b; background:#111c38;">
+                    <td style="padding:12px 10px; font-weight:800; color:#facc15;">${idx + 1}</td>
+                    <td style="padding:12px 10px; font-weight:700; color:#ffffff;">${name}</td>
+                    <td style="padding:12px 10px; color:#cbd5e1; font-weight:600;">${t.played}</td><td style="padding:12px 10px; color:#cbd5e1; font-weight:600;">${t.won}</td>
+                    <td style="padding:12px 10px; color:#cbd5e1; font-weight:600;">${t.draw}</td><td style="padding:12px 10px; color:#cbd5e1; font-weight:600;">${t.lost}</td>
+                    <td style="padding:12px 10px; color:#cbd5e1; font-weight:600;">${t.gd > 0 ? '+' + t.gd : t.gd}</td>
+                    <td style="padding:12px 10px; font-weight:800; color:#facc15; font-size:1.05rem;">${t.pts}</td>
+                    <td style="padding:12px 10px; text-align:center;">
+                        <button onclick="openStandingsOverrideModal('${name.replace(/'/g, "\\'")}', ${t.played}, ${t.won}, ${t.draw}, ${t.lost}, ${t.gf || 0}, ${t.ga || 0}, ${t.pts})" style="background:rgba(250,204,21,0.2); color:#facc15; border:1px solid rgba(250,204,21,0.4); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.8rem; font-weight:700;"><i class="fa-solid fa-pen-to-square"></i> Override</button>
+                    </td>
+                </tr>`;
+            });
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
+
+        window.openStandingsOverrideModal = (teamName, p, w, d, l, gf, ga, pts) => {
+            document.getElementById('ovTeamName').value = teamName;
+            document.getElementById('ovP').value = p;
+            document.getElementById('ovW').value = w;
+            document.getElementById('ovD').value = d;
+            document.getElementById('ovL').value = l;
+            document.getElementById('ovGF').value = gf;
+            document.getElementById('ovGA').value = ga;
+            document.getElementById('ovPts').value = pts;
+            document.getElementById('standingsOverrideForm').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        function saveStandingsOverride(e) {
+            e.preventDefault();
+            const teamName = document.getElementById('ovTeamName').value;
+            const filterComp = document.getElementById('standingsCompFilter').value;
+            if (!teamName) { alert('Select a team to override first.'); return; }
+            const rawAuto = localStorage.getItem('massavu_auto_standings');
+            let autoStandings = rawAuto ? JSON.parse(rawAuto) : {};
+            if (!autoStandings[filterComp]) autoStandings[filterComp] = [];
+            const p = parseInt(document.getElementById('ovP').value, 10);
+            const w = parseInt(document.getElementById('ovW').value, 10);
+            const d = parseInt(document.getElementById('ovD').value, 10);
+            const l = parseInt(document.getElementById('ovL').value, 10);
+            const gf = parseInt(document.getElementById('ovGF').value, 10);
+            const ga = parseInt(document.getElementById('ovGA').value, 10);
+            const pts = parseInt(document.getElementById('ovPts').value, 10);
+            const teamIndex = autoStandings[filterComp].findIndex(x => (typeof x.name === 'string' ? x.name : x.team.name) === teamName);
+            const updatedObj = { name: teamName, played: p, won: w, draw: d, lost: l, gf, ga, gd: gf - ga, pts };
+            if (teamIndex !== -1) { autoStandings[filterComp][teamIndex] = updatedObj; }
+            else { autoStandings[filterComp].push(updatedObj); }
+            autoStandings[filterComp].sort((a, b) => b.pts - a.pts || b.gd - a.gd);
+            localStorage.setItem('massavu_auto_standings', JSON.stringify(autoStandings));
+            alert(`Override saved for ${teamName}!`);
+            renderStandingsAdminTab();
+        }
+
+        // ============================================================
+        //  SETTINGS: BACKUP & SEED DATA RESET
+        // ============================================================
+        function exportAdminData() {
+            const data = {
+                competitions: getStoredCompetitions(),
+                teams: getStoredTeams(),
+                matches: getStoredMatches(),
+                standings: JSON.parse(localStorage.getItem('massavu_auto_standings') || '{}'),
+                lineups: JSON.parse(localStorage.getItem('massavu_lineups_admin') || '{}')
+            };
+            const jsonStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data, null, 2));
+            const a = document.createElement('a');
+            a.setAttribute("href", jsonStr);
+            a.setAttribute("download", `massavusports_admin_backup_${Date.now()}.json`);
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+
+        function resetToSeedData() {
+            if (!confirm('Reset ALL admin data back to default seeds? This cannot be undone.')) return;
+            ['massavu_competitions', 'massavu_teams', 'massavu_match_results', 'massavu_auto_standings', 'massavu_lineups_admin'].forEach(k => localStorage.removeItem(k));
+            alert('System reset to default seed data.');
+            window.location.reload();
+        }
+
+        // ============================================================
+        // LINEUP EDITOR LOGIC
+        // ============================================================
+        function populateLineupMatchSelector() {
+            const sel = document.getElementById('matchSelector');
+            if (!sel) return;
+            const matches = getStoredMatches();
+            sel.innerHTML = '<option value="">-- Choose a match --</option>';
+            matches.forEach(m => {
+                const kickoffDate = m.kickoffUtc ? new Date(m.kickoffUtc) : new Date();
+                const eatFormatted = kickoffDate.toLocaleString('en-GB', {
+                    timeZone: 'Africa/Nairobi', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
+                }) + ' EAT';
+                const scoreLabel = m.status === 'FT' ? ` (FT ${m.scoreH}-${m.scoreA})` : ` (${m.status})`;
+                sel.innerHTML += `<option value="${m.id}">${m.home} vs ${m.away}${scoreLabel} — ${eatFormatted}</option>`;
+            });
+        }
+
+        function loadMatchLineup(matchId) {
+            const container = document.getElementById('lineup-form-container');
+            if (!matchId) { container.style.display = 'none'; return; }
+            container.style.display = 'block';
+            const meta = getStoredMatches().find(m => String(m.id) === String(matchId));
+            if (meta) {
+                document.getElementById('home-team-label').textContent = meta.home;
+                document.getElementById('away-team-label').textContent = meta.away;
+            }
+            const stored = JSON.parse(localStorage.getItem('massavu_lineups_admin') || '{}');
+            const saved = stored[matchId];
+            if (saved) {
+                populateStartingList('home', saved.home.starting || []);
+                populateStartingList('away', saved.away.starting || []);
+                populateSubsList('home', saved.home.subs || []);
+                populateSubsList('away', saved.away.subs || []);
+                document.getElementById('home-coach').value = saved.home.coach || '';
+                document.getElementById('away-coach').value = saved.away.coach || '';
+                document.getElementById('home-formation').value = saved.home.formation || '4-4-2';
+                document.getElementById('away-formation').value = saved.away.formation || '4-3-3';
+                populateInjuries('home', saved.home.injuries || []);
+                populateInjuries('away', saved.away.injuries || []);
+            } else {
+                ['home', 'away'].forEach(t => {
+                    clearList(t + '-starting-list');
+                    clearList(t + '-subs-list');
+                    clearList(t + '-injuries-list');
+                    document.getElementById(t + '-coach').value = '';
+                });
+            }
+        }
+
+        function clearList(id) { document.getElementById(id).innerHTML = ''; }
+
+        function populateStartingList(team, players) {
+            clearList(team + '-starting-list');
+            players.forEach(p => addPlayerRow(team, 'starting', p));
+        }
+
+        function populateSubsList(team, subs) {
+            clearList(team + '-subs-list');
+            subs.forEach(p => addPlayerRow(team, 'subs', p));
+        }
+
+        function populateInjuries(team, injuries) {
+            clearList(team + '-injuries-list');
+            injuries.forEach(i => addInjuryRow(team, i));
+        }
+
+        function addPlayerRow(team, type, defaults = {}) {
+            const listId = team + '-' + type + '-list';
+            const list = document.getElementById(listId);
+            const row = document.createElement('div');
+            row.className = 'player-row';
+            row.innerHTML = `
+                <input type="number" placeholder="#" class="p-num" value="${defaults.num || ''}" min="1" max="99">
+                <input type="text" placeholder="Player name" class="p-name" value="${defaults.name || ''}">
+                <input type="text" placeholder="Position (e.g. GK)" class="p-pos" value="${defaults.pos || ''}">
+                <button type="button" class="remove-player-btn" onclick="this.parentElement.remove()"><i class="fa-solid fa-xmark"></i></button>
+            `;
+            list.appendChild(row);
+        }
+
+        function addInjuryRow(team, defaults = {}) {
+            const listId = team + '-injuries-list';
+            const list = document.getElementById(listId);
+            const row = document.createElement('div');
+            row.className = 'injury-row';
+            row.innerHTML = `
+                <input type="text" placeholder="Player name" class="i-name" value="${defaults.name || ''}">
+                <input type="text" placeholder="Injury (e.g. Knee — Doubtful)" class="i-status" value="${defaults.status || ''}">
+                <button type="button" class="remove-player-btn" onclick="this.parentElement.remove()"><i class="fa-solid fa-xmark"></i></button>
+            `;
+            list.appendChild(row);
+        }
+
+        function gatherPlayers(listId, isInjury = false) {
+            return [...document.getElementById(listId).querySelectorAll(isInjury ? '.injury-row' : '.player-row')].map(r => {
+                if (isInjury) return { name: r.querySelector('.i-name').value, status: r.querySelector('.i-status').value };
+                return { num: parseInt(r.querySelector('.p-num').value) || 0, name: r.querySelector('.p-name').value, pos: r.querySelector('.p-pos').value };
+            }).filter(p => p.name);
+        }
+
+        function saveLineup() {
+            const matchId = document.getElementById('matchSelector').value;
+            if (!matchId) { alert('Please select a match first.'); return; }
+            const stored = JSON.parse(localStorage.getItem('massavu_lineups_admin') || '{}');
+            stored[matchId] = {
+                home: { formation: document.getElementById('home-formation').value, coach: document.getElementById('home-coach').value, starting: gatherPlayers('home-starting-list'), subs: gatherPlayers('home-subs-list'), injuries: gatherPlayers('home-injuries-list', true) },
+                away: { formation: document.getElementById('away-formation').value, coach: document.getElementById('away-coach').value, starting: gatherPlayers('away-starting-list'), subs: gatherPlayers('away-subs-list'), injuries: gatherPlayers('away-injuries-list', true) }
+            };
+            localStorage.setItem('massavu_lineups_admin', JSON.stringify(stored));
+            alert('Lineup saved! Changes will reflect on the public site immediately.');
+        }
+
+        function clearLineupForm() {
+            ['home', 'away'].forEach(t => {
+                clearList(t + '-starting-list');
+                clearList(t + '-subs-list');
+                clearList(t + '-injuries-list');
+                document.getElementById(t + '-coach').value = '';
+            });
+        }
+
+        // ============================================================
+        // EVENT POST LOGIC
+        // ============================================================
+        const uploadArea = document.querySelector('.upload-area');
+        if (uploadArea) {
+            uploadArea.addEventListener('click', () => { const fu = document.getElementById('fileUpload'); if (fu) fu.click(); });
+            uploadArea.addEventListener('change', (e) => {
+                if (e.target && e.target.id === 'fileUpload' && e.target.files.length > 0) {
+                    const p = uploadArea.querySelector('p'); if (p) p.textContent = e.target.files[0].name;
+                }
+            }, true);
+        }
+
         const tagInput = document.getElementById('tagInput');
         const tagWrapper = document.getElementById('tagWrapper');
         let tags = [];
-
-        tagInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                const tag = tagInput.value.trim();
-                if (tag && !tags.includes(tag)) {
-                    tags.push(tag);
-                    renderTags();
+        if (tagInput) {
+            tagInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const tag = tagInput.value.trim();
+                    if (tag && !tags.includes(tag)) { tags.push(tag); renderTags(); }
+                    tagInput.value = '';
                 }
-                tagInput.value = '';
-            }
-        });
+            });
+        }
 
         function renderTags() {
+            if (!tagWrapper) return;
             const input = document.getElementById('tagInput');
             tagWrapper.innerHTML = '';
             tags.forEach(tag => {
@@ -309,68 +1937,45 @@
                 span.innerHTML = `${tag} <i class="fa-solid fa-xmark" onclick="removeTag('${tag}')"></i>`;
                 tagWrapper.appendChild(span);
             });
-            tagWrapper.appendChild(input);
-            input.focus();
+            if (input) tagWrapper.appendChild(input);
         }
 
-        window.removeTag = (tag) => {
-            tags = tags.filter(t => t !== tag);
-            renderTags();
-        };
+        window.removeTag = (tag) => { tags = tags.filter(t => t !== tag); renderTags(); };
 
-        // Known categories
+        const editPostId = urlParams.get('id');
+        const isEditMode = !!editPostId;
         const KNOWN_CATEGORIES = ['Uganda League', 'Local Tournaments', 'Transfers'];
 
-        // EDIT MODE: load post and pre-fill form
         if (isEditMode) {
-            document.getElementById('pageTitle').textContent = 'Edit Event';
-            document.getElementById('pageSubtitle').textContent = 'Update and republish the post below.';
-            document.querySelector('button[type="submit"]').innerHTML =
-                '<i class="fa-solid fa-paper-plane" style="margin-right:0.5rem;"></i> Update & Republish';
+            const titleEl = document.getElementById('pageTitle');
+            const subtitleEl = document.getElementById('pageSubtitle');
+            if (titleEl) titleEl.textContent = 'Edit Event';
+            if (subtitleEl) subtitleEl.textContent = 'Update and republish the post below.';
+            const submitBtn = document.querySelector('#postForm button[type="submit"]');
+            if (submitBtn) submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane" style="margin-right:0.5rem;"></i>Update &amp; Republish';
 
             async function loadPostForEdit() {
                 try {
                     const res = await fetch(`${API_BASE}/posts/${editPostId}`);
                     const result = await res.json();
                     if (!res.ok) throw new Error(result.message || 'Failed to load post');
-
                     const post = result.data.post;
-
                     document.getElementById('eventTitle').value = post.title || '';
                     document.getElementById('eventContent').value = post.content || '';
-
-                    if (post.createdAt) {
-                        document.getElementById('eventDate').value =
-                            new Date(post.createdAt).toISOString().slice(0, 16);
-                    }
-
+                    if (post.createdAt) document.getElementById('eventDate').value = new Date(post.createdAt).toISOString().slice(0, 16);
                     const postTagNames = post.tags.map(t => t.name);
                     const categoryTag = postTagNames.find(n => KNOWN_CATEGORIES.includes(n)) || '';
-                    const extraTags = postTagNames.filter(n => !KNOWN_CATEGORIES.includes(n));
+                    tags = postTagNames.filter(n => !KNOWN_CATEGORIES.includes(n));
                     document.getElementById('eventCategory').value = categoryTag;
-                    tags = extraTags;
                     if (tags.length > 0) renderTags();
-
-                    // Replace upload area with existing image preview
-                    if (post.featuredImage) {
-                        uploadArea.innerHTML = `
-                            <img src="${post.featuredImage}" alt="Current image"
-                                style="max-height:160px;max-width:100%;border-radius:6px;object-fit:cover;margin-bottom:0.5rem;">
-                            <p style="color:var(--text-muted);font-size:0.85rem;">Upload a new image to replace, or leave empty to keep current.</p>
-                            <input type="file" id="fileUpload" style="display:none;" accept="image/*">
-                        `;
+                    if (post.featuredImage && uploadArea) {
+                        uploadArea.innerHTML = `<img src="${post.featuredImage}" alt="current" style="max-height:160px;max-width:100%;border-radius:6px;object-fit:cover;margin-bottom:0.5rem;"><p style="color:var(--text-muted);font-size:0.85rem;">Upload a new image to replace, or leave empty to keep current.</p><input type="file" id="fileUpload" style="display:none;" accept="image/*">`;
                     }
-
-                } catch (err) {
-                    alert('Could not load post for editing: ' + err.message);
-                    window.location.href = 'admin.html';
-                }
+                } catch (err) { alert('Could not load post: ' + err.message); window.location.href = 'admin.html'; }
             }
-
             loadPostForEdit();
         }
 
-        // Helper: Compress Image
         async function compressImage(file) {
             return new Promise((resolve) => {
                 const reader = new FileReader();
@@ -379,8 +1984,7 @@
                     img.onload = () => {
                         const canvas = document.createElement('canvas');
                         let width = img.width, height = img.height;
-                        const MAX_WIDTH = 1200;
-                        if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                        if (width > 1200) { height *= 1200 / width; width = 1200; }
                         canvas.width = width; canvas.height = height;
                         canvas.getContext('2d').drawImage(img, 0, 0, width, height);
                         canvas.toBlob(blob => resolve(new File([blob], file.name, { type: 'image/jpeg' })), 'image/jpeg', 0.7);
@@ -391,65 +1995,148 @@
             });
         }
 
-        // FORM SUBMIT — create (POST) or update (PUT)
-        document.getElementById('postForm').addEventListener('submit', async (e) => {
+        const postFormEl = document.getElementById('postForm');
+        if (postFormEl) {
+            postFormEl.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const submitBtn = e.target.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:.5rem;"></i>' + (isEditMode ? 'Updating...' : 'Publishing...');
+                submitBtn.disabled = true;
+                const title = document.getElementById('eventTitle').value.trim();
+                const content = document.getElementById('eventContent').value.trim();
+                const category = document.getElementById('eventCategory').value;
+                if (!title || !content) { alert('Title and content are required.'); submitBtn.innerHTML = originalBtnText; submitBtn.disabled = false; return; }
+                const fileInput = document.getElementById('fileUpload');
+                let file = fileInput ? fileInput.files[0] : null;
+                if (file && file.type.startsWith('image/')) file = await compressImage(file);
+                const formData = new FormData();
+                formData.append('title', title);
+                formData.append('content', content);
+                formData.append('status', 'published');
+                formData.append('tags', JSON.stringify([category, ...tags].filter(t => t)));
+                if (file) formData.append('featuredImage', file);
+                try {
+                    const url = isEditMode ? `${API_BASE}/posts/${editPostId}` : `${API_BASE}/posts`;
+                    const response = await fetch(url, { method: isEditMode ? 'PUT' : 'POST', headers: { 'Authorization': `Bearer ${token}` }, body: formData });
+                    const data = await response.json();
+                    if (response.ok) { alert(isEditMode ? 'Event updated!' : 'Event posted!'); window.location.href = 'admin.html'; }
+                    else { alert('Error: ' + (data.message || 'Failed to save')); submitBtn.innerHTML = originalBtnText; submitBtn.disabled = false; }
+                } catch (err) { alert('An error occurred. Check that the backend is running.'); submitBtn.innerHTML = originalBtnText; submitBtn.disabled = false; }
+            });
+        }
+
+        // ============================================================
+        // RESULTS TAB (legacy scoreboard entry form)
+        // ============================================================
+        function saveMatchResult(e) {
             e.preventDefault();
-            const submitBtn = e.target.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right:0.5rem;"></i> ' +
-                (isEditMode ? 'Updating...' : 'Compressing & Publishing...');
-            submitBtn.disabled = true;
+            const competition = document.getElementById('resCompetition').value;
+            const date = document.getElementById('resDate').value;
+            const home = document.getElementById('resHomeTeam').value.trim();
+            const away = document.getElementById('resAwayTeam').value.trim();
+            const scoreH = parseInt(document.getElementById('resHomeScore').value, 10) || 0;
+            const scoreA = parseInt(document.getElementById('resAwayScore').value, 10) || 0;
+            if (!home || !away) { alert('Please enter both team names.'); return; }
+            if (home.toLowerCase() === away.toLowerCase()) { alert('Home and Away teams cannot be the same.'); return; }
+            const results = getStoredMatches();
+            results.unshift({ id: Date.now(), competition, date, kickoffUtc: date ? new Date(date).toISOString() : new Date().toISOString(), home, away, scoreH, scoreA, status: 'FT' });
+            localStorage.setItem('massavu_match_results', JSON.stringify(results));
+            recalculateStandingsEngine();
+            alert(`Result saved! Standings for "${competition}" recalculated.`);
+            document.getElementById('resHomeTeam').value = '';
+            document.getElementById('resAwayTeam').value = '';
+            document.getElementById('resHomeScore').value = '0';
+            document.getElementById('resAwayScore').value = '0';
+            renderResultsLog();
+        }
 
-            const title = document.getElementById('eventTitle').value.trim();
-            const content = document.getElementById('eventContent').value.trim();
-            const category = document.getElementById('eventCategory').value;
+        window.deleteMatchResult = (id) => {
+            if (!confirm('Delete this result? Standings will auto-recalculate.')) return;
+            let results = getStoredMatches().filter(r => r.id !== id);
+            localStorage.setItem('massavu_match_results', JSON.stringify(results));
+            recalculateStandingsEngine();
+            renderResultsLog();
+        };
 
-            if (!title || !content) {
-                alert('Title and content are required.');
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.disabled = false;
+        function renderResultsLog() {
+            const container = document.getElementById('resultsLogContainer');
+            const badge = document.getElementById('resultsCountBadge');
+            if (!container) return;
+            const results = getStoredMatches().filter(m => m.status === 'FT');
+            if (badge) badge.textContent = `${results.length} ${results.length === 1 ? 'match' : 'matches'} logged`;
+            if (results.length === 0) {
+                container.innerHTML = `<p style="color:var(--text-muted);font-size:0.9rem;text-align:center;padding:2rem 0;">No match results logged yet.</p>`;
                 return;
             }
+            let html = `<table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+                <thead><tr style="border-bottom:2px solid var(--border-color);text-align:left;color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;">
+                    <th style="padding:10px;">Date</th><th style="padding:10px;">Competition</th>
+                    <th style="padding:10px;">Match</th><th style="padding:10px;text-align:center;">Score</th>
+                    <th style="padding:10px;text-align:center;">Action</th>
+                </tr></thead><tbody>`;
+            results.forEach(r => {
+                html += `<tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                    <td style="padding:10px;color:var(--text-muted);font-size:0.85rem;">${r.date || 'N/A'}</td>
+                    <td style="padding:10px;"><span style="background:rgba(250,204,21,0.1);color:var(--accent-primary);padding:3px 8px;border-radius:4px;font-size:0.75rem;font-weight:700;">${r.competition}</span></td>
+                    <td style="padding:10px;font-weight:600;color:var(--text-primary);">${r.home} <span style="color:var(--text-muted);margin:0 4px;">vs</span> ${r.away}</td>
+                    <td style="padding:10px;text-align:center;"><span style="background:#060c18;border:1px solid rgba(255,255,255,0.15);padding:4px 12px;border-radius:12px;font-weight:800;color:white;">${r.scoreH} - ${r.scoreA}</span></td>
+                    <td style="padding:10px;text-align:center;">
+                        <button onclick="deleteMatchResult(${r.id})" style="background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.3);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:0.8rem;font-weight:600;"><i class="fa-solid fa-trash" style="margin-right:4px;"></i>Delete</button>
+                    </td>
+                </tr>`;
+            });
+            html += `</tbody></table>`;
+            container.innerHTML = html;
+        }
 
-            // Always get fileUpload fresh (it may have been replaced by loadPostForEdit)
-            const fileInput = document.getElementById('fileUpload');
-            let file = fileInput ? fileInput.files[0] : null;
-            if (file && file.type.startsWith('image/')) {
-                file = await compressImage(file);
-            }
-
-            const formData = new FormData();
-            formData.append('title', title);
-            formData.append('content', content);
-            formData.append('status', 'published');
-            const finalTags = [category, ...tags].filter(t => t);
-            formData.append('tags', JSON.stringify(finalTags));
-            if (file) formData.append('featuredImage', file);
-
-            try {
-                const url = isEditMode ? `${API_BASE}/posts/${editPostId}` : `${API_BASE}/posts`;
-                const method = isEditMode ? 'PUT' : 'POST';
-                const response = await fetch(url, {
-                    method,
-                    headers: { 'Authorization': `Bearer ${token}` },
-                    body: formData
+        // ============================================================
+        // AUTOMATIC STANDINGS ENGINE
+        // ============================================================
+        function recalculateStandingsEngine() {
+            const allMatches = getStoredMatches().filter(m => m.status === 'FT');
+            const standingsByComp = {};
+            allMatches.forEach(m => {
+                const comp = m.competition;
+                if (!standingsByComp[comp]) standingsByComp[comp] = {};
+                const h = m.home, a = m.away;
+                const sh = parseInt(m.scoreH, 10), sa = parseInt(m.scoreA, 10);
+                if (!standingsByComp[comp][h]) standingsByComp[comp][h] = { name: h, played: 0, won: 0, draw: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
+                if (!standingsByComp[comp][a]) standingsByComp[comp][a] = { name: a, played: 0, won: 0, draw: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
+                const tH = standingsByComp[comp][h];
+                const tA = standingsByComp[comp][a];
+                tH.played++; tA.played++;
+                tH.gf += sh; tH.ga += sa;
+                tA.gf += sa; tA.ga += sh;
+                if (sh > sa) { tH.won++; tH.pts += 3; tA.lost++; }
+                else if (sh < sa) { tA.won++; tA.pts += 3; tH.lost++; }
+                else { tH.draw++; tH.pts += 1; tA.draw++; tA.pts += 1; }
+                tH.gd = tH.gf - tH.ga;
+                tA.gd = tA.gf - tA.ga;
+            });
+            const finalStandings = {};
+            Object.keys(standingsByComp).forEach(comp => {
+                finalStandings[comp] = Object.values(standingsByComp[comp]).sort((a, b) => {
+                    if (b.pts !== a.pts) return b.pts - a.pts;
+                    if (b.gd !== a.gd) return b.gd - a.gd;
+                    return b.gf - a.gf;
                 });
-                const data = await response.json();
-                if (response.ok) {
-                    alert(isEditMode ? 'Event updated and republished!' : 'Event posted successfully!');
-                    window.location.href = 'admin.html';
-                } else {
-                    alert('Error: ' + (data.message || 'Failed to save event'));
-                    submitBtn.innerHTML = originalBtnText;
-                    submitBtn.disabled = false;
-                }
-            } catch (error) {
-                console.error('Error saving event:', error);
-                alert('An error occurred. Please make sure the backend server is running.');
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.disabled = false;
-            }
+            });
+            localStorage.setItem('massavu_auto_standings', JSON.stringify(finalStandings));
+        }
+
+        // ============================================================
+        // PAGE INITIALIZATION
+        // ============================================================
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            sessionStorage.removeItem('adminToken');
+            window.location.replace('admin-login.html');
         });
+
+        populateCompDropdowns();
+        populateTeamSelects();
+        switchAdminTab(defaultTab);
+
     </script>
 </body>
 
