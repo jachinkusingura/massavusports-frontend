@@ -690,8 +690,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             let html = `<table class="standings-table">
                 <thead><tr>
-                    <th style="width:30px;"></th>
-                    <th style="width:32px;">#</th>
+                    <th style="width:28px;"></th>
+                    <th style="width:28px;">#</th>
                     <th class="left-align">Team</th>
                     <th title="Played">P</th><th title="Won">W</th><th title="Drawn">D</th><th title="Lost">L</th>
                     <th title="Goal Difference">GD</th>
@@ -710,8 +710,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 </tr>`;
             });
             html += '</tbody></table>';
-            const wrap = document.createElement('div'); wrap.innerHTML = html;
-            matchesContainer.appendChild(wrap);
+            const scrollWrap = document.createElement('div');
+            scrollWrap.className = 'standings-scroll';
+            scrollWrap.innerHTML = html;
+            matchesContainer.appendChild(scrollWrap);
         }
     }
 
@@ -1056,7 +1058,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             html += '</tbody></table>';
-            const wrap = document.createElement('div'); wrap.style.marginBottom = '2rem';
+            const wrap = document.createElement('div'); wrap.className = 'standings-scroll'; wrap.style.marginBottom = '2rem';
             wrap.innerHTML = html;
             matchesContainer.appendChild(wrap);
         });

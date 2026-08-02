@@ -3,8 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MassavuSports | Football Scores</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0f1c33">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description"
+        content="MassavuSports – Live football scores, fixtures, results and standings for Uganda's top leagues.">
+    <title>MassavuSports | Football Scores & Fixtures</title>
     <!-- Performance: pre-establish connections -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,11 +21,11 @@
 
 <body>
 
+    <!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
     <header class="navbar">
         <div class="container">
             <a href="index.html" class="logo">
-                <img src="assets/images/logo.png" alt="Logo"
-                    style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;">
+                <img src="assets/images/logo.png" alt="MassavuSports Logo">
                 Massavu<span>Sports</span>
             </a>
 
@@ -29,40 +34,54 @@
                 <input type="text" placeholder="Search teams, leagues...">
             </div>
 
-            <nav class="nav-links" id="nav-links">
-                <a href="#fixtures" class="active">Fixtures</a>
-                <a href="#results">Results</a>
-                <a href="#standings">Standings</a>
-                <a href="#lineups">Lineups</a>
+            <nav class="nav-links" id="nav-links" aria-label="Main navigation">
+                <a href="#fixtures" class="active"><i class="fa-solid fa-calendar-days"
+                        style="margin-right:5px;font-size:0.85rem;"></i>Fixtures</a>
+                <a href="#results"><i class="fa-solid fa-flag-checkered"
+                        style="margin-right:5px;font-size:0.85rem;"></i>Results</a>
+                <a href="#standings"><i class="fa-solid fa-table-list"
+                        style="margin-right:5px;font-size:0.85rem;"></i>Standings</a>
+                <a href="#lineups"><i class="fa-solid fa-users"
+                        style="margin-right:5px;font-size:0.85rem;"></i>Lineups</a>
             </nav>
-            <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
         </div>
     </header>
 
+    <!-- ═══════════════════════ MAIN LAYOUT ═══════════════════════ -->
     <div class="container layout-wrapper">
+
         <!-- LEFT SIDEBAR -->
-        <aside class="sidebar-left">
+        <aside class="sidebar-left" aria-label="Competitions sidebar">
             <div class="sidebar-widget">
                 <h3><i class="fa-solid fa-trophy"></i> Competitions</h3>
                 <ul class="sidebar-list">
-                    <li><a href="#" onclick="openCompetition('Uganda Premier League');return false;"><img
-                                src="https://media.api-sports.io/football/leagues/332.png" alt=""> Uganda Premier
-                            League</a></li>
-                    <li><a href="#" onclick="openCompetition('FUFA Big League');return false;"><img
-                                src="https://media.api-sports.io/football/leagues/333.png" alt=""> FUFA Big League</a>
-                    </li>
-                    <li><a href="#" onclick="openCompetition('Ntare League');return false;"><img
-                                src="assets/images/ntare_league_logo.jpg" alt="Ntare League"
-                                style="width:22px;height:22px;object-fit:cover;border-radius:3px;vertical-align:middle;">
-                            Ntare League</a></li>
-                    <li><a href="#" onclick="openCompetition('Chaapa League');return false;"><img
-                                src="assets/images/chaapa_league_logo.jpg" alt="Chaapa League"
-                                style="width:22px;height:22px;object-fit:cover;border-radius:3px;vertical-align:middle;">
-                            Chaapa League</a></li>
-                    <li><a href="#" onclick="openCompetition('Kitunga League');return false;"><img
-                                src="assets/images/kitunga_league_logo.jpg" alt="Kitunga League"
-                                style="width:22px;height:22px;object-fit:cover;border-radius:3px;vertical-align:middle;">
-                            Kitunga League</a></li>
+                    <li><a href="#" onclick="openCompetition('Uganda Premier League');return false;">
+                            <img src="https://media.api-sports.io/football/leagues/332.png" alt="Uganda Premier League">
+                            Uganda Premier League
+                        </a></li>
+                    <li><a href="#" onclick="openCompetition('FUFA Big League');return false;">
+                            <img src="https://media.api-sports.io/football/leagues/333.png" alt="FUFA Big League">
+                            FUFA Big League
+                        </a></li>
+                    <li><a href="#" onclick="openCompetition('Ntare League');return false;">
+                            <img src="assets/images/ntare_league_logo.jpg" alt="Ntare League"
+                                style="width:20px;height:20px;object-fit:cover;border-radius:3px;">
+                            Ntare League
+                        </a></li>
+                    <li><a href="#" onclick="openCompetition('Chaapa League');return false;">
+                            <img src="assets/images/chaapa_league_logo.jpg" alt="Chaapa League"
+                                style="width:20px;height:20px;object-fit:cover;border-radius:3px;">
+                            Chaapa League
+                        </a></li>
+                    <li><a href="#" onclick="openCompetition('Kitunga League');return false;">
+                            <img src="assets/images/kitunga_league_logo.jpg" alt="Kitunga League"
+                                style="width:20px;height:20px;object-fit:cover;border-radius:3px;">
+                            Kitunga League
+                        </a></li>
                 </ul>
             </div>
 
@@ -70,65 +89,114 @@
                 <h3><i class="fa-solid fa-earth-africa"></i> Regions</h3>
                 <ul class="sidebar-list">
                     <li><a href="#"><i class="fa-solid fa-location-dot"
-                                style="width:20px; text-align:center; color:var(--text-muted)"></i> Eastern</a></li>
+                                style="width:18px;text-align:center;color:var(--text-muted);font-size:0.85rem;"></i>
+                            Eastern</a></li>
                     <li><a href="#"><i class="fa-solid fa-location-dot"
-                                style="width:20px; text-align:center; color:var(--text-muted)"></i> Southern</a></li>
+                                style="width:18px;text-align:center;color:var(--text-muted);font-size:0.85rem;"></i>
+                            Southern</a></li>
                     <li><a href="#"><i class="fa-solid fa-location-dot"
-                                style="width:20px; text-align:center; color:var(--text-muted)"></i> Western </a></li>
+                                style="width:18px;text-align:center;color:var(--text-muted);font-size:0.85rem;"></i>
+                            Western</a></li>
                     <li><a href="#"><i class="fa-solid fa-location-dot"
-                                style="width:20px; text-align:center; color:var(--text-muted)"></i> Northern</a></li>
+                                style="width:18px;text-align:center;color:var(--text-muted);font-size:0.85rem;"></i>
+                            Northern</a></li>
                 </ul>
             </div>
 
             <div class="sidebar-widget">
-                <h3><i class="fa-solid fa-star"></i> Popular Competitions</h3>
+                <h3><i class="fa-solid fa-star"></i> Popular</h3>
                 <ul class="sidebar-list">
-                    <li><a href="#" onclick="openCompetition('Ntare League');return false;"><img
-                                src="assets/images/ntare_league_logo.jpg" alt="Ntare League"
-                                style="width:22px;height:22px;object-fit:cover;border-radius:3px;vertical-align:middle;">
-                            Ntare League</a></li>
-                    <li><a href="#" onclick="openCompetition('Chaapa League');return false;"><img
-                                src="assets/images/chaapa_league_logo.jpg" alt="Chaapa League"
-                                style="width:22px;height:22px;object-fit:cover;border-radius:3px;vertical-align:middle;">
-                            Chaapa League</a></li>
-                    <li><a href="#" onclick="openCompetition('Kitunga League');return false;"><img
-                                src="assets/images/kitunga_league_logo.jpg" alt="Kitunga League"
-                                style="width:22px;height:22px;object-fit:cover;border-radius:3px;vertical-align:middle;">
-                            Kitunga League</a></li>
+                    <li><a href="#" onclick="openCompetition('Ntare League');return false;">
+                            <img src="assets/images/ntare_league_logo.jpg" alt="Ntare League"
+                                style="width:20px;height:20px;object-fit:cover;border-radius:3px;">
+                            Ntare League
+                        </a></li>
+                    <li><a href="#" onclick="openCompetition('Chaapa League');return false;">
+                            <img src="assets/images/chaapa_league_logo.jpg" alt="Chaapa League"
+                                style="width:20px;height:20px;object-fit:cover;border-radius:3px;">
+                            Chaapa League
+                        </a></li>
+                    <li><a href="#" onclick="openCompetition('Kitunga League');return false;">
+                            <img src="assets/images/kitunga_league_logo.jpg" alt="Kitunga League"
+                                style="width:20px;height:20px;object-fit:cover;border-radius:3px;">
+                            Kitunga League
+                        </a></li>
                 </ul>
             </div>
         </aside>
 
-        <!-- MAIN MATCHES CONTENT -->
+        <!-- MAIN CONTENT -->
         <main class="main-content">
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
-                <h1 class="section-title" id="main-view-title" style="margin-bottom: 0;">Upcoming Fixtures</h1>
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.5rem;">
+                <h1 class="section-title" id="main-view-title" style="margin-bottom:0;">Upcoming Fixtures</h1>
             </div>
-
             <div id="matches-container">
                 <!-- Matches populated dynamically -->
             </div>
         </main>
     </div>
 
-    <footer style="background-color: var(--bg-dark); color: white; padding: 3rem 0; margin-top: 4rem;">
-        <div class="container" style="text-align: center;">
-            <div class="logo" style="justify-content: center; margin-bottom: 1rem; color: white;">
-                <img src="assets/images/logo.png" alt="Logo"
-                    style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;">
-                Massavu<span>Sports</span>
+    <!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <a href="index.html" class="footer-logo" style="min-height:unset;">
+                    <img src="assets/images/logo.png" alt="MassavuSports Logo">
+                    Massavu<span>Sports</span>
+                </a>
+                <p>The premier platform for Ugandan football scores &amp; event updates.</p>
+                <nav class="footer-links" aria-label="Footer navigation">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="disclaimer.html">Disclaimer</a>
+                </nav>
+                <p class="footer-copy">&copy; 2026 MassavuSports. All rights reserved.</p>
             </div>
-            <p style="color: #9ca3af;">The premier platform for football scores and event updates.</p>
-            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-                <a href="index.html" style="color: #d1d5db;">Home</a>
-                <a href="about.html" style="color: #d1d5db;">About Us</a>
-                <a href="contact.html" style="color: #d1d5db;">Contact Us</a>
-            </div>
-            <p style="color: #6b7280; margin-top: 2rem; font-size: 0.9rem;">&copy; 2026 MassavuSports. All rights
-                reserved.</p>
         </div>
     </footer>
 
+    <!-- ═══════════════════════ MOBILE BOTTOM NAV ═══════════════════════ -->
+    <nav class="mobile-bottom-nav" aria-label="Mobile bottom navigation">
+        <ul>
+            <li>
+                <a href="#fixtures" id="bnav-fixtures" class="active" onclick="mobileNavClick(this,'fixtures')">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>Fixtures</span>
+                </a>
+            </li>
+            <li>
+                <a href="#results" id="bnav-results" onclick="mobileNavClick(this,'results')">
+                    <i class="fa-solid fa-flag-checkered"></i>
+                    <span>Results</span>
+                </a>
+            </li>
+            <li>
+                <a href="#standings" id="bnav-standings" onclick="mobileNavClick(this,'standings')">
+                    <i class="fa-solid fa-table-list"></i>
+                    <span>Standings</span>
+                </a>
+            </li>
+            <li>
+                <a href="#lineups" id="bnav-lineups" onclick="mobileNavClick(this,'lineups')">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Lineups</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <script>
+        // Sync bottom nav active state with main nav
+        function mobileNavClick(el, view) {
+            document.querySelectorAll('.mobile-bottom-nav a').forEach(a => a.classList.remove('active'));
+            el.classList.add('active');
+            // Also trigger the main nav tab click
+            const mainTab = document.querySelector('.nav-links a[href="#' + view + '"]');
+            if (mainTab) mainTab.click();
+        }
+    </script>
     <script src="assets/js/main.js"></script>
 </body>
 
