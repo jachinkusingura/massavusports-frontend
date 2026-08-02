@@ -147,6 +147,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const today = _normDay(new Date());
+        const tomorrow = daysFromToday(1);
+        const nextWeek = daysFromToday(3);
+
         const defaultFixtures = [
             {
                 date: today,
@@ -166,6 +169,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 ]
             },
             {
+                date: tomorrow,
+                league: 'Ntare League',
+                flag: leagueFlags['Ntare League'],
+                matches: [
+                    { id: 1010, home: { id: 'nsherasc', name: 'Nshera SC', logo: '' }, away: { id: 'jabulani', name: 'Jabulani', logo: '' }, scoreH: null, scoreA: null, time: '14:00 EAT', status: 'upcoming' },
+                    { id: 1011, home: { id: 'nturi', name: 'Nturi', logo: '' }, away: { id: 'abashweki', name: 'Abashweki', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
+                ]
+            },
+            {
+                date: nextWeek,
+                league: 'Ntare League',
+                flag: leagueFlags['Ntare League'],
+                matches: [
+                    { id: 1012, home: { id: 'kashorofc', name: 'Kashoro FC', logo: '' }, away: { id: 'enshaza', name: 'Enshaza', logo: '' }, scoreH: null, scoreA: null, time: '15:30 EAT', status: 'upcoming' }
+                ]
+            },
+            {
                 date: today,
                 league: 'Chaapa League',
                 flag: leagueFlags['Chaapa League'],
@@ -174,11 +194,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 ]
             },
             {
-                date: today,
+                date: new Date(2026, 7, 2), // 2nd Aug 2026 – GameWeek 8
                 league: 'Kitunga League',
                 flag: leagueFlags['Kitunga League'],
                 matches: [
-                    { id: 1005, home: { id: 'kitunga', name: 'Kitunga Stars', logo: '' }, away: { id: 'ntareLions', name: 'Ntare Lions', logo: '' }, scoreH: null, scoreA: null, time: '17:00 EAT', status: 'upcoming' }
+                    { id: 1101, home: { id: 'kisyangafc', name: 'Kisyanga FC', logo: '' }, away: { id: 'zonefc', name: 'Zone FC', logo: '' }, scoreH: null, scoreA: null, time: '10:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' },
+                    { id: 1102, home: { id: 'kyashafc', name: 'Kyasha FC', logo: '' }, away: { id: 'omutifc', name: 'Omuti FC', logo: '' }, scoreH: null, scoreA: null, time: '11:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' },
+                    { id: 1103, home: { id: 'kahondafc', name: 'Kahonda FC', logo: '' }, away: { id: 'fcabadet', name: 'FC Abadet', logo: '' }, scoreH: null, scoreA: null, time: '12:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' },
+                    { id: 1104, home: { id: 'mugangafc', name: 'Muganga FC', logo: '' }, away: { id: 'oduduafc', name: 'Odudua FC', logo: '' }, scoreH: null, scoreA: null, time: '13:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' },
+                    { id: 1105, home: { id: 'aboojofc', name: 'Aboojo FC', logo: '' }, away: { id: 'karumafc', name: 'Karuma FC', logo: '' }, scoreH: null, scoreA: null, time: '14:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' },
+                    { id: 1106, home: { id: 'kibeyafc', name: 'Kibeya FC', logo: '' }, away: { id: 'enzazafc', name: 'Enzaza FC', logo: '' }, scoreH: null, scoreA: null, time: '15:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' },
+                    { id: 1107, home: { id: 'kimirankufc', name: 'Kimiranku FC', logo: '' }, away: { id: 'akahurifc', name: 'Akahuri FC', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' }
+                ]
+            },
+            {
+                date: tomorrow,
+                league: 'FUFA Big League',
+                flag: leagueFlags['FUFA Big League'],
+                matches: [
+                    { id: 1006, home: { id: 'paidhablackangels', name: 'Paidha Black Angels', logo: '' }, away: { id: 'onduparakafc', name: 'Onduparaka FC', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
                 ]
             }
         ];
@@ -223,6 +257,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const yesterday = daysFromToday(-1);
+        const twoDaysAgo = daysFromToday(-2);
+
         const defaultResults = [
             {
                 date: yesterday,
@@ -237,7 +273,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 league: 'Ntare League',
                 flag: leagueFlags['Ntare League'],
                 matches: [
-                    { id: 2002, home: { id: 'sckalele', name: 'SC Kalele', logo: '' }, away: { id: 'ensayifc', name: 'Ensayi FC', logo: '' }, scoreH: 1, scoreA: 0, time: 'FT', status: 'finished' }
+                    { id: 2002, home: { id: 'sckalele', name: 'SC Kalele', logo: '' }, away: { id: 'ensayifc', name: 'Ensayi FC', logo: '' }, scoreH: 1, scoreA: 0, time: 'FT', status: 'finished' },
+                    { id: 2003, home: { id: 'tyomujuma', name: 'TY Omujuma', logo: '' }, away: { id: 'nsherasc', name: 'Nshera SC', logo: '' }, scoreH: 2, scoreA: 1, time: 'FT', status: 'finished' }
+                ]
+            },
+            {
+                date: twoDaysAgo,
+                league: 'Ntare League',
+                flag: leagueFlags['Ntare League'],
+                matches: [
+                    { id: 2004, home: { id: 'machandofc', name: 'Machando FC', logo: '' }, away: { id: 'abazibu', name: 'Abazibu', logo: '' }, scoreH: 3, scoreA: 1, time: 'FT', status: 'finished' },
+                    { id: 2005, home: { id: 'nturi', name: 'Nturi', logo: '' }, away: { id: 'kachanchali', name: 'Kachanchali', logo: '' }, scoreH: 0, scoreA: 0, time: 'FT', status: 'finished' }
+                ]
+            },
+            {
+                date: yesterday,
+                league: 'Chaapa League',
+                flag: leagueFlags['Chaapa League'],
+                matches: [
+                    { id: 2006, home: { id: 'bulls96', name: 'Bulls96', logo: '' }, away: { id: 'rugabofc', name: 'Rugabo FC', logo: '' }, scoreH: 3, scoreA: 1, time: 'FT', status: 'finished' }
+                ]
+            },
+            {
+                date: yesterday,
+                league: 'Kitunga League',
+                flag: leagueFlags['Kitunga League'],
+                matches: [
+                    { id: 2007, home: { id: 'kyashafc', name: 'Kyasha FC', logo: '' }, away: { id: 'akahurifc', name: 'Akahuri FC', logo: '' }, scoreH: 2, scoreA: 0, time: 'FT', status: 'finished' }
                 ]
             }
         ];
@@ -473,8 +535,38 @@ document.addEventListener('DOMContentLoaded', () => {
     window.openCompetition = (compName) => {
         activeCompetition = compName;
         activeCompTab = 'fixtures';
-        compFixtureDate = _normDay(new Date());
-        compResultDate = _normDay(new Date());
+        const normComp = compName.toLowerCase().trim();
+
+        const today = _normDay(new Date());
+
+        // Find nearest fixture date if any match exists
+        const allFx = getAllFixtures().filter(lg => lg.league.toLowerCase().trim() === normComp);
+        if (allFx.length > 0) {
+            const todayFx = allFx.find(f => isSameDate(_normDay(f.date), today));
+            if (todayFx) {
+                compFixtureDate = today;
+            } else {
+                const sortedFx = [...allFx].sort((a, b) => Math.abs(_normDay(a.date) - today) - Math.abs(_normDay(b.date) - today));
+                compFixtureDate = _normDay(sortedFx[0].date);
+            }
+        } else {
+            compFixtureDate = today;
+        }
+
+        // Find nearest result date if any match exists
+        const allRes = getAllResults().filter(lg => lg.league.toLowerCase().trim() === normComp);
+        if (allRes.length > 0) {
+            const todayRes = allRes.find(r => isSameDate(_normDay(r.date), today));
+            if (todayRes) {
+                compResultDate = today;
+            } else {
+                const sortedRes = [...allRes].sort((a, b) => Math.abs(_normDay(a.date) - today) - Math.abs(_normDay(b.date) - today));
+                compResultDate = _normDay(sortedRes[0].date);
+            }
+        } else {
+            compResultDate = today;
+        }
+
         currentView = 'competition';
         tabs.forEach(t => t.classList.remove('active'));
         if (sectionTitle) sectionTitle.textContent = compName;
@@ -507,7 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
             : `<i class="fa-solid fa-shield-halved" style="font-size:2rem;color:#facc15;"></i>`;
         const titleEl = document.createElement('div');
         titleEl.innerHTML = `<div style="font-size:1.3rem;font-weight:900;color:#ffffff;">${comp}</div>
-                             <div style="font-size:0.82rem;color:#94a3b8;margin-top:2px;">Competition Overview</div>`;
+                             <div style="font-size:0.82rem;color:#94a3b8;margin-top:2px;">Competition Overview & Statistics</div>`;
         banner.appendChild(titleEl);
         matchesContainer.appendChild(banner);
 
@@ -547,9 +639,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (dayFx.length > 0) {
                 renderMatchGroup(dayFx, '', true);
             } else {
-                matchesContainer.innerHTML += `<div style="text-align:center;padding:3rem 1rem;color:#475569;">
-                    <i class="fa-solid fa-calendar-xmark" style="font-size:2rem;margin-bottom:0.75rem;display:block;"></i>
-                    No fixtures scheduled for this day in <strong style="color:#facc15;">${comp}</strong>.</div>`;
+                matchesContainer.innerHTML += `<div style="text-align:center;padding:1.5rem 1rem 1rem;color:#94a3b8;font-size:0.9rem;">
+                    <i class="fa-solid fa-calendar-xmark" style="font-size:1.5rem;margin-bottom:0.5rem;display:block;color:#facc15;"></i>
+                    No fixtures scheduled specifically for ${compFixtureDate.toDateString()}.</div>`;
+
+                if (allFx.length > 0) {
+                    const fallbackHdr = document.createElement('div');
+                    fallbackHdr.style.cssText = 'font-size:1.05rem;font-weight:800;color:#ffffff;margin:1.5rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(255,255,255,0.1);';
+                    fallbackHdr.innerHTML = `<i class="fa-solid fa-list-ul" style="color:#facc15;margin-right:8px;"></i>All Upcoming Fixtures for ${comp}`;
+                    matchesContainer.appendChild(fallbackHdr);
+                    renderMatchGroup(allFx, '', true);
+                } else {
+                    matchesContainer.innerHTML += `<div style="text-align:center;padding:2rem;color:#475569;">No upcoming fixtures currently registered for <strong style="color:#facc15;">${comp}</strong>.</div>`;
+                }
             }
 
         } else if (activeCompTab === 'results') {
@@ -563,9 +665,19 @@ document.addEventListener('DOMContentLoaded', () => {
             if (dayRes.length > 0) {
                 renderMatchGroup(dayRes, '', false);
             } else {
-                matchesContainer.innerHTML += `<div style="text-align:center;padding:3rem 1rem;color:#475569;">
-                    <i class="fa-solid fa-flag-checkered" style="font-size:2rem;margin-bottom:0.75rem;display:block;"></i>
-                    No results recorded for this day in <strong style="color:#facc15;">${comp}</strong>.</div>`;
+                matchesContainer.innerHTML += `<div style="text-align:center;padding:1.5rem 1rem 1rem;color:#94a3b8;font-size:0.9rem;">
+                    <i class="fa-solid fa-flag-checkered" style="font-size:1.5rem;margin-bottom:0.5rem;display:block;color:#facc15;"></i>
+                    No results recorded specifically for ${compResultDate.toDateString()}.</div>`;
+
+                if (allRes.length > 0) {
+                    const fallbackHdr = document.createElement('div');
+                    fallbackHdr.style.cssText = 'font-size:1.05rem;font-weight:800;color:#ffffff;margin:1.5rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(255,255,255,0.1);';
+                    fallbackHdr.innerHTML = `<i class="fa-solid fa-list-ul" style="color:#facc15;margin-right:8px;"></i>All Recorded Results for ${comp}`;
+                    matchesContainer.appendChild(fallbackHdr);
+                    renderMatchGroup(allRes, '', false);
+                } else {
+                    matchesContainer.innerHTML += `<div style="text-align:center;padding:2rem;color:#475569;">No past results currently registered for <strong style="color:#facc15;">${comp}</strong>.</div>`;
+                }
             }
 
         } else if (activeCompTab === 'table') {
@@ -586,12 +698,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     <th title="Points">Pts</th>
                 </tr></thead><tbody>`;
             leagueData.forEach((s, idx) => {
-                const teamObj = s.team || { name: s.name, logo: '', id: s.name };
+                const teamObj = s.team || { name: s.name, logo: '', id: s.name ? s.name.toLowerCase().replace(/\s+/g, '') : 'team_' + idx };
                 const fc = favorites.includes(teamObj.id) ? 'fav-active' : '';
                 html += `<tr style="${fc ? 'background:rgba(250,204,21,0.05);' : ''}">
                     <td><button class="star-btn ${fc}" onclick="toggleFavorite('${teamObj.id}')"><i class="fa-solid fa-star"></i></button></td>
                     <td><span class="rank">${idx + 1}</span></td>
-                    <td class="left-align"><div class="team-cell">${teamObj.logo ? `<img src="${teamObj.logo}" alt="${teamObj.name}">` : ''}${teamObj.name}</div></td>
+                    <td class="left-align"><div class="team-cell">${teamObj.logo ? `<img src="${teamObj.logo}" alt="${teamObj.name}">` : `<i class="fa-solid fa-shield-halved text-muted" style="margin-right:6px;font-size:0.9rem;"></i>`}${teamObj.name}</div></td>
                     <td>${s.played}</td><td>${s.won}</td><td>${s.draw}</td><td>${s.lost}</td>
                     <td>${s.gd > 0 ? '+' + s.gd : s.gd}</td>
                     <td style="font-weight:700;color:var(--accent-primary);">${s.pts}</td>
