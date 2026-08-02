@@ -493,8 +493,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getLineups() {
-        const stored = localStorage.getItem('massavu_lineups');
-        return stored ? JSON.parse(stored) : defaultLineups();
+        const rawMain = localStorage.getItem('massavu_lineups');
+        const rawAdmin = localStorage.getItem('massavu_lineups_admin');
+        const defaults = defaultLineups();
+        let merged = { ...defaults };
+        if (rawMain) {
+            try { Object.assign(merged, JSON.parse(rawMain)); } catch (e) { }
+        }
+        if (rawAdmin) {
+            try { Object.assign(merged, JSON.parse(rawAdmin)); } catch (e) { }
+        }
+        return merged;
     }
 
     // ================================================================
@@ -1069,7 +1078,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // ================================================================
     function renderLineupsView() {
         const lineups = getLineups();
-        const allMatches = [...mockFixtures, ...mockResults];
 
         // If an active match is selected, show its pitch
         if (activeLineupMatch && lineups[activeLineupMatch]) {
@@ -1083,7 +1091,44 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Otherwise show list of all matches with lineup buttons
+        // Combine mockFixtures/mockResults + dynamic admin stored matches
+        const allMatches = [...mockFixtures, ...mockResults];
+        const adminMatches = getStoredAdminMatches();
+        if (adminMatches.length > 0) {
+            const compGroups = {};
+            adminMatches.forEach(m => {
+                const c = m.competition || 'Uganda Premier League';
+                if (!compGroups[c]) compGroups[c] = [];
+                const homeLogo = m.homeLogo || '';
+                const awayLogo = m.awayLogo || '';
+                compGroups[c].push({
+                    id: m.id,
+                    time: m.time || '16:00',
+                    status: m.status === 'FT' ? 'finished' : 'upcoming',
+                    scoreH: m.scoreH || 0,
+                    scoreA: m.scoreA || 0,
+                    home: { id: m.home, name: m.home, logo: homeLogo },
+                    away: { id: m.away, name: m.away, logo: awayLogo }
+                });
+            });
+            Object.keys(compGroups).forEach(comp => {
+                const existingLg = allMatches.find(l => l.league.toLowerCase().trim() === comp.toLowerCase().trim());
+                if (existingLg) {
+                    compGroups[comp].forEach(m => {
+                        if (!existingLg.matches.some(em => String(em.id) === String(m.id))) {
+                            existingLg.matches.unshift(m);
+                        }
+                    });
+                } else {
+                    allMatches.push({
+                        league: comp,
+                        flag: leagueFlags[comp] || 'https://media.api-sports.io/football/leagues/332.png',
+                        matches: compGroups[comp]
+                    });
+                }
+            });
+        }
+
         const intro = document.createElement('p');
         intro.textContent = 'Select a match to view its lineup:';
         intro.style.cssText = 'color:var(--text-muted);margin-bottom:1rem;';
@@ -1099,16 +1144,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.style.cssText = 'background:var(--bg-card);border-radius:var(--radius-md);padding:1rem 1.25rem;margin-bottom:.5rem;display:flex;align-items:center;justify-content:space-between;';
                 const score = m.status === 'upcoming' ? 'vs' : `${m.scoreH}-${m.scoreA}`;
                 const hasLineup = !!lineups[m.id];
+                const hLogo = m.home.logo ? `<img src="${m.home.logo}" style="width:24px;height:24px;object-fit:contain;" onerror="this.style.display='none'">` : '<i class="fa-solid fa-shield-halved text-muted" style="font-size:1.1rem;margin-right:4px;"></i>';
+                const aLogo = m.away.logo ? `<img src="${m.away.logo}" style="width:24px;height:24px;object-fit:contain;" onerror="this.style.display='none'">` : '<i class="fa-solid fa-shield-halved text-muted" style="font-size:1.1rem;margin-left:4px;"></i>';
+
                 card.innerHTML = `
                     <div style="display:flex;align-items:center;gap:.75rem;">
-                        <img src="${m.home.logo}" style="width:24px;height:24px;object-fit:contain;">
+                        ${hLogo}
                         <span style="font-weight:700;">${m.home.name}</span>
                         <span style="color:var(--accent-primary);font-weight:700;min-width:36px;text-align:center;">${score}</span>
                         <span style="font-weight:700;">${m.away.name}</span>
-                        <img src="${m.away.logo}" style="width:24px;height:24px;object-fit:contain;">
+                        ${aLogo}
                     </div>
-                    <button onclick="showLineupFor(${m.id},'home')" ${!hasLineup ? 'disabled' : ''} style="background:${hasLineup ? 'var(--accent-primary)' : 'rgba(255,255,255,0.1)'};color:${hasLineup ? 'var(--bg-main)' : 'var(--text-muted)'};border:none;border-radius:var(--radius-sm);padding:.4rem .9rem;font-size:.8rem;font-weight:700;cursor:${hasLineup ? 'pointer' : 'not-allowed'};">
-                        ${hasLineup ? '<i class="fa-solid fa-person-running"></i> Lineup' : 'No Lineup'}
+                    <button onclick="showLineupFor('${m.id}','home')" ${!hasLineup ? 'disabled' : ''} style="background:${hasLineup ? 'var(--accent-primary)' : 'rgba(255,255,255,0.1)'};color:${hasLineup ? 'var(--bg-main)' : 'var(--text-muted)'};border:none;border-radius:var(--radius-sm);padding:.4rem .9rem;font-size:.8rem;font-weight:700;cursor:${hasLineup ? 'pointer' : 'not-allowed'};">
+                        ${hasLineup ? '<i class="fa-solid fa-person-running"></i> View Lineup' : 'No Lineup'}
                     </button>
                 `;
                 matchesContainer.appendChild(card);
@@ -1125,14 +1173,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const active = lineupTeamView === 'home' ? home : away;
         const discClass = lineupTeamView === 'home' ? 'team-a-disc' : 'team-b-disc';
 
+        const homeLogoTag = home.team && home.team.logo ? `<img src="${home.team.logo}" style="width:18px;vertical-align:middle;margin-right:4px;">` : '<i class="fa-solid fa-shield-halved" style="margin-right:4px;"></i>';
+        const awayLogoTag = away.team && away.team.logo ? `<img src="${away.team.logo}" style="width:18px;vertical-align:middle;margin-right:4px;">` : '<i class="fa-solid fa-shield-halved" style="margin-right:4px;"></i>';
+
         // Team tabs
         const tabRow = document.createElement('div'); tabRow.className = 'lineup-tabs';
         tabRow.innerHTML = `
             <button class="lineup-tab-btn ${lineupTeamView === 'home' ? 'active' : ''}" onclick="switchLineupTeam('home')">
-                <img src="${home.team.logo}" style="width:18px;vertical-align:middle;margin-right:4px;">${home.team.name}
+                ${homeLogoTag}${home.team ? home.team.name : 'Home Team'}
             </button>
             <button class="lineup-tab-btn ${lineupTeamView === 'away' ? 'active' : ''}" onclick="switchLineupTeam('away')">
-                <img src="${away.team.logo}" style="width:18px;vertical-align:middle;margin-right:4px;">${away.team.name}
+                ${awayLogoTag}${away.team ? away.team.name : 'Away Team'}
             </button>
         `;
         matchesContainer.appendChild(tabRow);
@@ -1141,8 +1192,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const pitchWrap = document.createElement('div'); pitchWrap.className = 'pitch-wrapper';
         pitchWrap.innerHTML = `
             <div class="pitch-header">
-                <span class="${lineupTeamView === 'home' ? 'team-a' : 'team-b'}">${active.team.name}</span>
-                <span style="color:var(--text-muted);font-size:0.8rem;">${active.formation}</span>
+                <span class="${lineupTeamView === 'home' ? 'team-a' : 'team-b'}">${active.team ? active.team.name : 'Team'}</span>
+                <span style="color:var(--text-muted);font-size:0.8rem;">${active.formation || '4-4-2'}</span>
             </div>
             <div class="pitch-surface" id="pitch-surface"></div>
         `;
@@ -1150,12 +1201,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Inject players onto pitch
         const surface = pitchWrap.querySelector('#pitch-surface');
-        active.starting.forEach(p => {
+        const startingPlayers = active.starting || [];
+        startingPlayers.forEach((p, idx) => {
             const node = document.createElement('div');
             node.className = 'player-node';
-            node.style.left = p.x + '%';
-            node.style.top = p.y + '%';
-            node.innerHTML = `<div class="player-disc ${discClass}">${p.num}</div><div class="player-tag">${p.name}</div>`;
+            let posX = p.x !== undefined ? p.x : 50;
+            let posY = p.y !== undefined ? p.y : (lineupTeamView === 'home' ? 90 - (idx * 7) : 10 + (idx * 7));
+            node.style.left = posX + '%';
+            node.style.top = posY + '%';
+            node.innerHTML = `<div class="player-disc ${discClass}">${p.num || (idx + 1)}</div><div class="player-tag">${p.name}</div>`;
             surface.appendChild(node);
         });
 
@@ -1164,19 +1218,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Starting XI
         let xiHtml = `<div class="lineup-info-card"><h4><i class="fa-solid fa-shirt"></i> Starting XI</h4>`;
-        active.starting.forEach(p => {
-            xiHtml += `<div class="lineup-entry"><div><span class="num">${p.num}</span>${p.name}</div></div>`;
+        startingPlayers.forEach((p, idx) => {
+            xiHtml += `<div class="lineup-entry"><div><span class="num">${p.num || (idx + 1)}</span>${p.name}${p.pos ? ` <small style="color:var(--text-muted); font-size:0.75rem;">(${p.pos})</small>` : ''}</div></div>`;
         });
         xiHtml += '</div>';
 
         // Subs + Coach + Injuries
         let metaHtml = `<div class="lineup-info-card">`;
         metaHtml += `<h4><i class="fa-solid fa-user-tie"></i> Coach</h4>`;
-        metaHtml += `<div class="lineup-entry"><span>${active.coach}</span><span class="badge badge-coach">Head Coach</span></div>`;
+        metaHtml += `<div class="lineup-entry"><span>${active.coach || 'Head Coach'}</span><span class="badge badge-coach">Head Coach</span></div>`;
 
         if (active.subs && active.subs.length) {
             metaHtml += `<h4 style="margin-top:1rem;"><i class="fa-solid fa-arrows-rotate"></i> Substitutes</h4>`;
-            active.subs.forEach(s => metaHtml += `<div class="lineup-entry"><div><span class="num">${s.num}</span>${s.name}</div><span class="badge badge-sub">Sub</span></div>`);
+            active.subs.forEach((s, idx) => metaHtml += `<div class="lineup-entry"><div><span class="num">${s.num || (idx + 12)}</span>${s.name}${s.pos ? ` <small style="color:var(--text-muted); font-size:0.75rem;">(${s.pos})</small>` : ''}</div><span class="badge badge-sub">Sub</span></div>`);
         }
 
         if (active.injuries && active.injuries.length) {

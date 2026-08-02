@@ -1781,18 +1781,70 @@
         // ============================================================
         // LINEUP EDITOR LOGIC
         // ============================================================
+        // ============================================================
+        // LINEUP EDITOR LOGIC
+        // ============================================================
+        function computePitchCoordinates(players, formation, isAway = false) {
+            if (!players || !players.length) return [];
+            const layouts = {
+                '4-4-2': [
+                    [50, 90], [15, 72], [38, 72], [62, 72], [85, 72],
+                    [15, 50], [38, 50], [62, 50], [85, 50], [35, 28], [65, 28]
+                ],
+                '4-3-3': [
+                    [50, 90], [15, 72], [38, 72], [62, 72], [85, 72],
+                    [25, 50], [50, 50], [75, 50], [20, 28], [50, 28], [80, 28]
+                ],
+                '3-5-2': [
+                    [50, 90], [25, 75], [50, 75], [75, 75],
+                    [15, 50], [32, 50], [50, 50], [68, 50], [85, 50], [35, 28], [65, 28]
+                ],
+                '4-2-3-1': [
+                    [50, 90], [15, 75], [38, 75], [62, 75], [85, 75],
+                    [35, 58], [65, 58], [20, 42], [50, 42], [80, 42], [50, 25]
+                ],
+                '5-4-1': [
+                    [50, 90], [10, 75], [30, 75], [50, 75], [70, 75], [90, 75],
+                    [18, 50], [39, 50], [61, 50], [82, 50], [50, 25]
+                ]
+            };
+            const template = layouts[formation] || layouts['4-4-2'];
+            return players.map((p, idx) => {
+                const defaultPos = template[idx] || [50, 50];
+                let x = p.x !== undefined ? p.x : defaultPos[0];
+                let y = p.y !== undefined ? p.y : defaultPos[1];
+                if (isAway && p.y === undefined) { y = 100 - y; }
+                return { ...p, x, y };
+            });
+        }
+
         function populateLineupMatchSelector() {
             const sel = document.getElementById('matchSelector');
             if (!sel) return;
             const matches = getStoredMatches();
-            sel.innerHTML = '<option value="">-- Choose a match --</option>';
-            matches.forEach(m => {
+            sel.innerHTML = '<option value="">-- Choose a match fixture --</option>';
+
+            // Seed matches fallback if not already present
+            const seedMatches = [
+                { id: 103, home: 'Express FC', away: 'KCCA FC', status: 'Scheduled', kickoffUtc: '2026-07-26T16:00:00Z' },
+                { id: 104, home: 'URA FC', away: 'Express FC', status: 'FT', scoreH: 1, scoreA: 0, kickoffUtc: '2026-07-25T16:00:00Z' }
+            ];
+
+            const combinedMatches = [...matches];
+            seedMatches.forEach(sm => {
+                if (!combinedMatches.some(m => String(m.id) === String(sm.id))) {
+                    combinedMatches.push(sm);
+                }
+            });
+
+            combinedMatches.forEach(m => {
                 const kickoffDate = m.kickoffUtc ? new Date(m.kickoffUtc) : new Date();
                 const eatFormatted = kickoffDate.toLocaleString('en-GB', {
                     timeZone: 'Africa/Nairobi', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit'
                 }) + ' EAT';
                 const scoreLabel = m.status === 'FT' ? ` (FT ${m.scoreH}-${m.scoreA})` : ` (${m.status})`;
-                sel.innerHTML += `<option value="${m.id}">${m.home} vs ${m.away}${scoreLabel} — ${eatFormatted}</option>`;
+                const compStr = m.competition ? ` [${m.competition}]` : '';
+                sel.innerHTML += `<option value="${m.id}">${m.home} vs ${m.away}${scoreLabel}${compStr} — ${eatFormatted}</option>`;
             });
         }
 
@@ -1800,12 +1852,20 @@
             const container = document.getElementById('lineup-form-container');
             if (!matchId) { container.style.display = 'none'; return; }
             container.style.display = 'block';
-            const meta = getStoredMatches().find(m => String(m.id) === String(matchId));
+
+            const matches = getStoredMatches();
+            let meta = matches.find(m => String(m.id) === String(matchId));
+            if (!meta) {
+                if (String(matchId) === '103') meta = { home: 'Express FC', away: 'KCCA FC' };
+                if (String(matchId) === '104') meta = { home: 'URA FC', away: 'Express FC' };
+            }
+
             if (meta) {
                 document.getElementById('home-team-label').textContent = meta.home;
                 document.getElementById('away-team-label').textContent = meta.away;
             }
-            const stored = JSON.parse(localStorage.getItem('massavu_lineups_admin') || '{}');
+
+            const stored = JSON.parse(localStorage.getItem('massavu_lineups') || localStorage.getItem('massavu_lineups_admin') || '{}');
             const saved = stored[matchId];
             if (saved) {
                 populateStartingList('home', saved.home.starting || []);
@@ -1882,13 +1942,49 @@
         function saveLineup() {
             const matchId = document.getElementById('matchSelector').value;
             if (!matchId) { alert('Please select a match first.'); return; }
-            const stored = JSON.parse(localStorage.getItem('massavu_lineups_admin') || '{}');
-            stored[matchId] = {
-                home: { formation: document.getElementById('home-formation').value, coach: document.getElementById('home-coach').value, starting: gatherPlayers('home-starting-list'), subs: gatherPlayers('home-subs-list'), injuries: gatherPlayers('home-injuries-list', true) },
-                away: { formation: document.getElementById('away-formation').value, coach: document.getElementById('away-coach').value, starting: gatherPlayers('away-starting-list'), subs: gatherPlayers('away-subs-list'), injuries: gatherPlayers('away-injuries-list', true) }
+
+            const matches = getStoredMatches();
+            let meta = matches.find(m => String(m.id) === String(matchId));
+            if (!meta) {
+                if (String(matchId) === '103') meta = { home: 'Express FC', away: 'KCCA FC' };
+                if (String(matchId) === '104') meta = { home: 'URA FC', away: 'Express FC' };
+            }
+            if (!meta) meta = { home: 'Home Team', away: 'Away Team' };
+
+            const homeFormation = document.getElementById('home-formation').value;
+            const awayFormation = document.getElementById('away-formation').value;
+
+            const rawHomeStarting = gatherPlayers('home-starting-list');
+            const rawAwayStarting = gatherPlayers('away-starting-list');
+
+            const homeStarting = computePitchCoordinates(rawHomeStarting, homeFormation, false);
+            const awayStarting = computePitchCoordinates(rawAwayStarting, awayFormation, true);
+
+            const lineupPayload = {
+                home: {
+                    team: { name: meta.home, logo: '' },
+                    formation: homeFormation,
+                    coach: document.getElementById('home-coach').value || 'Manager',
+                    starting: homeStarting,
+                    subs: gatherPlayers('home-subs-list'),
+                    injuries: gatherPlayers('home-injuries-list', true)
+                },
+                away: {
+                    team: { name: meta.away, logo: '' },
+                    formation: awayFormation,
+                    coach: document.getElementById('away-coach').value || 'Manager',
+                    starting: awayStarting,
+                    subs: gatherPlayers('away-subs-list'),
+                    injuries: gatherPlayers('away-injuries-list', true)
+                }
             };
+
+            const stored = JSON.parse(localStorage.getItem('massavu_lineups') || localStorage.getItem('massavu_lineups_admin') || '{}');
+            stored[matchId] = lineupPayload;
+            localStorage.setItem('massavu_lineups', JSON.stringify(stored));
             localStorage.setItem('massavu_lineups_admin', JSON.stringify(stored));
-            alert('Lineup saved! Changes will reflect on the public site immediately.');
+
+            alert(`Lineup for "${meta.home} vs ${meta.away}" saved! It will show directly on the public site.`);
         }
 
         function clearLineupForm() {
