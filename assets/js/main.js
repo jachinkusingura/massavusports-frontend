@@ -186,11 +186,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 ]
             },
             {
-                date: today,
+                date: new Date(2026, 7, 9), // 9th August 2026 — Matchday 16 at NEC Grounds Bugolobi
                 league: 'Chaapa League',
                 flag: leagueFlags['Chaapa League'],
                 matches: [
-                    { id: 1004, home: { id: 'yoboyobo', name: 'Yobo Yobo', logo: '' }, away: { id: 'scrwizi', name: 'SC Rwizi', logo: '' }, scoreH: null, scoreA: null, time: '16:30 EAT', status: 'upcoming' }
+                    { id: 1201, home: { id: 'tysheldon', name: 'TY SHELDON', logo: '' }, away: { id: 'chogm', name: 'CHOGM', logo: '' }, scoreH: null, scoreA: null, time: '10:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
+                    { id: 1202, home: { id: 'scrwizi', name: 'SC RWIZI', logo: '' }, away: { id: 'akajjus', name: 'AKAJJU', logo: '' }, scoreH: null, scoreA: null, time: '10:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
+                    { id: 1203, home: { id: 'ruharo', name: 'RUHARO', logo: '' }, away: { id: 'kyangabukama', name: 'KYANGABUKAMA', logo: '' }, scoreH: null, scoreA: null, time: '11:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
+                    { id: 1204, home: { id: 'mutakoha', name: 'MUTAKOHA', logo: '' }, away: { id: 'bullsoldtimers', name: 'BULLS OLD TIMERS', logo: '' }, scoreH: null, scoreA: null, time: '11:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
+                    { id: 1205, home: { id: 'ezekyeenda', name: 'EZEKYEENDA', logo: '' }, away: { id: 'karasande', name: 'KARASANDE', logo: '' }, scoreH: null, scoreA: null, time: '12:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
+                    { id: 1206, home: { id: 'seefar', name: 'SEE FAR', logo: '' }, away: { id: 'sikukulu', name: 'SIKUKULU', logo: '' }, scoreH: null, scoreA: null, time: '12:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
+                    { id: 1207, home: { id: 'kataara', name: 'KATAARA', logo: '' }, away: { id: 'burdizo', name: 'BURDIZO', logo: '' }, scoreH: null, scoreA: null, time: '13:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
+                    { id: 1208, home: { id: 'omutaji', name: 'OMUTAJI', logo: '' }, away: { id: 'xconvicts', name: 'X-CONVICTS', logo: '' }, scoreH: null, scoreA: null, time: '13:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
+                    { id: 1209, home: { id: 'rugabocity', name: 'RUGABO CITY', logo: '' }, away: { id: 'scrwizi', name: 'SC RWIZI', logo: '' }, scoreH: null, scoreA: null, time: '14:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
+                    { id: 1210, home: { id: 'chogm', name: 'CHOGM', logo: '' }, away: { id: 'unruly', name: 'UNRULY', logo: '' }, scoreH: null, scoreA: null, time: '14:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
+                    { id: 1211, home: { id: 'akajjus', name: 'AKAJJU', logo: '' }, away: { id: 'yoboyobo', name: 'YOBO YOBO', logo: '' }, scoreH: null, scoreA: null, time: '15:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
+                    { id: 1212, home: { id: 'dingiswayo', name: 'DINGISWAYO', logo: '' }, away: { id: 'tysheldon', name: 'TY SHELDON', logo: '' }, scoreH: null, scoreA: null, time: '15:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' }
                 ]
             },
             {
@@ -287,11 +298,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 ]
             },
             {
-                date: yesterday,
+                date: new Date(2026, 7, 2), // 2nd August 2026 — Matchday 14 Results
                 league: 'Chaapa League',
                 flag: leagueFlags['Chaapa League'],
                 matches: [
-                    { id: 2006, home: { id: 'bulls96', name: 'Bulls96', logo: '' }, away: { id: 'rugabofc', name: 'Rugabo FC', logo: '' }, scoreH: 3, scoreA: 1, time: 'FT', status: 'finished' }
+                    { id: 2201, home: { id: 'dingiswayo', name: 'DINGISWAYO', logo: '' }, away: { id: 'omutaji', name: 'OMUTAJI', logo: '' }, scoreH: 1, scoreA: 0, time: 'FT', status: 'finished' },
+                    { id: 2202, home: { id: 'bullsoldtimers', name: 'BULLS OLD TIMERS', logo: '' }, away: { id: 'seefar', name: 'SEE FAR', logo: '' }, scoreH: 0, scoreA: 0, time: 'FT', status: 'finished' },
+                    { id: 2203, home: { id: 'ruharo', name: 'RUHARO', logo: '' }, away: { id: 'kataara', name: 'KATAARA', logo: '' }, scoreH: 1, scoreA: 1, time: 'FT', status: 'finished' },
+                    { id: 2204, home: { id: 'scrwizi', name: 'SC RWIZI', logo: '' }, away: { id: 'sikukulu', name: 'SIKUKULU', logo: '' }, scoreH: 8, scoreA: 0, time: 'FT', status: 'finished' },
+                    { id: 2205, home: { id: 'ezekyeenda', name: 'EZEKYEENDA', logo: '' }, away: { id: 'burdizo', name: 'BURDIZO', logo: '' }, scoreH: 1, scoreA: 1, time: 'FT', status: 'finished' },
+                    { id: 2206, home: { id: 'mutakoha', name: 'MUTAKOHA', logo: '' }, away: { id: 'xconvicts', name: 'X-CONVICTS', logo: '' }, scoreH: 1, scoreA: 0, time: 'FT', status: 'finished' },
+                    { id: 2207, home: { id: 'rugabocity', name: 'RUGABO CITY', logo: '' }, away: { id: 'karasande', name: 'KARASANDE', logo: '' }, scoreH: 0, scoreA: 0, time: 'FT', status: 'finished' },
+                    { id: 2208, home: { id: 'omutaji', name: 'OMUTAJI', logo: '' }, away: { id: 'unruly', name: 'UNRULY', logo: '' }, scoreH: 5, scoreA: 1, time: 'FT', status: 'finished' },
+                    { id: 2209, home: { id: 'seefar', name: 'SEE FAR', logo: '' }, away: { id: 'yoboyobo', name: 'YOBO YOBO', logo: '' }, scoreH: 0, scoreA: 1, time: 'FT', status: 'finished' },
+                    { id: 2210, home: { id: 'akajjus', name: 'AKAJJU', logo: '' }, away: { id: 'chogm', name: 'CHOGM', logo: '' }, scoreH: 0, scoreA: 1, time: 'FT', status: 'finished' },
+                    { id: 2211, home: { id: 'tysheldon', name: 'TY SHELDON', logo: '' }, away: { id: 'bullsoldtimers', name: 'BULLS OLD TIMERS', logo: '' }, scoreH: 1, scoreA: 2, time: 'FT', status: 'finished' },
+                    { id: 2212, home: { id: 'dingiswayo', name: 'DINGISWAYO', logo: '' }, away: { id: 'kyangabukama', name: 'KYANGABUKAMA', logo: '' }, scoreH: 2, scoreA: 0, time: 'FT', status: 'finished' }
                 ]
             },
             {
@@ -368,26 +390,26 @@ document.addEventListener('DOMContentLoaded', () => {
             { team: { id: 'bwerasfc', name: 'Bweras FC', logo: '' }, played: 12, won: 1, draw: 1, lost: 10, gd: -17, pts: 4 }
         ],
         'Chaapa League': [
-            { team: { id: 'yoboyobo', name: 'Yobo Yobo', logo: '' }, played: 12, won: 9, draw: 2, lost: 1, gd: 15, pts: 29 },
-            { team: { id: 'scrwizi', name: 'SC Rwizi', logo: '' }, played: 12, won: 8, draw: 3, lost: 1, gd: 12, pts: 27 },
-            { team: { id: 'bulls96', name: 'Bulls96', logo: '' }, played: 12, won: 8, draw: 2, lost: 2, gd: 10, pts: 26 },
-            { team: { id: 'dingiswayofc', name: 'Dingiswayo FC', logo: '' }, played: 12, won: 7, draw: 3, lost: 2, gd: 9, pts: 24 },
-            { team: { id: 'rugabofc', name: 'Rugabo FC', logo: '' }, played: 12, won: 7, draw: 2, lost: 3, gd: 7, pts: 23 },
-            { team: { id: 'karasandefc', name: 'Karasande FC', logo: '' }, played: 12, won: 6, draw: 4, lost: 2, gd: 6, pts: 22 },
-            { team: { id: 'mutakoohafc', name: 'Mutakooha FC', logo: '' }, played: 12, won: 6, draw: 3, lost: 3, gd: 5, pts: 21 },
-            { team: { id: 'kataarafc', name: 'Kataara FC', logo: '' }, played: 12, won: 5, draw: 5, lost: 2, gd: 4, pts: 20 },
-            { team: { id: 'burdizofc', name: 'Burdizo FC', logo: '' }, played: 12, won: 5, draw: 4, lost: 3, gd: 3, pts: 19 },
-            { team: { id: 'omutajifc', name: 'Omutaji FC', logo: '' }, played: 12, won: 5, draw: 3, lost: 4, gd: 2, pts: 18 },
-            { team: { id: 'sikukulufc', name: 'Sikukulu FC', logo: '' }, played: 12, won: 4, draw: 5, lost: 3, gd: 1, pts: 17 },
-            { team: { id: 'seefarfc', name: 'SeeFar FC', logo: '' }, played: 12, won: 4, draw: 4, lost: 4, gd: 0, pts: 16 },
-            { team: { id: 'unrulyfc', name: 'Unruly FC', logo: '' }, played: 12, won: 4, draw: 3, lost: 5, gd: -2, pts: 15 },
-            { team: { id: 'chogmfc', name: 'CHOGM FC', logo: '' }, played: 12, won: 3, draw: 4, lost: 5, gd: -4, pts: 13 },
-            { team: { id: 'ruharofc', name: 'Ruharo FC', logo: '' }, played: 12, won: 3, draw: 3, lost: 6, gd: -5, pts: 12 },
-            { team: { id: 'xconvicts', name: 'X Convicts', logo: '' }, played: 12, won: 3, draw: 2, lost: 7, gd: -7, pts: 11 },
-            { team: { id: 'kyangabukamafc', name: 'Kyangabukama FC', logo: '' }, played: 12, won: 2, draw: 4, lost: 6, gd: -8, pts: 10 },
-            { team: { id: 'akajjufc', name: 'Akajju FC', logo: '' }, played: 12, won: 2, draw: 3, lost: 7, gd: -10, pts: 9 },
-            { team: { id: 'tysheldon', name: 'TY Sheldon', logo: '' }, played: 12, won: 2, draw: 2, lost: 8, gd: -12, pts: 8 },
-            { team: { id: 'ezekyenda', name: 'Ezekyenda', logo: '' }, played: 12, won: 1, draw: 3, lost: 8, gd: -14, pts: 6 }
+            { team: { id: 'seefar', name: 'SEE FAR', logo: '' }, played: 16, won: 12, draw: 2, lost: 2, gd: 15, pts: 38 },
+            { team: { id: 'scrwizi', name: 'SC RWIZI', logo: '' }, played: 15, won: 11, draw: 4, lost: 0, gd: 38, pts: 37 },
+            { team: { id: 'yoboyobo', name: 'YOBO YOBO', logo: '' }, played: 15, won: 10, draw: 4, lost: 1, gd: 26, pts: 34 },
+            { team: { id: 'rugabocity', name: 'RUGABO CITY', logo: '' }, played: 16, won: 9, draw: 4, lost: 3, gd: 13, pts: 31 },
+            { team: { id: 'bullsoldtimers', name: 'BULLS OLD TIMERS', logo: '' }, played: 16, won: 8, draw: 6, lost: 2, gd: 7, pts: 30 },
+            { team: { id: 'chogm', name: 'CHOGM', logo: '' }, played: 15, won: 6, draw: 7, lost: 2, gd: 10, pts: 25 },
+            { team: { id: 'dingiswayo', name: 'DINGISWAYO', logo: '' }, played: 16, won: 6, draw: 5, lost: 5, gd: 6, pts: 23 },
+            { team: { id: 'burdizo', name: 'BURDIZO', logo: '' }, played: 15, won: 5, draw: 7, lost: 3, gd: -1, pts: 22 },
+            { team: { id: 'mutakoha', name: 'MUTAKOHA', logo: '' }, played: 16, won: 5, draw: 5, lost: 6, gd: 1, pts: 20 },
+            { team: { id: 'kataara', name: 'KATAARA', logo: '' }, played: 15, won: 5, draw: 5, lost: 5, gd: -1, pts: 20 },
+            { team: { id: 'karasande', name: 'KARASANDE', logo: '' }, played: 15, won: 4, draw: 7, lost: 4, gd: 4, pts: 19 },
+            { team: { id: 'kyangabukama', name: 'KYANGABUKAMA', logo: '' }, played: 15, won: 5, draw: 4, lost: 6, gd: -2, pts: 19 },
+            { team: { id: 'xconvicts', name: 'X-CONVICTS', logo: '' }, played: 15, won: 6, draw: 0, lost: 9, gd: -3, pts: 18 },
+            { team: { id: 'omutaji', name: 'OMUTAJI', logo: '' }, played: 16, won: 4, draw: 4, lost: 8, gd: -5, pts: 16 },
+            { team: { id: 'ruharo', name: 'RUHARO', logo: '' }, played: 16, won: 2, draw: 6, lost: 8, gd: -23, pts: 12 },
+            { team: { id: 'sikukulu', name: 'SIKUKULU', logo: '' }, played: 15, won: 3, draw: 3, lost: 9, gd: -23, pts: 12 },
+            { team: { id: 'unruly', name: 'UNRULY', logo: '' }, played: 15, won: 2, draw: 5, lost: 8, gd: -17, pts: 11 },
+            { team: { id: 'ezekyeenda', name: 'EZEKYEENDA', logo: '' }, played: 16, won: 3, draw: 2, lost: 11, gd: -25, pts: 11 },
+            { team: { id: 'tysheldon', name: 'TY SHELDON', logo: '' }, played: 15, won: 2, draw: 4, lost: 9, gd: -9, pts: 10 },
+            { team: { id: 'akajjus', name: 'AKAJJU', logo: '' }, played: 15, won: 0, draw: 8, lost: 7, gd: -11, pts: 8 }
         ],
         'Kitunga League': [
             { team: { id: 'kyashafc', name: 'Kyasha FC', logo: '' }, played: 7, won: 4, draw: 2, lost: 1, gd: 5, pts: 14 },
