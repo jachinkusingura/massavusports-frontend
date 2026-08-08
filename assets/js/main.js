@@ -846,7 +846,7 @@ document.addEventListener('DOMContentLoaded', () => {
         monthLabel.innerHTML = `<i class="fa-solid fa-calendar-days" style="color:#facc15; margin-right:8px;"></i><span style="font-size:1.05rem; font-weight:800; color:#ffffff;">${startStr} – ${endStr}</span>`;
 
         const controls = document.createElement('div');
-        controls.style.cssText = 'display:flex; align-items:center; gap:0.5rem;';
+        controls.style.cssText = 'display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;';
 
         const btnStyle = `
             background: rgba(250,204,21,0.12); border: 1px solid rgba(250,204,21,0.3);
@@ -876,7 +876,32 @@ document.addEventListener('DOMContentLoaded', () => {
         nextBtn.title = 'Next Week';
         nextBtn.onclick = () => onWeekChange(1);
 
-        controls.append(prevBtn, todayBtn, nextBtn);
+        // --- Date Picker button ---
+        const pickerWrap = document.createElement('div');
+        pickerWrap.style.cssText = 'position:relative; display:inline-block;';
+        const pickerBtn = document.createElement('button');
+        pickerBtn.innerHTML = '<i class="fa-solid fa-calendar-pen"></i>';
+        pickerBtn.style.cssText = btnStyle + 'width:36px;height:36px;';
+        pickerBtn.title = 'Pick any date';
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'date';
+        hiddenInput.style.cssText = 'position:absolute;top:0;left:0;width:36px;height:36px;opacity:0;cursor:pointer;';
+        // Set current value
+        const y = selectedDate.getFullYear();
+        const mo = String(selectedDate.getMonth() + 1).padStart(2, '0');
+        const d = String(selectedDate.getDate()).padStart(2, '0');
+        hiddenInput.value = `${y}-${mo}-${d}`;
+        hiddenInput.onchange = (e) => {
+            if (e.target.value) {
+                const parts = e.target.value.split('-');
+                const picked = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                onSelectDate(picked);
+            }
+        };
+        pickerWrap.appendChild(pickerBtn);
+        pickerWrap.appendChild(hiddenInput);
+
+        controls.append(prevBtn, todayBtn, nextBtn, pickerWrap);
         topRow.append(monthLabel, controls);
         container.appendChild(topRow);
 
@@ -890,7 +915,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const day = new Date(weekStart); day.setDate(weekStart.getDate() + i);
             const isSelected = isSameDate(day, selectedDate);
             const isToday = isSameDate(day, today);
-            const hasMatches = dataset.some(lg => isSameDate(lg.date, day));
+            const hasMatches = dataset.some(lg => isSameDate(_normDay(lg.date), _normDay(day)));
 
             const dayPill = document.createElement('button');
             dayPill.style.cssText = `
