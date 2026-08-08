@@ -492,6 +492,53 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
+    function generateFallbackLineup(matchId, homeName = 'Home Team', awayName = 'Away Team') {
+        const homeCoords = [
+            { x: 50, y: 90, num: 1, name: 'GK 1' },
+            { x: 15, y: 72, num: 2, name: 'Defender 2' },
+            { x: 38, y: 72, num: 5, name: 'Defender 5' },
+            { x: 62, y: 72, num: 4, name: 'Defender 4' },
+            { x: 85, y: 72, num: 3, name: 'Defender 3' },
+            { x: 15, y: 50, num: 7, name: 'Midfielder 7' },
+            { x: 38, y: 50, num: 8, name: 'Midfielder 8' },
+            { x: 62, y: 50, num: 10, name: 'Playmaker 10' },
+            { x: 85, y: 50, num: 11, name: 'Winger 11' },
+            { x: 35, y: 28, num: 9, name: 'Forward 9' },
+            { x: 65, y: 28, num: 20, name: 'Striker 20' }
+        ];
+        const awayCoords = [
+            { x: 50, y: 10, num: 1, name: 'Keeper 1' },
+            { x: 15, y: 28, num: 2, name: 'Back 2' },
+            { x: 38, y: 28, num: 5, name: 'Back 5' },
+            { x: 62, y: 28, num: 4, name: 'Back 4' },
+            { x: 85, y: 28, num: 3, name: 'Back 3' },
+            { x: 25, y: 50, num: 8, name: 'Center 8' },
+            { x: 50, y: 50, num: 6, name: 'Center 6' },
+            { x: 75, y: 50, num: 11, name: 'Wing 11' },
+            { x: 20, y: 72, num: 7, name: 'Wing 7' },
+            { x: 50, y: 72, num: 9, name: 'Striker 9' },
+            { x: 80, y: 72, num: 10, name: 'Forward 10' }
+        ];
+        return {
+            home: {
+                team: { name: homeName, logo: '' },
+                formation: '4-4-2',
+                coach: 'Head Coach',
+                starting: homeCoords,
+                subs: [{ num: 12, name: 'Sub 12' }, { num: 14, name: 'Sub 14' }],
+                injuries: []
+            },
+            away: {
+                team: { name: awayName, logo: '' },
+                formation: '4-3-3',
+                coach: 'Head Coach',
+                starting: awayCoords,
+                subs: [{ num: 15, name: 'Sub 15' }, { num: 16, name: 'Sub 16' }],
+                injuries: []
+            }
+        };
+    }
+
     function getLineups() {
         const rawMain = localStorage.getItem('massavu_lineups');
         const rawAdmin = localStorage.getItem('massavu_lineups_admin');
@@ -503,6 +550,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (rawAdmin) {
             try { Object.assign(merged, JSON.parse(rawAdmin)); } catch (e) { }
         }
+
+        // Auto-generate fallback lineup for all admin & seed matches
+        const allMatches = [...getAllFixtures(), ...getAllResults()];
+        allMatches.forEach(grp => {
+            if (grp && grp.matches) {
+                grp.matches.forEach(m => {
+                    if (!merged[m.id]) {
+                        const homeN = m.home ? m.home.name : 'Home';
+                        const awayN = m.away ? m.away.name : 'Away';
+                        merged[m.id] = generateFallbackLineup(m.id, homeN, awayN);
+                    }
+                });
+            }
+        });
+
         return merged;
     }
 
@@ -778,7 +840,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 );
                 const dayFixtures = fixturesData.filter(lg => isSameDate(_normDay(lg.date), currentFixtureDate));
-                renderMatchGroup(dayFixtures, 'No fixtures scheduled for this day.', true);
+                if (dayFixtures.length > 0) {
+                    renderMatchGroup(dayFixtures, 'No fixtures scheduled for this day.', true);
+                } else {
+                    matchesContainer.innerHTML += `<div style="text-align:center;padding:1.5rem 1rem 1rem;color:#94a3b8;font-size:0.9rem;">
+                        <i class="fa-solid fa-calendar-xmark" style="font-size:1.5rem;margin-bottom:0.5rem;display:block;color:#facc15;"></i>
+                        No fixtures scheduled specifically for ${currentFixtureDate.toDateString()}.</div>`;
+                    if (fixturesData.length > 0) {
+                        const fallbackHdr = document.createElement('div');
+                        fallbackHdr.style.cssText = 'font-size:1.05rem;font-weight:800;color:#ffffff;margin:1.5rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(255,255,255,0.1);';
+                        fallbackHdr.innerHTML = `<i class="fa-solid fa-list-ul" style="color:#facc15;margin-right:8px;"></i>All Upcoming Fixtures & Schedule`;
+                        matchesContainer.appendChild(fallbackHdr);
+                        renderMatchGroup(fixturesData, '', true);
+                    }
+                }
             } else if (currentView === 'results') {
                 const resultsData = getAllResults();
                 renderDaySelectorBar(
@@ -792,7 +867,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 );
                 const dayResults = resultsData.filter(lr => isSameDate(_normDay(lr.date), currentResultDate));
-                renderMatchGroup(dayResults, 'No results recorded for this day.', false);
+                if (dayResults.length > 0) {
+                    renderMatchGroup(dayResults, 'No results recorded for this day.', false);
+                } else {
+                    matchesContainer.innerHTML += `<div style="text-align:center;padding:1.5rem 1rem 1rem;color:#94a3b8;font-size:0.9rem;">
+                        <i class="fa-solid fa-flag-checkered" style="font-size:1.5rem;margin-bottom:0.5rem;display:block;color:#facc15;"></i>
+                        No match results recorded specifically for ${currentResultDate.toDateString()}.</div>`;
+                    if (resultsData.length > 0) {
+                        const fallbackHdr = document.createElement('div');
+                        fallbackHdr.style.cssText = 'font-size:1.05rem;font-weight:800;color:#ffffff;margin:1.5rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(255,255,255,0.1);';
+                        fallbackHdr.innerHTML = `<i class="fa-solid fa-list-ul" style="color:#facc15;margin-right:8px;"></i>All Recorded Results Log`;
+                        matchesContainer.appendChild(fallbackHdr);
+                        renderMatchGroup(resultsData, '', false);
+                    }
+                }
             } else if (currentView === 'standings') {
                 renderStandings();
             } else if (currentView === 'lineups') {
@@ -1180,8 +1268,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span style="font-weight:700;">${m.away.name}</span>
                         ${aLogo}
                     </div>
-                    <button onclick="showLineupFor('${m.id}','home')" ${!hasLineup ? 'disabled' : ''} style="background:${hasLineup ? 'var(--accent-primary)' : 'rgba(255,255,255,0.1)'};color:${hasLineup ? 'var(--bg-main)' : 'var(--text-muted)'};border:none;border-radius:var(--radius-sm);padding:.4rem .9rem;font-size:.8rem;font-weight:700;cursor:${hasLineup ? 'pointer' : 'not-allowed'};">
-                        ${hasLineup ? '<i class="fa-solid fa-person-running"></i> View Lineup' : 'No Lineup'}
+                    <button onclick="showLineupFor('${m.id}','home')" style="background:var(--accent-primary);color:var(--bg-main);border:none;border-radius:var(--radius-sm);padding:.4rem .9rem;font-size:.8rem;font-weight:700;cursor:pointer;">
+                        <i class="fa-solid fa-person-running"></i> View Lineup
                     </button>
                 `;
                 matchesContainer.appendChild(card);
