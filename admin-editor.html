@@ -440,6 +440,8 @@
                 Standings</a>
             <a href="admin-editor.html?tab=lineups" id="side-lineups"><i class="fa-solid fa-person-running"></i> Players
                 & Lineups</a>
+            <a href="admin-editor.html?tab=analytics" id="side-analytics"><i class="fa-solid fa-chart-pie"></i> Visitor
+                Analytics</a>
             <a href="admin-editor.html?tab=settings" id="side-settings"><i class="fa-solid fa-gear"></i> Settings</a>
         </nav>
         <button class="btn logout-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</button>
@@ -471,6 +473,8 @@
                     class="fa-solid fa-table"></i> Standings</button>
             <button class="admin-tab" id="tab-lineups" onclick="switchAdminTab('lineups')"><i
                     class="fa-solid fa-person-running"></i> Players & Lineups</button>
+            <button class="admin-tab" id="tab-analytics" onclick="switchAdminTab('analytics')"><i
+                    class="fa-solid fa-chart-pie"></i> Visitor Analytics</button>
             <button class="admin-tab" id="tab-settings" onclick="switchAdminTab('settings')"><i
                     class="fa-solid fa-gear"></i> Settings</button>
         </div>
@@ -1050,6 +1054,119 @@
             </div>
         </div>
 
+        <!-- ============ TAB: VISITOR ANALYTICS & PUSH BROADCAST ============ -->
+        <div id="tab-panel-analytics" style="display:none;">
+            <!-- Summary Metric Cards -->
+            <div
+                style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1.25rem; margin-bottom:2rem;">
+                <div
+                    style="background:#111c38; border:1px solid rgba(250,204,21,0.25); border-radius:12px; padding:1.25rem; text-align:center;">
+                    <div style="font-size:0.8rem; font-weight:700; color:#94a3b8; text-transform:uppercase;">Live
+                        Visitors (15m)</div>
+                    <div id="metric-live" style="font-size:2.2rem; font-weight:900; color:#facc15; margin-top:4px;">0
+                    </div>
+                </div>
+                <div
+                    style="background:#111c38; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.25rem; text-align:center;">
+                    <div style="font-size:0.8rem; font-weight:700; color:#94a3b8; text-transform:uppercase;">Total
+                        Logged Visits</div>
+                    <div id="metric-total" style="font-size:2.2rem; font-weight:900; color:#ffffff; margin-top:4px;">0
+                    </div>
+                </div>
+                <div
+                    style="background:#111c38; border:1px solid rgba(34,197,94,0.3); border-radius:12px; padding:1.25rem; text-align:center;">
+                    <div style="font-size:0.8rem; font-weight:700; color:#94a3b8; text-transform:uppercase;">
+                        Notification Opt-In Rate</div>
+                    <div id="metric-optin" style="font-size:2.2rem; font-weight:900; color:#4ade80; margin-top:4px;">0%
+                    </div>
+                </div>
+                <div
+                    style="background:#111c38; border:1px solid rgba(59,130,246,0.3); border-radius:12px; padding:1.25rem; text-align:center;">
+                    <div style="font-size:0.8rem; font-weight:700; color:#94a3b8; text-transform:uppercase;">Top Region
+                    </div>
+                    <div id="metric-country" style="font-size:1.4rem; font-weight:800; color:#60a5fa; margin-top:8px;">
+                        Uganda</div>
+                </div>
+            </div>
+
+            <!-- Manual Push Broadcast Form -->
+            <div
+                style="background:#111c38; border:1px solid rgba(250,204,21,0.3); border-radius:12px; padding:1.75rem; margin-bottom:2rem;">
+                <h3
+                    style="font-size:1.2rem; font-weight:800; color:#ffffff; margin-top:0; margin-bottom:1rem; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-paper-plane" style="color:#facc15;"></i> Broadcast Push Notification to
+                    Subscribers
+                </h3>
+                <form id="pushBroadcastForm" onsubmit="handlePushBroadcast(event)">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem; margin-bottom:1rem;">
+                        <div class="form-group" style="margin:0;">
+                            <label>Notification Title</label>
+                            <input type="text" id="pushTitle" class="form-control"
+                                placeholder="e.g. 🔥 GOAL! Vipers 1-0 KCCA" required>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label>Click Target URL</label>
+                            <input type="text" id="pushUrl" class="form-control" placeholder="e.g. index.html#fixtures">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Notification Body / Short Teaser</label>
+                        <textarea id="pushBody" class="form-control" rows="2"
+                            placeholder="Full time score update from the Uganda Premier League..." required></textarea>
+                    </div>
+                    <button type="submit" class="admin-tab active"
+                        style="padding:0.75rem 1.8rem; border:none; cursor:pointer; font-weight:800;">
+                        <i class="fa-solid fa-bell"></i> Send Push Notification Now
+                    </button>
+                </form>
+            </div>
+
+            <!-- Visitor Traffic Data Tables -->
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem; margin-bottom:2rem;">
+                <!-- Top Pages -->
+                <div
+                    style="background:#111c38; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.5rem;">
+                    <h3 style="font-size:1.05rem; font-weight:800; color:#ffffff; margin-top:0; margin-bottom:1rem;">
+                        <i class="fa-solid fa-file-lines" style="color:#facc15; margin-right:6px;"></i> Top Visited
+                        Views
+                    </h3>
+                    <div id="analyticsTopPages">
+                        <p style="color:#94a3b8; font-size:0.85rem;">No visit data recorded yet.</p>
+                    </div>
+                </div>
+
+                <!-- Devices & Browsers -->
+                <div
+                    style="background:#111c38; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.5rem;">
+                    <h3 style="font-size:1.05rem; font-weight:800; color:#ffffff; margin-top:0; margin-bottom:1rem;">
+                        <i class="fa-solid fa-mobile-screen" style="color:#facc15; margin-right:6px;"></i> Devices &amp;
+                        Browsers
+                    </h3>
+                    <div id="analyticsDevices">
+                        <p style="color:#94a3b8; font-size:0.85rem;">No visit data recorded yet.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Visits Stream -->
+            <div
+                style="background:#111c38; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1.5rem;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                    <h3 style="font-size:1.1rem; font-weight:800; color:#ffffff; margin:0;">
+                        <i class="fa-solid fa-clock-rotate-left" style="color:#facc15; margin-right:6px;"></i> Live
+                        Visitor Stream
+                    </h3>
+                    <button onclick="clearMassavuAnalytics(); renderAnalyticsDashboard();"
+                        style="background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.3); padding:4px 10px; border-radius:6px; font-size:0.8rem; cursor:pointer; font-weight:700;">
+                        Clear History
+                    </button>
+                </div>
+                <div id="analyticsVisitsTable">
+                    <p style="color:#94a3b8; font-size:0.85rem;">Loading visit stream...</p>
+                </div>
+            </div>
+        </div>
+
         <!-- ============ TAB: SETTINGS ============ -->
         <div id="tab-panel-settings" style="display:none;">
             <div
@@ -1278,7 +1395,7 @@
 
         // ---- Tab switching ----
         function switchAdminTab(tab) {
-            const tabsList = ['events', 'matches', 'teams', 'competitions', 'standings', 'lineups', 'results', 'settings'];
+            const tabsList = ['events', 'matches', 'teams', 'competitions', 'standings', 'lineups', 'results', 'settings', 'analytics'];
             tabsList.forEach(t => {
                 const panel = document.getElementById(`tab-panel-${t}`);
                 if (panel) panel.style.display = (t === tab || (t === 'results' && tab === 'standings')) ? 'block' : 'none';
@@ -1295,6 +1412,7 @@
                 competitions: 'Manage Competitions & Leagues',
                 standings: 'League Standings & Manual Overrides',
                 lineups: 'Match Lineups & Players',
+                analytics: 'Visitor Analytics & Push Broadcaster',
                 settings: 'System & Data Settings'
             };
             document.getElementById('pageTitle').textContent = titles[tab] || 'Admin Panel';
@@ -1306,6 +1424,7 @@
             if (tab === 'standings') { populateCompDropdowns(); recalculateStandingsEngine(); renderStandingsAdminTab(); }
             if (tab === 'lineups') { populateLineupMatchSelector(); }
             if (tab === 'results') renderResultsLog();
+            if (tab === 'analytics') renderAnalyticsDashboard();
         }
 
         // ============================================================
@@ -2234,6 +2353,119 @@
         }
 
         // ============================================================
+        // VISITOR ANALYTICS & PUSH NOTIFICATIONS BROADCASTER
+        // ============================================================
+        function renderAnalyticsDashboard() {
+            const rawVisits = localStorage.getItem('massavu_analytics_visits');
+            const visits = rawVisits ? JSON.parse(rawVisits) : [];
+
+            // 1. Calculate metrics
+            const totalVisits = visits.length;
+            const now = Date.now();
+            const fifteenMinsAgo = now - 15 * 60 * 1000;
+            const liveVisitors = visits.filter(v => v.timestamp >= fifteenMinsAgo).length;
+
+            const subState = localStorage.getItem('massavu_push_subscribed') === 'true';
+            const optInRate = totalVisits > 0 ? (subState ? 100 : 0) : 0;
+
+            const countryCounts = {};
+            const pageCounts = {};
+            const deviceCounts = {};
+
+            visits.forEach(v => {
+                const country = v.country || 'Uganda';
+                countryCounts[country] = (countryCounts[country] || 0) + 1;
+
+                const page = v.path || '/index.html';
+                pageCounts[page] = (pageCounts[page] || 0) + 1;
+
+                const device = `${v.device || 'Desktop'} (${v.browser || 'Browser'})`;
+                deviceCounts[device] = (deviceCounts[device] || 0) + 1;
+            });
+
+            let topCountry = 'Uganda';
+            let maxCountryCount = 0;
+            Object.entries(countryCounts).forEach(([c, cnt]) => {
+                if (cnt > maxCountryCount) { maxCountryCount = cnt; topCountry = c; }
+            });
+
+            document.getElementById('metric-live').textContent = liveVisitors;
+            document.getElementById('metric-total').textContent = totalVisits;
+            document.getElementById('metric-optin').textContent = `${subState ? '1' : '0'} Subscribed`;
+            document.getElementById('metric-country').textContent = topCountry;
+
+            // 2. Render Top Pages Table
+            const pagesEl = document.getElementById('analyticsTopPages');
+            const sortedPages = Object.entries(pageCounts).sort((a, b) => b[1] - a[1]);
+            if (sortedPages.length === 0) {
+                pagesEl.innerHTML = `<p style="color:#94a3b8; font-size:0.85rem;">No visits logged yet.</p>`;
+            } else {
+                let pHtml = `<table style="width:100%; border-collapse:collapse; font-size:0.85rem;"><thead><tr style="color:#94a3b8; border-bottom:1px solid #1e293b;"><th style="text-align:left; padding:6px 0;">Page Path</th><th style="text-align:right; padding:6px 0;">Visits</th></tr></thead><tbody>`;
+                sortedPages.slice(0, 5).forEach(([p, c]) => {
+                    pHtml += `<tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:6px 0; color:#ffffff; font-weight:600;">${p}</td><td style="text-align:right; color:#facc15; font-weight:800;">${c}</td></tr>`;
+                });
+                pHtml += `</tbody></table>`;
+                pagesEl.innerHTML = pHtml;
+            }
+
+            // 3. Render Devices & Browsers Table
+            const devEl = document.getElementById('analyticsDevices');
+            const sortedDev = Object.entries(deviceCounts).sort((a, b) => b[1] - a[1]);
+            if (sortedDev.length === 0) {
+                devEl.innerHTML = `<p style="color:#94a3b8; font-size:0.85rem;">No device data logged yet.</p>`;
+            } else {
+                let dHtml = `<table style="width:100%; border-collapse:collapse; font-size:0.85rem;"><thead><tr style="color:#94a3b8; border-bottom:1px solid #1e293b;"><th style="text-align:left; padding:6px 0;">Device / Browser</th><th style="text-align:right; padding:6px 0;">Count</th></tr></thead><tbody>`;
+                sortedDev.slice(0, 5).forEach(([d, c]) => {
+                    dHtml += `<tr style="border-bottom:1px solid rgba(255,255,255,0.05);"><td style="padding:6px 0; color:#ffffff; font-weight:600;">${d}</td><td style="text-align:right; color:#60a5fa; font-weight:800;">${c}</td></tr>`;
+                });
+                dHtml += `</tbody></table>`;
+                devEl.innerHTML = dHtml;
+            }
+
+            // 4. Render Live Visits Stream
+            const streamEl = document.getElementById('analyticsVisitsTable');
+            if (visits.length === 0) {
+                streamEl.innerHTML = `<p style="color:#94a3b8; font-size:0.85rem; text-align:center; padding:1.5rem 0;">No active visits stream. Browse the website in another tab to see real-time visits here!</p>`;
+            } else {
+                let sHtml = `<table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+                    <thead><tr style="color:#94a3b8; border-bottom:1px solid #1e293b; text-transform:uppercase; font-size:0.75rem;">
+                        <th style="padding:8px; text-align:left;">Time</th>
+                        <th style="padding:8px; text-align:left;">Page</th>
+                        <th style="padding:8px; text-align:left;">Device</th>
+                        <th style="padding:8px; text-align:left;">Referrer</th>
+                        <th style="padding:8px; text-align:left;">Country</th>
+                    </tr></thead><tbody>`;
+                visits.slice(0, 15).forEach(v => {
+                    const timeStr = v.timestamp ? new Date(v.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'Just now';
+                    sHtml += `<tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <td style="padding:8px; color:#94a3b8;">${timeStr}</td>
+                        <td style="padding:8px; color:#ffffff; font-weight:700;">${v.path || '/'}</td>
+                        <td style="padding:8px; color:#cbd5e1;">${v.device || 'Desktop'} (${v.browser || 'Web'})</td>
+                        <td style="padding:8px; color:#94a3b8;">${v.referrer || 'Direct'}</td>
+                        <td style="padding:8px;"><span style="background:rgba(59,130,246,0.15); color:#60a5fa; padding:2px 6px; border-radius:4px; font-weight:700; font-size:0.75rem;">${v.country || 'Uganda'}</span></td>
+                    </tr>`;
+                });
+                sHtml += `</tbody></table>`;
+                streamEl.innerHTML = sHtml;
+            }
+        }
+
+        function handlePushBroadcast(e) {
+            e.preventDefault();
+            const title = document.getElementById('pushTitle').value.trim();
+            const body = document.getElementById('pushBody').value.trim();
+            const url = document.getElementById('pushUrl').value.trim() || 'index.html';
+
+            if (typeof triggerPushNotification === 'function') {
+                triggerPushNotification(title, body, url);
+            } else {
+                alert(`Broadcast dispatched!\nTitle: ${title}\nBody: ${body}`);
+            }
+
+            document.getElementById('pushBroadcastForm').reset();
+        }
+
+        // ============================================================
         // PAGE INITIALIZATION
         // ============================================================
         document.getElementById('logoutBtn').addEventListener('click', () => {
@@ -2246,6 +2478,8 @@
         switchAdminTab(defaultTab);
 
     </script>
+    <script src="assets/js/analytics.js"></script>
+    <script src="assets/js/notifications.js"></script>
 </body>
 
 </html>
