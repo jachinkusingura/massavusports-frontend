@@ -924,57 +924,58 @@ document.addEventListener('DOMContentLoaded', () => {
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         `;
 
-        // Top Navigation Header
+        // Top Navigation Header: Month Range & Presets
         const topRow = document.createElement('div');
-        topRow.style.cssText = 'display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;';
+        topRow.style.cssText = 'display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; flex-wrap:wrap; gap:0.75rem;';
 
         const monthLabel = document.createElement('div');
         const startStr = `${weekStart.getDate()} ${MONTH_NAMES[weekStart.getMonth()].slice(0, 3)}`;
         const endStr = `${weekEnd.getDate()} ${MONTH_NAMES[weekEnd.getMonth()].slice(0, 3)} ${weekEnd.getFullYear()}`;
-        monthLabel.innerHTML = `<i class="fa-solid fa-calendar-days" style="color:#facc15; margin-right:8px;"></i><span style="font-size:1.05rem; font-weight:800; color:#ffffff;">${startStr} – ${endStr}</span>`;
+        monthLabel.innerHTML = `<i class="fa-solid fa-calendar-days" style="color:#facc15; margin-right:8px;"></i><span style="font-size:1rem; font-weight:800; color:#ffffff;">${startStr} – ${endStr}</span>`;
 
-        const controls = document.createElement('div');
-        controls.style.cssText = 'display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;';
+        // Quick Day Preset Pills (Yesterday, Today, Tomorrow, Pick Date)
+        const presetBar = document.createElement('div');
+        presetBar.style.cssText = 'display:flex; align-items:center; gap:0.4rem; flex-wrap:wrap;';
 
-        const btnStyle = `
-            background: rgba(250,204,21,0.12); border: 1px solid rgba(250,204,21,0.3);
-            color: #facc15; border-radius: 8px; width: 36px; height: 36px;
-            cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center;
-            transition: all 0.15s ease;
+        const presetBtnStyle = (active) => `
+            background: ${active ? '#facc15' : 'rgba(255,255,255,0.06)'};
+            border: 1px solid ${active ? '#facc15' : 'rgba(255,255,255,0.12)'};
+            color: ${active ? '#0b1329' : '#cbd5e1'};
+            border-radius: 20px; padding: 0.35rem 0.85rem; font-size: 0.78rem; font-weight: 800;
+            cursor: pointer; transition: all 0.15s ease; white-space: nowrap;
         `;
 
-        const prevBtn = document.createElement('button');
-        prevBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
-        prevBtn.style.cssText = btnStyle;
-        prevBtn.title = 'Previous Week';
-        prevBtn.onclick = () => onWeekChange(-1);
+        const yesterdayDate = new Date(today); yesterdayDate.setDate(today.getDate() - 1);
+        const tomorrowDate = new Date(today); tomorrowDate.setDate(today.getDate() + 1);
+
+        const isYesterdaySel = isSameDate(selectedDate, yesterdayDate);
+        const isTodaySel = isSameDate(selectedDate, today);
+        const isTomorrowSel = isSameDate(selectedDate, tomorrowDate);
+
+        const yestBtn = document.createElement('button');
+        yestBtn.textContent = 'Yesterday';
+        yestBtn.style.cssText = presetBtnStyle(isYesterdaySel);
+        yestBtn.onclick = () => onSelectDate(yesterdayDate);
 
         const todayBtn = document.createElement('button');
         todayBtn.textContent = 'Today';
-        todayBtn.style.cssText = `
-            background: rgba(250,204,21,0.15); border: 1px solid #facc15;
-            color: #facc15; border-radius: 8px; padding: 0 14px; height: 36px;
-            cursor: pointer; font-weight: 800; font-size: 0.85rem; letter-spacing: 0.04em;
-        `;
-        todayBtn.onclick = () => onSelectDate(new Date());
+        todayBtn.style.cssText = presetBtnStyle(isTodaySel);
+        todayBtn.onclick = () => onSelectDate(today);
 
-        const nextBtn = document.createElement('button');
-        nextBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
-        nextBtn.style.cssText = btnStyle;
-        nextBtn.title = 'Next Week';
-        nextBtn.onclick = () => onWeekChange(1);
+        const tomBtn = document.createElement('button');
+        tomBtn.textContent = 'Tomorrow';
+        tomBtn.style.cssText = presetBtnStyle(isTomorrowSel);
+        tomBtn.onclick = () => onSelectDate(tomorrowDate);
 
-        // --- Date Picker button ---
+        // Date Picker Button
         const pickerWrap = document.createElement('div');
         pickerWrap.style.cssText = 'position:relative; display:inline-block;';
         const pickerBtn = document.createElement('button');
-        pickerBtn.innerHTML = '<i class="fa-solid fa-calendar-pen"></i>';
-        pickerBtn.style.cssText = btnStyle + 'width:36px;height:36px;';
-        pickerBtn.title = 'Pick any date';
+        pickerBtn.innerHTML = '<i class="fa-solid fa-calendar-week" style="margin-right:4px;"></i> Date Picker';
+        pickerBtn.style.cssText = presetBtnStyle(false) + 'background:rgba(250,204,21,0.1);border-color:rgba(250,204,21,0.4);color:#facc15;';
         const hiddenInput = document.createElement('input');
         hiddenInput.type = 'date';
-        hiddenInput.style.cssText = 'position:absolute;top:0;left:0;width:36px;height:36px;opacity:0;cursor:pointer;';
-        // Set current value
+        hiddenInput.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;';
         const y = selectedDate.getFullYear();
         const mo = String(selectedDate.getMonth() + 1).padStart(2, '0');
         const d = String(selectedDate.getDate()).padStart(2, '0');
@@ -986,17 +987,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 onSelectDate(picked);
             }
         };
-        pickerWrap.appendChild(pickerBtn);
-        pickerWrap.appendChild(hiddenInput);
+        pickerWrap.append(pickerBtn, hiddenInput);
 
-        controls.append(prevBtn, todayBtn, nextBtn, pickerWrap);
-        topRow.append(monthLabel, controls);
+        presetBar.append(yestBtn, todayBtn, tomBtn, pickerWrap);
+
+        // Day Stepper Controls (< Day | Day >)
+        const controls = document.createElement('div');
+        controls.style.cssText = 'display:flex; align-items:center; gap:0.4rem;';
+
+        const btnStyle = `
+            background: rgba(250,204,21,0.12); border: 1px solid rgba(250,204,21,0.3);
+            color: #facc15; border-radius: 8px; padding: 0.35rem 0.65rem;
+            cursor: pointer; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 4px;
+            transition: all 0.15s ease;
+        `;
+
+        const prevDayBtn = document.createElement('button');
+        prevDayBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i> Prev Day';
+        prevDayBtn.style.cssText = btnStyle;
+        prevDayBtn.onclick = () => {
+            const prevD = new Date(selectedDate);
+            prevD.setDate(prevD.getDate() - 1);
+            onSelectDate(prevD);
+        };
+
+        const nextDayBtn = document.createElement('button');
+        nextDayBtn.innerHTML = 'Next Day <i class="fa-solid fa-chevron-right"></i>';
+        nextDayBtn.style.cssText = btnStyle;
+        nextDayBtn.onclick = () => {
+            const nextD = new Date(selectedDate);
+            nextD.setDate(nextD.getDate() + 1);
+            onSelectDate(nextD);
+        };
+
+        controls.append(prevDayBtn, nextDayBtn);
+
+        topRow.append(monthLabel, presetBar, controls);
         container.appendChild(topRow);
 
-        // Day Bar: Mon, Tue, Wed, Thu, Fri, Sat, Sun
+        // 7-Day Bar Grid: Mon, Tue, Wed, Thu, Fri, Sat, Sun
         const dayBar = document.createElement('div');
         dayBar.style.cssText = `
-            display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem;
+            display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.4rem;
         `;
 
         for (let i = 0; i < 7; i++) {
@@ -1008,9 +1040,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const dayPill = document.createElement('button');
             dayPill.style.cssText = `
                 display: flex; flex-direction: column; align-items: center; justify-content: center;
-                padding: 0.65rem 0.2rem; border-radius: 10px; cursor: pointer;
-                background: ${isSelected ? '#facc15' : isToday ? 'rgba(250,204,21,0.12)' : '#080f22'};
-                border: 1px solid ${isSelected ? '#facc15' : isToday ? 'rgba(250,204,21,0.4)' : 'rgba(255,255,255,0.08)'};
+                padding: 0.65rem 0.1rem; border-radius: 10px; cursor: pointer;
+                background: ${isSelected ? '#facc15' : isToday ? 'rgba(250,204,21,0.14)' : '#080f22'};
+                border: 1px solid ${isSelected ? '#facc15' : isToday ? '#facc15' : 'rgba(255,255,255,0.08)'};
                 color: ${isSelected ? '#0b1329' : '#ffffff'};
                 transition: all 0.15s ease;
             `;
@@ -1032,9 +1064,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const dot = document.createElement('span');
             dot.style.cssText = `
-                width: 5px; height: 5px; border-radius: 50%; margin-top: 4px;
+                width: 6px; height: 6px; border-radius: 50%; margin-top: 4px;
                 background: ${isSelected ? '#0b1329' : '#facc15'};
                 opacity: ${hasMatches ? '1' : '0'};
+                box-shadow: ${hasMatches && !isSelected ? '0 0 6px #facc15' : 'none'};
             `;
 
             dayPill.append(dayName, dateNum, dot);
