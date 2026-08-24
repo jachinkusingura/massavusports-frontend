@@ -1186,12 +1186,12 @@
                 <div class="form-group" style="margin:0;">
                     <label>Supabase Project URL</label>
                     <input type="text" id="supabaseUrlInput" class="form-control"
-                        placeholder="https://yourproject.supabase.co" oninput="saveSupa()">
+                        placeholder="https://enjwjpjuyeedqfintqzt.supabase.co" oninput="saveSupa()">
                 </div>
                 <div class="form-group" style="margin:0;">
                     <label>Supabase Anon / Public API Key</label>
-                    <input type="text" id="supabaseKeyInput" class="form-control" placeholder="eyJhbGciOiJIUzI1NiJ9..."
-                        oninput="saveSupa()">
+                    <input type="text" id="supabaseKeyInput" class="form-control"
+                        placeholder="Paste your anon/public key here…" oninput="saveSupa()">
                 </div>
             </div>
 
@@ -1212,6 +1212,10 @@ CREATE TABLE massavu_lineups (match_id text primary key, lineup jsonb, saved_at 
                     style="background:linear-gradient(135deg,#22c55e,#16a34a); color:#fff; border:none; border-radius:8px; padding:0.8rem 1.6rem; font-weight:800; font-size:0.95rem; cursor:pointer; display:flex; align-items:center; gap:8px; box-shadow:0 4px 14px rgba(34,197,94,0.35);">
                     <i class="fa-solid fa-cloud-arrow-up"></i> Sync All Data to Cloud Now
                 </button>
+                <button type="button" onclick="pullAllFromCloud()"
+                    style="background:linear-gradient(135deg,#3b82f6,#1d4ed8); color:#fff; border:none; border-radius:8px; padding:0.8rem 1.6rem; font-weight:800; font-size:0.95rem; cursor:pointer; display:flex; align-items:center; gap:8px; box-shadow:0 4px 14px rgba(59,130,246,0.35);">
+                    <i class="fa-solid fa-cloud-arrow-down"></i> Pull Cloud Data to Admin
+                </button>
                 <button type="button" onclick="testSupabaseConn()"
                     style="background:rgba(59,130,246,0.15); color:#60a5fa; border:1px solid rgba(59,130,246,0.4); border-radius:8px; padding:0.8rem 1.4rem; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:8px;">
                     <i class="fa-solid fa-plug"></i> Test Connection
@@ -1224,61 +1228,61 @@ CREATE TABLE massavu_lineups (match_id text primary key, lineup jsonb, saved_at 
 
     <script>
         // ── Supabase config helpers ─────────────────────────────────────
-        (function loadSupaConfig() {
-            const url = localStorage.getItem('massavu_supa_url') || '';
-            const key = localStorage.getItem('massavu_supa_key') || '';
-            const urlEl = document.getElementById('supabaseUrlInput');
-            const keyEl = document.getElementById('supabaseKeyInput');
-            if (urlEl) urlEl.value = url;
-            if (keyEl) keyEl.value = key;
-            if (window.MASSAVU_SUPABASE) {
-                window.MASSAVU_SUPABASE_URL = url;
-                window.MASSAVU_SUPABASE_KEY = key;
-            }
-        })();
-
         function saveSupa() {
-            const url = document.getElementById('supabaseUrlInput').value.trim();
-            const key = document.getElementById('supabaseKeyInput').value.trim();
-            localStorage.setItem('massavu_supa_url', url);
-            localStorage.setItem('massavu_supa_key', key);
-            window.MASSAVU_SUPABASE_URL = url;
-            window.MASSAVU_SUPABASE_KEY = key;
+            const url = (document.getElementById('supabaseUrlInput').value || '').trim();
+            const key = (document.getElementById('supabaseKeyInput').value || '').trim();
+            if (url) localStorage.setItem('massavu_supa_url', url);
+            if (key) localStorage.setItem('massavu_supa_key', key);
         }
 
         async function syncAllToSupabase() {
             saveSupa();
             const status = document.getElementById('supabaseSyncStatus');
             status.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="color:#facc15;"></i> Syncing all data to cloud…';
-            if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.syncAllToCloud === 'function') {
-                await window.MASSAVU_SUPABASE.syncAllToCloud();
-                status.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> Sync complete! All fixtures, results, standings &amp; lineups have been pushed to Supabase.';
+            if (!window.MASSAVU_SUPABASE) {
+                status.innerHTML = '<span style="color:#ef4444;">❌ supabase.js not loaded. Refresh the page and try again.</span>';
+                return;
+            }
+            const ok = await window.MASSAVU_SUPABASE.syncAllToCloud();
+            if (ok) {
+                status.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> <strong>Sync complete!</strong> All fixtures, standings &amp; lineups pushed to Supabase.';
             } else {
-                status.innerHTML = '<span style="color:#ef4444;">supabase.js not loaded yet. Please refresh and try again.</span>';
+                status.innerHTML = '<span style="color:#ef4444;">❌ Sync failed. Check your API key and ensure the tables exist (see SQL above).</span>';
+            }
+        }
+
+        async function pullAllFromCloud() {
+            saveSupa();
+            const status = document.getElementById('supabaseSyncStatus');
+            status.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="color:#3b82f6;"></i> Pulling data from Supabase cloud…';
+            if (!window.MASSAVU_SUPABASE) {
+                status.innerHTML = '<span style="color:#ef4444;">❌ supabase.js not loaded. Refresh the page.</span>';
+                return;
+            }
+            const ok = await window.MASSAVU_SUPABASE.pullAllFromCloud();
+            if (ok) {
+                status.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> <strong>Pull complete!</strong> Cloud data loaded into admin panel. Refreshing lists…';
+                // Re-render any currently visible tables
+                if (typeof renderMatchesTable === 'function') renderMatchesTable();
+                if (typeof renderStandingsAdminTab === 'function') renderStandingsAdminTab();
+            } else {
+                status.innerHTML = '<span style="color:#ef4444;">❌ Pull failed. Check your API key and table policies.</span>';
             }
         }
 
         async function testSupabaseConn() {
             saveSupa();
-            const url = localStorage.getItem('massavu_supa_url') || '';
-            const key = localStorage.getItem('massavu_supa_key') || '';
             const status = document.getElementById('supabaseSyncStatus');
-            if (!url || url.includes('yourproject')) {
-                status.innerHTML = '<span style="color:#ef4444;">⚠ Please enter your Supabase Project URL first.</span>';
+            status.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="color:#facc15;"></i> Testing connection…';
+            if (!window.MASSAVU_SUPABASE) {
+                status.innerHTML = '<span style="color:#ef4444;">❌ supabase.js not loaded. Refresh the page.</span>';
                 return;
             }
-            status.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="color:#facc15;"></i> Testing connection…';
-            try {
-                const res = await fetch(`${url}/rest/v1/massavu_matches?select=id&limit=1`, {
-                    headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
-                });
-                if (res.ok || res.status === 200) {
-                    status.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> Connection successful! Supabase is reachable.';
-                } else {
-                    status.innerHTML = `<span style="color:#ef4444;">❌ Connection error: HTTP ${res.status}. Check credentials or table policies.</span>`;
-                }
-            } catch (e) {
-                status.innerHTML = `<span style="color:#ef4444;">❌ Connection failed: ${e.message}</span>`;
+            const result = await window.MASSAVU_SUPABASE.testConnection();
+            if (result.ok) {
+                status.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> <strong>Connection successful!</strong> Supabase is fully reachable.';
+            } else {
+                status.innerHTML = `<span style="color:#ef4444;">❌ ${result.message}</span>`;
             }
         }
     </script>
@@ -2575,9 +2579,9 @@ CREATE TABLE massavu_lineups (match_id text primary key, lineup jsonb, saved_at 
         switchAdminTab(defaultTab);
 
     </script>
+    <script src="assets/js/supabase.js"></script>
     <script src="assets/js/analytics.js"></script>
     <script src="assets/js/notifications.js"></script>
-    <script src="assets/js/supabase.js"></script>
 </body>
 
 </html>
