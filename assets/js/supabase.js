@@ -47,11 +47,14 @@ window.MASSAVU_SUPABASE = (function () {
 
             if (!res.ok) {
                 const txt = await res.text();
-                console.warn(`[MassavuSupa] ${table} sync HTTP ${res.status}:`, txt);
+                console.error(`[MassavuSupa] ❌ ${table} HTTP ${res.status}:`, txt);
+                if (res.status === 404 || res.status === 400) {
+                    console.error('[MassavuSupa] Table may not exist. Run the SQL setup in Admin Panel → Settings → System Settings.');
+                }
             }
             return res.ok;
         } catch (err) {
-            console.warn('[MassavuSupa] Network error on', table, err.message);
+            console.error('[MassavuSupa] Network error on', table, err.message);
             return false;
         }
     }
@@ -102,24 +105,35 @@ window.MASSAVU_SUPABASE = (function () {
         /** Load all matches from Supabase cloud into localStorage */
         loadMatchesFromCloud: async function () {
             const { url, key } = getCreds();
-            if (!url || !key || key.length < 20) return false;
+            if (!url || !key || key.length < 20) {
+                console.warn('[MassavuSupa] No credentials available.');
+                return false;
+            }
             try {
                 const res = await fetch(`${url}/rest/v1/massavu_matches?select=*&order=created_at.desc`, {
                     headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
                 });
-                if (!res.ok) return false;
+                if (!res.ok) {
+                    const txt = await res.text();
+                    console.error(`[MassavuSupa] ❌ loadMatchesFromCloud HTTP ${res.status}:`, txt);
+                    if (res.status === 404 || res.status === 400 || res.status === 406) {
+                        console.error('[MassavuSupa] The massavu_matches table does NOT exist. Open Admin Panel → System Settings and run the SQL setup.');
+                    }
+                    return false;
+                }
                 const data = await res.json();
-                if (Array.isArray(data) && data.length > 0) {
+                if (Array.isArray(data)) {
                     const local = JSON.parse(localStorage.getItem(STORAGE_KEYS.MATCHES) || '[]');
                     const merged = [...data];
                     local.forEach(lm => {
                         if (!merged.find(m => String(m.id) === String(lm.id))) merged.push(lm);
                     });
                     localStorage.setItem(STORAGE_KEYS.MATCHES, JSON.stringify(merged));
+                    console.log(`[MassavuSupa] ✅ Loaded ${data.length} matches from cloud.`);
                 }
                 return true;
             } catch (e) {
-                console.warn('[MassavuSupa] loadMatchesFromCloud error:', e.message);
+                console.error('[MassavuSupa] loadMatchesFromCloud error:', e.message);
                 return false;
             }
         },

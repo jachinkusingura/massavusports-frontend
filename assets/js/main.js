@@ -1502,12 +1502,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // ================================================================
     renderView();
 
+    // Pull latest matches from Supabase cloud and re-render
     if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.loadMatchesFromCloud === 'function') {
         window.MASSAVU_SUPABASE.loadMatchesFromCloud().then(updated => {
             if (updated) {
-                console.log('[Massavu] Synced cloud matches on page load.');
+                console.log('[Massavu] ✅ Synced cloud matches — re-rendering view.');
                 renderView();
+            } else {
+                console.warn('[Massavu] Cloud pull returned no data. Check Supabase table setup.');
             }
-        }).catch(err => console.warn('[Massavu] Auto cloud sync error:', err));
+        }).catch(err => console.error('[Massavu] Cloud sync error:', err));
     }
 });
