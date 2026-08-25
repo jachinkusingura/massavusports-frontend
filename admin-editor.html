@@ -1209,9 +1209,23 @@
 
             <div
                 style="background:rgba(0,0,0,0.3); border-radius:8px; padding:1rem; margin-bottom:1.25rem; font-size:0.82rem; color:#94a3b8;">
-                <strong style="color:#facc15;">📋 Required Supabase Tables:</strong><br>
-                Create these tables in your Supabase dashboard (SQL Editor):
-                <pre style="color:#4ade80; font-size:0.78rem; margin-top:0.5rem; overflow-x:auto;">
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <strong style="color:#facc15;">📋 Required Supabase Tables:</strong>
+                    <div style="display:flex; gap:8px;">
+                        <button type="button" onclick="copySupaSql()"
+                            style="background:#facc15; color:#0f172a; border:none; border-radius:6px; padding:0.35rem 0.8rem; font-weight:800; font-size:0.78rem; cursor:pointer;">
+                            <i class="fa-solid fa-copy"></i> Copy SQL Code
+                        </button>
+                        <a href="https://supabase.com/dashboard/project/enjwjpjuyeedqfintqzt/sql/new" target="_blank"
+                            style="background:#38bdf8; color:#0f172a; border:none; border-radius:6px; padding:0.35rem 0.8rem; font-weight:800; font-size:0.78rem; text-decoration:none; display:inline-flex; align-items:center; gap:4px;">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Supabase SQL Editor
+                        </a>
+                    </div>
+                </div>
+                <p style="margin:0.4rem 0 0.5rem; color:#cbd5e1;">Click <strong>Copy SQL Code</strong> above, then click
+                    <strong>Open Supabase SQL Editor</strong>, paste (Ctrl+V) and click <strong>Run</strong>.</p>
+                <pre id="supaSqlCodeBlock"
+                    style="color:#4ade80; font-size:0.78rem; margin-top:0.5rem; overflow-x:auto; background:#090d16; padding:0.75rem; border-radius:6px; border:1px solid rgba(250,204,21,0.2);">
 -- Copy & Run in Supabase SQL Editor:
 CREATE TABLE IF NOT EXISTS massavu_matches (
     id text primary key,
@@ -1221,8 +1235,8 @@ CREATE TABLE IF NOT EXISTS massavu_matches (
     status text,
     home text,
     away text,
-    scoreH int,
-    scoreA int,
+    scoreH int default 0,
+    scoreA int default 0,
     created_at timestamptz default now()
 );
 CREATE TABLE IF NOT EXISTS massavu_standings (
@@ -1240,8 +1254,6 @@ CREATE TABLE IF NOT EXISTS massavu_lineups (
 ALTER TABLE massavu_matches DISABLE ROW LEVEL SECURITY;
 ALTER TABLE massavu_standings DISABLE ROW LEVEL SECURITY;
 ALTER TABLE massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
-                <p style="margin:0.5rem 0 0; color:#cbd5e1;">Copy the SQL snippet above into your Supabase Dashboard SQL
-                    Editor and click <strong>Run</strong>.</p>
             </div>
 
             <div style="display:flex; gap:1rem; flex-wrap:wrap;">
@@ -1265,6 +1277,15 @@ ALTER TABLE massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
 
     <script>
         // ── Supabase config helpers ─────────────────────────────────────
+        function copySupaSql() {
+            const code = document.getElementById('supaSqlCodeBlock').innerText.replace('-- Copy & Run in Supabase SQL Editor:\n', '');
+            navigator.clipboard.writeText(code).then(() => {
+                alert('✅ SQL code copied to clipboard! Now paste it in your Supabase SQL Editor and click RUN.');
+            }).catch(e => {
+                alert('SQL Code:\n\n' + code);
+            });
+        }
+
         function saveSupa() {
             const url = (document.getElementById('supabaseUrlInput').value || '').trim();
             const key = (document.getElementById('supabaseKeyInput').value || '').trim();
@@ -1282,9 +1303,13 @@ ALTER TABLE massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
             }
             const ok = await window.MASSAVU_SUPABASE.syncAllToCloud();
             if (ok) {
-                status.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> <strong>Sync complete!</strong> All fixtures, standings &amp; lineups pushed to Supabase.';
+                status.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> <strong>Sync complete!</strong> All fixtures, standings &amp; lineups pushed to Supabase cloud.';
             } else {
-                status.innerHTML = '<span style="color:#ef4444;">❌ Sync failed. Check your API key and ensure the tables exist (see SQL above).</span>';
+                status.innerHTML = '<div style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); padding:0.8rem; border-radius:8px; color:#f87171;">' +
+                    '<strong>❌ Sync Failed: Tables do not exist in Supabase database yet.</strong><br>' +
+                    '<span style="color:#cbd5e1; font-size:0.8rem;">Supabase security blocks public web apps from creating database tables automatically.<br>' +
+                    'Please click <strong>"Copy SQL Code"</strong> above, open the SQL Editor link, paste and click <strong>RUN</strong> once.</span>' +
+                    '</div>';
             }
         }
 
