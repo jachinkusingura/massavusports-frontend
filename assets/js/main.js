@@ -94,17 +94,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Helper: Parse date cleanly into local time without UTC offset skews
     function parseLocalDate(dateVal, utcVal) {
-        if (typeof dateVal === 'string' && dateVal.includes('-')) {
-            const p = dateVal.split('-').map(Number);
-            if (p.length === 3 && p[0] > 2000 && p[1] >= 1 && p[2] >= 1) {
-                return new Date(p[0], p[1] - 1, p[2]);
+        if (typeof dateVal === 'string' && dateVal.length > 0) {
+            const match = dateVal.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+            if (match) {
+                const y = parseInt(match[1], 10);
+                const m = parseInt(match[2], 10) - 1;
+                const d = parseInt(match[3], 10);
+                if (y > 2000 && m >= 0 && m <= 11 && d >= 1 && d <= 31) {
+                    return new Date(y, m, d);
+                }
             }
         }
         if (utcVal) {
             const u = new Date(utcVal);
             if (!isNaN(u.getTime())) return u;
         }
-        if (dateVal instanceof Date) return dateVal;
+        if (dateVal instanceof Date && !isNaN(dateVal.getTime())) return dateVal;
         return new Date();
     }
 
@@ -114,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const fixturesByDateComp = {};
 
         // Merge admin scheduled/LIVE matches
-        adminMatches.filter(m => m.status !== 'FT').forEach(m => {
+        adminMatches.filter(m => m.status !== 'FT' && m.status !== 'finished').forEach(m => {
             const dateObj = parseLocalDate(m.date, m.kickoffUtc);
             const dateKey = _normDay(dateObj).toDateString();
             const comp = m.competition ? m.competition.trim() : 'Uganda Premier League';
@@ -130,14 +135,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const timeFormatted = m.kickoffUtc ? new Date(m.kickoffUtc).toLocaleTimeString('en-GB', { timeZone: 'Africa/Nairobi', hour: '2-digit', minute: '2-digit' }) : (m.time || '16:00');
+            const hName = m.home || m.homeTeam || 'Home Team';
+            const aName = m.away || m.awayTeam || 'Away Team';
+            const hId = typeof hName === 'string' ? hName.toLowerCase().replace(/\s+/g, '') : 'home';
+            const aId = typeof aName === 'string' ? aName.toLowerCase().replace(/\s+/g, '') : 'away';
+
             fixturesByDateComp[dateKey][comp].matches.push({
                 id: m.id,
-                home: { id: m.home.toLowerCase().replace(/\s+/g, ''), name: m.home, logo: '' },
-                away: { id: m.away.toLowerCase().replace(/\s+/g, ''), name: m.away, logo: '' },
-                scoreH: m.scoreH || null,
-                scoreA: m.scoreA || null,
+                home: { id: hId, name: hName, logo: m.homeLogo || '' },
+                away: { id: aId, name: aName, logo: m.awayLogo || '' },
+                scoreH: (m.scoreH !== undefined && m.scoreH !== null) ? m.scoreH : (m.homeScore || null),
+                scoreA: (m.scoreA !== undefined && m.scoreA !== null) ? m.scoreA : (m.awayScore || null),
                 time: timeFormatted + ' EAT',
-                status: m.status === 'LIVE' ? 'live' : 'upcoming'
+                status: (m.status === 'LIVE' || m.status === 'live') ? 'live' : 'upcoming',
+                venue: m.venue || m.location || ''
             });
         });
 
@@ -251,14 +262,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
             }
 
+            const hName = m.home || m.homeTeam || 'Home Team';
+            const aName = m.away || m.awayTeam || 'Away Team';
+            const hId = typeof hName === 'string' ? hName.toLowerCase().replace(/\s+/g, '') : 'home';
+            const aId = typeof aName === 'string' ? aName.toLowerCase().replace(/\s+/g, '') : 'away';
+
             resultsByDateComp[dateKey][comp].matches.push({
                 id: m.id,
-                home: { id: m.home.toLowerCase().replace(/\s+/g, ''), name: m.home, logo: '' },
-                away: { id: m.away.toLowerCase().replace(/\s+/g, ''), name: m.away, logo: '' },
-                scoreH: m.scoreH,
-                scoreA: m.scoreA,
+                home: { id: hId, name: hName, logo: m.homeLogo || '' },
+                away: { id: aId, name: aName, logo: m.awayLogo || '' },
+                scoreH: (m.scoreH !== undefined && m.scoreH !== null) ? m.scoreH : (m.homeScore || 0),
+                scoreA: (m.scoreA !== undefined && m.scoreA !== null) ? m.scoreA : (m.awayScore || 0),
                 time: 'FT',
-                status: 'finished'
+                status: 'finished',
+                venue: m.venue || m.location || ''
             });
         });
 
@@ -1481,7 +1498,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ================================================================
-    //  INIT
+    //  INIT & CLOUD SYNC
     // ================================================================
     renderView();
+
+    if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.loadMatchesFromCloud === 'function') {
+        window.MASSAVU_SUPABASE.loadMatchesFromCloud().then(updated => {
+            if (updated) {
+                console.log('[Massavu] Synced cloud matches on page load.');
+                renderView();
+            }
+        }).catch(err => console.warn('[Massavu] Auto cloud sync error:', err));
+    }
 });

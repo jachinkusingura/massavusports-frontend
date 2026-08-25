@@ -1370,20 +1370,27 @@ CREATE TABLE massavu_lineups (match_id text primary key, lineup jsonb, saved_at 
                     date: matchDate,
                     kickoffUtc,
                     status: 'Scheduled',
-                    homeTeam,
-                    awayTeam,
+                    home: homeTeam,
+                    homeTeam: homeTeam,
+                    away: awayTeam,
+                    awayTeam: awayTeam,
+                    scoreH: 0,
+                    scoreA: 0,
                     homeScore: 0,
                     awayScore: 0,
                     venue: location || 'Stadium'
                 };
 
-                const existingIdx = matches.findIndex(m => m.id == fixtureId || (m.homeTeam === homeTeam && m.awayTeam === awayTeam && m.date === matchDate));
+                const existingIdx = matches.findIndex(m => m.id == fixtureId || ((m.home === homeTeam || m.homeTeam === homeTeam) && (m.away === awayTeam || m.awayTeam === awayTeam) && m.date === matchDate));
                 if (existingIdx >= 0) {
                     matches[existingIdx] = { ...matches[existingIdx], ...fixtureObj };
                 } else {
                     matches.unshift(fixtureObj);
                 }
                 localStorage.setItem('massavu_match_results', JSON.stringify(matches));
+                if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.saveMatch === 'function') {
+                    window.MASSAVU_SUPABASE.saveMatch(fixtureObj);
+                }
             }
 
             alert(`Event & Fixture "${title}" published and synchronized!`);
@@ -1773,9 +1780,13 @@ CREATE TABLE massavu_lineups (match_id text primary key, lineup jsonb, saved_at 
                 date: dateStr,
                 time: timeStr,
                 home,
+                homeTeam: home,
                 away,
+                awayTeam: away,
                 scoreH: status === 'FT' ? scoreH : 0,
                 scoreA: status === 'FT' ? scoreA : 0,
+                homeScore: status === 'FT' ? scoreH : 0,
+                awayScore: status === 'FT' ? scoreA : 0,
                 status
             };
 
@@ -1786,6 +1797,9 @@ CREATE TABLE massavu_lineups (match_id text primary key, lineup jsonb, saved_at 
             }
 
             localStorage.setItem('massavu_match_results', JSON.stringify(matches));
+            if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.saveMatch === 'function') {
+                window.MASSAVU_SUPABASE.saveMatch(matchData);
+            }
             recalculateStandingsEngine();
             alert(`Fixture "${home} vs ${away}" for ${competition} saved successfully!`);
             resetMatchForm();
