@@ -1791,20 +1791,13 @@ ALTER TABLE massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
         function saveMatchFixture(e) {
             e.preventDefault();
             const editId = document.getElementById('matchEditId') ? document.getElementById('matchEditId').value : '';
-            const competition = (document.getElementById('matchComp') && document.getElementById('matchComp').value) ||
-                (document.getElementById('resCompetition') && document.getElementById('resCompetition').value) || 'Uganda Premier League';
-            const kickoffLocal = (document.getElementById('matchKickoff') && document.getElementById('matchKickoff').value) ||
-                (document.getElementById('resDate') && document.getElementById('resDate').value) || '';
-            const status = (document.getElementById('matchStatus') && document.getElementById('matchStatus').value) ||
-                (document.getElementById('resStatus') && document.getElementById('resStatus').value) || 'Scheduled';
-            const home = (document.getElementById('matchHomeTeamSelect') && document.getElementById('matchHomeTeamSelect').value.trim()) ||
-                (document.getElementById('resHomeTeam') && document.getElementById('resHomeTeam').value.trim()) || '';
-            const away = (document.getElementById('matchAwayTeamSelect') && document.getElementById('matchAwayTeamSelect').value.trim()) ||
-                (document.getElementById('resAwayTeam') && document.getElementById('resAwayTeam').value.trim()) || '';
-            const scoreH = parseInt((document.getElementById('matchHomeScoreInput') && document.getElementById('matchHomeScoreInput').value) ||
-                (document.getElementById('resHomeScore') && document.getElementById('resHomeScore').value) || '0', 10) || 0;
-            const scoreA = parseInt((document.getElementById('matchAwayScoreInput') && document.getElementById('matchAwayScoreInput').value) ||
-                (document.getElementById('resAwayScore') && document.getElementById('resAwayScore').value) || '0', 10) || 0;
+            const competition = document.getElementById('matchComp') ? document.getElementById('matchComp').value : 'Uganda Premier League';
+            const kickoffLocal = document.getElementById('matchKickoff') ? document.getElementById('matchKickoff').value : '';
+            const status = document.getElementById('matchStatus') ? document.getElementById('matchStatus').value : 'Scheduled';
+            const home = document.getElementById('matchHomeTeamSelect') ? document.getElementById('matchHomeTeamSelect').value.trim() : '';
+            const away = document.getElementById('matchAwayTeamSelect') ? document.getElementById('matchAwayTeamSelect').value.trim() : '';
+            const scoreH = parseInt(document.getElementById('matchHomeScoreInput') ? document.getElementById('matchHomeScoreInput').value : '0', 10) || 0;
+            const scoreA = parseInt(document.getElementById('matchAwayScoreInput') ? document.getElementById('matchAwayScoreInput').value : '0', 10) || 0;
 
             if (!home || !away) { alert('Please enter both Home and Away team names.'); return; }
             if (home.toLowerCase() === away.toLowerCase()) { alert('Home team and Away team must be different.'); return; }
@@ -1844,13 +1837,62 @@ ALTER TABLE massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
                 window.MASSAVU_SUPABASE.saveMatch(matchData);
             }
             recalculateStandingsEngine();
-            alert(`Fixture/Match "${home} vs ${away}" for ${competition} saved successfully!`);
+            alert(`Fixture "${home} vs ${away}" for ${competition} saved successfully!`);
             resetMatchForm();
             renderMatchesTable();
         }
 
         function saveMatchResult(e) {
-            saveMatchFixture(e);
+            e.preventDefault();
+            const editId = document.getElementById('matchEditId') ? document.getElementById('matchEditId').value : '';
+            const competition = document.getElementById('resCompetition') ? document.getElementById('resCompetition').value : 'Uganda Premier League';
+            const dateInput = document.getElementById('resDate') ? document.getElementById('resDate').value : '';
+            const status = document.getElementById('resStatus') ? document.getElementById('resStatus').value : 'FT';
+            const home = document.getElementById('resHomeTeam') ? document.getElementById('resHomeTeam').value.trim() : '';
+            const away = document.getElementById('resAwayTeam') ? document.getElementById('resAwayTeam').value.trim() : '';
+            const scoreH = parseInt(document.getElementById('resHomeScore') ? document.getElementById('resHomeScore').value : '0', 10) || 0;
+            const scoreA = parseInt(document.getElementById('resAwayScore') ? document.getElementById('resAwayScore').value : '0', 10) || 0;
+
+            if (!home || !away) { alert('Please enter both Home and Away team names.'); return; }
+            if (home.toLowerCase() === away.toLowerCase()) { alert('Home team and Away team must be different.'); return; }
+
+            const dateObj = dateInput ? new Date(dateInput) : new Date();
+            const pad = n => String(n).padStart(2, '0');
+            const kickoffUtc = dateObj.toISOString();
+            const dateStr = `${dateObj.getFullYear()}-${pad(dateObj.getMonth() + 1)}-${pad(dateObj.getDate())}`;
+
+            let matches = getStoredMatches();
+            const matchData = {
+                id: editId ? parseInt(editId, 10) : Date.now(),
+                competition,
+                kickoffUtc,
+                date: dateStr,
+                time: status === 'FT' ? 'FT' : '16:00',
+                home,
+                homeTeam: home,
+                away,
+                awayTeam: away,
+                scoreH: status === 'FT' ? scoreH : 0,
+                scoreA: status === 'FT' ? scoreA : 0,
+                homeScore: status === 'FT' ? scoreH : 0,
+                awayScore: status === 'FT' ? scoreA : 0,
+                status
+            };
+
+            if (editId) {
+                matches = matches.map(m => m.id == editId ? matchData : m);
+            } else {
+                matches.unshift(matchData);
+            }
+
+            localStorage.setItem('massavu_match_results', JSON.stringify(matches));
+            if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.saveMatch === 'function') {
+                window.MASSAVU_SUPABASE.saveMatch(matchData);
+            }
+            recalculateStandingsEngine();
+            alert(`Match Result "${home} vs ${away}" for ${competition} saved successfully!`);
+            resetMatchForm();
+            renderMatchesTable();
         }
 
         function resetMatchForm() {
