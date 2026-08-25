@@ -1212,11 +1212,36 @@
                 <strong style="color:#facc15;">📋 Required Supabase Tables:</strong><br>
                 Create these tables in your Supabase dashboard (SQL Editor):
                 <pre style="color:#4ade80; font-size:0.78rem; margin-top:0.5rem; overflow-x:auto;">
-CREATE TABLE massavu_matches (id bigint primary key, home text, away text, competition text, status text, kickoffUtc text, scoreH int, scoreA int, created_at timestamptz default now());
-CREATE TABLE massavu_standings (id uuid default gen_random_uuid() primary key, league text, data jsonb, updated_at timestamptz default now());
-CREATE TABLE massavu_lineups (match_id text primary key, lineup jsonb, saved_at timestamptz default now());</pre>
-                <p style="margin:0.5rem 0 0; color:#cbd5e1;">Set Row Level Security policies to allow <strong>anon
-                        INSERT</strong> on all three tables.</p>
+-- Copy & Run in Supabase SQL Editor:
+CREATE TABLE IF NOT EXISTS massavu_matches (
+    id text primary key,
+    competition text,
+    date text,
+    kickoffUtc text,
+    status text,
+    home text,
+    away text,
+    scoreH int,
+    scoreA int,
+    created_at timestamptz default now()
+);
+CREATE TABLE IF NOT EXISTS massavu_standings (
+    id uuid default gen_random_uuid() primary key,
+    league text unique,
+    data jsonb,
+    updated_at timestamptz default now()
+);
+CREATE TABLE IF NOT EXISTS massavu_lineups (
+    match_id text primary key,
+    lineup jsonb,
+    saved_at timestamptz default now()
+);
+
+ALTER TABLE massavu_matches DISABLE ROW LEVEL SECURITY;
+ALTER TABLE massavu_standings DISABLE ROW LEVEL SECURITY;
+ALTER TABLE massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
+                <p style="margin:0.5rem 0 0; color:#cbd5e1;">Copy the SQL snippet above into your Supabase Dashboard SQL
+                    Editor and click <strong>Run</strong>.</p>
             </div>
 
             <div style="display:flex; gap:1rem; flex-wrap:wrap;">

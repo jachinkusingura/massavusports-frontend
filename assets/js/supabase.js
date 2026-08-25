@@ -68,7 +68,19 @@ window.MASSAVU_SUPABASE = (function () {
                 matches.push(matchObj);
             }
             localStorage.setItem(STORAGE_KEYS.MATCHES, JSON.stringify(matches));
-            return await request('massavu_matches', matchObj, 'id');
+
+            const supaPayload = {
+                id: String(matchObj.id),
+                competition: matchObj.competition || 'Uganda Premier League',
+                date: matchObj.date || '',
+                kickoffUtc: matchObj.kickoffUtc || new Date().toISOString(),
+                status: matchObj.status || 'Scheduled',
+                home: matchObj.home || matchObj.homeTeam || '',
+                away: matchObj.away || matchObj.awayTeam || '',
+                scoreH: (matchObj.scoreH !== undefined && matchObj.scoreH !== null) ? Number(matchObj.scoreH) : (Number(matchObj.homeScore) || 0),
+                scoreA: (matchObj.scoreA !== undefined && matchObj.scoreA !== null) ? Number(matchObj.scoreA) : (Number(matchObj.awayScore) || 0)
+            };
+            return await request('massavu_matches', supaPayload, 'id');
         },
 
         /** Save (upsert) league standings */
@@ -92,13 +104,12 @@ window.MASSAVU_SUPABASE = (function () {
             const { url, key } = getCreds();
             if (!url || !key || key.length < 20) return false;
             try {
-                const res = await fetch(`${url}/rest/v1/massavu_matches?select=*&order=id.asc`, {
+                const res = await fetch(`${url}/rest/v1/massavu_matches?select=*&order=created_at.desc`, {
                     headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
                 });
                 if (!res.ok) return false;
                 const data = await res.json();
                 if (Array.isArray(data) && data.length > 0) {
-                    // Merge cloud data with any local data
                     const local = JSON.parse(localStorage.getItem(STORAGE_KEYS.MATCHES) || '[]');
                     const merged = [...data];
                     local.forEach(lm => {
@@ -166,7 +177,18 @@ window.MASSAVU_SUPABASE = (function () {
             let ok = true;
 
             if (matches.length > 0) {
-                const r = await request('massavu_matches', matches, 'id');
+                const cleanMatches = matches.map(m => ({
+                    id: String(m.id),
+                    competition: m.competition || 'Uganda Premier League',
+                    date: m.date || '',
+                    kickoffUtc: m.kickoffUtc || new Date().toISOString(),
+                    status: m.status || 'Scheduled',
+                    home: m.home || m.homeTeam || '',
+                    away: m.away || m.awayTeam || '',
+                    scoreH: (m.scoreH !== undefined && m.scoreH !== null) ? Number(m.scoreH) : (Number(m.homeScore) || 0),
+                    scoreA: (m.scoreA !== undefined && m.scoreA !== null) ? Number(m.scoreA) : (Number(m.awayScore) || 0)
+                }));
+                const r = await request('massavu_matches', cleanMatches, 'id');
                 if (!r) ok = false;
             }
 
