@@ -1763,24 +1763,32 @@ CREATE TABLE massavu_lineups (match_id text primary key, lineup jsonb, saved_at 
             return raw ? JSON.parse(raw) : [];
         }
 
-        function saveMatchResult(e) {
+        function saveMatchFixture(e) {
             e.preventDefault();
             const editId = document.getElementById('matchEditId') ? document.getElementById('matchEditId').value : '';
-            const competition = document.getElementById('resCompetition') ? document.getElementById('resCompetition').value : 'Uganda Premier League';
-            const dateInput = document.getElementById('resDate') ? document.getElementById('resDate').value : '';
-            const status = document.getElementById('resStatus') ? document.getElementById('resStatus').value : 'FT';
-            const home = document.getElementById('resHomeTeam') ? document.getElementById('resHomeTeam').value.trim() : '';
-            const away = document.getElementById('resAwayTeam') ? document.getElementById('resAwayTeam').value.trim() : '';
-            const scoreH = parseInt(document.getElementById('resHomeScore') ? document.getElementById('resHomeScore').value : '0', 10) || 0;
-            const scoreA = parseInt(document.getElementById('resAwayScore') ? document.getElementById('resAwayScore').value : '0', 10) || 0;
+            const competition = (document.getElementById('matchComp') && document.getElementById('matchComp').value) ||
+                (document.getElementById('resCompetition') && document.getElementById('resCompetition').value) || 'Uganda Premier League';
+            const kickoffLocal = (document.getElementById('matchKickoff') && document.getElementById('matchKickoff').value) ||
+                (document.getElementById('resDate') && document.getElementById('resDate').value) || '';
+            const status = (document.getElementById('matchStatus') && document.getElementById('matchStatus').value) ||
+                (document.getElementById('resStatus') && document.getElementById('resStatus').value) || 'Scheduled';
+            const home = (document.getElementById('matchHomeTeamSelect') && document.getElementById('matchHomeTeamSelect').value.trim()) ||
+                (document.getElementById('resHomeTeam') && document.getElementById('resHomeTeam').value.trim()) || '';
+            const away = (document.getElementById('matchAwayTeamSelect') && document.getElementById('matchAwayTeamSelect').value.trim()) ||
+                (document.getElementById('resAwayTeam') && document.getElementById('resAwayTeam').value.trim()) || '';
+            const scoreH = parseInt((document.getElementById('matchHomeScoreInput') && document.getElementById('matchHomeScoreInput').value) ||
+                (document.getElementById('resHomeScore') && document.getElementById('resHomeScore').value) || '0', 10) || 0;
+            const scoreA = parseInt((document.getElementById('matchAwayScoreInput') && document.getElementById('matchAwayScoreInput').value) ||
+                (document.getElementById('resAwayScore') && document.getElementById('resAwayScore').value) || '0', 10) || 0;
 
             if (!home || !away) { alert('Please enter both Home and Away team names.'); return; }
             if (home.toLowerCase() === away.toLowerCase()) { alert('Home team and Away team must be different.'); return; }
 
-            const dateObj = dateInput ? new Date(dateInput) : new Date();
+            const dateObj = kickoffLocal ? new Date(kickoffLocal) : new Date();
             const pad = n => String(n).padStart(2, '0');
             const kickoffUtc = dateObj.toISOString();
             const dateStr = `${dateObj.getFullYear()}-${pad(dateObj.getMonth() + 1)}-${pad(dateObj.getDate())}`;
+            const timeStr = `${pad(dateObj.getHours())}:${pad(dateObj.getMinutes())}`;
 
             let matches = getStoredMatches();
             const matchData = {
@@ -1788,7 +1796,7 @@ CREATE TABLE massavu_lineups (match_id text primary key, lineup jsonb, saved_at 
                 competition,
                 kickoffUtc,
                 date: dateStr,
-                time: status === 'FT' ? 'FT' : '16:00',
+                time: status === 'FT' ? 'FT' : (timeStr === '00:00' ? '16:00' : timeStr),
                 home,
                 homeTeam: home,
                 away,
@@ -1811,20 +1819,24 @@ CREATE TABLE massavu_lineups (match_id text primary key, lineup jsonb, saved_at 
                 window.MASSAVU_SUPABASE.saveMatch(matchData);
             }
             recalculateStandingsEngine();
-            alert(`Fixture/Result "${home} vs ${away}" for ${competition} saved successfully!`);
+            alert(`Fixture/Match "${home} vs ${away}" for ${competition} saved successfully!`);
             resetMatchForm();
             renderMatchesTable();
         }
 
-        function saveMatchFixture(e) {
-            saveMatchResult(e);
+        function saveMatchResult(e) {
+            saveMatchFixture(e);
         }
 
         function resetMatchForm() {
-            const form = document.getElementById('resultForm');
-            if (form) form.reset();
+            const f1 = document.getElementById('matchManagerForm');
+            if (f1) f1.reset();
+            const f2 = document.getElementById('resultForm');
+            if (f2) f2.reset();
             const editEl = document.getElementById('matchEditId');
             if (editEl) editEl.value = '';
+            const saveBtn = document.getElementById('saveMatchBtn');
+            if (saveBtn) saveBtn.innerHTML = `<i class="fa-solid fa-floppy-disk" style="margin-right:6px;"></i>Save Match`;
         }
 
         window.editMatchFixture = (id) => {
@@ -1832,11 +1844,17 @@ CREATE TABLE massavu_lineups (match_id text primary key, lineup jsonb, saved_at 
             const m = matches.find(x => x.id == id);
             if (!m) return;
             if (document.getElementById('matchEditId')) document.getElementById('matchEditId').value = m.id;
+            if (document.getElementById('matchComp')) document.getElementById('matchComp').value = m.competition || 'Uganda Premier League';
             if (document.getElementById('resCompetition')) document.getElementById('resCompetition').value = m.competition || 'Uganda Premier League';
+            if (document.getElementById('matchStatus')) document.getElementById('matchStatus').value = m.status || 'FT';
             if (document.getElementById('resStatus')) document.getElementById('resStatus').value = m.status || 'FT';
+            if (document.getElementById('matchHomeTeamSelect')) document.getElementById('matchHomeTeamSelect').value = m.home || m.homeTeam || '';
             if (document.getElementById('resHomeTeam')) document.getElementById('resHomeTeam').value = m.home || m.homeTeam || '';
+            if (document.getElementById('matchAwayTeamSelect')) document.getElementById('matchAwayTeamSelect').value = m.away || m.awayTeam || '';
             if (document.getElementById('resAwayTeam')) document.getElementById('resAwayTeam').value = m.away || m.awayTeam || '';
+            if (document.getElementById('matchHomeScoreInput')) document.getElementById('matchHomeScoreInput').value = m.scoreH ?? m.homeScore ?? 0;
             if (document.getElementById('resHomeScore')) document.getElementById('resHomeScore').value = m.scoreH ?? m.homeScore ?? 0;
+            if (document.getElementById('matchAwayScoreInput')) document.getElementById('matchAwayScoreInput').value = m.scoreA ?? m.awayScore ?? 0;
             if (document.getElementById('resAwayScore')) document.getElementById('resAwayScore').value = m.scoreA ?? m.awayScore ?? 0;
             if (document.getElementById('resDate') && m.date) document.getElementById('resDate').value = m.date;
 
@@ -2374,27 +2392,7 @@ CREATE TABLE massavu_lineups (match_id text primary key, lineup jsonb, saved_at 
         // ============================================================
         // RESULTS TAB (legacy scoreboard entry form)
         // ============================================================
-        function saveMatchResult(e) {
-            e.preventDefault();
-            const competition = document.getElementById('resCompetition').value;
-            const date = document.getElementById('resDate').value;
-            const home = document.getElementById('resHomeTeam').value.trim();
-            const away = document.getElementById('resAwayTeam').value.trim();
-            const scoreH = parseInt(document.getElementById('resHomeScore').value, 10) || 0;
-            const scoreA = parseInt(document.getElementById('resAwayScore').value, 10) || 0;
-            if (!home || !away) { alert('Please enter both team names.'); return; }
-            if (home.toLowerCase() === away.toLowerCase()) { alert('Home and Away teams cannot be the same.'); return; }
-            const results = getStoredMatches();
-            results.unshift({ id: Date.now(), competition, date, kickoffUtc: date ? new Date(date).toISOString() : new Date().toISOString(), home, away, scoreH, scoreA, status: 'FT' });
-            localStorage.setItem('massavu_match_results', JSON.stringify(results));
-            recalculateStandingsEngine();
-            alert(`Result saved! Standings for "${competition}" recalculated.`);
-            document.getElementById('resHomeTeam').value = '';
-            document.getElementById('resAwayTeam').value = '';
-            document.getElementById('resHomeScore').value = '0';
-            document.getElementById('resAwayScore').value = '0';
-            renderResultsLog();
-        }
+
 
         window.deleteMatchResult = (id) => {
             if (!confirm('Delete this result? Standings will auto-recalculate.')) return;
