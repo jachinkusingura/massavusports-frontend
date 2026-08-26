@@ -879,10 +879,9 @@
                                 <label
                                     style="font-size:0.8rem; font-weight:800; color:#facc15; text-transform:uppercase; letter-spacing:0.05em;">🏠
                                     Home Team</label>
-                                <select id="matchHomeTeamSelect" class="form-control" required
+                                <input type="text" id="matchHomeTeamSelect" class="form-control" list="allTeamsDatalist"
+                                    placeholder="e.g. Express FC" required
                                     style="margin-top:0.5rem; font-size:1rem; font-weight:700;">
-                                    <option value="">— Select Home Team —</option>
-                                </select>
                             </div>
                             <!-- Score (only shown in result mode) -->
                             <div id="scoreBlock"
@@ -911,10 +910,9 @@
                                 <label
                                     style="font-size:0.8rem; font-weight:800; color:#3b82f6; text-transform:uppercase; letter-spacing:0.05em;">✈️
                                     Away Team</label>
-                                <select id="matchAwayTeamSelect" class="form-control" required
+                                <input type="text" id="matchAwayTeamSelect" class="form-control" list="allTeamsDatalist"
+                                    placeholder="e.g. KCCA FC" required
                                     style="margin-top:0.5rem; font-size:1rem; font-weight:700; text-align:right;">
-                                    <option value="">— Select Away Team —</option>
-                                </select>
                             </div>
                         </div>
                     </div>
@@ -929,6 +927,10 @@
                         <button type="button" onclick="resetMatchForm()"
                             style="padding:0.9rem 1.5rem; border-radius:10px; border:1px solid #334155; background:#1e293b; color:#94a3b8; font-weight:700; font-size:0.9rem; cursor:pointer;">
                             <i class="fa-solid fa-xmark"></i> Clear
+                        </button>
+                        <button type="button" id="deleteMatchBtn" onclick="deleteCurrentMatchEditing()"
+                            style="display:none; padding:0.9rem 1.5rem; border-radius:10px; border:1px solid rgba(239,68,68,0.5); background:rgba(239,68,68,0.2); color:#ef4444; font-weight:800; font-size:0.9rem; cursor:pointer;">
+                            <i class="fa-solid fa-trash"></i> Delete Match
                         </button>
                     </div>
                 </form>
@@ -1863,19 +1865,42 @@ ALTER TABLE IF EXISTS massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
 
         function populateTeamSelects() {
             const teams = getStoredTeams();
+            const allNames = new Set();
+            teams.forEach(t => { if (t && t.name) allNames.add(t.name.trim()); });
+
+            // Include teams from stored matches
+            const storedMatches = getStoredMatches();
+            storedMatches.forEach(m => {
+                if (m.home) allNames.add(m.home.trim());
+                if (m.homeTeam) allNames.add(m.homeTeam.trim());
+                if (m.away) allNames.add(m.away.trim());
+                if (m.awayTeam) allNames.add(m.awayTeam.trim());
+            });
+
+            // Include teams from seed matches if defined
+            if (typeof seedMatches !== 'undefined') {
+                seedMatches.forEach(m => {
+                    if (m.home) allNames.add(m.home.trim());
+                    if (m.away) allNames.add(m.away.trim());
+                });
+            }
+
+            const teamListSorted = Array.from(allNames).filter(Boolean).sort();
+
             const datalist = document.getElementById('allTeamsDatalist');
             if (datalist) {
-                datalist.innerHTML = teams.map(t => `<option value="${t.name}">`).join('');
+                datalist.innerHTML = teamListSorted.map(name => `<option value="${name}">`).join('');
             }
+
             const blankOpt = `<option value="">\u2014 Select Team \u2014</option>`;
-            const options = blankOpt + teams.map(t => `<option value="${t.name}">${t.name}</option>`).join('');
-            const allSelects = ['eventHomeTeam', 'eventAwayTeam', 'matchHomeTeamSelect', 'matchAwayTeamSelect'];
-            allSelects.forEach(id => {
+            const options = blankOpt + teamListSorted.map(name => `<option value="${name}">${name}</option>`).join('');
+            const selectIds = ['eventHomeTeam', 'eventAwayTeam'];
+            selectIds.forEach(id => {
                 const el = document.getElementById(id);
                 if (!el) return;
                 const curr = el.value;
                 el.innerHTML = options;
-                if (curr && teams.some(t => t.name === curr)) el.value = curr;
+                if (curr && teamListSorted.includes(curr)) el.value = curr;
             });
         }
 
@@ -1955,7 +1980,7 @@ ALTER TABLE IF EXISTS massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
             };
 
             if (editId) {
-                matches = matches.map(m => m.id == editId ? matchData : m);
+                matches = matches.map(m => String(m.id) === String(editId) ? matchData : m);
             } else {
                 matches.unshift(matchData);
             }
@@ -1964,6 +1989,7 @@ ALTER TABLE IF EXISTS massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
             if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.saveMatch === 'function') {
                 window.MASSAVU_SUPABASE.saveMatch(matchData);
             }
+            populateTeamSelects();
             recalculateStandingsEngine();
             alert(`Fixture "${home} vs ${away}" for ${competition} saved successfully!`);
             resetMatchForm();
@@ -2008,7 +2034,7 @@ ALTER TABLE IF EXISTS massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
             };
 
             if (editId) {
-                matches = matches.map(m => m.id == editId ? matchData : m);
+                matches = matches.map(m => String(m.id) === String(editId) ? matchData : m);
             } else {
                 matches.unshift(matchData);
             }
@@ -2017,6 +2043,7 @@ ALTER TABLE IF EXISTS massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
             if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.saveMatch === 'function') {
                 window.MASSAVU_SUPABASE.saveMatch(matchData);
             }
+            populateTeamSelects();
             recalculateStandingsEngine();
             alert(`Match Result "${home} vs ${away}" for ${competition} saved successfully!`);
             resetMatchForm();
@@ -2028,14 +2055,19 @@ ALTER TABLE IF EXISTS massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
             if (f1) f1.reset();
             const editEl = document.getElementById('matchEditId');
             if (editEl) editEl.value = '';
+            const delBtn = document.getElementById('deleteMatchBtn');
+            if (delBtn) delBtn.style.display = 'none';
             setMatchMode('fixture');
         }
 
         window.editMatchFixture = (id) => {
             const matches = getStoredMatches();
-            const m = matches.find(x => x.id == id);
+            let m = matches.find(x => String(x.id) === String(id));
+            if (!m && typeof seedMatches !== 'undefined') {
+                m = seedMatches.find(x => String(x.id) === String(id));
+            }
             if (!m) return;
-            // Switch to the correct mode
+
             const isResult = m.status === 'FT';
             setMatchMode(isResult ? 'result' : 'fixture');
             if (document.getElementById('matchEditId')) document.getElementById('matchEditId').value = m.id;
@@ -2045,20 +2077,48 @@ ALTER TABLE IF EXISTS massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
             if (document.getElementById('matchAwayTeamSelect')) document.getElementById('matchAwayTeamSelect').value = m.away || m.awayTeam || '';
             if (document.getElementById('matchHomeScoreInput')) document.getElementById('matchHomeScoreInput').value = m.scoreH ?? m.homeScore ?? 0;
             if (document.getElementById('matchAwayScoreInput')) document.getElementById('matchAwayScoreInput').value = m.scoreA ?? m.awayScore ?? 0;
-            if (document.getElementById('matchKickoff') && m.kickoffUtc) {
-                const d = new Date(m.kickoffUtc);
-                const pad = n => String(n).padStart(2, '0');
-                const local = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-                document.getElementById('matchKickoff').value = local;
+            if (document.getElementById('matchKickoff')) {
+                let dateVal = m.kickoffUtc || m.kickoffutc;
+                if (!dateVal && m.date) {
+                    dateVal = `${m.date}T${m.time && m.time !== 'FT' ? m.time : '16:00'}:00Z`;
+                }
+                if (dateVal) {
+                    try {
+                        const d = new Date(dateVal);
+                        const pad = n => String(n).padStart(2, '0');
+                        const local = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+                        document.getElementById('matchKickoff').value = local;
+                    } catch (e) {
+                        console.warn('Could not parse kickoff date:', dateVal);
+                    }
+                }
             }
+
+            const title = document.getElementById('quickPostTitle');
+            if (title) title.innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Edit Match #${m.id} (${m.home || m.homeTeam} vs ${m.away || m.awayTeam})`;
+            const btnLabel = document.getElementById('saveMatchBtnLabel');
+            if (btnLabel) btnLabel.textContent = isResult ? 'Update Result' : 'Update Fixture';
+            const delBtn = document.getElementById('deleteMatchBtn');
+            if (delBtn) delBtn.style.display = 'inline-flex';
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.deleteCurrentMatchEditing = () => {
+            const editId = document.getElementById('matchEditId') ? document.getElementById('matchEditId').value : '';
+            if (!editId) { alert('No match selected for deletion.'); return; }
+            deleteMatchFixture(editId);
         };
 
         window.deleteMatchFixture = (id) => {
             if (!confirm('Delete this match fixture? Standings will auto-recalculate.')) return;
-            let matches = getStoredMatches().filter(m => m.id != id);
+            let matches = getStoredMatches().filter(m => String(m.id) !== String(id));
             localStorage.setItem('massavu_match_results', JSON.stringify(matches));
+            if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.deleteMatch === 'function') {
+                window.MASSAVU_SUPABASE.deleteMatch(id);
+            }
             recalculateStandingsEngine();
+            resetMatchForm();
             renderMatchesTable();
         };
 

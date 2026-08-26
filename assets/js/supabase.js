@@ -135,6 +135,28 @@ window.MASSAVU_SUPABASE = (function () {
             return await request('massavu_matches', [supaPayload]);
         },
 
+        /** Delete a single match fixture/result from cloud and local storage */
+        deleteMatch: async function (matchId) {
+            const { url, key } = getCreds();
+            if (!url || !key || key.length < 20) {
+                return false;
+            }
+            try {
+                const endpoint = `${url}/rest/v1/massavu_matches?id=eq.${matchId}`;
+                const res = await fetch(endpoint, {
+                    method: 'DELETE',
+                    headers: {
+                        'apikey': key,
+                        'Authorization': `Bearer ${key}`
+                    }
+                });
+                return res.ok;
+            } catch (err) {
+                console.error('[MassavuSupa] Error deleting match from cloud:', err.message);
+                return false;
+            }
+        },
+
         /** Save (upsert) league standings */
         saveStandings: async function (leagueName, standingsArray) {
             const standings = JSON.parse(localStorage.getItem(STORAGE_KEYS.STANDINGS) || '{}');
