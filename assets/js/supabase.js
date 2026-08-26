@@ -1,5 +1,5 @@
 /**
- * MassavuSports — Supabase Database Cloud Persistence Layer v2
+ * MassavuSports — Supabase Database Cloud Persistence Layer v3
  * Dynamically reads credentials from localStorage on every call.
  * Tables required:
  *   massavu_matches, massavu_standings, massavu_lineups
@@ -7,7 +7,7 @@
 
 window.MASSAVU_SUPABASE = (function () {
 
-    // Default project URL — user can override via the Settings panel
+    // Default project URL & anon key — user can override via the Settings panel
     const DEFAULT_URL = 'https://enjwjpjuyeedqfintqzt.supabase.co';
     const DEFAULT_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVuandqcGp1eWVlZHFmaW50cXp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2NTU0OTQsImV4cCI6MjA5MzIzMTQ5NH0.AY7tdZar9qmA0Cyd5FLQgn12nTBROKTGGtlkNv9szio';
 
@@ -48,9 +48,6 @@ window.MASSAVU_SUPABASE = (function () {
             if (!res.ok) {
                 const txt = await res.text();
                 console.error(`[MassavuSupa] ❌ ${table} HTTP ${res.status}:`, txt);
-                if (res.status === 404 || res.status === 400) {
-                    console.error('[MassavuSupa] Table may not exist. Run the SQL setup in Admin Panel → Settings → System Settings.');
-                }
             }
             return res.ok;
         } catch (err) {
@@ -60,6 +57,7 @@ window.MASSAVU_SUPABASE = (function () {
     }
 
     return {
+        getCreds: getCreds,
 
         /** Save (upsert) a single match fixture/result */
         saveMatch: async function (matchObj) {
@@ -116,9 +114,6 @@ window.MASSAVU_SUPABASE = (function () {
                 if (!res.ok) {
                     const txt = await res.text();
                     console.error(`[MassavuSupa] ❌ loadMatchesFromCloud HTTP ${res.status}:`, txt);
-                    if (res.status === 404 || res.status === 400 || res.status === 406) {
-                        console.error('[MassavuSupa] The massavu_matches table does NOT exist. Open Admin Panel → System Settings and run the SQL setup.');
-                    }
                     return false;
                 }
                 const data = await res.json();
@@ -188,6 +183,19 @@ window.MASSAVU_SUPABASE = (function () {
             const standings = JSON.parse(localStorage.getItem(STORAGE_KEYS.STANDINGS) || '{}');
             const lineups = JSON.parse(localStorage.getItem(STORAGE_KEYS.LINEUPS) || '{}');
 
+            // Check if tables exist first
+            const { url, key } = getCreds();
+            try {
+                const checkRes = await fetch(`${url}/rest/v1/massavu_matches?select=id&limit=1`, {
+                    headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+                });
+                if (!checkRes.ok) {
+                    return { ok: false, reason: 'tables_missing', status: checkRes.status };
+                }
+            } catch (e) {
+                return { ok: false, reason: 'network_error', message: e.message };
+            }
+
             let ok = true;
 
             if (matches.length > 0) {
@@ -216,7 +224,7 @@ window.MASSAVU_SUPABASE = (function () {
                 if (!r) ok = false;
             }
 
-            return ok;
+            return { ok: ok };
         },
 
         /** Pull ALL cloud data down into localStorage */
@@ -227,7 +235,7 @@ window.MASSAVU_SUPABASE = (function () {
             return r1 && r2 && r3;
         },
 
-        /** Test connectivity — returns { ok, status, message } */
+        /** Test connectivity — returns { ok, status, message, needsTables } */
         testConnection: async function () {
             const { url, key } = getCreds();
             if (!url || !key || key.length < 20) {
@@ -238,13 +246,14 @@ window.MASSAVU_SUPABASE = (function () {
                     headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
                 });
                 if (res.ok) {
-                    return { ok: true, message: 'Connection successful! Tables exist and Supabase is reachable.' };
+                    return { ok: true, message: 'Connection successful! Supabase tables exist and cloud sync is ready.' };
                 }
-                if (res.status === 404 || res.status === 400) {
+                if (res.status === 404 || res.status === 400 || res.status === 406) {
                     return {
                         ok: false,
                         status: res.status,
-                        message: `Credentials valid ✅ but tables not found (HTTP ${res.status}). Run the SQL setup script in Supabase to create massavu_matches, massavu_standings, and massavu_lineups tables.`
+                        needsTables: true,
+                        message: `Connected to Supabase ✅ but database tables do not exist yet (HTTP ${res.status}).`
                     };
                 }
                 if (res.status === 401 || res.status === 403) {
@@ -263,10 +272,8 @@ window.MASSAVU_SUPABASE = (function () {
 (function prefillSupaCredentials() {
     const BAKED_URL = 'https://enjwjpjuyeedqfintqzt.supabase.co';
     const BAKED_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVuandqcGp1eWVlZHFmaW50cXp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2NTU0OTQsImV4cCI6MjA5MzIzMTQ5NH0.AY7tdZar9qmA0Cyd5FLQgn12nTBROKTGGtlkNv9szio';
-    // Seed localStorage if empty
     if (!localStorage.getItem('massavu_supa_url')) localStorage.setItem('massavu_supa_url', BAKED_URL);
     if (!localStorage.getItem('massavu_supa_key')) localStorage.setItem('massavu_supa_key', BAKED_KEY);
-    // Fill the visible input fields
     const urlEl = document.getElementById('supabaseUrlInput');
     const keyEl = document.getElementById('supabaseKeyInput');
     if (urlEl) urlEl.value = localStorage.getItem('massavu_supa_url') || BAKED_URL;

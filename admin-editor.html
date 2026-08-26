@@ -1358,15 +1358,21 @@ ALTER TABLE massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
                 status.innerHTML = '<span style="color:#ef4444;">❌ supabase.js not loaded. Refresh the page and try again.</span>';
                 return;
             }
-            const ok = await window.MASSAVU_SUPABASE.syncAllToCloud();
-            if (ok) {
+            const res = await window.MASSAVU_SUPABASE.syncAllToCloud();
+            if (res && res.ok) {
                 status.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> <strong>Sync complete!</strong> All fixtures, standings &amp; lineups pushed to Supabase cloud.';
+            } else if (res && res.reason === 'tables_missing') {
+                status.innerHTML = '<div style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); padding:1rem; border-radius:10px; color:#f87171; margin-top:0.75rem;">' +
+                    '<strong style="font-size:1rem;">⚠️ Database Tables Not Found in Supabase Yet</strong><br>' +
+                    '<p style="color:#cbd5e1; font-size:0.85rem; margin:0.5rem 0 0.75rem;">Your Supabase credentials are valid, but the database tables (<code>massavu_matches</code>, <code>massavu_standings</code>, <code>massavu_lineups</code>) have not been created in your Supabase project yet.</p>' +
+                    '<div style="display:flex; gap:10px; flex-wrap:wrap;">' +
+                    '<button type="button" onclick="copySupaSql()" style="background:#facc15; color:#0f172a; border:none; border-radius:6px; padding:0.4rem 1rem; font-weight:800; font-size:0.85rem; cursor:pointer;">' +
+                    '<i class="fa-solid fa-copy"></i> 1. Copy SQL Code</button>' +
+                    '<a href="https://supabase.com/dashboard/project/enjwjpjuyeedqfintqzt/sql/new" target="_blank" style="background:#38bdf8; color:#0f172a; border:none; border-radius:6px; padding:0.4rem 1rem; font-weight:800; font-size:0.85rem; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">' +
+                    '<i class="fa-solid fa-arrow-up-right-from-square"></i> 2. Open Supabase SQL Editor &amp; Click RUN</a>' +
+                    '</div></div>';
             } else {
-                status.innerHTML = '<div style="background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.4); padding:0.8rem; border-radius:8px; color:#f87171;">' +
-                    '<strong>❌ Sync Failed: Tables do not exist in Supabase database yet.</strong><br>' +
-                    '<span style="color:#cbd5e1; font-size:0.8rem;">Supabase security blocks public web apps from creating database tables automatically.<br>' +
-                    'Please click <strong>"Copy SQL Code"</strong> above, open the SQL Editor link, paste and click <strong>RUN</strong> once.</span>' +
-                    '</div>';
+                status.innerHTML = '<span style="color:#ef4444;">❌ Sync failed. Check your network connection and Supabase URL/Key credentials.</span>';
             }
         }
 
@@ -1381,11 +1387,10 @@ ALTER TABLE massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
             const ok = await window.MASSAVU_SUPABASE.pullAllFromCloud();
             if (ok) {
                 status.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> <strong>Pull complete!</strong> Cloud data loaded into admin panel. Refreshing lists…';
-                // Re-render any currently visible tables
                 if (typeof renderMatchesTable === 'function') renderMatchesTable();
                 if (typeof renderStandingsAdminTab === 'function') renderStandingsAdminTab();
             } else {
-                status.innerHTML = '<span style="color:#ef4444;">❌ Pull failed. Check your API key and table policies.</span>';
+                status.innerHTML = '<span style="color:#ef4444;">❌ Pull failed. Check that tables exist in your Supabase project (see SQL block above).</span>';
             }
         }
 
@@ -1399,7 +1404,12 @@ ALTER TABLE massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
             }
             const result = await window.MASSAVU_SUPABASE.testConnection();
             if (result.ok) {
-                status.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> <strong>Connection successful!</strong> Supabase is fully reachable.';
+                status.innerHTML = '<i class="fa-solid fa-circle-check" style="color:#4ade80;"></i> <strong>Connection successful!</strong> Supabase project is connected and tables exist.';
+            } else if (result.needsTables) {
+                status.innerHTML = `<div style="background:rgba(250,204,21,0.15); border:1px solid rgba(250,204,21,0.4); padding:0.8rem; border-radius:8px; color:#facc15;">` +
+                    `<strong>⚠️ ${result.message}</strong><br>` +
+                    `<span style="color:#cbd5e1; font-size:0.82rem;">Click <strong>"Copy SQL Code"</strong> above, then <strong>"Open Supabase SQL Editor"</strong>, paste and click <strong>RUN</strong> to create the tables.</span>` +
+                    `</div>`;
             } else {
                 status.innerHTML = `<span style="color:#ef4444;">❌ ${result.message}</span>`;
             }
