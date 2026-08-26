@@ -19,8 +19,17 @@ window.MASSAVU_SUPABASE = (function () {
 
     /** Always reads credentials fresh from localStorage — falls back to hardcoded defaults */
     function getCreds() {
-        const url = (localStorage.getItem('massavu_supa_url') || DEFAULT_URL).trim();
-        const key = (localStorage.getItem('massavu_supa_key') || DEFAULT_KEY).trim();
+        let url = (localStorage.getItem('massavu_supa_url') || '').trim();
+        let key = (localStorage.getItem('massavu_supa_key') || '').trim();
+
+        if (!url || !url.startsWith('http')) {
+            url = DEFAULT_URL;
+            localStorage.setItem('massavu_supa_url', DEFAULT_URL);
+        }
+        if (!key || key.length < 50 || key.includes('your_')) {
+            key = DEFAULT_KEY;
+            localStorage.setItem('massavu_supa_key', DEFAULT_KEY);
+        }
         return { url, key };
     }
 
