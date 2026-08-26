@@ -165,6 +165,52 @@ window.MASSAVU_SUPABASE = (function () {
             return await request('massavu_standings', { league: leagueName, data: standingsArray });
         },
 
+        /** Save (upsert) competition */
+        saveCompetition: async function (compObj) {
+            const comps = JSON.parse(localStorage.getItem('massavu_competitions') || '[]');
+            const idx = comps.findIndex(c => c.name === compObj.name);
+            if (idx >= 0) comps[idx] = { ...comps[idx], ...compObj };
+            else comps.unshift(compObj);
+            localStorage.setItem('massavu_competitions', JSON.stringify(comps));
+            return await request('massavu_competitions', compObj);
+        },
+
+        /** Delete competition */
+        deleteCompetition: async function (compName) {
+            const { url, key } = getCreds();
+            if (!url || !key || key.length < 20) return false;
+            try {
+                const res = await fetch(`${url}/rest/v1/massavu_competitions?name=eq.${encodeURIComponent(compName)}`, {
+                    method: 'DELETE',
+                    headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+                });
+                return res.ok;
+            } catch (err) { return false; }
+        },
+
+        /** Save (upsert) team */
+        saveTeam: async function (teamObj) {
+            const teams = JSON.parse(localStorage.getItem('massavu_teams') || '[]');
+            const idx = teams.findIndex(t => t.name === teamObj.name);
+            if (idx >= 0) teams[idx] = { ...teams[idx], ...teamObj };
+            else teams.unshift(teamObj);
+            localStorage.setItem('massavu_teams', JSON.stringify(teams));
+            return await request('massavu_teams', teamObj);
+        },
+
+        /** Delete team */
+        deleteTeam: async function (teamName) {
+            const { url, key } = getCreds();
+            if (!url || !key || key.length < 20) return false;
+            try {
+                const res = await fetch(`${url}/rest/v1/massavu_teams?name=eq.${encodeURIComponent(teamName)}`, {
+                    method: 'DELETE',
+                    headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+                });
+                return res.ok;
+            } catch (err) { return false; }
+        },
+
         /** Save (upsert) team lineup for a match */
         saveLineup: async function (matchId, lineupData) {
             const lineups = JSON.parse(localStorage.getItem(STORAGE_KEYS.LINEUPS) || '{}');
