@@ -1288,29 +1288,35 @@ CREATE TABLE IF NOT EXISTS massavu_matches (
     id text primary key,
     competition text,
     date text,
-    kickoffUtc text,
+    "kickoffUtc" text,
     status text,
     home text,
     away text,
-    scoreH int default 0,
-    scoreA int default 0,
+    "scoreH" int default 0,
+    "scoreA" int default 0,
     created_at timestamptz default now()
 );
+
 CREATE TABLE IF NOT EXISTS massavu_standings (
     id uuid default gen_random_uuid() primary key,
     league text unique,
     data jsonb,
     updated_at timestamptz default now()
 );
+
 CREATE TABLE IF NOT EXISTS massavu_lineups (
     match_id text primary key,
     lineup jsonb,
     saved_at timestamptz default now()
 );
 
-ALTER TABLE massavu_matches DISABLE ROW LEVEL SECURITY;
-ALTER TABLE massavu_standings DISABLE ROW LEVEL SECURITY;
-ALTER TABLE massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
+-- Ensure id column is text (if table was created previously as bigint)
+ALTER TABLE IF EXISTS massavu_matches ALTER COLUMN id TYPE text USING id::text;
+
+-- Disable Row Level Security so public sync works without policy errors
+ALTER TABLE IF EXISTS massavu_matches DISABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS massavu_standings DISABLE ROW LEVEL SECURITY;
+ALTER TABLE IF EXISTS massavu_lineups DISABLE ROW LEVEL SECURITY;</pre>
             </div>
 
             <div style="display:flex; gap:1rem; flex-wrap:wrap;">
