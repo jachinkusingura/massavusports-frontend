@@ -1044,19 +1044,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const prevDayBtn = document.createElement('button');
         prevDayBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i> Prev Day';
         prevDayBtn.style.cssText = btnStyle;
-        prevDayBtn.onclick = () => {
-            const prevD = new Date(selectedDate);
-            prevD.setDate(prevD.getDate() - 1);
-            onSelectDate(prevD);
+        prevDayBtn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const cur = new Date(selectedDate.getTime());
+            cur.setDate(cur.getDate() - 1);
+            onSelectDate(cur);
         };
 
         const nextDayBtn = document.createElement('button');
         nextDayBtn.innerHTML = 'Next Day <i class="fa-solid fa-chevron-right"></i>';
         nextDayBtn.style.cssText = btnStyle;
-        nextDayBtn.onclick = () => {
-            const nextD = new Date(selectedDate);
-            nextD.setDate(nextD.getDate() + 1);
-            onSelectDate(nextD);
+        nextDayBtn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const cur = new Date(selectedDate.getTime());
+            cur.setDate(cur.getDate() + 1);
+            onSelectDate(cur);
         };
 
         controls.append(prevDayBtn, nextDayBtn);

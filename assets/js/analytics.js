@@ -40,14 +40,13 @@ function getDeviceInfo() {
     return { device, browser };
 }
 
-// ── GEO COUNTRY (anonymised) ─────────────────────────────────────────────────
+// ── GEO COUNTRY (anonymised & CORS-safe) ─────────────────────────────────────
 async function getCountry() {
     try {
-        const res = await fetch('https://ipapi.co/json/', { cache: 'no-store' });
-        if (!res.ok) return {};
-        const data = await res.json();
-        return { country: data.country_name || '', city: data.city || '' };
-    } catch { return {}; }
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+        const parts = tz.split('/');
+        return { country: parts[0] || 'Local', city: parts[1] || 'Local' };
+    } catch { return { country: 'Local', city: 'Local' }; }
 }
 
 // ── STORE VISIT LOCALLY ──────────────────────────────────────────────────────

@@ -889,13 +889,27 @@
             const competition = document.getElementById('matchComp').value;
             const kickoffLocal = document.getElementById('matchKickoff').value;
             const status = document.getElementById('matchStatus').value;
-            const home = document.getElementById('matchHome').value.trim();
-            const away = document.getElementById('matchAway').value.trim();
+            const homeEl = document.getElementById('matchHome');
+            const awayEl = document.getElementById('matchAway');
+            const home = (homeEl ? homeEl.value : '').trim();
+            const away = (awayEl ? awayEl.value : '').trim();
             const scoreH = parseInt(document.getElementById('scoreH').value || '0', 10);
             const scoreA = parseInt(document.getElementById('scoreA').value || '0', 10);
 
-            if (!home || !away) { alert('Please enter both Home and Away team names.'); return; }
-            if (home.toLowerCase() === away.toLowerCase()) { alert('Home and Away teams must be different.'); return; }
+            if (!home) {
+                if (homeEl) homeEl.focus();
+                alert('Please enter a Home Team name.');
+                return;
+            }
+            if (!away) {
+                if (awayEl) awayEl.focus();
+                alert('Please enter an Away Team name.');
+                return;
+            }
+            if (home.toLowerCase() === away.toLowerCase()) {
+                alert('Home and Away teams must be different.');
+                return;
+            }
 
             const dateObj = kickoffLocal ? new Date(kickoffLocal) : new Date();
             const pad = n => String(n).padStart(2, '0');

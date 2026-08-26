@@ -41,6 +41,26 @@ window.MASSAVU_SUPABASE = (function () {
             return false;
         }
 
+        // PostgREST Fix: Ensure every object in a bulk array payload has 100% IDENTICAL keys
+        let cleanPayload = payload;
+        if (Array.isArray(payload) && payload.length > 0) {
+            const masterKeys = new Set();
+            payload.forEach(item => {
+                if (item && typeof item === 'object') {
+                    Object.keys(item).forEach(k => masterKeys.add(k));
+                }
+            });
+            const keyList = Array.from(masterKeys);
+            cleanPayload = payload.map(item => {
+                const norm = {};
+                keyList.forEach(k => {
+                    const val = item ? item[k] : null;
+                    norm[k] = (val !== undefined && val !== null) ? val : null;
+                });
+                return norm;
+            });
+        }
+
         const endpoint = `${url}/rest/v1/${table}`;
         try {
             const res = await fetch(endpoint, {
@@ -51,12 +71,14 @@ window.MASSAVU_SUPABASE = (function () {
                     'Authorization': `Bearer ${key}`,
                     'Prefer': `resolution=merge-duplicates,return=representation`
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(cleanPayload)
             });
 
             if (!res.ok) {
                 const txt = await res.text();
                 console.error(`[MassavuSupa] ❌ ${table} HTTP ${res.status}:`, txt);
+            } else {
+                console.log(`[MassavuSupa] ✅ ${table} sync HTTP ${res.status}`);
             }
             return res.ok;
         } catch (err) {
