@@ -4,9 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Admin Control Studio | MassavuSports</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=5.0.0">
     <script>if (!sessionStorage.getItem('adminToken')) { sessionStorage.setItem('adminToken', 'massavu_admin_token_2026'); }</script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
@@ -690,7 +693,7 @@
     </div>
 
     <!-- Script Container -->
-    <script src="assets/js/supabase.js?v=4.2.0"></script>
+    <script src="assets/js/supabase.js?v=5.0.0"></script>
     <script>
         const STORAGE_KEYS = {
             MATCHES: 'massavu_match_results',
@@ -774,17 +777,35 @@
 
         function saveMatch(e) {
             e.preventDefault();
-            const editId = document.getElementById('matchId').value;
-            const competition = document.getElementById('matchComp').value;
-            const kickoffLocal = document.getElementById('matchKickoff').value;
-            const status = document.getElementById('matchStatus').value;
-            const home = document.getElementById('matchHome').value.trim();
-            const away = document.getElementById('matchAway').value.trim();
-            const scoreH = parseInt(document.getElementById('scoreH').value || '0', 10);
-            const scoreA = parseInt(document.getElementById('scoreA').value || '0', 10);
+            const editId = document.getElementById('matchId') ? document.getElementById('matchId').value : '';
+            const competition = document.getElementById('matchComp') ? document.getElementById('matchComp').value : 'Uganda Premier League';
+            const kickoffLocal = document.getElementById('matchKickoff') ? document.getElementById('matchKickoff').value : '';
+            const status = document.getElementById('matchStatus') ? document.getElementById('matchStatus').value : 'Scheduled';
 
-            if (!home || !away) { alert('Please enter Home and Away team names.'); return; }
-            if (home.toLowerCase() === away.toLowerCase()) { alert('Home and Away teams must be different.'); return; }
+            const homeEl = document.getElementById('matchHome') || document.getElementById('homeTeam');
+            const awayEl = document.getElementById('matchAway') || document.getElementById('awayTeam');
+            const home = (homeEl ? homeEl.value : '').trim();
+            const away = (awayEl ? awayEl.value : '').trim();
+
+            const scoreHEl = document.getElementById('scoreH') || document.getElementById('homeScore');
+            const scoreAEl = document.getElementById('scoreA') || document.getElementById('awayScore');
+            const scoreH = parseInt((scoreHEl ? scoreHEl.value : '0') || '0', 10);
+            const scoreA = parseInt((scoreAEl ? scoreAEl.value : '0') || '0', 10);
+
+            if (!home) {
+                if (homeEl) homeEl.focus();
+                alert('Please enter a Home Team name.');
+                return;
+            }
+            if (!away) {
+                if (awayEl) awayEl.focus();
+                alert('Please enter an Away Team name.');
+                return;
+            }
+            if (home.toLowerCase() === away.toLowerCase()) {
+                alert('Home and Away teams must be different.');
+                return;
+            }
 
             const dateObj = kickoffLocal ? new Date(kickoffLocal) : new Date();
             const pad = n => String(n).padStart(2, '0');

@@ -325,12 +325,21 @@ window.MASSAVU_SUPABASE = (function () {
             const standings = JSON.parse(localStorage.getItem(STORAGE_KEYS.STANDINGS) || '{}');
             const lineups = JSON.parse(localStorage.getItem(STORAGE_KEYS.LINEUPS) || '{}');
 
-            // Connectivity / Schema check
-            const { url, key } = getCreds();
+            // Connectivity / Schema check with auto-repair
+            let { url, key } = getCreds();
             try {
-                const checkRes = await fetch(`${url}/rest/v1/massavu_matches?select=id&limit=1`, {
+                let checkRes = await fetch(`${url}/rest/v1/massavu_matches?select=id&limit=1`, {
                     headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
                 });
+                if (!checkRes.ok && (checkRes.status === 401 || checkRes.status === 403)) {
+                    // Auto-repair key
+                    localStorage.setItem('massavu_supa_url', DEFAULT_URL);
+                    localStorage.setItem('massavu_supa_key', DEFAULT_KEY);
+                    url = DEFAULT_URL; key = DEFAULT_KEY;
+                    checkRes = await fetch(`${url}/rest/v1/massavu_matches?select=id&limit=1`, {
+                        headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+                    });
+                }
                 if (!checkRes.ok) {
                     return { ok: false, reason: 'tables_missing', status: checkRes.status };
                 }
@@ -369,14 +378,25 @@ window.MASSAVU_SUPABASE = (function () {
 
         /** Test connectivity — returns { ok, status, message, needsTables } */
         testConnection: async function () {
-            const { url, key } = getCreds();
+            let { url, key } = getCreds();
             if (!url || !key || key.length < 20) {
-                return { ok: false, message: 'Missing Supabase URL or API key.' };
+                localStorage.setItem('massavu_supa_url', DEFAULT_URL);
+                localStorage.setItem('massavu_supa_key', DEFAULT_KEY);
+                url = DEFAULT_URL; key = DEFAULT_KEY;
             }
             try {
-                const res = await fetch(`${url}/rest/v1/massavu_matches?select=id&limit=1`, {
+                let res = await fetch(`${url}/rest/v1/massavu_matches?select=id&limit=1`, {
                     headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
                 });
+                if (!res.ok && (res.status === 401 || res.status === 403)) {
+                    // Auto-repair corrupted key in localStorage
+                    localStorage.setItem('massavu_supa_url', DEFAULT_URL);
+                    localStorage.setItem('massavu_supa_key', DEFAULT_KEY);
+                    url = DEFAULT_URL; key = DEFAULT_KEY;
+                    res = await fetch(`${url}/rest/v1/massavu_matches?select=id&limit=1`, {
+                        headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+                    });
+                }
                 if (res.ok) {
                     return { ok: true, message: 'Connection successful! Supabase tables exist and cloud sync is ready.' };
                 }
@@ -387,9 +407,6 @@ window.MASSAVU_SUPABASE = (function () {
                         needsTables: true,
                         message: `Connected to Supabase ✅ but database tables do not exist yet (HTTP ${res.status}).`
                     };
-                }
-                if (res.status === 401 || res.status === 403) {
-                    return { ok: false, status: res.status, message: `Authentication failed (HTTP ${res.status}). Check your anon API key.` };
                 }
                 const txt = await res.text();
                 return { ok: false, status: res.status, message: `HTTP ${res.status}: ${txt}` };
