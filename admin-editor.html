@@ -16,7 +16,7 @@
 
         body {
             display: flex;
-            background-color: #0b1329;
+            background: #0b1329;
             color: #f8fafc;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             margin: 0;
@@ -25,29 +25,28 @@
         }
 
         .sidebar {
-            width: 260px;
+            width: 250px;
             background: #060c1c;
             border-right: 1px solid rgba(255, 255, 255, 0.08);
             height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
-            padding: 1.75rem 1.25rem;
+            padding: 1.5rem 1rem;
             display: flex;
             flex-direction: column;
-            color: white;
             z-index: 100;
         }
 
         .sidebar .logo {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 900;
-            color: white;
+            color: #fff;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.5rem;
             text-decoration: none;
-            padding-bottom: 1.2rem;
+            padding-bottom: 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
@@ -56,92 +55,63 @@
         }
 
         .sidebar-menu {
-            margin-top: 1.25rem;
+            margin-top: 1rem;
             display: flex;
             flex-direction: column;
-            gap: 0.4rem;
+            gap: 0.35rem;
         }
 
         .sidebar-menu a {
             display: flex;
             align-items: center;
-            gap: 0.85rem;
-            padding: 0.8rem 1rem;
+            gap: 0.75rem;
+            padding: 0.75rem 0.9rem;
             border-radius: 8px;
             color: #94a3b8;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             text-decoration: none;
             transition: all 0.2s ease;
             cursor: pointer;
         }
 
-        .sidebar-menu a i {
-            font-size: 1.1rem;
-            width: 22px;
-            text-align: center;
-        }
-
-        .sidebar-menu a:hover {
-            background: rgba(250, 204, 21, 0.1);
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: rgba(250, 204, 21, 0.12);
             color: #facc15;
         }
 
-        .sidebar-menu a.active {
-            background: #facc15;
-            color: #0b1329;
-            font-weight: 800;
-            box-shadow: 0 4px 14px rgba(250, 204, 21, 0.3);
-        }
-
-        .logout-btn {
+        .sidebar-footer {
             margin-top: auto;
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            transition: all 0.2s ease;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .logout-btn:hover {
-            background: #ef4444;
-            color: white;
-        }
-
-        .admin-main {
-            margin-left: 260px;
-            padding: 2rem 2.5rem;
+        .main-content {
+            margin-left: 250px;
             flex: 1;
-            width: calc(100% - 260px);
-            min-height: 100vh;
+            padding: 2rem;
+            max-width: calc(100vw - 250px);
         }
 
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.75rem;
+            margin-bottom: 1.5rem;
             background: #111c38;
-            padding: 1rem 1.5rem;
+            padding: 1rem 1.25rem;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
 
         .top-bar-title {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 900;
-            color: #ffffff;
+            color: #fff;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.5rem;
         }
 
         .top-bar-title i {
@@ -151,10 +121,10 @@
         .cloud-badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.4rem 0.9rem;
+            gap: 0.4rem;
+            padding: 0.35rem 0.8rem;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 700;
             background: rgba(34, 197, 94, 0.15);
             color: #4ade80;
@@ -163,198 +133,45 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 1rem;
-            margin-bottom: 1.75rem;
+            margin-bottom: 1.5rem;
         }
 
         .stat-card {
             background: #111c38;
-            padding: 1.25rem;
+            padding: 1.1rem;
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.9rem;
         }
 
         .stat-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 10px;
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
             background: rgba(250, 204, 21, 0.1);
             color: #facc15;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
+        }
+
+        .stat-val {
+            font-size: 1.4rem;
             font-weight: 900;
+            color: #fff;
+            line-height: 1;
         }
 
-        .stat-info h4 {
-            margin: 0;
-            font-size: 0.8rem;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .stat-info .stat-value {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #ffffff;
-            margin-top: 0.2rem;
-        }
-
-        .editor-card {
-            background: #111c38;
-            padding: 1.75rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-        }
-
-        .editor-card h2 {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-top: 0;
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .form-grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.2rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #e2e8f0;
-            font-weight: 700;
-            font-size: 0.85rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.75rem 0.9rem;
-            background: #080e1e;
-            border: 1.5px solid #2a3a5c;
-            border-radius: 8px;
-            color: #ffffff;
-            font-family: inherit;
-            font-size: 0.9rem;
-            font-weight: 600;
-            box-sizing: border-box;
-            transition: all 0.2s ease;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: #facc15;
-            background: #0c152d;
-            box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.2);
-        }
-
-        select.form-control option {
-            background: #0b1329;
-            color: #ffffff;
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            border: none;
-            font-weight: 800;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #facc15, #ca8a04);
-            color: #0b1329;
-            box-shadow: 0 4px 14px rgba(250, 204, 21, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(250, 204, 21, 0.4);
-        }
-
-        .btn-secondary {
-            background: #1e293b;
-            color: #94a3b8;
-            border: 1px solid #334155;
-        }
-
-        .btn-secondary:hover {
-            color: #ffffff;
-            background: #334155;
-        }
-
-        .btn-danger {
-            background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.4);
-        }
-
-        .btn-danger:hover {
-            background: #ef4444;
-            color: #ffffff;
-        }
-
-        .btn-success {
-            background: rgba(34, 197, 94, 0.2);
-            color: #4ade80;
-            border: 1px solid rgba(34, 197, 94, 0.4);
-        }
-
-        .btn-success:hover {
-            background: #22c55e;
-            color: #0b1329;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.88rem;
-            margin-top: 1rem;
-        }
-
-        .data-table th {
-            text-align: left;
-            padding: 10px 12px;
-            color: #94a3b8;
+        .stat-lbl {
             font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 2px solid #1e293b;
-        }
-
-        .data-table td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: #cbd5e1;
-        }
-
-        .data-table tr:hover {
-            background: rgba(255, 255, 255, 0.02);
+            color: #94a3b8;
+            font-weight: 600;
+            margin-top: 2px;
         }
 
         .tab-panel {
@@ -365,411 +182,516 @@
             display: block;
         }
 
-        .status-pill {
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 800;
-            font-size: 0.75rem;
-            text-transform: uppercase;
+        .editor-card {
+            background: #111c38;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .status-scheduled {
-            background: rgba(59, 130, 246, 0.15);
-            color: #60a5fa;
+        .editor-card h2 {
+            margin: 0 0 1.2rem 0;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 0.75rem;
+        }
+
+        .editor-card h2 i {
+            color: #facc15;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            color: #e2e8f0;
+            font-weight: 700;
+            font-size: 0.82rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.7rem 0.85rem;
+            background: #080e1e;
+            border: 1.5px solid #2a3a5c;
+            border-radius: 8px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 600;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #facc15;
+            background: #0c152d;
+        }
+
+        select.form-control option {
+            background: #0b1329;
+            color: #fff;
+        }
+
+        .btn {
+            padding: 0.65rem 1.25rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #facc15, #ca8a04);
+            color: #0b1329;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(250, 204, 21, 0.3);
+        }
+
+        .btn-secondary {
+            background: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .btn-success {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-success:hover {
+            background: #22c55e;
+            color: #fff;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 0.85rem;
+        }
+
+        .data-table th {
+            background: #080e1e;
+            color: #94a3b8;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .status-pill {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.72rem;
+            display: inline-block;
         }
 
         .status-live {
             background: rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            animation: pulse 1.5s infinite;
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.4);
         }
 
         .status-ft {
-            background: rgba(34, 197, 94, 0.15);
-            color: #4ade80;
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+            border: 1px solid rgba(34, 197, 94, 0.4);
         }
 
-        @keyframes pulse {
-            0% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.4;
-            }
-
-            100% {
-                opacity: 1;
-            }
+        .status-scheduled {
+            background: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+            border: 1px solid rgba(59, 130, 246, 0.4);
         }
     </style>
 </head>
 
 <body>
-    <!-- Sidebar Nav -->
+
+    <!-- Sidebar Navigation -->
     <div class="sidebar">
         <a href="index.html" class="logo">
-            <i class="fa-solid fa-trophy" style="color:#facc15;"></i>
-            <span>MASSAVU</span>SPORTS
+            <i class="fa-solid fa-trophy" style="color: #facc15;"></i>
+            Massavu<span>Studio</span>
         </a>
         <div class="sidebar-menu">
-            <a onclick="switchTab('matches')" id="nav-matches" class="active"><i class="fa-solid fa-gamepad"></i>
-                Matches &amp; Fixtures</a>
-            <a onclick="switchTab('competitions')" id="nav-competitions"><i class="fa-solid fa-trophy"></i>
+            <a id="nav-matches" class="active" onclick="switchTab('matches')"><i class="fa-solid fa-futbol"></i>
+                Matches</a>
+            <a id="nav-competitions" onclick="switchTab('competitions')"><i class="fa-solid fa-trophy"></i>
                 Competitions</a>
-            <a onclick="switchTab('teams')" id="nav-teams"><i class="fa-solid fa-shield-halved"></i> Teams</a>
-            <a onclick="switchTab('standings')" id="nav-standings"><i class="fa-solid fa-table-list"></i> Standings</a>
-            <a onclick="switchTab('lineups')" id="nav-lineups"><i class="fa-solid fa-users"></i> Lineups</a>
-            <a onclick="switchTab('posts')" id="nav-posts"><i class="fa-solid fa-newspaper"></i> News &amp; Events</a>
-            <a onclick="switchTab('settings')" id="nav-settings"><i class="fa-solid fa-sliders"></i> Sync &amp;
-                Backup</a>
+            <a id="nav-teams" onclick="switchTab('teams')"><i class="fa-solid fa-shield-halved"></i> Teams</a>
+            <a id="nav-standings" onclick="switchTab('standings')"><i class="fa-solid fa-table-list"></i> Standings</a>
+            <a id="nav-lineups" onclick="switchTab('lineups')"><i class="fa-solid fa-users-gear"></i> Lineups</a>
+            <a id="nav-posts" onclick="switchTab('posts')"><i class="fa-solid fa-newspaper"></i> News Posts</a>
+            <a id="nav-settings" onclick="switchTab('settings')"><i class="fa-solid fa-sliders"></i> Sync & Backup</a>
         </div>
-        <button class="logout-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout Studio</button>
+        <div class="sidebar-footer">
+            <a id="logoutBtn" style="color:#f87171; cursor:pointer;"><i class="fa-solid fa-right-from-bracket"></i> Sign
+                Out</a>
+        </div>
     </div>
 
     <!-- Main Content Area -->
-    <div class="admin-main">
-        <!-- Top Stats Bar -->
+    <div class="main-content">
+        <!-- Top Bar -->
         <div class="top-bar">
             <div class="top-bar-title">
                 <i class="fa-solid fa-sliders"></i> Admin Control Studio
             </div>
-            <div style="display:flex; align-items:center; gap:1rem;">
-                <div class="cloud-badge" id="cloudStatusBadge">
-                    <i class="fa-solid fa-cloud-check"></i> <span id="cloudStatusText">Supabase Connected</span>
-                </div>
-                <button class="btn btn-success" style="font-size:0.8rem; padding:0.4rem 0.9rem;" onclick="syncNow()"><i
-                        class="fa-solid fa-rotate"></i> Sync Cloud</button>
+            <div class="cloud-badge" id="cloudBadge">
+                <i class="fa-solid fa-cloud-check"></i> <span id="cloudStatusText">Supabase Ready</span>
             </div>
         </div>
 
-        <!-- Quick Stats Cards -->
+        <!-- Stats Counter Grid -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
-                <div class="stat-info">
-                    <h4>Total Matches</h4>
-                    <div class="stat-value" id="statMatches">0</div>
+                <div class="stat-icon"><i class="fa-solid fa-futbol"></i></div>
+                <div>
+                    <div class="stat-val" id="statMatches">0</div>
+                    <div class="stat-lbl">Total Matches</div>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon" style="color:#ef4444; background:rgba(239,68,68,0.1);"><i
-                        class="fa-solid fa-tower-broadcast"></i></div>
-                <div class="stat-info">
-                    <h4>Live Matches</h4>
-                    <div class="stat-value" id="statLive">0</div>
+                <div class="stat-icon"><i class="fa-solid fa-tower-broadcast" style="color:#ef4444;"></i></div>
+                <div>
+                    <div class="stat-val" id="statLive">0</div>
+                    <div class="stat-lbl">Live Matches</div>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon" style="color:#60a5fa; background:rgba(59,130,246,0.1);"><i
-                        class="fa-solid fa-trophy"></i></div>
-                <div class="stat-info">
-                    <h4>Competitions</h4>
-                    <div class="stat-value" id="statComps">0</div>
+                <div class="stat-icon"><i class="fa-solid fa-trophy"></i></div>
+                <div>
+                    <div class="stat-val" id="statComps">0</div>
+                    <div class="stat-lbl">Competitions</div>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon" style="color:#4ade80; background:rgba(34,197,94,0.1);"><i
-                        class="fa-solid fa-shield-halved"></i></div>
-                <div class="stat-info">
-                    <h4>Active Teams</h4>
-                    <div class="stat-value" id="statTeams">0</div>
+                <div class="stat-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <div>
+                    <div class="stat-val" id="statTeams">0</div>
+                    <div class="stat-lbl">Teams</div>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 1: MATCHES & FIXTURES -->
+        <!-- TAB 1: MATCHES CRUD -->
         <div id="tab-matches" class="tab-panel active">
             <div class="editor-card">
                 <h2 id="matchFormTitle"><i class="fa-solid fa-pen-to-square"></i> Post / Edit Match Fixture</h2>
                 <form id="matchForm" onsubmit="saveMatch(event)">
                     <input type="hidden" id="matchId">
-                    <div class="form-grid-3">
+                    <div class="form-grid">
                         <div class="form-group">
-                            <label>Competition</label>
+                            <label for="matchComp">Competition</label>
                             <select id="matchComp" class="form-control" required></select>
                         </div>
                         <div class="form-group">
-                            <label>Kickoff Date &amp; Time (Local / EAT)</label>
+                            <label for="matchKickoff">Kickoff Time (EAT)</label>
                             <input type="datetime-local" id="matchKickoff" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <label>Match Status</label>
+                            <label for="matchStatus">Match Status</label>
                             <select id="matchStatus" class="form-control" onchange="toggleScoreFields()">
                                 <option value="Scheduled">Scheduled</option>
                                 <option value="Live">Live</option>
                                 <option value="FT">Full Time (FT)</option>
-                                <option value="Postponed">Postponed</option>
                             </select>
                         </div>
                     </div>
 
-                    <div
-                        style="background:#080e1e; border:1px solid #1e293b; border-radius:10px; padding:1.25rem; margin-bottom:1.25rem;">
-                        <div style="display:grid; grid-template-columns:1fr auto 1fr; gap:1.25rem; align-items:center;">
-                            <div>
-                                <label
-                                    style="font-size:0.8rem; font-weight:800; color:#facc15; text-transform:uppercase;">🏠
-                                    Home Team</label>
-                                <input type="text" id="matchHome" class="form-control" list="teamsDatalist"
-                                    placeholder="e.g. Express FC" required style="margin-top:0.4rem; font-weight:700;">
-                            </div>
-                            <div id="scoreContainer"
-                                style="display:flex; align-items:center; gap:0.5rem; background:#0b1329; padding:0.5rem 1rem; border-radius:8px; border:1px solid #1e293b;">
-                                <input type="number" id="scoreH" class="form-control" min="0" value="0"
-                                    style="width:55px; text-align:center; font-size:1.4rem; font-weight:900; color:#facc15; padding:0.3rem;">
-                                <span style="font-size:1.2rem; font-weight:900; color:#cbd5e1;">–</span>
-                                <input type="number" id="scoreA" class="form-control" min="0" value="0"
-                                    style="width:55px; text-align:center; font-size:1.4rem; font-weight:900; color:#60a5fa; padding:0.3rem;">
-                            </div>
-                            <div style="text-align:right;">
-                                <label
-                                    style="font-size:0.8rem; font-weight:800; color:#60a5fa; text-transform:uppercase;">✈️
-                                    Away Team</label>
-                                <input type="text" id="matchAway" class="form-control" list="teamsDatalist"
-                                    placeholder="e.g. KCCA FC" required
-                                    style="margin-top:0.4rem; font-weight:700; text-align:right;">
-                            </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="matchHome">Home Team</label>
+                            <input type="text" id="matchHome" class="form-control" list="teamsDatalist"
+                                placeholder="e.g. Vipers SC" required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="matchAway">Away Team</label>
+                            <input type="text" id="matchAway" class="form-control" list="teamsDatalist"
+                                placeholder="e.g. KCCA FC" required autocomplete="off">
                         </div>
                     </div>
+
                     <datalist id="teamsDatalist"></datalist>
 
-                    <div style="display:flex; gap:0.75rem; align-items:center;">
-                        <button type="submit" class="btn btn-primary" id="saveMatchBtn"><i
-                                class="fa-solid fa-check"></i> <span id="saveMatchBtnText">Save Match
-                                Fixture</span></button>
+                    <div class="form-grid" id="scoreContainer" style="opacity: 0.4; transition: opacity 0.2s;">
+                        <div class="form-group">
+                            <label for="scoreH">Home Score</label>
+                            <input type="number" id="scoreH" class="form-control" value="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="scoreA">Away Score</label>
+                            <input type="number" id="scoreA" class="form-control" value="0" min="0">
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> <span
+                                id="saveMatchBtnText">Save Match</span></button>
                         <button type="button" class="btn btn-secondary" onclick="resetMatchForm()"><i
-                                class="fa-solid fa-xmark"></i> Clear</button>
-                        <button type="button" class="btn btn-danger" id="deleteMatchBtn" style="display:none;"
-                            onclick="deleteCurrentEditingMatch()"><i class="fa-solid fa-trash"></i> Delete
-                            Match</button>
+                                class="fa-solid fa-xmark"></i> Cancel</button>
+                        <button type="button" class="btn btn-danger" id="deleteMatchBtn"
+                            style="display:none; margin-left:auto;" onclick="deleteCurrentEditingMatch()"><i
+                                class="fa-solid fa-trash"></i> Delete Match</button>
                     </div>
                 </form>
             </div>
 
-            <!-- Matches Table -->
             <div class="editor-card">
-                <div
-                    style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
-                    <h2><i class="fa-solid fa-list-check"></i> All Match Fixtures &amp; Results</h2>
-                    <div style="display:flex; gap:0.75rem; align-items:center;">
-                        <select id="filterMatchComp" class="form-control" style="width:200px;"
-                            onchange="renderMatchesTable()"></select>
-                        <input type="text" id="searchMatch" class="form-control" style="width:180px;"
-                            placeholder="Search team..." oninput="renderMatchesTable()">
-                    </div>
+                <h2><i class="fa-solid fa-list-ul"></i> Matches Directory</h2>
+                <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <select id="filterMatchComp" class="form-control" style="max-width: 220px;"
+                        onchange="renderMatchesTable()"></select>
+                    <input type="text" id="searchMatch" class="form-control" style="max-width: 260px;"
+                        placeholder="Search team or ID..." oninput="renderMatchesTable()">
                 </div>
-                <div id="matchesTableWrapper" style="overflow-x:auto;"></div>
+                <div id="matchesTableWrapper"></div>
             </div>
         </div>
 
-        <!-- TAB 2: COMPETITIONS -->
+        <!-- TAB 2: COMPETITIONS CRUD -->
         <div id="tab-competitions" class="tab-panel">
             <div class="editor-card">
                 <h2 id="compFormTitle"><i class="fa-solid fa-square-plus"></i> Add / Edit Competition</h2>
                 <form id="compForm" onsubmit="saveCompetition(event)">
                     <input type="hidden" id="compOriginalName">
-                    <div class="form-grid-3">
+                    <div class="form-grid">
                         <div class="form-group">
-                            <label>Competition Name</label>
-                            <input type="text" id="compName" class="form-control" placeholder="e.g. Kitunga League"
-                                required>
+                            <label for="compName">Competition Name</label>
+                            <input type="text" id="compName" class="form-control"
+                                placeholder="e.g. Uganda Premier League" required>
                         </div>
                         <div class="form-group">
-                            <label>Country / Region</label>
-                            <input type="text" id="compCountry" class="form-control" placeholder="e.g. Uganda"
-                                value="Uganda">
+                            <label for="compCountry">Country / Region</label>
+                            <input type="text" id="compCountry" class="form-control" value="Uganda"
+                                placeholder="e.g. Uganda">
                         </div>
                         <div class="form-group">
-                            <label>Season</label>
-                            <input type="text" id="compSeason" class="form-control" placeholder="e.g. 2025/2026"
-                                value="2025/2026">
+                            <label for="compSeason">Season</label>
+                            <input type="text" id="compSeason" class="form-control" value="2025/2026"
+                                placeholder="e.g. 2025/2026">
                         </div>
                     </div>
-                    <div style="display:flex; gap:0.75rem;">
+                    <div style="display: flex; gap: 0.5rem;">
                         <button type="submit" class="btn btn-primary" id="saveCompBtn"><i class="fa-solid fa-check"></i>
                             Save Competition</button>
                         <button type="button" class="btn btn-secondary" onclick="resetCompForm()"><i
-                                class="fa-solid fa-xmark"></i> Clear</button>
+                                class="fa-solid fa-xmark"></i> Cancel</button>
                     </div>
                 </form>
             </div>
+
             <div class="editor-card">
                 <h2><i class="fa-solid fa-trophy"></i> Registered Competitions</h2>
-                <div id="competitionsTableWrapper" style="overflow-x:auto;"></div>
+                <div id="competitionsTableWrapper"></div>
             </div>
         </div>
 
-        <!-- TAB 3: TEAMS -->
+        <!-- TAB 3: TEAMS CRUD -->
         <div id="tab-teams" class="tab-panel">
             <div class="editor-card">
                 <h2 id="teamFormTitle"><i class="fa-solid fa-shield-cat"></i> Add / Edit Team</h2>
                 <form id="teamForm" onsubmit="saveTeam(event)">
                     <input type="hidden" id="teamOriginalName">
-                    <div class="form-grid-3">
+                    <div class="form-grid">
                         <div class="form-group">
-                            <label>Team Name</label>
-                            <input type="text" id="teamName" class="form-control" placeholder="e.g. Karuma FC" required>
+                            <label for="teamName">Team Name</label>
+                            <input type="text" id="teamName" class="form-control" placeholder="e.g. Vipers SC" required>
                         </div>
                         <div class="form-group">
-                            <label>Short Code</label>
-                            <input type="text" id="teamCode" class="form-control" placeholder="e.g. KRM" maxlength="5">
+                            <label for="teamCode">Short Code (3 Letters)</label>
+                            <input type="text" id="teamCode" class="form-control" placeholder="e.g. VIP" maxlength="4">
                         </div>
                         <div class="form-group">
-                            <label>Competition Tag</label>
+                            <label for="teamComp">Primary Competition</label>
                             <select id="teamComp" class="form-control"></select>
                         </div>
                     </div>
-                    <div style="display:flex; gap:0.75rem;">
+                    <div style="display: flex; gap: 0.5rem;">
                         <button type="submit" class="btn btn-primary" id="saveTeamBtn"><i class="fa-solid fa-check"></i>
                             Save Team</button>
                         <button type="button" class="btn btn-secondary" onclick="resetTeamForm()"><i
-                                class="fa-solid fa-xmark"></i> Clear</button>
+                                class="fa-solid fa-xmark"></i> Cancel</button>
                     </div>
                 </form>
             </div>
+
             <div class="editor-card">
-                <h2><i class="fa-solid fa-shield-halved"></i> Team Directory</h2>
-                <div id="teamsTableWrapper" style="overflow-x:auto;"></div>
+                <h2><i class="fa-solid fa-shield-halved"></i> Teams Directory</h2>
+                <div id="teamsTableWrapper"></div>
             </div>
         </div>
 
-        <!-- TAB 4: STANDINGS -->
+        <!-- TAB 4: STANDINGS ENGINE -->
         <div id="tab-standings" class="tab-panel">
             <div class="editor-card">
-                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-                    <h2><i class="fa-solid fa-table-list"></i> League Table &amp; Auto-Standings Engine</h2>
-                    <div style="display:flex; gap:0.75rem;">
-                        <select id="standingsCompSelect" class="form-control" style="width:200px;"
-                            onchange="renderStandingsTable()"></select>
-                        <button class="btn btn-primary" onclick="recalculateStandingsEngine()"><i
-                                class="fa-solid fa-arrows-rotate"></i> Recalculate Now</button>
-                    </div>
+                <h2><i class="fa-solid fa-calculator"></i> Standings Engine</h2>
+                <p style="color: #94a3b8; font-size: 0.88rem; margin-bottom: 1rem;">
+                    Standings automatically recalculate from finished (FT) matches.
+                </p>
+                <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap;">
+                    <select id="standingsCompSelect" class="form-control" style="max-width: 250px;"
+                        onchange="renderStandingsTable()"></select>
+                    <button class="btn btn-primary" onclick="recalculateStandingsEngine()"><i
+                            class="fa-solid fa-rotate"></i> Recalculate Standings</button>
                 </div>
-                <div id="standingsTableWrapper" style="overflow-x:auto; margin-top:1rem;"></div>
+                <div id="standingsTableWrapper"></div>
             </div>
         </div>
 
-        <!-- TAB 5: LINEUPS -->
+        <!-- TAB 5: LINEUPS BUILDER -->
         <div id="tab-lineups" class="tab-panel">
             <div class="editor-card">
-                <h2><i class="fa-solid fa-users"></i> Match Lineup Builder</h2>
-                <div class="form-group">
-                    <label>Select Match Fixture</label>
+                <h2><i class="fa-solid fa-users-gear"></i> Match Lineup Builder</h2>
+                <div class="form-group" style="max-width: 400px;">
+                    <label for="lineupMatchSelector">Select Match Fixture</label>
                     <select id="lineupMatchSelector" class="form-control"
                         onchange="loadLineupForSelectedMatch()"></select>
                 </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;" id="lineupPanels">
-                    <!-- Home Squad -->
-                    <div style="background:#080e1e; padding:1.25rem; border-radius:10px; border:1px solid #1e293b;">
-                        <h3 style="color:#facc15; margin-top:0;">🏠 Home Starting XI</h3>
-                        <div class="form-group">
-                            <label>Formation</label>
-                            <select id="homeFormation" class="form-control">
-                                <option value="4-3-3">4-3-3</option>
-                                <option value="4-4-2">4-4-2</option>
-                                <option value="3-5-2">3-5-2</option>
-                                <option value="4-2-3-1">4-2-3-1</option>
-                            </select>
-                        </div>
-                        <div class="form-group"><label>Coach</label><input type="text" id="homeCoach"
-                                class="form-control" placeholder="Manager Name"></div>
+                <div class="form-grid">
+                    <div>
+                        <h3 style="color:#facc15; font-size:0.95rem; margin-bottom:0.75rem;">Home Starting XI</h3>
                         <div id="homeStartingList"></div>
                     </div>
-                    <!-- Away Squad -->
-                    <div style="background:#080e1e; padding:1.25rem; border-radius:10px; border:1px solid #1e293b;">
-                        <h3 style="color:#60a5fa; margin-top:0;">✈️ Away Starting XI</h3>
-                        <div class="form-group">
-                            <label>Formation</label>
-                            <select id="awayFormation" class="form-control">
-                                <option value="4-3-3">4-3-3</option>
-                                <option value="4-4-2">4-4-2</option>
-                                <option value="3-5-2">3-5-2</option>
-                                <option value="4-2-3-1">4-2-3-1</option>
-                            </select>
-                        </div>
-                        <div class="form-group"><label>Coach</label><input type="text" id="awayCoach"
-                                class="form-control" placeholder="Manager Name"></div>
+                    <div>
+                        <h3 style="color:#60a5fa; font-size:0.95rem; margin-bottom:0.75rem;">Away Starting XI</h3>
                         <div id="awayStartingList"></div>
                     </div>
                 </div>
-                <button class="btn btn-primary" style="margin-top:1.25rem;" onclick="saveLineup()"><i
+                <button class="btn btn-primary" style="margin-top:1rem;" onclick="saveLineup()"><i
                         class="fa-solid fa-floppy-disk"></i> Save Match Lineup</button>
             </div>
         </div>
 
-        <!-- TAB 6: POSTS -->
+        <!-- TAB 6: NEWS POSTS CRUD -->
         <div id="tab-posts" class="tab-panel">
             <div class="editor-card">
-                <h2><i class="fa-solid fa-newspaper"></i> News &amp; Event Posts Editor</h2>
+                <h2><i class="fa-solid fa-pen"></i> Create News Post</h2>
                 <form id="postForm" onsubmit="savePost(event)">
                     <input type="hidden" id="postId">
-                    <div class="form-group"><label>Title</label><input type="text" id="postTitle" class="form-control"
-                            required></div>
-                    <div class="form-group"><label>Category</label><input type="text" id="postCategory"
-                            class="form-control" placeholder="Uganda League, Transfers..."></div>
-                    <div class="form-group"><label>Content</label><textarea id="postContent" class="form-control"
-                            style="min-height:120px;" required></textarea></div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="postTitle">Article Title</label>
+                            <input type="text" id="postTitle" class="form-control" placeholder="Enter headline..."
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="postCategory">Category</label>
+                            <input type="text" id="postCategory" class="form-control" value="General News"
+                                placeholder="General, Transfer, Match Report">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="postContent">Post Content</label>
+                        <textarea id="postContent" class="form-control" rows="5"
+                            placeholder="Write news article content here..." required></textarea>
+                    </div>
                     <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Publish
                         Post</button>
                 </form>
             </div>
+
             <div class="editor-card">
-                <h2><i class="fa-solid fa-folder-open"></i> Published Posts</h2>
-                <div id="postsTableWrapper" style="overflow-x:auto;"></div>
+                <h2><i class="fa-solid fa-newspaper"></i> Published Posts</h2>
+                <div id="postsTableWrapper"></div>
             </div>
         </div>
 
         <!-- TAB 7: SETTINGS & BACKUP -->
         <div id="tab-settings" class="tab-panel">
             <div class="editor-card">
-                <h2><i class="fa-solid fa-cloud-bolt"></i> Supabase Cloud Credentials</h2>
-                <div class="form-group"><label>Supabase Project URL</label><input type="text" id="supabaseUrlInput"
-                        class="form-control"></div>
-                <div class="form-group"><label>Anon API Key</label><input type="text" id="supabaseKeyInput"
-                        class="form-control"></div>
-                <div style="display:flex; gap:0.75rem;">
+                <h2><i class="fa-solid fa-cloud-arrow-up"></i> Supabase Cloud Connectivity</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="supabaseUrlInput">Supabase Project URL</label>
+                        <input type="text" id="supabaseUrlInput" class="form-control"
+                            placeholder="https://xxxx.supabase.co">
+                    </div>
+                    <div class="form-group">
+                        <label for="supabaseKeyInput">Supabase Anon Key</label>
+                        <input type="password" id="supabaseKeyInput" class="form-control" placeholder="eyJhbGci...">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                     <button class="btn btn-primary" onclick="saveSupaCreds()"><i class="fa-solid fa-floppy-disk"></i>
                         Save Credentials</button>
-                    <button class="btn btn-secondary" onclick="testSupaConnection()"><i class="fa-solid fa-plug"></i>
-                        Test Connection</button>
+                    <button class="btn btn-secondary" onclick="testSupaConnection()"><i
+                            class="fa-solid fa-network-wired"></i> Test Connection</button>
+                    <button class="btn btn-success" onclick="syncNow()"><i class="fa-solid fa-rotate"></i> Sync Cloud
+                        Now</button>
                 </div>
             </div>
 
             <div class="editor-card">
-                <h2><i class="fa-solid fa-file-export"></i> Database JSON Backup &amp; Restore</h2>
-                <p style="color:#94a3b8; font-size:0.9rem;">Export all local matches, competitions, teams, standings,
-                    and lineups to a JSON file or restore from a backup.</p>
-                <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
-                    <button class="btn btn-success" onclick="exportJsonBackup()"><i class="fa-solid fa-download"></i>
+                <h2><i class="fa-solid fa-database"></i> JSON Backup & Restore</h2>
+                <p style="color: #94a3b8; font-size: 0.88rem; margin-bottom: 1rem;">
+                    Export your complete database to a backup JSON file, or restore data from a previous backup.
+                </p>
+                <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="exportJsonBackup()"><i class="fa-solid fa-download"></i>
                         Export JSON Backup</button>
-                    <input type="file" id="importJsonInput" accept=".json" style="display:none;"
-                        onchange="importJsonBackup(event)">
-                    <button class="btn btn-secondary" onclick="document.getElementById('importJsonInput').click()"><i
-                            class="fa-solid fa-upload"></i> Restore from JSON File</button>
-                </div>
-            </div>
-
-            <div class="editor-card">
-                <h2><i class="fa-brands fa-github"></i> Deployment Status</h2>
-                <div style="background:#080e1e; padding:1.25rem; border-radius:10px; border:1px solid #1e293b;">
-                    <p style="margin:0 0 0.5rem 0; font-weight:700; color:#facc15;">Repository: <a
-                            href="https://github.com/jachinkusingura/massavusports-frontend" target="_blank"
-                            style="color:#60a5fa;">jachinkusingura/massavusports-frontend</a></p>
-                    <p style="margin:0; font-size:0.85rem; color:#94a3b8;">Changes pushed to GitHub branch
-                        <code>main</code> trigger auto-deployment on Render / cloud host.
-                    </p>
+                    <label class="btn btn-secondary" style="margin: 0; cursor: pointer;">
+                        <i class="fa-solid fa-upload"></i> Restore JSON Backup
+                        <input type="file" id="importJsonInput" accept=".json" style="display: none;"
+                            onchange="importJsonBackup(event)">
+                    </label>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Script Container -->
-    <script src="assets/js/supabase.js?v=4.1.0"></script>
-    <script id="main-admin-script">
-        // ============================================================
-        // ADMIN CONTROL STUDIO — CORE ENGINE & STATE MANAGEMENT
-        // ============================================================
+    <script src="assets/js/supabase.js?v=4.2.0"></script>
+    <script>
         const STORAGE_KEYS = {
             MATCHES: 'massavu_match_results',
             COMPS: 'massavu_competitions',
@@ -786,11 +708,9 @@
             { name: 'Chaapa League', country: 'Uganda', season: '2025/2026' }
         ];
 
-        // --- TAB SWITCHER ---
         function switchTab(tabId) {
             document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.sidebar-menu a').forEach(el => el.classList.remove('active'));
-
             const targetPanel = document.getElementById('tab-' + tabId);
             const targetNav = document.getElementById('nav-' + tabId);
             if (targetPanel) targetPanel.classList.add('active');
@@ -805,31 +725,14 @@
             updateStatsCounters();
         }
 
-        // --- STORAGE HELPERS ---
-        function getStoredMatches() {
-            try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.MATCHES) || '[]'); }
-            catch (e) { return []; }
-        }
-        function getStoredCompetitions() {
-            try {
-                const stored = JSON.parse(localStorage.getItem(STORAGE_KEYS.COMPS) || '[]');
-                return stored.length > 0 ? stored : DEFAULT_COMPS;
-            } catch (e) { return DEFAULT_COMPS; }
-        }
-        function getStoredTeams() {
-            try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.TEAMS) || '[]'); }
-            catch (e) { return []; }
-        }
-        function getStoredPosts() {
-            try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.POSTS) || '[]'); }
-            catch (e) { return []; }
-        }
+        function getStoredMatches() { try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.MATCHES) || '[]'); } catch (e) { return []; } }
+        function getStoredCompetitions() { try { const s = JSON.parse(localStorage.getItem(STORAGE_KEYS.COMPS) || '[]'); return s.length > 0 ? s : DEFAULT_COMPS; } catch (e) { return DEFAULT_COMPS; } }
+        function getStoredTeams() { try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.TEAMS) || '[]'); } catch (e) { return []; } }
+        function getStoredPosts() { try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.POSTS) || '[]'); } catch (e) { return []; } }
 
-        // --- POPULATORS ---
         function populateCompSelects() {
             const comps = getStoredCompetitions();
-            const selects = ['matchComp', 'filterMatchComp', 'teamComp', 'standingsCompSelect'];
-            selects.forEach(id => {
+            ['matchComp', 'filterMatchComp', 'teamComp', 'standingsCompSelect'].forEach(id => {
                 const el = document.getElementById(id);
                 if (!el) return;
                 const curr = el.value;
@@ -842,45 +745,31 @@
 
         function populateTeamSelects() {
             const teams = getStoredTeams();
-            const allNames = new Set();
-            teams.forEach(t => { if (t && t.name) allNames.add(t.name.trim()); });
-
+            const names = new Set();
+            teams.forEach(t => { if (t && t.name) names.add(t.name.trim()); });
             getStoredMatches().forEach(m => {
-                if (m.home) allNames.add(m.home.trim());
-                if (m.homeTeam) allNames.add(m.homeTeam.trim());
-                if (m.away) allNames.add(m.away.trim());
-                if (m.awayTeam) allNames.add(m.awayTeam.trim());
+                if (m.home) names.add(m.home.trim());
+                if (m.away) names.add(m.away.trim());
             });
-
-            const sorted = Array.from(allNames).filter(Boolean).sort();
             const datalist = document.getElementById('teamsDatalist');
-            if (datalist) {
-                datalist.innerHTML = sorted.map(name => `<option value="${name}">`).join('');
-            }
+            if (datalist) datalist.innerHTML = Array.from(names).filter(Boolean).sort().map(n => `<option value="${n}">`).join('');
         }
 
-        // --- STATS COUNTERS ---
         function updateStatsCounters() {
             const matches = getStoredMatches();
             const comps = getStoredCompetitions();
             const teams = getStoredTeams();
-            const liveMatches = matches.filter(m => m.status === 'Live');
-
+            const live = matches.filter(m => m.status === 'Live');
             if (document.getElementById('statMatches')) document.getElementById('statMatches').textContent = matches.length;
-            if (document.getElementById('statLive')) document.getElementById('statLive').textContent = liveMatches.length;
+            if (document.getElementById('statLive')) document.getElementById('statLive').textContent = live.length;
             if (document.getElementById('statComps')) document.getElementById('statComps').textContent = comps.length;
             if (document.getElementById('statTeams')) document.getElementById('statTeams').textContent = teams.length;
         }
 
-        // ============================================================
-        // MODULE 1: MATCHES CRUD
-        // ============================================================
         function toggleScoreFields() {
             const status = document.getElementById('matchStatus').value;
-            const scoreContainer = document.getElementById('scoreContainer');
-            if (scoreContainer) {
-                scoreContainer.style.opacity = (status === 'FT' || status === 'Live') ? '1' : '0.4';
-            }
+            const container = document.getElementById('scoreContainer');
+            if (container) container.style.opacity = (status === 'FT' || status === 'Live') ? '1' : '0.4';
         }
 
         function saveMatch(e) {
@@ -889,27 +778,13 @@
             const competition = document.getElementById('matchComp').value;
             const kickoffLocal = document.getElementById('matchKickoff').value;
             const status = document.getElementById('matchStatus').value;
-            const homeEl = document.getElementById('matchHome');
-            const awayEl = document.getElementById('matchAway');
-            const home = (homeEl ? homeEl.value : '').trim();
-            const away = (awayEl ? awayEl.value : '').trim();
+            const home = document.getElementById('matchHome').value.trim();
+            const away = document.getElementById('matchAway').value.trim();
             const scoreH = parseInt(document.getElementById('scoreH').value || '0', 10);
             const scoreA = parseInt(document.getElementById('scoreA').value || '0', 10);
 
-            if (!home) {
-                if (homeEl) homeEl.focus();
-                alert('Please enter a Home Team name.');
-                return;
-            }
-            if (!away) {
-                if (awayEl) awayEl.focus();
-                alert('Please enter an Away Team name.');
-                return;
-            }
-            if (home.toLowerCase() === away.toLowerCase()) {
-                alert('Home and Away teams must be different.');
-                return;
-            }
+            if (!home || !away) { alert('Please enter Home and Away team names.'); return; }
+            if (home.toLowerCase() === away.toLowerCase()) { alert('Home and Away teams must be different.'); return; }
 
             const dateObj = kickoffLocal ? new Date(kickoffLocal) : new Date();
             const pad = n => String(n).padStart(2, '0');
@@ -919,13 +794,9 @@
 
             const matchData = {
                 id: editId ? parseInt(editId, 10) : Date.now(),
-                competition,
-                kickoffUtc,
-                kickoffutc: kickoffUtc,
-                date: dateStr,
-                time: status === 'FT' ? 'FT' : (timeStr === '00:00' ? '16:00' : timeStr),
-                home, homeTeam: home,
-                away, awayTeam: away,
+                competition, kickoffUtc, kickoffutc: kickoffUtc,
+                date: dateStr, time: status === 'FT' ? 'FT' : (timeStr === '00:00' ? '16:00' : timeStr),
+                home, homeTeam: home, away, awayTeam: away,
                 scoreH: (status === 'FT' || status === 'Live') ? scoreH : 0,
                 scoreA: (status === 'FT' || status === 'Live') ? scoreA : 0,
                 scoreh: (status === 'FT' || status === 'Live') ? scoreH : 0,
@@ -934,30 +805,23 @@
             };
 
             let matches = getStoredMatches();
-            if (editId) {
-                matches = matches.map(m => String(m.id) === String(editId) ? matchData : m);
-            } else {
-                matches.unshift(matchData);
-            }
+            if (editId) matches = matches.map(m => String(m.id) === String(editId) ? matchData : m);
+            else matches.unshift(matchData);
 
             localStorage.setItem(STORAGE_KEYS.MATCHES, JSON.stringify(matches));
-            if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.saveMatch === 'function') {
-                window.MASSAVU_SUPABASE.saveMatch(matchData);
-            }
+            if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.saveMatch) window.MASSAVU_SUPABASE.saveMatch(matchData);
 
             populateTeamSelects();
             recalculateStandingsEngine();
-            alert(`Match "${home} vs ${away}" saved successfully!`);
+            alert(`Match "${home} vs ${away}" saved!`);
             resetMatchForm();
             renderMatchesTable();
             updateStatsCounters();
         }
 
         function editMatch(id) {
-            const matches = getStoredMatches();
-            const m = matches.find(x => String(x.id) === String(id));
+            const m = getStoredMatches().find(x => String(x.id) === String(id));
             if (!m) return;
-
             document.getElementById('matchId').value = m.id;
             document.getElementById('matchComp').value = m.competition || 'Uganda Premier League';
             document.getElementById('matchStatus').value = m.status || 'Scheduled';
@@ -965,15 +829,12 @@
             document.getElementById('matchAway').value = m.away || m.awayTeam || '';
             document.getElementById('scoreH').value = m.scoreH ?? m.scoreh ?? 0;
             document.getElementById('scoreA').value = m.scoreA ?? m.scorea ?? 0;
-
             if (m.kickoffUtc || m.kickoffutc) {
                 const d = new Date(m.kickoffUtc || m.kickoffutc);
                 const pad = n => String(n).padStart(2, '0');
-                const local = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-                document.getElementById('matchKickoff').value = local;
+                document.getElementById('matchKickoff').value = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
             }
-
-            document.getElementById('matchFormTitle').innerHTML = `<i class="fa-solid fa-pen-to-square" style="color:#facc15;"></i> Edit Match #${m.id} (${m.home} vs ${m.away})`;
+            document.getElementById('matchFormTitle').innerHTML = `<i class="fa-solid fa-pen-to-square" style="color:#facc15;"></i> Edit Match #${m.id}`;
             document.getElementById('saveMatchBtnText').textContent = 'Update Match';
             document.getElementById('deleteMatchBtn').style.display = 'inline-flex';
             toggleScoreFields();
@@ -981,12 +842,10 @@
         }
 
         function deleteMatch(id) {
-            if (!confirm('Delete this match fixture? Standings will automatically recalculate.')) return;
+            if (!confirm('Delete this match?')) return;
             let matches = getStoredMatches().filter(m => String(m.id) !== String(id));
             localStorage.setItem(STORAGE_KEYS.MATCHES, JSON.stringify(matches));
-            if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.deleteMatch === 'function') {
-                window.MASSAVU_SUPABASE.deleteMatch(id);
-            }
+            if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.deleteMatch) window.MASSAVU_SUPABASE.deleteMatch(id);
             recalculateStandingsEngine();
             resetMatchForm();
             renderMatchesTable();
@@ -994,30 +853,15 @@
         }
 
         function deleteCurrentEditingMatch() {
-            const editId = document.getElementById('matchId').value;
-            if (editId) deleteMatch(editId);
-        }
-
-        function toggleMatchStatus(id, newStatus) {
-            let matches = getStoredMatches();
-            const idx = matches.findIndex(m => String(m.id) === String(id));
-            if (idx >= 0) {
-                matches[idx].status = newStatus;
-                localStorage.setItem(STORAGE_KEYS.MATCHES, JSON.stringify(matches));
-                if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.saveMatch === 'function') {
-                    window.MASSAVU_SUPABASE.saveMatch(matches[idx]);
-                }
-                recalculateStandingsEngine();
-                renderMatchesTable();
-                updateStatsCounters();
-            }
+            const id = document.getElementById('matchId').value;
+            if (id) deleteMatch(id);
         }
 
         function resetMatchForm() {
             document.getElementById('matchForm').reset();
             document.getElementById('matchId').value = '';
             document.getElementById('matchFormTitle').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Post / Edit Match Fixture';
-            document.getElementById('saveMatchBtnText').textContent = 'Save Match Fixture';
+            document.getElementById('saveMatchBtnText').textContent = 'Save Match';
             document.getElementById('deleteMatchBtn').style.display = 'none';
             toggleScoreFields();
         }
@@ -1025,57 +869,32 @@
         function renderMatchesTable() {
             const wrapper = document.getElementById('matchesTableWrapper');
             if (!wrapper) return;
-
             let matches = getStoredMatches();
-            const compFilter = document.getElementById('filterMatchComp') ? document.getElementById('filterMatchComp').value : 'ALL';
-            const searchQuery = document.getElementById('searchMatch') ? document.getElementById('searchMatch').value.toLowerCase().trim() : '';
+            const comp = document.getElementById('filterMatchComp') ? document.getElementById('filterMatchComp').value : 'ALL';
+            const query = document.getElementById('searchMatch') ? document.getElementById('searchMatch').value.toLowerCase().trim() : '';
 
-            if (compFilter && compFilter !== 'ALL') {
-                matches = matches.filter(m => m.competition === compFilter);
-            }
-            if (searchQuery) {
-                matches = matches.filter(m =>
-                    (m.home && m.home.toLowerCase().includes(searchQuery)) ||
-                    (m.away && m.away.toLowerCase().includes(searchQuery)) ||
-                    String(m.id).includes(searchQuery)
-                );
-            }
+            if (comp && comp !== 'ALL') matches = matches.filter(m => m.competition === comp);
+            if (query) matches = matches.filter(m => (m.home && m.home.toLowerCase().includes(query)) || (m.away && m.away.toLowerCase().includes(query)) || String(m.id).includes(query));
 
-            if (matches.length === 0) {
-                wrapper.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:2rem 0;">No match fixtures found.</p>';
-                return;
-            }
+            if (matches.length === 0) { wrapper.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:1.5rem 0;">No match fixtures found.</p>'; return; }
 
-            let html = `<table class="data-table">
-                <thead><tr>
-                    <th>Date &amp; Time (EAT)</th>
-                    <th>Competition</th>
-                    <th>Matchup</th>
-                    <th>Score / Status</th>
-                    <th style="text-align:right;">Actions</th>
-                </tr></thead><tbody>`;
-
+            let html = `<table class="data-table"><thead><tr><th>Date & Time</th><th>Competition</th><th>Matchup</th><th>Score / Status</th><th style="text-align:right;">Actions</th></tr></thead><tbody>`;
             matches.forEach(m => {
-                const dateStr = m.date || (m.kickoffUtc ? new Date(m.kickoffUtc).toLocaleDateString() : 'N/A');
-                const timeStr = m.time || (m.kickoffUtc ? new Date(m.kickoffUtc).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '16:00');
-                const isFT = m.status === 'FT';
-                const isLive = m.status === 'Live';
+                const isFT = m.status === 'FT', isLive = m.status === 'Live';
                 const statusClass = isLive ? 'status-live' : (isFT ? 'status-ft' : 'status-scheduled');
-
                 html += `<tr>
-                    <td style="color:#cbd5e1; font-weight:600;">${dateStr} <span style="color:#64748b; font-size:0.8rem;">${timeStr}</span></td>
-                    <td><span style="background:rgba(250,204,21,0.1); color:#facc15; padding:3px 8px; border-radius:4px; font-weight:700; font-size:0.75rem;">${m.competition}</span></td>
-                    <td style="font-weight:700; color:#ffffff;">${m.home || m.homeTeam} <span style="color:#64748b; font-weight:400; margin:0 4px;">vs</span> ${m.away || m.awayTeam}</td>
+                    <td>${m.date || 'N/A'} <span style="color:#64748b; font-size:0.8rem;">${m.time || '16:00'}</span></td>
+                    <td><span style="background:rgba(250,204,21,0.1); color:#facc15; padding:2px 6px; border-radius:4px; font-weight:700; font-size:0.75rem;">${m.competition}</span></td>
+                    <td style="font-weight:700; color:#fff;">${m.home || m.homeTeam} vs ${m.away || m.awayTeam}</td>
                     <td>
-                        <span style="background:#080e1e; border:1px solid #1e293b; padding:3px 8px; border-radius:6px; font-weight:900; color:#ffffff; margin-right:6px;">
+                        <span style="background:#080e1e; border:1px solid #1e293b; padding:2px 6px; border-radius:4px; font-weight:900; color:#fff; margin-right:6px;">
                             ${(isFT || isLive) ? `${m.scoreH ?? m.scoreh ?? 0} - ${m.scoreA ?? m.scorea ?? 0}` : 'VS'}
                         </span>
                         <span class="status-pill ${statusClass}">${m.status || 'Scheduled'}</span>
                     </td>
                     <td style="text-align:right;">
-                        <button class="btn btn-secondary" style="font-size:0.75rem; padding:0.35rem 0.65rem;" onclick="editMatch('${m.id}')"><i class="fa-solid fa-pen"></i> Edit</button>
-                        <button class="btn btn-success" style="font-size:0.75rem; padding:0.35rem 0.65rem;" onclick="toggleMatchStatus('${m.id}', 'Live')">Live</button>
-                        <button class="btn btn-danger" style="font-size:0.75rem; padding:0.35rem 0.65rem;" onclick="deleteMatch('${m.id}')"><i class="fa-solid fa-trash"></i></button>
+                        <button class="btn btn-secondary" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="editMatch('${m.id}')"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn btn-danger" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="deleteMatch('${m.id}')"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>`;
             });
@@ -1083,68 +902,47 @@
             wrapper.innerHTML = html;
         }
 
-        // ============================================================
-        // MODULE 2: COMPETITIONS CRUD
-        // ============================================================
         function saveCompetition(e) {
             e.preventDefault();
             const orig = document.getElementById('compOriginalName').value;
             const name = document.getElementById('compName').value.trim();
             const country = document.getElementById('compCountry').value.trim() || 'Uganda';
             const season = document.getElementById('compSeason').value.trim() || '2025/2026';
-
             if (!name) return;
-            const compObj = { name, country, season };
 
+            const compObj = { name, country, season };
             let comps = getStoredCompetitions();
-            if (orig) {
-                comps = comps.map(c => c.name === orig ? compObj : c);
-            } else {
-                if (comps.some(c => c.name.toLowerCase() === name.toLowerCase())) { alert('Competition already exists.'); return; }
-                comps.push(compObj);
-            }
+            if (orig) comps = comps.map(c => c.name === orig ? compObj : c);
+            else { if (comps.some(c => c.name.toLowerCase() === name.toLowerCase())) { alert('Competition exists.'); return; } comps.push(compObj); }
 
             localStorage.setItem(STORAGE_KEYS.COMPS, JSON.stringify(comps));
-            if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.saveCompetition === 'function') {
-                window.MASSAVU_SUPABASE.saveCompetition(compObj);
-            }
-
-            populateCompSelects();
-            resetCompForm();
-            renderCompetitionsTable();
-            updateStatsCounters();
+            if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.saveCompetition) window.MASSAVU_SUPABASE.saveCompetition(compObj);
+            populateCompSelects(); resetCompForm(); renderCompetitionsTable(); updateStatsCounters();
             alert(`Competition "${name}" saved!`);
         }
 
         function editCompetition(name) {
-            const comps = getStoredCompetitions();
-            const c = comps.find(x => x.name === name);
+            const c = getStoredCompetitions().find(x => x.name === name);
             if (!c) return;
             document.getElementById('compOriginalName').value = c.name;
             document.getElementById('compName').value = c.name;
             document.getElementById('compCountry').value = c.country || 'Uganda';
             document.getElementById('compSeason').value = c.season || '2025/2026';
             document.getElementById('compFormTitle').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Edit Competition "${c.name}"`;
-            document.getElementById('saveCompBtn').innerHTML = '<i class="fa-solid fa-check"></i> Update Competition';
         }
 
         function deleteCompetition(name) {
-            if (!confirm(`Delete competition "${name}"? Existing matches will remain.`)) return;
+            if (!confirm(`Delete competition "${name}"?`)) return;
             let comps = getStoredCompetitions().filter(c => c.name !== name);
             localStorage.setItem(STORAGE_KEYS.COMPS, JSON.stringify(comps));
-            if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.deleteCompetition === 'function') {
-                window.MASSAVU_SUPABASE.deleteCompetition(name);
-            }
-            populateCompSelects();
-            renderCompetitionsTable();
-            updateStatsCounters();
+            if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.deleteCompetition) window.MASSAVU_SUPABASE.deleteCompetition(name);
+            populateCompSelects(); renderCompetitionsTable(); updateStatsCounters();
         }
 
         function resetCompForm() {
             document.getElementById('compForm').reset();
             document.getElementById('compOriginalName').value = '';
             document.getElementById('compFormTitle').innerHTML = '<i class="fa-solid fa-square-plus"></i> Add / Edit Competition';
-            document.getElementById('saveCompBtn').innerHTML = '<i class="fa-solid fa-check"></i> Save Competition';
         }
 
         function renderCompetitionsTable() {
@@ -1152,18 +950,17 @@
             if (!wrapper) return;
             const comps = getStoredCompetitions();
             const matches = getStoredMatches();
-
-            let html = `<table class="data-table"><thead><tr><th>Competition</th><th>Country</th><th>Season</th><th>Total Matches</th><th style="text-align:right;">Actions</th></tr></thead><tbody>`;
+            let html = `<table class="data-table"><thead><tr><th>Competition</th><th>Country</th><th>Season</th><th>Matches</th><th style="text-align:right;">Actions</th></tr></thead><tbody>`;
             comps.forEach(c => {
                 const count = matches.filter(m => m.competition === c.name).length;
                 html += `<tr>
-                    <td style="font-weight:700; color:#ffffff;">${c.name}</td>
+                    <td style="font-weight:700; color:#fff;">${c.name}</td>
                     <td>${c.country || 'Uganda'}</td>
                     <td>${c.season || '2025/2026'}</td>
-                    <td><span style="background:rgba(59,130,246,0.15); color:#60a5fa; padding:2px 8px; border-radius:4px; font-weight:800;">${count}</span></td>
+                    <td><span style="background:rgba(59,130,246,0.15); color:#60a5fa; padding:2px 6px; border-radius:4px; font-weight:800;">${count}</span></td>
                     <td style="text-align:right;">
-                        <button class="btn btn-secondary" style="font-size:0.75rem; padding:0.35rem 0.65rem;" onclick="editCompetition('${c.name}')"><i class="fa-solid fa-pen"></i> Edit</button>
-                        <button class="btn btn-danger" style="font-size:0.75rem; padding:0.35rem 0.65rem;" onclick="deleteCompetition('${c.name}')"><i class="fa-solid fa-trash"></i></button>
+                        <button class="btn btn-secondary" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="editCompetition('${c.name}')"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn btn-danger" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="deleteCompetition('${c.name}')"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>`;
             });
@@ -1171,89 +968,63 @@
             wrapper.innerHTML = html;
         }
 
-        // ============================================================
-        // MODULE 3: TEAMS CRUD
-        // ============================================================
         function saveTeam(e) {
             e.preventDefault();
             const orig = document.getElementById('teamOriginalName').value;
             const name = document.getElementById('teamName').value.trim();
             const code = document.getElementById('teamCode').value.trim() || name.substring(0, 3).toUpperCase();
             const comp = document.getElementById('teamComp').value;
-
             if (!name) return;
-            const teamObj = { name, code, competition: comp };
 
+            const teamObj = { name, code, competition: comp };
             let teams = getStoredTeams();
-            if (orig) {
-                teams = teams.map(t => t.name === orig ? teamObj : t);
-            } else {
-                if (teams.some(t => t.name.toLowerCase() === name.toLowerCase())) { alert('Team already exists.'); return; }
-                teams.unshift(teamObj);
-            }
+            if (orig) teams = teams.map(t => t.name === orig ? teamObj : t);
+            else { if (teams.some(t => t.name.toLowerCase() === name.toLowerCase())) { alert('Team exists.'); return; } teams.unshift(teamObj); }
 
             localStorage.setItem(STORAGE_KEYS.TEAMS, JSON.stringify(teams));
-            if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.saveTeam === 'function') {
-                window.MASSAVU_SUPABASE.saveTeam(teamObj);
-            }
-
-            populateTeamSelects();
-            resetTeamForm();
-            renderTeamsTable();
-            updateStatsCounters();
+            if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.saveTeam) window.MASSAVU_SUPABASE.saveTeam(teamObj);
+            populateTeamSelects(); resetTeamForm(); renderTeamsTable(); updateStatsCounters();
             alert(`Team "${name}" saved!`);
         }
 
         function editTeam(name) {
-            const teams = getStoredTeams();
-            const t = teams.find(x => x.name === name);
+            const t = getStoredTeams().find(x => x.name === name);
             if (!t) return;
             document.getElementById('teamOriginalName').value = t.name;
             document.getElementById('teamName').value = t.name;
             document.getElementById('teamCode').value = t.code || '';
             document.getElementById('teamComp').value = t.competition || 'Uganda Premier League';
             document.getElementById('teamFormTitle').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Edit Team "${t.name}"`;
-            document.getElementById('saveTeamBtn').innerHTML = '<i class="fa-solid fa-check"></i> Update Team';
         }
 
         function deleteTeam(name) {
             if (!confirm(`Delete team "${name}"?`)) return;
             let teams = getStoredTeams().filter(t => t.name !== name);
             localStorage.setItem(STORAGE_KEYS.TEAMS, JSON.stringify(teams));
-            if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.deleteTeam === 'function') {
-                window.MASSAVU_SUPABASE.deleteTeam(name);
-            }
-            populateTeamSelects();
-            renderTeamsTable();
-            updateStatsCounters();
+            if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.deleteTeam) window.MASSAVU_SUPABASE.deleteTeam(name);
+            populateTeamSelects(); renderTeamsTable(); updateStatsCounters();
         }
 
         function resetTeamForm() {
             document.getElementById('teamForm').reset();
             document.getElementById('teamOriginalName').value = '';
             document.getElementById('teamFormTitle').innerHTML = '<i class="fa-solid fa-shield-cat"></i> Add / Edit Team';
-            document.getElementById('saveTeamBtn').innerHTML = '<i class="fa-solid fa-check"></i> Save Team';
         }
 
         function renderTeamsTable() {
             const wrapper = document.getElementById('teamsTableWrapper');
             if (!wrapper) return;
             const teams = getStoredTeams();
-
-            if (teams.length === 0) {
-                wrapper.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:1.5rem 0;">No teams registered yet.</p>';
-                return;
-            }
-
+            if (teams.length === 0) { wrapper.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:1.5rem 0;">No teams registered yet.</p>'; return; }
             let html = `<table class="data-table"><thead><tr><th>Code</th><th>Team Name</th><th>Competition</th><th style="text-align:right;">Actions</th></tr></thead><tbody>`;
             teams.forEach(t => {
                 html += `<tr>
                     <td><span style="background:rgba(250,204,21,0.15); color:#facc15; padding:2px 6px; border-radius:4px; font-weight:800; font-size:0.75rem;">${t.code || 'TEA'}</span></td>
-                    <td style="font-weight:700; color:#ffffff;">${t.name}</td>
+                    <td style="font-weight:700; color:#fff;">${t.name}</td>
                     <td>${t.competition || 'Uganda Premier League'}</td>
                     <td style="text-align:right;">
-                        <button class="btn btn-secondary" style="font-size:0.75rem; padding:0.35rem 0.65rem;" onclick="editTeam('${t.name}')"><i class="fa-solid fa-pen"></i> Edit</button>
-                        <button class="btn btn-danger" style="font-size:0.75rem; padding:0.35rem 0.65rem;" onclick="deleteTeam('${t.name}')"><i class="fa-solid fa-trash"></i></button>
+                        <button class="btn btn-secondary" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="editTeam('${t.name}')"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn btn-danger" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="deleteTeam('${t.name}')"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>`;
             });
@@ -1261,51 +1032,31 @@
             wrapper.innerHTML = html;
         }
 
-        // ============================================================
-        // MODULE 4: STANDINGS ENGINE
-        // ============================================================
         function recalculateStandingsEngine() {
             const allMatches = getStoredMatches().filter(m => m.status === 'FT');
             const standingsByComp = {};
-
             allMatches.forEach(m => {
                 const comp = m.competition || 'Uganda Premier League';
                 if (!standingsByComp[comp]) standingsByComp[comp] = {};
-
-                const h = m.home || m.homeTeam;
-                const a = m.away || m.awayTeam;
-                const sh = parseInt(m.scoreH ?? m.scoreh ?? 0, 10);
-                const sa = parseInt(m.scoreA ?? m.scorea ?? 0, 10);
-
+                const h = m.home || m.homeTeam, a = m.away || m.awayTeam;
+                const sh = parseInt(m.scoreH ?? m.scoreh ?? 0, 10), sa = parseInt(m.scoreA ?? m.scorea ?? 0, 10);
                 if (!h || !a) return;
 
                 if (!standingsByComp[comp][h]) standingsByComp[comp][h] = { name: h, played: 0, won: 0, draw: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
                 if (!standingsByComp[comp][a]) standingsByComp[comp][a] = { name: a, played: 0, won: 0, draw: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
+                const tH = standingsByComp[comp][h], tA = standingsByComp[comp][a];
 
-                const tH = standingsByComp[comp][h];
-                const tA = standingsByComp[comp][a];
-
-                tH.played++; tA.played++;
-                tH.gf += sh; tH.ga += sa;
-                tA.gf += sa; tA.ga += sh;
-
+                tH.played++; tA.played++; tH.gf += sh; tH.ga += sa; tA.gf += sa; tA.ga += sh;
                 if (sh > sa) { tH.won++; tH.pts += 3; tA.lost++; }
                 else if (sh < sa) { tA.won++; tA.pts += 3; tH.lost++; }
                 else { tH.draw++; tH.pts += 1; tA.draw++; tA.pts += 1; }
-
-                tH.gd = tH.gf - tH.ga;
-                tA.gd = tA.gf - tA.ga;
+                tH.gd = tH.gf - tH.ga; tA.gd = tA.gf - tA.ga;
             });
 
             const finalStandings = {};
             Object.keys(standingsByComp).forEach(comp => {
-                finalStandings[comp] = Object.values(standingsByComp[comp]).sort((a, b) => {
-                    if (b.pts !== a.pts) return b.pts - a.pts;
-                    if (b.gd !== a.gd) return b.gd - a.gd;
-                    return b.gf - a.gf;
-                });
+                finalStandings[comp] = Object.values(standingsByComp[comp]).sort((a, b) => b.pts !== a.pts ? b.pts - a.pts : (b.gd !== a.gd ? b.gd - a.gd : b.gf - a.gf));
             });
-
             localStorage.setItem('massavu_auto_standings', JSON.stringify(finalStandings));
             renderStandingsTable();
         }
@@ -1313,65 +1064,47 @@
         function renderStandingsTable() {
             const wrapper = document.getElementById('standingsTableWrapper');
             if (!wrapper) return;
-
             const comp = document.getElementById('standingsCompSelect') ? document.getElementById('standingsCompSelect').value : 'Uganda Premier League';
             const autoRaw = localStorage.getItem('massavu_auto_standings');
             const autoData = autoRaw ? JSON.parse(autoRaw) : {};
             const rows = autoData[comp] || [];
 
-            if (rows.length === 0) {
-                wrapper.innerHTML = `<p style="color:#94a3b8; text-align:center; padding:1.5rem 0;">No finished matches for "${comp}" yet.</p>`;
-                return;
-            }
-
-            let html = `<table class="data-table"><thead><tr>
-                <th>#</th><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th>
-            </tr></thead><tbody>`;
-
+            if (rows.length === 0) { wrapper.innerHTML = `<p style="color:#94a3b8; text-align:center; padding:1.5rem 0;">No finished matches for "${comp}" yet.</p>`; return; }
+            let html = `<table class="data-table"><thead><tr><th>#</th><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>PTS</th></tr></thead><tbody>`;
             rows.forEach((r, idx) => {
                 html += `<tr>
                     <td style="font-weight:900; color:#facc15;">${idx + 1}</td>
-                    <td style="font-weight:700; color:#ffffff;">${r.name}</td>
+                    <td style="font-weight:700; color:#fff;">${r.name}</td>
                     <td>${r.played}</td><td>${r.won}</td><td>${r.draw}</td><td>${r.lost}</td>
                     <td>${r.gf}</td><td>${r.ga}</td>
                     <td style="font-weight:700; color:${r.gd >= 0 ? '#4ade80' : '#ef4444'};">${r.gd > 0 ? '+' + r.gd : r.gd}</td>
-                    <td style="font-weight:900; color:#ffffff; font-size:0.95rem;">${r.pts}</td>
+                    <td style="font-weight:900; color:#fff;">${r.pts}</td>
                 </tr>`;
             });
             html += `</tbody></table>`;
             wrapper.innerHTML = html;
         }
 
-        // ============================================================
-        // MODULE 5: LINEUPS BUILDER
-        // ============================================================
         function populateLineupMatchSelector() {
             const select = document.getElementById('lineupMatchSelector');
             if (!select) return;
             const matches = getStoredMatches();
-            if (matches.length === 0) {
-                select.innerHTML = '<option value="">No matches available</option>';
-                return;
-            }
-            select.innerHTML = matches.map(m => `<option value="${m.id}">${m.competition}: ${m.home || m.homeTeam} vs ${m.away || m.awayTeam} (${m.date || 'TBD'})</option>`).join('');
+            if (matches.length === 0) { select.innerHTML = '<option value="">No matches available</option>'; return; }
+            select.innerHTML = matches.map(m => `<option value="${m.id}">${m.competition}: ${m.home || m.homeTeam} vs ${m.away || m.awayTeam}</option>`).join('');
             loadLineupForSelectedMatch();
         }
 
         function loadLineupForSelectedMatch() {
-            const matchId = document.getElementById('lineupMatchSelector').value;
-            if (!matchId) return;
-
             const homeList = document.getElementById('homeStartingList');
             const awayList = document.getElementById('awayStartingList');
-
             let homeHtml = '', awayHtml = '';
             for (let i = 1; i <= 11; i++) {
-                homeHtml += `<div style="display:flex; gap:0.5rem; margin-bottom:0.4rem;">
-                    <input type="number" class="form-control" style="width:50px;" value="${i}" placeholder="#">
+                homeHtml += `<div style="display:flex; gap:0.4rem; margin-bottom:0.35rem;">
+                    <input type="number" class="form-control" style="width:45px;" value="${i}">
                     <input type="text" class="form-control" placeholder="Player Name ${i}">
                 </div>`;
-                awayHtml += `<div style="display:flex; gap:0.5rem; margin-bottom:0.4rem;">
-                    <input type="number" class="form-control" style="width:50px;" value="${i}" placeholder="#">
+                awayHtml += `<div style="display:flex; gap:0.4rem; margin-bottom:0.35rem;">
+                    <input type="number" class="form-control" style="width:45px;" value="${i}">
                     <input type="text" class="form-control" placeholder="Player Name ${i}">
                 </div>`;
             }
@@ -1379,25 +1112,17 @@
             if (awayList) awayList.innerHTML = awayHtml;
         }
 
-        function saveLineup() {
-            const matchId = document.getElementById('lineupMatchSelector').value;
-            if (!matchId) { alert('Select a match first.'); return; }
-            alert('Match lineup saved successfully!');
-        }
+        function saveLineup() { alert('Lineup saved!'); }
 
-        // ============================================================
-        // MODULE 6: POSTS CRUD
-        // ============================================================
         function savePost(e) {
             e.preventDefault();
             const editId = document.getElementById('postId').value;
             const title = document.getElementById('postTitle').value.trim();
-            const category = document.getElementById('postCategory').value.trim() || 'General';
+            const category = document.getElementById('postCategory').value.trim() || 'General News';
             const content = document.getElementById('postContent').value.trim();
-
             if (!title || !content) return;
-            const postObj = { id: editId ? parseInt(editId, 10) : Date.now(), title, category, content, createdAt: new Date().toISOString() };
 
+            const postObj = { id: editId ? parseInt(editId, 10) : Date.now(), title, category, content, createdAt: new Date().toISOString() };
             let posts = getStoredPosts();
             if (editId) posts = posts.map(p => String(p.id) === String(editId) ? postObj : p);
             else posts.unshift(postObj);
@@ -1406,11 +1131,11 @@
             document.getElementById('postForm').reset();
             document.getElementById('postId').value = '';
             renderPostsTable();
-            alert('Post published successfully!');
+            alert('Post published!');
         }
 
         function deletePost(id) {
-            if (!confirm('Delete this post?')) return;
+            if (!confirm('Delete post?')) return;
             let posts = getStoredPosts().filter(p => String(p.id) !== String(id));
             localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(posts));
             renderPostsTable();
@@ -1421,23 +1146,19 @@
             if (!wrapper) return;
             const posts = getStoredPosts();
             if (posts.length === 0) { wrapper.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:1.5rem 0;">No posts published yet.</p>'; return; }
-
             let html = `<table class="data-table"><thead><tr><th>Title</th><th>Category</th><th>Date</th><th style="text-align:right;">Actions</th></tr></thead><tbody>`;
             posts.forEach(p => {
                 html += `<tr>
-                    <td style="font-weight:700; color:#ffffff;">${p.title}</td>
+                    <td style="font-weight:700; color:#fff;">${p.title}</td>
                     <td><span style="background:rgba(59,130,246,0.15); color:#60a5fa; padding:2px 6px; border-radius:4px; font-weight:700; font-size:0.75rem;">${p.category}</span></td>
                     <td style="color:#64748b;">${new Date(p.createdAt).toLocaleDateString()}</td>
-                    <td style="text-align:right;"><button class="btn btn-danger" style="font-size:0.75rem; padding:0.35rem 0.65rem;" onclick="deletePost('${p.id}')"><i class="fa-solid fa-trash"></i></button></td>
+                    <td style="text-align:right;"><button class="btn btn-danger" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="deletePost('${p.id}')"><i class="fa-solid fa-trash"></i></button></td>
                 </tr>`;
             });
             html += `</tbody></table>`;
             wrapper.innerHTML = html;
         }
 
-        // ============================================================
-        // MODULE 7: SETTINGS & BACKUP ENGINE
-        // ============================================================
         function saveSupaCreds() {
             const url = document.getElementById('supabaseUrlInput').value.trim();
             const key = document.getElementById('supabaseKeyInput').value.trim();
@@ -1448,33 +1169,26 @@
         }
 
         async function testSupaConnection() {
-            const badgeText = document.getElementById('cloudStatusText');
-            if (badgeText) badgeText.textContent = 'Testing connection...';
-            if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.testConnection === 'function') {
+            const text = document.getElementById('cloudStatusText');
+            if (text) text.textContent = 'Testing...';
+            if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.testConnection) {
                 const res = await window.MASSAVU_SUPABASE.testConnection();
-                if (badgeText) badgeText.textContent = res.ok ? 'Supabase Connected' : (res.needsTables ? 'Supabase (Tables Pending)' : 'Local Standalone');
+                if (text) text.textContent = res.ok ? 'Supabase Connected' : 'Local Standalone';
                 alert(res.message);
             }
         }
 
         async function syncNow() {
-            if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.syncAllToCloud === 'function') {
+            if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.syncAllToCloud) {
                 const res = await window.MASSAVU_SUPABASE.syncAllToCloud();
-                alert(res.ok ? 'Cloud synchronization complete!' : 'Sync completed with warnings.');
+                alert(res.ok ? 'Cloud sync complete!' : 'Sync warnings reported.');
             }
         }
 
         function exportJsonBackup() {
-            const backup = {
-                matches: getStoredMatches(),
-                competitions: getStoredCompetitions(),
-                teams: getStoredTeams(),
-                posts: getStoredPosts(),
-                exportedAt: new Date().toISOString()
-            };
-            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+            const backup = { matches: getStoredMatches(), competitions: getStoredCompetitions(), teams: getStoredTeams(), posts: getStoredPosts(), exportedAt: new Date().toISOString() };
             const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
+            a.href = URL.createObjectURL(new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' }));
             a.download = `massavu_backup_${new Date().toISOString().slice(0, 10)}.json`;
             a.click();
         }
@@ -1483,23 +1197,20 @@
             const file = e.target.files[0];
             if (!file) return;
             const reader = new FileReader();
-            reader.onload = (event) => {
+            reader.onload = (evt) => {
                 try {
-                    const data = JSON.parse(event.target.result);
+                    const data = JSON.parse(evt.target.result);
                     if (data.matches) localStorage.setItem(STORAGE_KEYS.MATCHES, JSON.stringify(data.matches));
                     if (data.competitions) localStorage.setItem(STORAGE_KEYS.COMPS, JSON.stringify(data.competitions));
                     if (data.teams) localStorage.setItem(STORAGE_KEYS.TEAMS, JSON.stringify(data.teams));
                     if (data.posts) localStorage.setItem(STORAGE_KEYS.POSTS, JSON.stringify(data.posts));
-                    alert('Backup restored successfully!');
+                    alert('Backup restored!');
                     location.reload();
-                } catch (err) { alert('Invalid backup file format.'); }
+                } catch (err) { alert('Invalid backup file.'); }
             };
             reader.readAsText(file);
         }
 
-        // ============================================================
-        // INITIALIZATION
-        // ============================================================
         document.getElementById('logoutBtn').addEventListener('click', () => {
             sessionStorage.removeItem('adminToken');
             window.location.replace('admin-login.html');
