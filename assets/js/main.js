@@ -203,72 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     { id: 1008, home: { id: 'policefc', name: 'Police', logo: '' }, away: { id: 'updffc', name: 'UPDF', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' },
                     { id: 1009, home: { id: 'mbararacity', name: 'Mbarara City', logo: '' }, away: { id: 'necfc', name: 'NEC', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
                 ]
-            },
-            {
-                date: today,
-                league: 'Ntare League',
-                flag: leagueFlags['Ntare League'],
-                matches: [
-                    { id: 1050, home: { id: 'tyomujuma', name: 'TY Omujuma', logo: '' }, away: { id: 'machandofc', name: 'Machando FC', logo: '' }, scoreH: null, scoreA: null, time: '15:00 EAT', status: 'upcoming' }
-                ]
-            },
-            {
-                date: tomorrow,
-                league: 'Ntare League',
-                flag: leagueFlags['Ntare League'],
-                matches: [
-                    { id: 1060, home: { id: 'nsherasc', name: 'Nshera SC', logo: '' }, away: { id: 'jabulani', name: 'Jabulani', logo: '' }, scoreH: null, scoreA: null, time: '14:00 EAT', status: 'upcoming' },
-                    { id: 1061, home: { id: 'nturi', name: 'Nturi', logo: '' }, away: { id: 'abashweki', name: 'Abashweki', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
-                ]
-            },
-            {
-                date: nextWeek,
-                league: 'Ntare League',
-                flag: leagueFlags['Ntare League'],
-                matches: [
-                    { id: 1062, home: { id: 'kashorofc', name: 'Kashoro FC', logo: '' }, away: { id: 'enshaza', name: 'Enshaza', logo: '' }, scoreH: null, scoreA: null, time: '15:30 EAT', status: 'upcoming' }
-                ]
-            },
-            {
-                date: new Date(2026, 7, 9), // 9th August 2026 — Matchday 16 at NEC Grounds Bugolobi
-                league: 'Chaapa League',
-                flag: leagueFlags['Chaapa League'],
-                matches: [
-                    { id: 1201, home: { id: 'tysheldon', name: 'TY SHELDON', logo: '' }, away: { id: 'chogm', name: 'CHOGM', logo: '' }, scoreH: null, scoreA: null, time: '10:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
-                    { id: 1202, home: { id: 'scrwizi', name: 'SC RWIZI', logo: '' }, away: { id: 'akajjus', name: 'AKAJJU', logo: '' }, scoreH: null, scoreA: null, time: '10:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
-                    { id: 1203, home: { id: 'ruharo', name: 'RUHARO', logo: '' }, away: { id: 'kyangabukama', name: 'KYANGABUKAMA', logo: '' }, scoreH: null, scoreA: null, time: '11:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
-                    { id: 1204, home: { id: 'mutakoha', name: 'MUTAKOHA', logo: '' }, away: { id: 'bullsoldtimers', name: 'BULLS OLD TIMERS', logo: '' }, scoreH: null, scoreA: null, time: '11:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
-                    { id: 1205, home: { id: 'ezekyeenda', name: 'EZEKYEENDA', logo: '' }, away: { id: 'karasande', name: 'KARASANDE', logo: '' }, scoreH: null, scoreA: null, time: '12:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
-                    { id: 1206, home: { id: 'seefar', name: 'SEE FAR', logo: '' }, away: { id: 'sikukulu', name: 'SIKUKULU', logo: '' }, scoreH: null, scoreA: null, time: '12:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
-                    { id: 1207, home: { id: 'kataara', name: 'KATAARA', logo: '' }, away: { id: 'burdizo', name: 'BURDIZO', logo: '' }, scoreH: null, scoreA: null, time: '13:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
-                    { id: 1208, home: { id: 'omutaji', name: 'OMUTAJI', logo: '' }, away: { id: 'xconvicts', name: 'X-CONVICTS', logo: '' }, scoreH: null, scoreA: null, time: '13:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
-                    { id: 1209, home: { id: 'rugabocity', name: 'RUGABO CITY', logo: '' }, away: { id: 'scrwizi', name: 'SC RWIZI', logo: '' }, scoreH: null, scoreA: null, time: '14:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
-                    { id: 1210, home: { id: 'chogm', name: 'CHOGM', logo: '' }, away: { id: 'unruly', name: 'UNRULY', logo: '' }, scoreH: null, scoreA: null, time: '14:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
-                    { id: 1211, home: { id: 'akajjus', name: 'AKAJJU', logo: '' }, away: { id: 'yoboyobo', name: 'YOBO YOBO', logo: '' }, scoreH: null, scoreA: null, time: '15:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' },
-                    { id: 1212, home: { id: 'dingiswayo', name: 'DINGISWAYO', logo: '' }, away: { id: 'tysheldon', name: 'TY SHELDON', logo: '' }, scoreH: null, scoreA: null, time: '15:00 EAT', status: 'upcoming', venue: 'NEC Grounds Bugolobi' }
-                ]
-            },
-            {
-                date: new Date(2026, 7, 2), // 2nd Aug 2026 – GameWeek 8
-                league: 'Kitunga League',
-                flag: leagueFlags['Kitunga League'],
-                matches: [
-                    { id: 1101, home: { id: 'kisyangafc', name: 'Kisyanga FC', logo: '' }, away: { id: 'zonefc', name: 'Zone FC', logo: '' }, scoreH: null, scoreA: null, time: '10:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' },
-                    { id: 1102, home: { id: 'kyashafc', name: 'Kyasha FC', logo: '' }, away: { id: 'omutifc', name: 'Omuti FC', logo: '' }, scoreH: null, scoreA: null, time: '11:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' },
-                    { id: 1103, home: { id: 'kahondafc', name: 'Kahonda FC', logo: '' }, away: { id: 'fcabadet', name: 'FC Abadet', logo: '' }, scoreH: null, scoreA: null, time: '12:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' },
-                    { id: 1104, home: { id: 'mugangafc', name: 'Muganga FC', logo: '' }, away: { id: 'oduduafc', name: 'Odudua FC', logo: '' }, scoreH: null, scoreA: null, time: '13:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' },
-                    { id: 1105, home: { id: 'aboojofc', name: 'Aboojo FC', logo: '' }, away: { id: 'karumafc', name: 'Karuma FC', logo: '' }, scoreH: null, scoreA: null, time: '14:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' },
-                    { id: 1106, home: { id: 'kibeyafc', name: 'Kibeya FC', logo: '' }, away: { id: 'enzazafc', name: 'Enzaza FC', logo: '' }, scoreH: null, scoreA: null, time: '15:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' },
-                    { id: 1107, home: { id: 'kimirankufc', name: 'Kimiranku FC', logo: '' }, away: { id: 'akahurifc', name: 'Akahuri FC', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming', venue: 'Kitante Hill Playground' }
-                ]
-            },
-            {
-                date: tomorrow,
-                league: 'FUFA Big League',
-                flag: leagueFlags['FUFA Big League'],
-                matches: [
-                    { id: 1006, home: { id: 'paidhablackangels', name: 'Paidha Black Angels', logo: '' }, away: { id: 'onduparakafc', name: 'Onduparaka FC', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
-                ]
             }
         ];
 
@@ -917,16 +851,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (dayFixtures.length > 0) {
                     renderMatchGroup(dayFixtures, 'No fixtures scheduled for this day.', true);
                 } else {
-                    matchesContainer.innerHTML += `<div style="text-align:center;padding:1.5rem 1rem 1rem;color:#94a3b8;font-size:0.9rem;">
-                        <i class="fa-solid fa-calendar-xmark" style="font-size:1.5rem;margin-bottom:0.5rem;display:block;color:#facc15;"></i>
-                        No fixtures scheduled specifically for ${currentFixtureDate.toDateString()}.</div>`;
-                    if (fixturesData.length > 0) {
-                        const fallbackHdr = document.createElement('div');
-                        fallbackHdr.style.cssText = 'font-size:1.05rem;font-weight:800;color:#ffffff;margin:1.5rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(255,255,255,0.1);';
-                        fallbackHdr.innerHTML = `<i class="fa-solid fa-list-ul" style="color:#facc15;margin-right:8px;"></i>All Upcoming Fixtures & Schedule`;
-                        matchesContainer.appendChild(fallbackHdr);
-                        renderMatchGroup(fixturesData, '', true);
-                    }
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.style.cssText = 'text-align:center;padding:2rem 1rem;color:#94a3b8;font-size:0.95rem;background:#111c38;border-radius:12px;border:1px solid rgba(255,255,255,0.06);margin-bottom:1.5rem;';
+                    emptyDiv.innerHTML = `
+                        <i class="fa-solid fa-calendar-xmark" style="font-size:2rem;margin-bottom:0.75rem;display:block;color:#facc15;"></i>
+                        <div style="font-weight:700;color:#ffffff;margin-bottom:0.25rem;">No Fixtures Scheduled</div>
+                        <div>There are no matches scheduled for ${currentFixtureDate.toDateString()}.</div>
+                        <button id="show-all-fx-btn" style="margin-top:1rem;background:rgba(250,204,21,0.12);border:1px solid rgba(250,204,21,0.3);color:#facc15;border-radius:8px;padding:0.45rem 0.9rem;font-size:0.82rem;font-weight:700;cursor:pointer;">
+                            <i class="fa-solid fa-list-ul" style="margin-right:6px;"></i>View All Upcoming Schedule
+                        </button>
+                    `;
+                    matchesContainer.appendChild(emptyDiv);
+
+                    const allFxContainer = document.createElement('div');
+                    allFxContainer.style.display = 'none';
+                    matchesContainer.appendChild(allFxContainer);
+
+                    const showAllBtn = emptyDiv.querySelector('#show-all-fx-btn');
+                    showAllBtn.onclick = () => {
+                        if (allFxContainer.style.display === 'none') {
+                            allFxContainer.style.display = 'block';
+                            if (!allFxContainer.hasChildNodes()) {
+                                const fallbackHdr = document.createElement('div');
+                                fallbackHdr.style.cssText = 'font-size:1.05rem;font-weight:800;color:#ffffff;margin:1.5rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(255,255,255,0.1);';
+                                fallbackHdr.innerHTML = `<i class="fa-solid fa-list-ul" style="color:#facc15;margin-right:8px;"></i>All Upcoming Fixtures & Schedule`;
+                                allFxContainer.appendChild(fallbackHdr);
+                                renderMatchGroup(fixturesData, '', true, allFxContainer);
+                            }
+                            showAllBtn.innerHTML = '<i class="fa-solid fa-eye-slash" style="margin-right:6px;"></i>Hide Schedule';
+                        } else {
+                            allFxContainer.style.display = 'none';
+                            showAllBtn.innerHTML = '<i class="fa-solid fa-list-ul" style="margin-right:6px;"></i>View All Upcoming Schedule';
+                        }
+                    };
                 }
             } else if (currentView === 'results') {
                 const resultsData = getAllResults();
@@ -944,16 +901,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (dayResults.length > 0) {
                     renderMatchGroup(dayResults, 'No results recorded for this day.', false);
                 } else {
-                    matchesContainer.innerHTML += `<div style="text-align:center;padding:1.5rem 1rem 1rem;color:#94a3b8;font-size:0.9rem;">
-                        <i class="fa-solid fa-flag-checkered" style="font-size:1.5rem;margin-bottom:0.5rem;display:block;color:#facc15;"></i>
-                        No match results recorded specifically for ${currentResultDate.toDateString()}.</div>`;
-                    if (resultsData.length > 0) {
-                        const fallbackHdr = document.createElement('div');
-                        fallbackHdr.style.cssText = 'font-size:1.05rem;font-weight:800;color:#ffffff;margin:1.5rem 0 1rem;padding-bottom:0.5rem;border-bottom:1px solid rgba(255,255,255,0.1);';
-                        fallbackHdr.innerHTML = `<i class="fa-solid fa-list-ul" style="color:#facc15;margin-right:8px;"></i>All Recorded Results Log`;
-                        matchesContainer.appendChild(fallbackHdr);
-                        renderMatchGroup(resultsData, '', false);
-                    }
+                    const emptyDiv = document.createElement('div');
+                    emptyDiv.style.cssText = 'text-align:center;padding:2rem 1rem;color:#94a3b8;font-size:0.95rem;background:#111c38;border-radius:12px;border:1px solid rgba(255,255,255,0.06);margin-bottom:1.5rem;';
+                    emptyDiv.innerHTML = `
+                        <i class="fa-solid fa-flag-checkered" style="font-size:2rem;margin-bottom:0.75rem;display:block;color:#facc15;"></i>
+                        <div style="font-weight:700;color:#ffffff;margin-bottom:0.25rem;">No Results Recorded</div>
+                        <div>No match results recorded for ${currentResultDate.toDateString()}.</div>
+                    `;
+                    matchesContainer.appendChild(emptyDiv);
                 }
             } else if (currentView === 'standings') {
                 renderStandings();
@@ -1219,15 +1174,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // ================================================================
     //  MATCH CARDS
     // ================================================================
-    function renderMatchGroup(leagues, emptyMsg, showLineupBtn) {
+    function renderMatchGroup(leagues, emptyMsg, showLineupBtn, targetContainer) {
+        const parent = targetContainer || matchesContainer;
         if (!leagues || leagues.length === 0) {
-            matchesContainer.innerHTML += `<div style="text-align:center;padding:2rem;color:var(--text-muted);">${emptyMsg}</div>`;
+            parent.innerHTML += `<div style="text-align:center;padding:2rem;color:var(--text-muted);">${emptyMsg}</div>`;
             return;
         }
         leagues.forEach(league => {
             const hdr = document.createElement('div'); hdr.className = 'league-header';
             hdr.innerHTML = `<img src="${league.flag}" alt="${league.league}"><span>${league.league}</span>`;
-            matchesContainer.appendChild(hdr);
+            parent.appendChild(hdr);
 
             const sorted = [...league.matches].sort((a, b) => {
                 const af = favorites.includes(a.home.id) || favorites.includes(a.away.id);
@@ -1258,7 +1214,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button class="star-btn ${fA}" onclick="toggleFavorite(${match.away.id})"><i class="fa-solid fa-star"></i></button>
                     </div>
                 `;
-                matchesContainer.appendChild(card);
+                parent.appendChild(card);
             });
         });
     }
