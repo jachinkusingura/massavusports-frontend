@@ -161,14 +161,47 @@ document.addEventListener('DOMContentLoaded', () => {
         const tomorrow = daysFromToday(1);
         const nextWeek = daysFromToday(3);
 
+        const upl8Sept = new Date(2026, 8, 8); // Sept 8 – Tomorrow
+        const upl9Sept = new Date(2026, 8, 9); // Sept 9 – Wednesday
+        const upl10Sept = new Date(2026, 8, 10); // Sept 10 – Thursday
+        const upl11Sept = new Date(2026, 8, 11); // Sept 11 – Friday
+
         const defaultFixtures = [
             {
-                date: today,
+                date: upl8Sept,
                 league: 'Uganda Premier League',
                 flag: ugandaLogoUrl,
                 matches: [
-                    { id: 1001, home: { id: 'vipers', name: 'Vipers SC', logo: '' }, away: { id: 'kcca', name: 'KCCA FC', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' },
-                    { id: 1002, home: { id: 'villa', name: 'SC Villa', logo: '' }, away: { id: 'express', name: 'Express FC', logo: '' }, scoreH: null, scoreA: null, time: '18:30 EAT', status: 'upcoming' }
+                    { id: 1001, home: { id: 'kigezihomeboyz', name: 'Kigezi Homeboyz', logo: '' }, away: { id: 'kcca', name: 'KCCA FC', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' },
+                    { id: 1002, home: { id: 'maroonsfc', name: 'Maroons', logo: '' }, away: { id: 'blackspower', name: 'Blacks Power', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
+                ]
+            },
+            {
+                date: upl9Sept,
+                league: 'Uganda Premier League',
+                flag: ugandaLogoUrl,
+                matches: [
+                    { id: 1003, home: { id: 'bulfc', name: 'BUL', logo: '' }, away: { id: 'ntugasaze', name: 'Ntugasaze', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' },
+                    { id: 1004, home: { id: 'villa', name: 'Villa', logo: '' }, away: { id: 'express', name: 'Express', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
+                ]
+            },
+            {
+                date: upl10Sept,
+                league: 'Uganda Premier League',
+                flag: ugandaLogoUrl,
+                matches: [
+                    { id: 1005, home: { id: 'entebbeuppc', name: 'Entebbe UPPC', logo: '' }, away: { id: 'lugazifc', name: 'Lugazi', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' },
+                    { id: 1006, home: { id: 'kitara', name: 'Kitara', logo: '' }, away: { id: 'ura', name: 'URA', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' },
+                    { id: 1007, home: { id: 'katakafc', name: 'Kataka', logo: '' }, away: { id: 'vipers', name: 'Vipers', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
+                ]
+            },
+            {
+                date: upl11Sept,
+                league: 'Uganda Premier League',
+                flag: ugandaLogoUrl,
+                matches: [
+                    { id: 1008, home: { id: 'policefc', name: 'Police', logo: '' }, away: { id: 'updffc', name: 'UPDF', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' },
+                    { id: 1009, home: { id: 'mbararacity', name: 'Mbarara City', logo: '' }, away: { id: 'necfc', name: 'NEC', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
                 ]
             },
             {
@@ -176,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 league: 'Ntare League',
                 flag: leagueFlags['Ntare League'],
                 matches: [
-                    { id: 1003, home: { id: 'tyomujuma', name: 'TY Omujuma', logo: '' }, away: { id: 'machandofc', name: 'Machando FC', logo: '' }, scoreH: null, scoreA: null, time: '15:00 EAT', status: 'upcoming' }
+                    { id: 1050, home: { id: 'tyomujuma', name: 'TY Omujuma', logo: '' }, away: { id: 'machandofc', name: 'Machando FC', logo: '' }, scoreH: null, scoreA: null, time: '15:00 EAT', status: 'upcoming' }
                 ]
             },
             {
@@ -184,8 +217,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 league: 'Ntare League',
                 flag: leagueFlags['Ntare League'],
                 matches: [
-                    { id: 1010, home: { id: 'nsherasc', name: 'Nshera SC', logo: '' }, away: { id: 'jabulani', name: 'Jabulani', logo: '' }, scoreH: null, scoreA: null, time: '14:00 EAT', status: 'upcoming' },
-                    { id: 1011, home: { id: 'nturi', name: 'Nturi', logo: '' }, away: { id: 'abashweki', name: 'Abashweki', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
+                    { id: 1060, home: { id: 'nsherasc', name: 'Nshera SC', logo: '' }, away: { id: 'jabulani', name: 'Jabulani', logo: '' }, scoreH: null, scoreA: null, time: '14:00 EAT', status: 'upcoming' },
+                    { id: 1061, home: { id: 'nturi', name: 'Nturi', logo: '' }, away: { id: 'abashweki', name: 'Abashweki', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
                 ]
             },
             {
@@ -193,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 league: 'Ntare League',
                 flag: leagueFlags['Ntare League'],
                 matches: [
-                    { id: 1012, home: { id: 'kashorofc', name: 'Kashoro FC', logo: '' }, away: { id: 'enshaza', name: 'Enshaza', logo: '' }, scoreH: null, scoreA: null, time: '15:30 EAT', status: 'upcoming' }
+                    { id: 1062, home: { id: 'kashorofc', name: 'Kashoro FC', logo: '' }, away: { id: 'enshaza', name: 'Enshaza', logo: '' }, scoreH: null, scoreA: null, time: '15:30 EAT', status: 'upcoming' }
                 ]
             },
             {
@@ -348,22 +381,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const mockStandings = {
         'Uganda Premier League': [
-            { team: { id: 'bulfc', name: 'BUL FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'vipers', name: 'Vipers SC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'kcca', name: 'KCCA FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'villa', name: 'SC Villa', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'express', name: 'Express FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'ura', name: 'URA FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'mbararacity', name: 'Mbarara City FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'kitara', name: 'Kitara FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'necfc', name: 'NEC FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'lugazifc', name: 'Lugazi FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'updffc', name: 'UPDF FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'calvaryfc', name: 'Calvary FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'buhimbasaints', name: 'Buhimba Saints United FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'entebbeuppc', name: 'Entebbe UPPC FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'policefc', name: 'Police FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
-            { team: { id: 'maroonsfc', name: 'Maroons FC', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 }
+            { team: { id: 'necfc', name: 'NEC', logo: '' }, played: 2, won: 2, draw: 0, lost: 0, gd: 4, pts: 6 },
+            { team: { id: 'entebbeuppc', name: 'Entebbe UPPC', logo: '' }, played: 2, won: 2, draw: 0, lost: 0, gd: 2, pts: 6 },
+            { team: { id: 'blackspower', name: 'Blacks Power', logo: '' }, played: 2, won: 2, draw: 0, lost: 0, gd: 2, pts: 6 },
+            { team: { id: 'villa', name: 'Villa', logo: '' }, played: 2, won: 1, draw: 1, lost: 0, gd: 1, pts: 4 },
+            { team: { id: 'ura', name: 'URA', logo: '' }, played: 2, won: 1, draw: 0, lost: 1, gd: 0, pts: 3 },
+            { team: { id: 'express', name: 'Express', logo: '' }, played: 2, won: 1, draw: 0, lost: 1, gd: 1, pts: 3 },
+            { team: { id: 'policefc', name: 'Police', logo: '' }, played: 2, won: 1, draw: 0, lost: 1, gd: 0, pts: 3 },
+            { team: { id: 'bulfc', name: 'BUL', logo: '' }, played: 2, won: 1, draw: 0, lost: 1, gd: -1, pts: 3 },
+            { team: { id: 'lugazifc', name: 'Lugazi', logo: '' }, played: 2, won: 1, draw: 0, lost: 1, gd: -1, pts: 3 },
+            { team: { id: 'maroonsfc', name: 'Maroons', logo: '' }, played: 2, won: 1, draw: 0, lost: 1, gd: 1, pts: 3 },
+            { team: { id: 'updffc', name: 'UPDF', logo: '' }, played: 2, won: 0, draw: 1, lost: 1, gd: -1, pts: 1 },
+            { team: { id: 'katakafc', name: 'Kataka', logo: '' }, played: 2, won: 0, draw: 1, lost: 1, gd: -3, pts: 1 },
+            { team: { id: 'kitara', name: 'Kitara', logo: '' }, played: 1, won: 0, draw: 1, lost: 0, gd: 0, pts: 1 },
+            { team: { id: 'kigezihomeboyz', name: 'Kigezi Homeboyz', logo: '' }, played: 1, won: 0, draw: 0, lost: 1, gd: -1, pts: 0 },
+            { team: { id: 'vipers', name: 'Vipers', logo: '' }, played: 1, won: 0, draw: 0, lost: 1, gd: -1, pts: 0 },
+            { team: { id: 'mbararacity', name: 'Mbarara City', logo: '' }, played: 1, won: 0, draw: 0, lost: 1, gd: -1, pts: 0 },
+            { team: { id: 'ntugasaze', name: 'Ntugasaze', logo: '' }, played: 2, won: 0, draw: 0, lost: 2, gd: -3, pts: 0 },
+            { team: { id: 'kcca', name: 'KCCA FC', logo: '' }, played: 2, won: 0, draw: 0, lost: 2, gd: -4, pts: 0 }
         ],
         'FUFA Big League': [
             { team: { id: 'paidhablackangels', name: 'Paidha Black Angels', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
@@ -1164,15 +1199,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button class="star-btn ${fA}" onclick="toggleFavorite(${match.away.id})"><i class="fa-solid fa-star"></i></button>
                     </div>
                 `;
-                // Lineup quick-link below the card
-                if (showLineupBtn) {
-                    const lnkRow = document.createElement('div');
-                    lnkRow.style.cssText = 'display:flex;justify-content:flex-end;padding:0 1rem 0.5rem;';
-                    lnkRow.innerHTML = `<button class="lineup-link" onclick="showLineupFor(${match.id},'home')" style="background:none;border:none;color:var(--accent-primary);cursor:pointer;font-size:0.8rem;font-weight:600;"><i class="fa-solid fa-person-running" style="margin-right:4px;"></i>View Lineups</button>`;
-                    matchesContainer.appendChild(card);
-                    matchesContainer.appendChild(lnkRow);
-                    return;
-                }
                 matchesContainer.appendChild(card);
             });
         });
