@@ -77,7 +77,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ---- Dynamic LocalStorage & Admin Integration ----
+    function seedDefaultUplMatchesToStorage() {
+        try {
+            const raw = localStorage.getItem('massavu_match_results');
+            let existing = raw ? JSON.parse(raw) : [];
+            const uplMatches = [
+                { id: 1001, competition: 'Uganda Premier League', date: '2026-09-08', time: '16:00 EAT', home: 'Kigezi Homeboyz', away: 'KCCA FC', scoreH: 0, scoreA: 0, status: 'Scheduled' },
+                { id: 1002, competition: 'Uganda Premier League', date: '2026-09-08', time: '16:00 EAT', home: 'Maroons', away: 'Blacks Power', scoreH: 0, scoreA: 0, status: 'Scheduled' },
+                { id: 1003, competition: 'Uganda Premier League', date: '2026-09-09', time: '16:00 EAT', home: 'BUL', away: 'Ntugasaze', scoreH: 0, scoreA: 0, status: 'Scheduled' },
+                { id: 1004, competition: 'Uganda Premier League', date: '2026-09-09', time: '16:00 EAT', home: 'Villa', away: 'Express', scoreH: 0, scoreA: 0, status: 'Scheduled' },
+                { id: 1005, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Entebbe UPPC', away: 'Lugazi', scoreH: 0, scoreA: 0, status: 'Scheduled' },
+                { id: 1006, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Kitara', away: 'URA', scoreH: 0, scoreA: 0, status: 'Scheduled' },
+                { id: 1007, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Kataka', away: 'Vipers', scoreH: 0, scoreA: 0, status: 'Scheduled' },
+                { id: 1008, competition: 'Uganda Premier League', date: '2026-09-11', time: '16:00 EAT', home: 'Police', away: 'UPDF', scoreH: 0, scoreA: 0, status: 'Scheduled' },
+                { id: 1009, competition: 'Uganda Premier League', date: '2026-09-11', time: '16:00 EAT', home: 'Mbarara City', away: 'NEC', scoreH: 0, scoreA: 0, status: 'Scheduled' }
+            ];
+            let updated = false;
+            uplMatches.forEach(um => {
+                if (!existing.some(m => String(m.id) === String(um.id))) {
+                    existing.push(um);
+                    updated = true;
+                }
+            });
+            if (updated || !raw) {
+                localStorage.setItem('massavu_match_results', JSON.stringify(existing));
+            }
+        } catch (e) { }
+    }
+
     function getStoredAdminMatches() {
+        seedDefaultUplMatchesToStorage();
         const raw = localStorage.getItem('massavu_match_results');
         return raw ? JSON.parse(raw) : [];
     }
