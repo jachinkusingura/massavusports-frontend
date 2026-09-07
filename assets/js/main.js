@@ -1002,10 +1002,46 @@ document.addEventListener('DOMContentLoaded', () => {
         const topRow = document.createElement('div');
         topRow.style.cssText = 'display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; flex-wrap:wrap; gap:0.75rem;';
 
+        // Week Navigation Header (< 7 Sep – 13 Sep 2026 >)
         const monthLabel = document.createElement('div');
+        monthLabel.style.cssText = 'display:flex; align-items:center; gap:0.5rem;';
+
         const startStr = `${weekStart.getDate()} ${MONTH_NAMES[weekStart.getMonth()].slice(0, 3)}`;
         const endStr = `${weekEnd.getDate()} ${MONTH_NAMES[weekEnd.getMonth()].slice(0, 3)} ${weekEnd.getFullYear()}`;
-        monthLabel.innerHTML = `<i class="fa-solid fa-calendar-days" style="color:#facc15; margin-right:8px;"></i><span style="font-size:1rem; font-weight:800; color:#ffffff;">${startStr} – ${endStr}</span>`;
+
+        const prevWeekBtn = document.createElement('button');
+        prevWeekBtn.title = 'Previous Week';
+        prevWeekBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+        prevWeekBtn.style.cssText = `
+            background: rgba(250,204,21,0.12); border: 1px solid rgba(250,204,21,0.3);
+            color: #facc15; border-radius: 6px; width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 0.8rem; transition: all 0.15s ease;
+        `;
+        prevWeekBtn.onclick = (e) => {
+            e.preventDefault();
+            if (onWeekChange) onWeekChange(-1);
+        };
+
+        const nextWeekBtn = document.createElement('button');
+        nextWeekBtn.title = 'Next Week';
+        nextWeekBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+        nextWeekBtn.style.cssText = `
+            background: rgba(250,204,21,0.12); border: 1px solid rgba(250,204,21,0.3);
+            color: #facc15; border-radius: 6px; width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 0.8rem; transition: all 0.15s ease;
+        `;
+        nextWeekBtn.onclick = (e) => {
+            e.preventDefault();
+            if (onWeekChange) onWeekChange(1);
+        };
+
+        const titleText = document.createElement('span');
+        titleText.style.cssText = 'font-size:1rem; font-weight:800; color:#ffffff; display:flex; align-items:center; gap:6px;';
+        titleText.innerHTML = `<i class="fa-solid fa-calendar-days" style="color:#facc15;"></i><span>${startStr} – ${endStr}</span>`;
+
+        monthLabel.append(prevWeekBtn, titleText, nextWeekBtn);
 
         // Quick Day Preset Pills (Yesterday, Today, Tomorrow, Pick Date)
         const presetBar = document.createElement('div');
@@ -1041,31 +1077,54 @@ document.addEventListener('DOMContentLoaded', () => {
         tomBtn.style.cssText = presetBtnStyle(isTomorrowSel);
         tomBtn.onclick = () => onSelectDate(tomorrowDate);
 
-        // Date Picker Button
+        // Date Picker Button with robust native trigger
         const pickerWrap = document.createElement('div');
         pickerWrap.style.cssText = 'position:relative; display:inline-block;';
+
         const pickerBtn = document.createElement('button');
         pickerBtn.innerHTML = '<i class="fa-solid fa-calendar-week" style="margin-right:4px;"></i> Date Picker';
         pickerBtn.style.cssText = presetBtnStyle(false) + 'background:rgba(250,204,21,0.1);border-color:rgba(250,204,21,0.4);color:#facc15;';
+
         const hiddenInput = document.createElement('input');
         hiddenInput.type = 'date';
-        hiddenInput.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;';
+        hiddenInput.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:5;';
+
         const y = selectedDate.getFullYear();
         const mo = String(selectedDate.getMonth() + 1).padStart(2, '0');
         const d = String(selectedDate.getDate()).padStart(2, '0');
         hiddenInput.value = `${y}-${mo}-${d}`;
-        hiddenInput.onchange = (e) => {
-            if (e.target.value) {
-                const parts = e.target.value.split('-');
-                const picked = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-                onSelectDate(picked);
+
+        const handleDatePick = (val) => {
+            if (!val) return;
+            const parts = val.split('-');
+            if (parts.length === 3) {
+                const picked = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+                if (!isNaN(picked.getTime())) {
+                    onSelectDate(_normDay(picked));
+                }
             }
         };
-        pickerWrap.append(pickerBtn, hiddenInput);
 
+        hiddenInput.onchange = (e) => handleDatePick(e.target.value);
+        hiddenInput.oninput = (e) => handleDatePick(e.target.value);
+
+        pickerBtn.onclick = (e) => {
+            e.preventDefault();
+            try {
+                if (typeof hiddenInput.showPicker === 'function') {
+                    hiddenInput.showPicker();
+                } else {
+                    hiddenInput.click();
+                }
+            } catch (err) {
+                hiddenInput.click();
+            }
+        };
+
+        pickerWrap.append(pickerBtn, hiddenInput);
         presetBar.append(yestBtn, todayBtn, tomBtn, pickerWrap);
 
-        // Day Stepper Controls (< Day | Day >)
+        // Day Stepper Controls (< Prev Day | Next Day >)
         const controls = document.createElement('div');
         controls.style.cssText = 'display:flex; align-items:center; gap:0.4rem;';
 
