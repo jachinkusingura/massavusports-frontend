@@ -8,9 +8,12 @@ const sql = [
     "CREATE TABLE IF NOT EXISTS massavu_matches (id text primary key, competition text, date text, kickoffUtc text, status text, home text, away text, scoreH int default 0, scoreA int default 0, created_at timestamptz default now());",
     "CREATE TABLE IF NOT EXISTS massavu_standings (id uuid default gen_random_uuid() primary key, league text unique, data jsonb, updated_at timestamptz default now());",
     "CREATE TABLE IF NOT EXISTS massavu_lineups (match_id text primary key, lineup jsonb, saved_at timestamptz default now());",
-    "ALTER TABLE massavu_matches DISABLE ROW LEVEL SECURITY;",
-    "ALTER TABLE massavu_standings DISABLE ROW LEVEL SECURITY;",
-    "ALTER TABLE massavu_lineups DISABLE ROW LEVEL SECURITY;"
+    "ALTER TABLE massavu_matches ENABLE ROW LEVEL SECURITY;",
+    "ALTER TABLE massavu_standings ENABLE ROW LEVEL SECURITY;",
+    "ALTER TABLE massavu_lineups ENABLE ROW LEVEL SECURITY;",
+    "CREATE POLICY IF NOT EXISTS \"Public Access Matches\" ON massavu_matches FOR ALL USING (true) WITH CHECK (true);",
+    "CREATE POLICY IF NOT EXISTS \"Public Access Standings\" ON massavu_standings FOR ALL USING (true) WITH CHECK (true);",
+    "CREATE POLICY IF NOT EXISTS \"Public Access Lineups\" ON massavu_lineups FOR ALL USING (true) WITH CHECK (true);"
 ].join('\n');
 
 const body = JSON.stringify({ query: sql });
