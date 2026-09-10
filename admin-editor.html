@@ -733,11 +733,11 @@
                 const raw = localStorage.getItem(STORAGE_KEYS.MATCHES);
                 let existing = raw ? JSON.parse(raw) : [];
                 const uplMatches = [
-                    { id: 1001, competition: 'Uganda Premier League', date: '2026-09-08', time: '16:00 EAT', home: 'Kigezi Homeboyz', away: 'KCCA FC', scoreH: 0, scoreA: 0, status: 'Scheduled' },
-                    { id: 1002, competition: 'Uganda Premier League', date: '2026-09-08', time: '16:00 EAT', home: 'Maroons', away: 'Blacks Power', scoreH: 0, scoreA: 0, status: 'Scheduled' },
-                    { id: 1003, competition: 'Uganda Premier League', date: '2026-09-09', time: '16:00 EAT', home: 'BUL', away: 'Ntugasaze', scoreH: 0, scoreA: 0, status: 'Scheduled' },
-                    { id: 1004, competition: 'Uganda Premier League', date: '2026-09-09', time: '16:00 EAT', home: 'Villa', away: 'Express', scoreH: 0, scoreA: 0, status: 'Scheduled' },
-                    { id: 1005, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Entebbe UPPC', away: 'Lugazi', scoreH: 0, scoreA: 0, status: 'Scheduled' },
+                    { id: 1001, competition: 'Uganda Premier League', date: '2026-09-08', time: '16:00 EAT', home: 'Kigezi Homeboyz', away: 'KCCA FC', scoreH: 0, scoreA: 0, status: 'FT' },
+                    { id: 1002, competition: 'Uganda Premier League', date: '2026-09-08', time: '16:00 EAT', home: 'Maroons', away: 'Blacks Power', scoreH: 1, scoreA: 2, status: 'FT' },
+                    { id: 1003, competition: 'Uganda Premier League', date: '2026-09-09', time: '16:00 EAT', home: 'BUL', away: 'Ntugasaze', scoreH: 4, scoreA: 1, status: 'FT' },
+                    { id: 1004, competition: 'Uganda Premier League', date: '2026-09-09', time: '16:00 EAT', home: 'Villa', away: 'Express', scoreH: 2, scoreA: 0, status: 'FT' },
+                    { id: 1005, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Entebbe UPPC', away: 'Lugazi', scoreH: 0, scoreA: 1, status: 'FT' },
                     { id: 1006, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Kitara', away: 'URA', scoreH: 0, scoreA: 0, status: 'Scheduled' },
                     { id: 1007, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Kataka', away: 'Vipers', scoreH: 0, scoreA: 0, status: 'Scheduled' },
                     { id: 1008, competition: 'Uganda Premier League', date: '2026-09-11', time: '16:00 EAT', home: 'Police', away: 'UPDF', scoreH: 0, scoreA: 0, status: 'Scheduled' },
@@ -745,7 +745,11 @@
                 ];
                 let updated = false;
                 uplMatches.forEach(um => {
-                    if (!existing.some(m => String(m.id) === String(um.id))) {
+                    const idx = existing.findIndex(m => String(m.id) === String(um.id));
+                    if (idx >= 0) {
+                        existing[idx] = { ...existing[idx], ...um };
+                        updated = true;
+                    } else {
                         existing.push(um);
                         updated = true;
                     }

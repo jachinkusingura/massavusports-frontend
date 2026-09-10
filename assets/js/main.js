@@ -82,11 +82,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const raw = localStorage.getItem('massavu_match_results');
             let existing = raw ? JSON.parse(raw) : [];
             const uplMatches = [
-                { id: 1001, competition: 'Uganda Premier League', date: '2026-09-08', time: '16:00 EAT', home: 'Kigezi Homeboyz', away: 'KCCA FC', scoreH: 0, scoreA: 0, status: 'Scheduled' },
-                { id: 1002, competition: 'Uganda Premier League', date: '2026-09-08', time: '16:00 EAT', home: 'Maroons', away: 'Blacks Power', scoreH: 0, scoreA: 0, status: 'Scheduled' },
-                { id: 1003, competition: 'Uganda Premier League', date: '2026-09-09', time: '16:00 EAT', home: 'BUL', away: 'Ntugasaze', scoreH: 0, scoreA: 0, status: 'Scheduled' },
-                { id: 1004, competition: 'Uganda Premier League', date: '2026-09-09', time: '16:00 EAT', home: 'Villa', away: 'Express', scoreH: 0, scoreA: 0, status: 'Scheduled' },
-                { id: 1005, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Entebbe UPPC', away: 'Lugazi', scoreH: 0, scoreA: 0, status: 'Scheduled' },
+                { id: 1001, competition: 'Uganda Premier League', date: '2026-09-08', time: '16:00 EAT', home: 'Kigezi Homeboyz', away: 'KCCA FC', scoreH: 0, scoreA: 0, status: 'FT' },
+                { id: 1002, competition: 'Uganda Premier League', date: '2026-09-08', time: '16:00 EAT', home: 'Maroons', away: 'Blacks Power', scoreH: 1, scoreA: 2, status: 'FT' },
+                { id: 1003, competition: 'Uganda Premier League', date: '2026-09-09', time: '16:00 EAT', home: 'BUL', away: 'Ntugasaze', scoreH: 4, scoreA: 1, status: 'FT' },
+                { id: 1004, competition: 'Uganda Premier League', date: '2026-09-09', time: '16:00 EAT', home: 'Villa', away: 'Express', scoreH: 2, scoreA: 0, status: 'FT' },
+                { id: 1005, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Entebbe UPPC', away: 'Lugazi', scoreH: 0, scoreA: 1, status: 'FT' },
                 { id: 1006, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Kitara', away: 'URA', scoreH: 0, scoreA: 0, status: 'Scheduled' },
                 { id: 1007, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Kataka', away: 'Vipers', scoreH: 0, scoreA: 0, status: 'Scheduled' },
                 { id: 1008, competition: 'Uganda Premier League', date: '2026-09-11', time: '16:00 EAT', home: 'Police', away: 'UPDF', scoreH: 0, scoreA: 0, status: 'Scheduled' },
@@ -94,7 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
             let updated = false;
             uplMatches.forEach(um => {
-                if (!existing.some(m => String(m.id) === String(um.id))) {
+                const idx = existing.findIndex(m => String(m.id) === String(um.id));
+                if (idx >= 0) {
+                    existing[idx] = { ...existing[idx], ...um };
+                    updated = true;
+                } else {
                     existing.push(um);
                     updated = true;
                 }
@@ -197,29 +201,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const defaultFixtures = [
             {
-                date: upl8Sept,
-                league: 'Uganda Premier League',
-                flag: ugandaLogoUrl,
-                matches: [
-                    { id: 1001, home: { id: 'kigezihomeboyz', name: 'Kigezi Homeboyz', logo: '' }, away: { id: 'kcca', name: 'KCCA FC', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' },
-                    { id: 1002, home: { id: 'maroonsfc', name: 'Maroons', logo: '' }, away: { id: 'blackspower', name: 'Blacks Power', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
-                ]
-            },
-            {
-                date: upl9Sept,
-                league: 'Uganda Premier League',
-                flag: ugandaLogoUrl,
-                matches: [
-                    { id: 1003, home: { id: 'bulfc', name: 'BUL', logo: '' }, away: { id: 'ntugasaze', name: 'Ntugasaze', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' },
-                    { id: 1004, home: { id: 'villa', name: 'Villa', logo: '' }, away: { id: 'express', name: 'Express', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
-                ]
-            },
-            {
                 date: upl10Sept,
                 league: 'Uganda Premier League',
                 flag: ugandaLogoUrl,
                 matches: [
-                    { id: 1005, home: { id: 'entebbeuppc', name: 'Entebbe UPPC', logo: '' }, away: { id: 'lugazifc', name: 'Lugazi', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' },
                     { id: 1006, home: { id: 'kitara', name: 'Kitara', logo: '' }, away: { id: 'ura', name: 'URA', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' },
                     { id: 1007, home: { id: 'katakafc', name: 'Kataka', logo: '' }, away: { id: 'vipers', name: 'Vipers', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
                 ]
@@ -285,11 +270,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const defaultResults = [
             {
-                date: yesterday,
+                date: upl10Sept,
                 league: 'Uganda Premier League',
                 flag: ugandaLogoUrl,
                 matches: [
-                    { id: 2001, home: { id: 'bulfc', name: 'BUL FC', logo: '' }, away: { id: 'urafc', name: 'URA FC', logo: '' }, scoreH: 2, scoreA: 1, time: 'FT', status: 'finished' }
+                    { id: 1005, home: { id: 'entebbeuppc', name: 'Entebbe UPPC', logo: '' }, away: { id: 'lugazifc', name: 'Lugazi', logo: '' }, scoreH: 0, scoreA: 1, time: 'FT', status: 'finished' }
+                ]
+            },
+            {
+                date: upl9Sept,
+                league: 'Uganda Premier League',
+                flag: ugandaLogoUrl,
+                matches: [
+                    { id: 1003, home: { id: 'bulfc', name: 'BUL', logo: '' }, away: { id: 'ntugasaze', name: 'Ntugasaze', logo: '' }, scoreH: 4, scoreA: 1, time: 'FT', status: 'finished' },
+                    { id: 1004, home: { id: 'villa', name: 'Villa', logo: '' }, away: { id: 'express', name: 'Express', logo: '' }, scoreH: 2, scoreA: 0, time: 'FT', status: 'finished' }
+                ]
+            },
+            {
+                date: upl8Sept,
+                league: 'Uganda Premier League',
+                flag: ugandaLogoUrl,
+                matches: [
+                    { id: 1001, home: { id: 'kigezihomeboyz', name: 'Kigezi Homeboyz', logo: '' }, away: { id: 'kcca', name: 'KCCA FC', logo: '' }, scoreH: 0, scoreA: 0, time: 'FT', status: 'finished' },
+                    { id: 1002, home: { id: 'maroonsfc', name: 'Maroons', logo: '' }, away: { id: 'blackspower', name: 'Blacks Power', logo: '' }, scoreH: 1, scoreA: 2, time: 'FT', status: 'finished' }
                 ]
             },
             {
@@ -344,24 +347,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const mockStandings = {
         'Uganda Premier League': [
+            { team: { id: 'blackspower', name: 'Blacks Power', logo: '' }, played: 3, won: 3, draw: 0, lost: 0, gd: 3, pts: 9 },
+            { team: { id: 'villa', name: 'Villa', logo: '' }, played: 3, won: 2, draw: 1, lost: 0, gd: 3, pts: 7 },
             { team: { id: 'necfc', name: 'NEC', logo: '' }, played: 2, won: 2, draw: 0, lost: 0, gd: 4, pts: 6 },
-            { team: { id: 'entebbeuppc', name: 'Entebbe UPPC', logo: '' }, played: 2, won: 2, draw: 0, lost: 0, gd: 2, pts: 6 },
-            { team: { id: 'blackspower', name: 'Blacks Power', logo: '' }, played: 2, won: 2, draw: 0, lost: 0, gd: 2, pts: 6 },
-            { team: { id: 'villa', name: 'Villa', logo: '' }, played: 2, won: 1, draw: 1, lost: 0, gd: 1, pts: 4 },
+            { team: { id: 'bulfc', name: 'BUL', logo: '' }, played: 3, won: 2, draw: 0, lost: 1, gd: 2, pts: 6 },
+            { team: { id: 'entebbeuppc', name: 'Entebbe UPPC', logo: '' }, played: 3, won: 2, draw: 0, lost: 1, gd: 1, pts: 6 },
+            { team: { id: 'lugazifc', name: 'Lugazi', logo: '' }, played: 3, won: 2, draw: 0, lost: 1, gd: 0, pts: 6 },
             { team: { id: 'ura', name: 'URA', logo: '' }, played: 2, won: 1, draw: 0, lost: 1, gd: 0, pts: 3 },
-            { team: { id: 'express', name: 'Express', logo: '' }, played: 2, won: 1, draw: 0, lost: 1, gd: 1, pts: 3 },
             { team: { id: 'policefc', name: 'Police', logo: '' }, played: 2, won: 1, draw: 0, lost: 1, gd: 0, pts: 3 },
-            { team: { id: 'bulfc', name: 'BUL', logo: '' }, played: 2, won: 1, draw: 0, lost: 1, gd: -1, pts: 3 },
-            { team: { id: 'lugazifc', name: 'Lugazi', logo: '' }, played: 2, won: 1, draw: 0, lost: 1, gd: -1, pts: 3 },
-            { team: { id: 'maroonsfc', name: 'Maroons', logo: '' }, played: 2, won: 1, draw: 0, lost: 1, gd: 1, pts: 3 },
+            { team: { id: 'maroonsfc', name: 'Maroons', logo: '' }, played: 3, won: 1, draw: 0, lost: 2, gd: 0, pts: 3 },
+            { team: { id: 'express', name: 'Express', logo: '' }, played: 3, won: 1, draw: 0, lost: 2, gd: -1, pts: 3 },
+            { team: { id: 'kitara', name: 'Kitara', logo: '' }, played: 1, won: 0, draw: 1, lost: 0, gd: 0, pts: 1 },
+            { team: { id: 'kigezihomeboyz', name: 'Kigezi Homeboyz', logo: '' }, played: 2, won: 0, draw: 1, lost: 1, gd: -1, pts: 1 },
             { team: { id: 'updffc', name: 'UPDF', logo: '' }, played: 2, won: 0, draw: 1, lost: 1, gd: -1, pts: 1 },
             { team: { id: 'katakafc', name: 'Kataka', logo: '' }, played: 2, won: 0, draw: 1, lost: 1, gd: -3, pts: 1 },
-            { team: { id: 'kitara', name: 'Kitara', logo: '' }, played: 1, won: 0, draw: 1, lost: 0, gd: 0, pts: 1 },
-            { team: { id: 'kigezihomeboyz', name: 'Kigezi Homeboyz', logo: '' }, played: 1, won: 0, draw: 0, lost: 1, gd: -1, pts: 0 },
+            { team: { id: 'kcca', name: 'KCCA FC', logo: '' }, played: 3, won: 0, draw: 1, lost: 2, gd: -4, pts: 1 },
             { team: { id: 'vipers', name: 'Vipers', logo: '' }, played: 1, won: 0, draw: 0, lost: 1, gd: -1, pts: 0 },
             { team: { id: 'mbararacity', name: 'Mbarara City', logo: '' }, played: 1, won: 0, draw: 0, lost: 1, gd: -1, pts: 0 },
-            { team: { id: 'ntugasaze', name: 'Ntugasaze', logo: '' }, played: 2, won: 0, draw: 0, lost: 2, gd: -3, pts: 0 },
-            { team: { id: 'kcca', name: 'KCCA FC', logo: '' }, played: 2, won: 0, draw: 0, lost: 2, gd: -4, pts: 0 }
+            { team: { id: 'ntugasaze', name: 'Ntugasaze', logo: '' }, played: 3, won: 0, draw: 0, lost: 3, gd: -6, pts: 0 }
         ],
         'FUFA Big League': [
             { team: { id: 'paidhablackangels', name: 'Paidha Black Angels', logo: '' }, played: 0, won: 0, draw: 0, lost: 0, gd: 0, pts: 0 },
