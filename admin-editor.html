@@ -733,15 +733,26 @@
                 const raw = localStorage.getItem(STORAGE_KEYS.MATCHES);
                 let existing = raw ? JSON.parse(raw) : [];
                 const uplMatches = [
+                    // Matchday 3 – Results
                     { id: 1001, competition: 'Uganda Premier League', date: '2026-09-08', time: '16:00 EAT', home: 'Kigezi Homeboyz', away: 'KCCA FC', scoreH: 0, scoreA: 0, status: 'FT' },
                     { id: 1002, competition: 'Uganda Premier League', date: '2026-09-08', time: '16:00 EAT', home: 'Maroons', away: 'Blacks Power', scoreH: 1, scoreA: 2, status: 'FT' },
                     { id: 1003, competition: 'Uganda Premier League', date: '2026-09-09', time: '16:00 EAT', home: 'BUL', away: 'Ntugasaze', scoreH: 4, scoreA: 1, status: 'FT' },
                     { id: 1004, competition: 'Uganda Premier League', date: '2026-09-09', time: '16:00 EAT', home: 'Villa', away: 'Express', scoreH: 2, scoreA: 0, status: 'FT' },
-                    { id: 1005, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Entebbe UPPC', away: 'Lugazi', scoreH: 0, scoreA: 1, status: 'FT' },
-                    { id: 1006, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Kitara', away: 'URA', scoreH: 0, scoreA: 0, status: 'Scheduled' },
-                    { id: 1007, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Kataka', away: 'Vipers', scoreH: 0, scoreA: 0, status: 'Scheduled' },
-                    { id: 1008, competition: 'Uganda Premier League', date: '2026-09-11', time: '16:00 EAT', home: 'Police', away: 'UPDF', scoreH: 0, scoreA: 0, status: 'Scheduled' },
-                    { id: 1009, competition: 'Uganda Premier League', date: '2026-09-11', time: '16:00 EAT', home: 'Mbarara City', away: 'NEC', scoreH: 0, scoreA: 0, status: 'Scheduled' }
+                    { id: 1005, competition: 'Uganda Premier League', date: 'TBD', time: 'TBD', home: 'Entebbe UPPC', away: 'Lugazi', scoreH: null, scoreA: null, status: 'Postponed' },
+                    { id: 1006, competition: 'Uganda Premier League', date: 'TBD', time: 'TBD', home: 'Kitara', away: 'URA', scoreH: null, scoreA: null, status: 'Postponed' },
+                    { id: 1007, competition: 'Uganda Premier League', date: '2026-09-10', time: '16:00 EAT', home: 'Kataka', away: 'Vipers', scoreH: 0, scoreA: 0, status: 'FT' },
+                    { id: 1008, competition: 'Uganda Premier League', date: '2026-09-11', time: '16:00 EAT', home: 'Police', away: 'UPDF', scoreH: 0, scoreA: 0, status: 'FT' },
+                    { id: 1009, competition: 'Uganda Premier League', date: '2026-09-11', time: '16:00 EAT', home: 'Mbarara City', away: 'NEC', scoreH: 0, scoreA: 0, status: 'FT' },
+                    // Matchday 4 – Upcoming Fixtures
+                    { id: 1010, competition: 'Uganda Premier League', date: '2026-09-15', time: '16:00 EAT', home: 'Villa', away: 'Kigezi Homeboyz', scoreH: null, scoreA: null, status: 'Scheduled' },
+                    { id: 1011, competition: 'Uganda Premier League', date: '2026-09-15', time: '16:00 EAT', home: 'BUL', away: 'Blacks Power', scoreH: null, scoreA: null, status: 'Scheduled' },
+                    { id: 1012, competition: 'Uganda Premier League', date: '2026-09-15', time: '16:00 EAT', home: 'NEC', away: 'URA', scoreH: null, scoreA: null, status: 'Scheduled' },
+                    { id: 1013, competition: 'Uganda Premier League', date: '2026-09-16', time: '16:00 EAT', home: 'Lugazi', away: 'Police', scoreH: null, scoreA: null, status: 'Scheduled' },
+                    { id: 1014, competition: 'Uganda Premier League', date: '2026-09-16', time: '16:00 EAT', home: 'KCCA FC', away: 'Kataka', scoreH: null, scoreA: null, status: 'Scheduled' },
+                    { id: 1015, competition: 'Uganda Premier League', date: '2026-09-16', time: '16:00 EAT', home: 'Mbarara City', away: 'Entebbe UPPC', scoreH: null, scoreA: null, status: 'Scheduled' },
+                    { id: 1016, competition: 'Uganda Premier League', date: '2026-09-17', time: '16:00 EAT', home: 'UPDF', away: 'Maroons', scoreH: null, scoreA: null, status: 'Scheduled' },
+                    { id: 1017, competition: 'Uganda Premier League', date: '2026-09-17', time: '19:00 EAT', home: 'Express', away: 'Kitara', scoreH: null, scoreA: null, status: 'Scheduled' },
+                    { id: 1018, competition: 'Uganda Premier League', date: '2026-09-19', time: '20:00 EAT', home: 'Vipers', away: 'Ntugasaze', scoreH: null, scoreA: null, status: 'Scheduled' }
                 ];
                 let updated = false;
                 uplMatches.forEach(um => {
@@ -759,6 +770,7 @@
                 }
             } catch (e) { }
         }
+
 
         function getStoredMatches() {
             try {
