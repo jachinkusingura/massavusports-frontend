@@ -146,13 +146,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return new Date();
     }
 
-    // Build dynamic fixtures list (Upcoming or Scheduled matches)
+    // Build dynamic fixtures list (All fixtures including finished ones with results)
     function getAllFixtures() {
         const adminMatches = getStoredAdminMatches();
         const fixturesByDateComp = {};
 
-        // Merge admin scheduled/LIVE matches
-        adminMatches.filter(m => m.status !== 'FT' && m.status !== 'finished').forEach(m => {
+        // Process all admin matches (finished, live, and upcoming)
+        adminMatches.forEach(m => {
             const dateObj = parseLocalDate(m.date, m.kickoffUtc);
             const dateKey = _normDay(dateObj).toDateString();
             const comp = m.competition ? m.competition.trim() : 'Uganda Premier League';
@@ -173,38 +173,60 @@ document.addEventListener('DOMContentLoaded', () => {
             const hId = typeof hName === 'string' ? hName.toLowerCase().replace(/\s+/g, '') : 'home';
             const aId = typeof aName === 'string' ? aName.toLowerCase().replace(/\s+/g, '') : 'away';
 
+            const isFt = m.status === 'FT' || m.status === 'finished';
+            const isLive = m.status === 'LIVE' || m.status === 'live';
+
             fixturesByDateComp[dateKey][comp].matches.push({
                 id: m.id,
                 home: { id: hId, name: hName, logo: m.homeLogo || '' },
                 away: { id: aId, name: aName, logo: m.awayLogo || '' },
-                scoreH: (m.scoreH !== undefined && m.scoreH !== null) ? m.scoreH : (m.homeScore || null),
-                scoreA: (m.scoreA !== undefined && m.scoreA !== null) ? m.scoreA : (m.awayScore || null),
-                time: timeFormatted + ' EAT',
-                status: (m.status === 'LIVE' || m.status === 'live') ? 'live' : 'upcoming',
+                scoreH: (m.scoreH !== undefined && m.scoreH !== null) ? m.scoreH : (m.homeScore !== undefined ? m.homeScore : null),
+                scoreA: (m.scoreA !== undefined && m.scoreA !== null) ? m.scoreA : (m.awayScore !== undefined ? m.awayScore : null),
+                time: isFt ? 'FT' : (isLive ? 'LIVE' : (timeFormatted.includes('EAT') ? timeFormatted : timeFormatted + ' EAT')),
+                status: isFt ? 'finished' : (isLive ? 'live' : 'upcoming'),
                 venue: m.venue || m.location || ''
             });
         });
 
         const dynamicList = [];
+        const dynamicMatchIds = new Set();
         Object.values(fixturesByDateComp).forEach(byComp => {
-            Object.values(byComp).forEach(group => dynamicList.push(group));
+            Object.values(byComp).forEach(group => {
+                dynamicList.push(group);
+                group.matches.forEach(m => dynamicMatchIds.add(String(m.id)));
+            });
         });
 
-        const today = _normDay(new Date());
-        const tomorrow = daysFromToday(1);
-        const nextWeek = daysFromToday(3);
-
-        const upl8Sept = new Date(2026, 8, 8); // Sept 8 – Tomorrow
-        const upl9Sept = new Date(2026, 8, 9); // Sept 9 – Wednesday
-        const upl10Sept = new Date(2026, 8, 10); // Sept 10 – Thursday
-        const upl11Sept = new Date(2026, 8, 11); // Sept 11 – Friday
+        const upl8Sept = new Date(2026, 8, 8); // Sept 8
+        const upl9Sept = new Date(2026, 8, 9); // Sept 9
+        const upl10Sept = new Date(2026, 8, 10); // Sept 10
+        const upl11Sept = new Date(2026, 8, 11); // Sept 11
 
         const defaultFixtures = [
+            {
+                date: upl8Sept,
+                league: 'Uganda Premier League',
+                flag: ugandaLogoUrl,
+                matches: [
+                    { id: 1001, home: { id: 'kigezihomeboyz', name: 'Kigezi Homeboyz', logo: '' }, away: { id: 'kcca', name: 'KCCA FC', logo: '' }, scoreH: 0, scoreA: 0, time: 'FT', status: 'finished' },
+                    { id: 1002, home: { id: 'maroonsfc', name: 'Maroons', logo: '' }, away: { id: 'blackspower', name: 'Blacks Power', logo: '' }, scoreH: 1, scoreA: 2, time: 'FT', status: 'finished' }
+                ]
+            },
+            {
+                date: upl9Sept,
+                league: 'Uganda Premier League',
+                flag: ugandaLogoUrl,
+                matches: [
+                    { id: 1003, home: { id: 'bulfc', name: 'BUL', logo: '' }, away: { id: 'ntugasaze', name: 'Ntugasaze', logo: '' }, scoreH: 4, scoreA: 1, time: 'FT', status: 'finished' },
+                    { id: 1004, home: { id: 'villa', name: 'Villa', logo: '' }, away: { id: 'express', name: 'Express', logo: '' }, scoreH: 2, scoreA: 0, time: 'FT', status: 'finished' }
+                ]
+            },
             {
                 date: upl10Sept,
                 league: 'Uganda Premier League',
                 flag: ugandaLogoUrl,
                 matches: [
+                    { id: 1005, home: { id: 'entebbeuppc', name: 'Entebbe UPPC', logo: '' }, away: { id: 'lugazifc', name: 'Lugazi', logo: '' }, scoreH: 0, scoreA: 1, time: 'FT', status: 'finished' },
                     { id: 1006, home: { id: 'kitara', name: 'Kitara', logo: '' }, away: { id: 'ura', name: 'URA', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' },
                     { id: 1007, home: { id: 'katakafc', name: 'Kataka', logo: '' }, away: { id: 'vipers', name: 'Vipers', logo: '' }, scoreH: null, scoreA: null, time: '16:00 EAT', status: 'upcoming' }
                 ]
@@ -220,7 +242,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         ];
 
-        return [...dynamicList, ...defaultFixtures];
+        const filteredDefaultFixtures = defaultFixtures.map(grp => ({
+            ...grp,
+            matches: grp.matches.filter(m => !dynamicMatchIds.has(String(m.id)))
+        })).filter(grp => grp.matches.length > 0);
+
+        return [...dynamicList, ...filteredDefaultFixtures];
     }
 
     // Build dynamic results list (Finished FT matches)
@@ -1229,11 +1256,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const fH = favorites.includes(match.home.id) ? 'fav-active' : '';
                 const fA = favorites.includes(match.away.id) ? 'fav-active' : '';
-                let tCls = 'match-time' + (match.status === 'finished' ? ' finished' : match.status === 'upcoming' ? ' upcoming' : '');
-                const score = match.status === 'upcoming' ? '-- : --' : `${match.scoreH} - ${match.scoreA}`;
+                const isFinished = match.status === 'finished' || match.status === 'FT';
+                const isLive = match.status === 'live' || match.status === 'LIVE';
+                let tCls = 'match-time' + (isFinished ? ' finished' : isLive ? ' live' : ' upcoming');
+                const hasScore = match.scoreH !== null && match.scoreH !== undefined && match.scoreA !== null && match.scoreA !== undefined;
+                const score = (hasScore && (isFinished || isLive)) ? `${match.scoreH} - ${match.scoreA}` : '-- : --';
+                const timeDisplay = isFinished ? 'FT' : (isLive ? 'LIVE' : match.time);
 
                 card.innerHTML = `
-                    <div class="${tCls}">${match.time}</div>
+                    <div class="${tCls}">${timeDisplay}</div>
                     <div class="match-team home">
                         <button class="star-btn ${fH}" onclick="toggleFavorite(${match.home.id})"><i class="fa-solid fa-star"></i></button>
                         <span>${match.home.name}</span>
