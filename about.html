@@ -4,72 +4,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="MassavuSports is Uganda's dedicated football platform — covering UPL, FUFA Big League, Ntare, Chaapa and Kitunga leagues with live scores, fixtures, standings, and lineups.">
     <title>About Us | MassavuSports</title>
     <link rel="canonical" href="https://massavusports.com/about.html">
+    <meta name="last-modified" content="2026-09-29">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">`n
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7077047821404742"
+        crossorigin="anonymous"></script>
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, #0b1329 0%, #111c38 60%, #0f2140 100%);
+            border-bottom: 1px solid rgba(250, 204, 21, 0.15);
+            padding: 3rem 1.5rem 2.5rem;
+            text-align: center;
+        }
+
+        .about-hero h1 {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 0.75rem;
+        }
+
+        .about-hero h1 span {
+            color: #facc15;
+        }
+
+        .about-hero p {
+            max-width: 620px;
+            margin: 0 auto;
+            color: #94a3b8;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .about-section {
+            background: var(--bg-card, #111c38);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
+            padding: 2rem 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-section h2 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #facc15;
+            margin-bottom: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .about-section p {
+            color: #94a3b8;
+            line-height: 1.8;
+            font-size: 0.97rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .about-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .league-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .league-card {
+            background: rgba(250, 204, 21, 0.04);
+            border: 1px solid rgba(250, 204, 21, 0.15);
+            border-radius: 10px;
+            padding: 1rem 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .league-card img {
+            width: 36px;
+            height: 36px;
+            object-fit: cover;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .league-card .lc-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(250, 204, 21, 0.12);
+            border-radius: 6px;
+            flex-shrink: 0;
+            color: #facc15;
+            font-size: 1.1rem;
+        }
+
+        .league-card .lc-name {
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: #e2e8f0;
+            line-height: 1.3;
+        }
+
+        .league-card .lc-tier {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        .sourcing-list {
+            list-style: none;
+            padding: 0;
+            margin: 0.5rem 0 0;
+        }
+
+        .sourcing-list li {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            padding: 0.45rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+        }
+
+        .sourcing-list li:last-child {
+            border-bottom: none;
+        }
+
+        .sourcing-list li i {
+            color: #facc15;
+            margin-top: 4px;
+            flex-shrink: 0;
+            width: 16px;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 0.25rem;
+        }
+
+        .stat-pill {
+            background: rgba(250, 204, 21, 0.08);
+            border: 1px solid rgba(250, 204, 21, 0.2);
+            border-radius: 8px;
+            padding: 0.6rem 1.1rem;
+            text-align: center;
+        }
+
+        .stat-pill .sp-num {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #facc15;
+            display: block;
+        }
+
+        .stat-pill .sp-lbl {
+            font-size: 0.76rem;
+            color: #64748b;
+            margin-top: 2px;
+        }
+    </style>
 </head>
 
 <body>
     <header class="navbar">
         <div class="container">
             <a href="index.html" class="logo">
-                <img src="assets/images/logo.png" alt="Logo"
-                    style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;">
+                <img src="assets/images/logo.png" alt="MassavuSports Logo">
                 Massavu<span>Sports</span>
             </a>
-            <nav class="nav-links" id="nav-links">
+            <nav class="nav-links" id="nav-links" aria-label="Main navigation">
                 <a href="index.html">Home</a>
-                <a href="category.html">Uganda League</a>
-                <a href="category.html">Local News</a>
-                <a href="category.html">Transfers</a>
+                <a href="about.html" class="active">About</a>
+                <a href="contact.html">Contact</a>
             </nav>
-            <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu"><i
+                    class="fa-solid fa-bars"></i></button>
         </div>
     </header>
 
-    <main class="container" style="padding: 4rem 1.5rem; max-width: 800px;">
-        <h1 class="section-title">About Us</h1>
-        <div style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.8;">
-            <p style="margin-bottom: 1.5rem;">Welcome to MassavuSports, your number one source for all things related to
-                Ugandan local football. We're dedicated to bringing you the very best of sports media, with a focus on
-                deep analysis, real-time match day coverage, and breaking transfer news.</p>
-            <p style="margin-bottom: 1.5rem;">Founded with a passion for uplifting local talent, MassavuSports has come
-                a long way from its beginnings. When we first started out, our passion for bridging the gap between fans
-                and the pitch drove us to start this platform.</p>
-            <p>We hope you enjoy our news coverage and match insights as much as we enjoy offering them to you. If you
-                have any questions or comments, please don't hesitate to contact us.</p>
-        </div>
+    <!-- HERO -->
+    <div class="about-hero">
+        <h1>About <span>MassavuSports</span></h1>
+        <p>Uganda's dedicated football data platform — delivering accurate fixtures, results, standings, and lineups
+            for local leagues that matter to Ugandan fans.</p>
+    </div>
+
+    <main class="container" style="max-width: 860px; padding: 2.5rem 1.25rem 4rem;">
+
+        <!-- MISSION -->
+        <article class="about-section">
+            <h2><i class="fa-solid fa-bullseye"></i> Our Mission</h2>
+            <p>MassavuSports was built to bridge the gap between fans and the pitch. For too long, Uganda's local
+                football ecosystem lacked a central, reliable hub where supporters could track their teams in real time.
+                We set out to change that.</p>
+            <p>Our mission is simple: <strong style="color:#e2e8f0;">provide authentic, up-to-date football data for
+                    Ugandan leagues</strong> — from the top-flight Uganda Premier League down to passionate community
+                competitions like the Ntare, Chaapa, and Kitunga leagues. Every fixture, result, and standing you see
+                on this platform is manually verified by our editorial team before it goes live.</p>
+
+            <!-- Quick stats -->
+            <div class="stats-row">
+                <div class="stat-pill">
+                    <span class="sp-num">5</span>
+                    <div class="sp-lbl">Leagues Covered</div>
+                </div>
+                <div class="stat-pill">
+                    <span class="sp-num">36+</span>
+                    <div class="sp-lbl">Teams Tracked</div>
+                </div>
+                <div class="stat-pill">
+                    <span class="sp-num">Daily</span>
+                    <div class="sp-lbl">Data Updates</div>
+                </div>
+                <div class="stat-pill">
+                    <span class="sp-num">Free</span>
+                    <div class="sp-lbl">Always</div>
+                </div>
+            </div>
+        </article>
+
+        <!-- WHAT WE COVER -->
+        <section class="about-section">
+            <h2><i class="fa-solid fa-trophy"></i> What We Cover</h2>
+            <p>We focus exclusively on Ugandan football — no filler content, no recycled international news.
+                Every competition on our platform has active editorial oversight:</p>
+
+            <div class="league-grid">
+                <div class="league-card">
+                    <img src="https://media.api-sports.io/football/leagues/332.png" alt="Uganda Premier League">
+                    <div>
+                        <div class="lc-name">Uganda Premier League</div>
+                        <div class="lc-tier">Top Division · 18 clubs</div>
+                    </div>
+                </div>
+                <div class="league-card">
+                    <img src="https://media.api-sports.io/football/leagues/333.png" alt="FUFA Big League">
+                    <div>
+                        <div class="lc-name">FUFA Big League</div>
+                        <div class="lc-tier">2nd Division · 16 clubs</div>
+                    </div>
+                </div>
+                <div class="league-card">
+                    <img src="assets/images/ntare_league_logo.jpg" alt="Ntare League">
+                    <div>
+                        <div class="lc-name">Ntare League</div>
+                        <div class="lc-tier">Regional · Mbarara</div>
+                    </div>
+                </div>
+                <div class="league-card">
+                    <img src="assets/images/chaapa_league_logo.jpg" alt="Chaapa League">
+                    <div>
+                        <div class="lc-name">Chaapa League</div>
+                        <div class="lc-tier">Community · Western UG</div>
+                    </div>
+                </div>
+                <div class="league-card">
+                    <img src="assets/images/kitunga_league_logo.jpg" alt="Kitunga League">
+                    <div>
+                        <div class="lc-name">Kitunga League</div>
+                        <div class="lc-tier">Community · Western UG</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW WE SOURCE DATA -->
+        <section class="about-section">
+            <h2><i class="fa-solid fa-database"></i> How We Source Our Data</h2>
+            <p>Transparency matters to us. Here is exactly how match data gets onto MassavuSports:</p>
+            <ul class="sourcing-list">
+                <li>
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span><strong style="color:#e2e8f0;">Official FUFA communications</strong> — Fixture schedules,
+                        referee assignments, and competition rulings are sourced directly from FUFA's official
+                        channels and matchday programmes.</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span><strong style="color:#e2e8f0;">On-the-ground reporting</strong> — Our team of regional
+                        correspondents attend or monitor matches directly for community league results (Ntare,
+                        Chaapa, Kitunga), where no official digital feed exists.</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span><strong style="color:#e2e8f0;">Editorial verification</strong> — Every score and fixture
+                        entered through our admin system is cross-checked against at least one independent source
+                        before publication.</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-check-circle"></i>
+                    <span><strong style="color:#e2e8f0;">Supabase cloud sync</strong> — Data is stored in a
+                        secure, cloud-backed database ensuring consistency across all devices and sessions in
+                        real time.</span>
+                </li>
+                <li>
+                    <i class="fa-solid fa-exclamation-triangle"></i>
+                    <span><strong style="color:#e2e8f0;">Correction policy</strong> — If we publish an incorrect
+                        score, we correct it within 24 hours and note the amendment. Spotted an error?
+                        <a href="contact.html" style="color:#facc15;">Contact us</a>.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- EDITORIAL NOTE -->
+        <section class="about-section">
+            <h2><i class="fa-solid fa-pen-nib"></i> Editorial Independence</h2>
+            <p>MassavuSports is independently operated and has no commercial ties to any football club, sponsor,
+                or governing body. Our only obligation is to Ugandan football fans who rely on this platform for
+                accurate information.</p>
+            <p>We display Google AdSense advertisements to cover hosting and operational costs. Advertising
+                relationships have zero influence on our match reporting, standings calculations, or editorial
+                decisions.</p>
+            <p>For media inquiries, data correction requests, or partnership proposals, please reach out via our
+                <a href="contact.html" style="color:#facc15;">Contact page</a>.
+            </p>
+        </section>
+
     </main>
 
-    <footer
-        style="background-color: var(--bg-card); padding: 3rem 0; margin-top: 4rem; border-top: 1px solid var(--border-color);">
-        <div class="container" style="text-align: center;">
-            <div class="logo" style="justify-content: center; margin-bottom: 1rem;"><img src="assets/images/logo.png"
-                    alt="Logo" style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;">
-                Massavu<span>Sports</span></div>
-            <p class="text-muted">Your premier source for Ugandan local football news, updates, and highlights.</p>
-            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-                <a href="index.html" class="text-secondary">Home</a>
-                <a href="about.html" class="text-secondary">About Us</a>
-                <a href="contact.html" class="text-secondary">Contact Us</a>
-                <a href="disclaimer.html" class="text-secondary">Disclaimer</a>
-                <a href="privacy.html" class="text-secondary">Privacy Policy</a>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <a href="index.html" class="footer-logo" style="min-height:unset;">
+                    <img src="assets/images/logo.png" alt="MassavuSports Logo">
+                    Massavu<span>Sports</span>
+                </a>
+                <p>The premier platform for Ugandan football scores &amp; event updates.</p>
+                <nav class="footer-links" aria-label="Footer navigation">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="disclaimer.html">Disclaimer</a>
+                </nav>
+                <p class="footer-copy">&copy; 2026 MassavuSports. All rights reserved.</p>
             </div>
-            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
-                <a href="#" style="color: var(--text-muted); font-size: 1.5rem;"><i
-                        class="fa-brands fa-facebook"></i></a>
-                <a href="#" style="color: var(--text-muted); font-size: 1.5rem;"><i
-                        class="fa-brands fa-twitter"></i></a>
-                <a href="#" style="color: var(--text-muted); font-size: 1.5rem;"><i
-                        class="fa-brands fa-instagram"></i></a>
-            </div>
-            <p class="text-muted" style="margin-top: 2rem; font-size: 0.9rem;">&copy; 2026 MassavuSports. All rights
-                reserved.</p>
         </div>
     </footer>
-    <script src="assets/js/main.js"></script>
+
+    <script>
+        // Mobile menu toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const nav = document.getElementById('nav-links');
+        if (btn && nav) {
+            btn.addEventListener('click', () => {
+                nav.classList.toggle('open');
+                const ic = btn.querySelector('i');
+                if (ic) ic.className = nav.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+            });
+        }
+    </script>
 </body>
 
 </html>
