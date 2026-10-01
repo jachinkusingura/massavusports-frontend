@@ -446,8 +446,9 @@
                             <label for="matchStatus">Match Status</label>
                             <select id="matchStatus" class="form-control" onchange="toggleScoreFields()">
                                 <option value="Scheduled">Scheduled</option>
-                                <option value="Live">Live</option>
                                 <option value="FT">Full Time (FT)</option>
+                                <option value="Postponed">Postponed</option>
+                                <option value="Cancelled">Cancelled</option>
                             </select>
                         </div>
                     </div>
@@ -492,10 +493,30 @@
 
             <div class="editor-card">
                 <h2><i class="fa-solid fa-list-ul"></i> Matches Directory</h2>
+                <div style="display: flex; gap: 0.6rem; margin-bottom: 0.75rem; flex-wrap: wrap; align-items: center;">
+                    <button class="btn btn-secondary" style="font-size:0.78rem;padding:0.35rem 0.7rem;"
+                        onclick="setAdminDateFilter('today')">Today</button>
+                    <button class="btn btn-secondary" style="font-size:0.78rem;padding:0.35rem 0.7rem;"
+                        onclick="setAdminDateFilter('yesterday')">Yesterday</button>
+                    <button class="btn btn-secondary" style="font-size:0.78rem;padding:0.35rem 0.7rem;"
+                        onclick="setAdminDateFilter('tomorrow')">Tomorrow</button>
+                    <input type="date" id="filterMatchDate" class="form-control" style="max-width:160px;"
+                        onchange="renderMatchesTable()" title="Filter by date">
+                    <button class="btn btn-secondary" style="font-size:0.78rem;padding:0.35rem 0.7rem;color:#94a3b8;"
+                        onclick="clearAdminDateFilter()">All Dates</button>
+                </div>
                 <div style="display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
                     <select id="filterMatchComp" class="form-control" style="max-width: 220px;"
                         onchange="renderMatchesTable()"></select>
-                    <input type="text" id="searchMatch" class="form-control" style="max-width: 260px;"
+                    <select id="filterMatchStatus" class="form-control" style="max-width: 180px;"
+                        onchange="renderMatchesTable()">
+                        <option value="ALL">All Statuses</option>
+                        <option value="Scheduled">Scheduled</option>
+                        <option value="FT">Full Time</option>
+                        <option value="Postponed">Postponed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                    <input type="text" id="searchMatch" class="form-control" style="max-width: 230px;"
                         placeholder="Search team or ID..." oninput="renderMatchesTable()">
                 </div>
                 <div id="matchesTableWrapper"></div>
@@ -559,6 +580,10 @@
                             <label for="teamComp">Primary Competition</label>
                             <select id="teamComp" class="form-control"></select>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="teamLogo">Team Logo URL (optional)</label>
+                        <input type="url" id="teamLogo" class="form-control" placeholder="https://... (logo image URL)">
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
                         <button type="submit" class="btn btn-primary" id="saveTeamBtn"><i class="fa-solid fa-check"></i>
@@ -939,35 +964,86 @@
             toggleScoreFields();
         }
 
+        function setAdminDateFilter(which) {
+            const el = document.getElementById('filterMatchDate');
+            if (!el) return;
+            const d = new Date();
+            if (which === 'today') {
+                el.value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            } else if (which === 'yesterday') {
+                d.setDate(d.getDate() - 1);
+                el.value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            } else if (which === 'tomorrow') {
+                d.setDate(d.getDate() + 1);
+                el.value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            }
+            renderMatchesTable();
+        }
+
+        function clearAdminDateFilter() {
+            const el = document.getElementById('filterMatchDate');
+            if (el) el.value = '';
+            renderMatchesTable();
+        }
+
+        function quickUpdateResult(id) {
+            const m = getStoredMatches().find(x => String(x.id) === String(id));
+            if (!m) return;
+            const scoreH = prompt(`Enter Home Score (${m.home || m.homeTeam}):`);
+            if (scoreH === null) return;
+            const scoreA = prompt(`Enter Away Score (${m.away || m.awayTeam}):`);
+            if (scoreA === null) return;
+            const sh = parseInt(scoreH, 10) || 0;
+            const sa = parseInt(scoreA, 10) || 0;
+            const updated = { ...m, scoreh: sh, scorea: sa, scoreH: sh, scoreA: sa, status: 'FT' };
+            let matches = getStoredMatches();
+            matches = matches.map(x => String(x.id) === String(id) ? updated : x);
+            localStorage.setItem(STORAGE_KEYS.MATCHES, JSON.stringify(matches));
+            if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.saveMatch) window.MASSAVU_SUPABASE.saveMatch(updated);
+            recalculateStandingsEngine();
+            renderMatchesTable();
+            updateStatsCounters();
+        }
+
         function renderMatchesTable() {
             const wrapper = document.getElementById('matchesTableWrapper');
             if (!wrapper) return;
             let matches = getStoredMatches();
             const comp = document.getElementById('filterMatchComp') ? document.getElementById('filterMatchComp').value : 'ALL';
+            const status = document.getElementById('filterMatchStatus') ? document.getElementById('filterMatchStatus').value : 'ALL';
+            const dateFilter = document.getElementById('filterMatchDate') ? document.getElementById('filterMatchDate').value : '';
             const query = document.getElementById('searchMatch') ? document.getElementById('searchMatch').value.toLowerCase().trim() : '';
 
             if (comp && comp !== 'ALL') matches = matches.filter(m => m.competition === comp);
+            if (status && status !== 'ALL') matches = matches.filter(m => (m.status || '').toLowerCase() === status.toLowerCase());
+            if (dateFilter) matches = matches.filter(m => m.date === dateFilter);
             if (query) matches = matches.filter(m => (m.home && m.home.toLowerCase().includes(query)) || (m.away && m.away.toLowerCase().includes(query)) || String(m.id).includes(query));
+
+            // Sort newest date first
+            matches.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
             if (matches.length === 0) { wrapper.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:1.5rem 0;">No match fixtures found.</p>'; return; }
 
-            let html = `<table class="data-table"><thead><tr><th>Date & Time</th><th>Competition</th><th>Matchup</th><th>Score / Status</th><th style="text-align:right;">Actions</th></tr></thead><tbody>`;
+            let html = `<table class="data-table"><thead><tr><th>Date</th><th>Competition</th><th>Matchup</th><th>Score / Status</th><th style="text-align:right;">Actions</th></tr></thead><tbody>`;
             matches.forEach(m => {
-                const isFT = m.status === 'FT', isLive = m.status === 'Live';
-                const statusClass = isLive ? 'status-live' : (isFT ? 'status-ft' : 'status-scheduled');
+                const isFT = m.status === 'FT';
+                const isPostponed = m.status === 'Postponed';
+                const isCancelled = m.status === 'Cancelled';
+                const statusCls = isFT ? 'status-ft' : (isPostponed ? 'status-postponed' : (isCancelled ? 'status-live' : 'status-scheduled'));
                 html += `<tr>
-                    <td>${m.date || 'N/A'} <span style="color:#64748b; font-size:0.8rem;">${m.time || '16:00'}</span></td>
+                    <td>${m.date || 'N/A'}</td>
                     <td><span style="background:rgba(250,204,21,0.1); color:#facc15; padding:2px 6px; border-radius:4px; font-weight:700; font-size:0.75rem;">${m.competition}</span></td>
                     <td style="font-weight:700; color:#fff;">${m.home || m.homeTeam} vs ${m.away || m.awayTeam}</td>
                     <td>
                         <span style="background:#080e1e; border:1px solid #1e293b; padding:2px 6px; border-radius:4px; font-weight:900; color:#fff; margin-right:6px;">
-                            ${(isFT || isLive) ? `${m.scoreH ?? m.scoreh ?? 0} - ${m.scoreA ?? m.scorea ?? 0}` : 'VS'}
+                            ${isFT ? `${m.scoreH ?? m.scoreh ?? 0} - ${m.scoreA ?? m.scorea ?? 0}` : 'VS'}
                         </span>
-                        <span class="status-pill ${statusClass}">${m.status || 'Scheduled'}</span>
+                        <span class="status-pill ${statusCls}">${m.status || 'Scheduled'}</span>
                     </td>
                     <td style="text-align:right;">
-                        <button class="btn btn-secondary" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="editMatch('${m.id}')"><i class="fa-solid fa-pen"></i></button>
-                        <button class="btn btn-danger" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="deleteMatch('${m.id}')"><i class="fa-solid fa-trash"></i></button>
+                        ${!isFT && !isPostponed && !isCancelled ? `<button class="btn btn-success" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="quickUpdateResult('${m.id}')" title="Enter result"><i class="fa-solid fa-futbol"></i></button>` : ''}
+                        <button class="btn btn-secondary" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="editMatch('${m.id}')" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                        <button class="btn btn-danger" style="font-size:0.75rem; padding:0.3rem 0.5rem;" onclick="deleteMatch('${m.id}')" title="Delete"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>`;
             });
@@ -1047,9 +1123,10 @@
             const name = document.getElementById('teamName').value.trim();
             const code = document.getElementById('teamCode').value.trim() || name.substring(0, 3).toUpperCase();
             const comp = document.getElementById('teamComp').value;
+            const logo = (document.getElementById('teamLogo') ? document.getElementById('teamLogo').value.trim() : '') || '';
             if (!name) return;
 
-            const teamObj = { name, code, competition: comp };
+            const teamObj = { name, code, competition: comp, logo };
             let teams = getStoredTeams();
             if (orig) teams = teams.map(t => t.name === orig ? teamObj : t);
             else { if (teams.some(t => t.name.toLowerCase() === name.toLowerCase())) { alert('Team exists.'); return; } teams.unshift(teamObj); }
@@ -1067,7 +1144,9 @@
             document.getElementById('teamName').value = t.name;
             document.getElementById('teamCode').value = t.code || '';
             document.getElementById('teamComp').value = t.competition || 'Uganda Premier League';
+            if (document.getElementById('teamLogo')) document.getElementById('teamLogo').value = t.logo || '';
             document.getElementById('teamFormTitle').innerHTML = `<i class="fa-solid fa-pen-to-square"></i> Edit Team "${t.name}"`;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function deleteTeam(name) {
@@ -1081,6 +1160,7 @@
         function resetTeamForm() {
             document.getElementById('teamForm').reset();
             document.getElementById('teamOriginalName').value = '';
+            if (document.getElementById('teamLogo')) document.getElementById('teamLogo').value = '';
             document.getElementById('teamFormTitle').innerHTML = '<i class="fa-solid fa-shield-cat"></i> Add / Edit Team';
         }
 
@@ -1089,9 +1169,11 @@
             if (!wrapper) return;
             const teams = getStoredTeams();
             if (teams.length === 0) { wrapper.innerHTML = '<p style="color:#94a3b8; text-align:center; padding:1.5rem 0;">No teams registered yet.</p>'; return; }
-            let html = `<table class="data-table"><thead><tr><th>Code</th><th>Team Name</th><th>Competition</th><th style="text-align:right;">Actions</th></tr></thead><tbody>`;
+            let html = `<table class="data-table"><thead><tr><th>Logo</th><th>Code</th><th>Team Name</th><th>Competition</th><th style="text-align:right;">Actions</th></tr></thead><tbody>`;
             teams.forEach(t => {
+                const logoHtml = t.logo ? `<img src="${t.logo}" alt="${t.name}" style="width:24px;height:24px;object-fit:contain;border-radius:4px;" onerror="this.style.display='none'">` : '<span style="color:#475569;font-size:0.75rem;">—</span>';
                 html += `<tr>
+                    <td>${logoHtml}</td>
                     <td><span style="background:rgba(250,204,21,0.15); color:#facc15; padding:2px 6px; border-radius:4px; font-weight:800; font-size:0.75rem;">${t.code || 'TEA'}</span></td>
                     <td style="font-weight:700; color:#fff;">${t.name}</td>
                     <td>${t.competition || 'Uganda Premier League'}</td>

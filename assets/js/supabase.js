@@ -141,6 +141,97 @@ window.MASSAVU_SUPABASE = (function () {
         getCreds: getCreds,
         normalizeMatch: normalizeMatch,
 
+        /** Calculate standings live from completed (FT) match results */
+        calculateStandings: function (compName, matchesList) {
+            const standingsMap = {};
+            if (!Array.isArray(matchesList)) return [];
+
+            const ftMatches = matchesList.filter(m => {
+                if (!m) return false;
+                const isCompMatch = !compName || compName === 'ALL' || (m.competition && m.competition.toLowerCase().trim() === compName.toLowerCase().trim());
+                const isFT = m.status === 'FT' || m.status === 'Completed';
+                return isCompMatch && isFT;
+            });
+
+            ftMatches.forEach(m => {
+                const homeName = (m.home || m.homeTeam || '').trim();
+                const awayName = (m.away || m.awayTeam || '').trim();
+                if (!homeName || !awayName) return;
+
+                if (!standingsMap[homeName]) {
+                    standingsMap[homeName] = { name: homeName, logo: m.homeLogo || '', played: 0, won: 0, draw: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
+                }
+                if (!standingsMap[awayName]) {
+                    standingsMap[awayName] = { name: awayName, logo: m.awayLogo || '', played: 0, won: 0, draw: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
+                }
+
+                const scoreH = Number((m.scoreH !== undefined && m.scoreH !== null) ? m.scoreH : ((m.scoreh !== undefined && m.scoreh !== null) ? m.scoreh : (m.homeScore || 0)));
+                const scoreA = Number((m.scoreA !== undefined && m.scoreA !== null) ? m.scoreA : ((m.scorea !== undefined && m.scorea !== null) ? m.scorea : (m.awayScore || 0)));
+
+                const home = standingsMap[homeName];
+                const away = standingsMap[awayName];
+
+                home.played += 1;
+                away.played += 1;
+                home.gf += scoreH;
+                home.ga += scoreA;
+                away.gf += scoreA;
+                away.ga += scoreH;
+
+                if (scoreH > scoreA) {
+                    home.won += 1;
+                    home.pts += 3;
+                    away.lost += 1;
+                } else if (scoreA > scoreH) {
+                    away.won += 1;
+                    away.pts += 3;
+                    home.lost += 1;
+                } else {
+                    home.draw += 1;
+                    home.pts += 1;
+                    away.draw += 1;
+                    away.pts += 1;
+                }
+            });
+
+            const resultList = Object.values(standingsMap).map(t => {
+                t.gd = t.gf - t.ga;
+                return t;
+            });
+
+            resultList.sort((a, b) => {
+                if (b.pts !== a.pts) return b.pts - a.pts;
+                if (b.gd !== a.gd) return b.gd - a.gd;
+                if (b.gf !== a.gf) return b.gf - a.gf;
+                return a.name.localeCompare(b.name);
+            });
+
+            return resultList.map((t, idx) => ({
+                pos: idx + 1,
+                team: { name: t.name, logo: t.logo, id: t.name.toLowerCase().replace(/[^a-z0-9]/g, '') },
+                played: t.played,
+                won: t.won,
+                draw: t.draw,
+                lost: t.lost,
+                gf: t.gf,
+                ga: t.ga,
+                gd: t.gd,
+                pts: t.pts
+            }));
+        },
+
+        /** Filter matches by date string (YYYY-MM-DD) and competition */
+        filterMatchesByDateAndComp: function (matchesList, targetDate, compName) {
+            if (!Array.isArray(matchesList)) return [];
+            return matchesList.filter(m => {
+                if (!m) return false;
+                const matchDate = m.date || (m.kickoffUtc ? m.kickoffUtc.split('T')[0] : '');
+                const dateMatch = !targetDate || matchDate === targetDate;
+                const compMatch = !compName || compName === 'ALL' || (m.competition && m.competition.toLowerCase().trim() === compName.toLowerCase().trim());
+                return dateMatch && compMatch;
+            });
+        },
+
         /** Save (upsert) a single match fixture/result */
         saveMatch: async function (matchObj) {
             const matches = JSON.parse(localStorage.getItem(STORAGE_KEYS.MATCHES) || '[]');
