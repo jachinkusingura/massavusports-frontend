@@ -173,7 +173,27 @@ document.addEventListener('DOMContentLoaded', () => {
         'kataka fc': 'https://media.api-sports.io/football/teams/9073.png',
         'entebbe uppc': 'https://media.api-sports.io/football/teams/9074.png',
         'buhimba saints': 'https://media.api-sports.io/football/teams/9075.png',
-        'calvary fc': 'https://media.api-sports.io/football/teams/9076.png'
+        'calvary fc': 'https://media.api-sports.io/football/teams/9076.png',
+
+        // FUFA Big League Teams
+        'onduparaka': 'https://upload.wikimedia.org/wikipedia/en/f/fb/Onduparaka-logo.png',
+        'onduparaka fc': 'https://upload.wikimedia.org/wikipedia/en/f/fb/Onduparaka-logo.png',
+        'busoga united': 'https://upload.wikimedia.org/wikipedia/en/4/49/Busoga-united-fc.jpg',
+        'busoga united fc': 'https://upload.wikimedia.org/wikipedia/en/4/49/Busoga-united-fc.jpg',
+        'ndejje university': 'https://upload.wikimedia.org/wikipedia/commons/e/e2/Ndejje_University_Logo.jpg',
+        'ndejje university fc': 'https://upload.wikimedia.org/wikipedia/commons/e/e2/Ndejje_University_Logo.jpg',
+        'paidha black angels': 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Paidha_black_angels_logo.webp/250px-Paidha_black_angels_logo.webp',
+        'paidha black angels fc': 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Paidha_black_angels_logo.webp/250px-Paidha_black_angels_logo.webp',
+        'gaddafi fc': 'https://upload.wikimedia.org/wikipedia/en/thumb/7/76/Entebbe_UPPC_logo.png/250px-Entebbe_UPPC_logo.png',
+        'booma fc': 'https://media.api-sports.io/football/teams/9079.png',
+        'kaaro karungi': 'https://media.api-sports.io/football/teams/9077.png',
+        'kaaro karungi fc': 'https://media.api-sports.io/football/teams/9077.png',
+        'kiyinda boys': 'https://media.api-sports.io/football/teams/9078.png',
+        'kiyinda boys fc': 'https://media.api-sports.io/football/teams/9078.png',
+        'kyetume fc': 'https://media.api-sports.io/football/teams/9080.png',
+        'amus college': 'https://media.api-sports.io/football/teams/9081.png',
+        'amus college fc': 'https://media.api-sports.io/football/teams/9081.png',
+        'myda fc': 'https://media.api-sports.io/football/teams/9082.png'
     };
 
     function seedDefaultTeamsToStorage() {
@@ -181,6 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const raw = localStorage.getItem(STORAGE_KEY_TEAMS);
             let existing = raw ? JSON.parse(raw) : [];
             const defaultTeams = [
+                // UPL
                 { name: 'Vipers SC', code: 'VIP', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['vipers sc'] },
                 { name: 'KCCA FC', code: 'KCC', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['kcca fc'] },
                 { name: 'SC Villa', code: 'VIL', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['sc villa'] },
@@ -198,7 +219,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 { name: 'Kigezi Homeboyz', code: 'KIG', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['kigezi homeboyz'] },
                 { name: 'Ntugasaze FC', code: 'NTU', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['ntugasaze fc'] },
                 { name: 'Kataka FC', code: 'KAT', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['kataka fc'] },
-                { name: 'Entebbe UPPC', code: 'ENT', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['entebbe uppc'] }
+                { name: 'Entebbe UPPC', code: 'ENT', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['entebbe uppc'] },
+
+                // FUFA Big League
+                { name: 'Onduparaka FC', code: 'OND', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['onduparaka fc'] },
+                { name: 'Busoga United FC', code: 'BUS', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['busoga united fc'] },
+                { name: 'Ndejje University FC', code: 'NDJ', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['ndejje university fc'] },
+                { name: 'Paidha Black Angels FC', code: 'PBA', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['paidha black angels fc'] },
+                { name: 'Booma FC', code: 'BOO', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['booma fc'] },
+                { name: 'Kaaro Karungi FC', code: 'KAA', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['kaaro karungi fc'] },
+                { name: 'Kiyinda Boys FC', code: 'KIY', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['kiyinda boys fc'] },
+                { name: 'Kyetume FC', code: 'KYE', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['kyetume fc'] },
+                { name: 'Amus College FC', code: 'AMU', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['amus college fc'] },
+                { name: 'Myda FC', code: 'MYD', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['myda fc'] }
             ];
 
             defaultTeams.forEach(dt => {
