@@ -137,14 +137,98 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) { return [{ name: 'Uganda Premier League' }]; }
     }
 
+    const UPL_TEAM_LOGOS = {
+        'vipers': 'https://upload.wikimedia.org/wikipedia/en/2/2f/Vipers_SC_logo.png',
+        'vipers sc': 'https://upload.wikimedia.org/wikipedia/en/2/2f/Vipers_SC_logo.png',
+        'kcca': 'https://upload.wikimedia.org/wikipedia/en/c/cd/Kampala_Capital_City_Authority_FC.png',
+        'kcca fc': 'https://upload.wikimedia.org/wikipedia/en/c/cd/Kampala_Capital_City_Authority_FC.png',
+        'sc villa': 'https://upload.wikimedia.org/wikipedia/en/1/15/Sc_villa_logo.png',
+        'villa': 'https://upload.wikimedia.org/wikipedia/en/1/15/Sc_villa_logo.png',
+        'express': 'https://upload.wikimedia.org/wikipedia/en/9/9e/EXPRESS-FC-LOGO.png',
+        'express fc': 'https://upload.wikimedia.org/wikipedia/en/9/9e/EXPRESS-FC-LOGO.png',
+        'ura': 'https://upload.wikimedia.org/wikipedia/en/1/1e/URA-FC-logo.png',
+        'ura fc': 'https://upload.wikimedia.org/wikipedia/en/1/1e/URA-FC-logo.png',
+        'bul': 'https://upload.wikimedia.org/wikipedia/en/c/cb/BUL_Jinja_FC.svg',
+        'bul fc': 'https://upload.wikimedia.org/wikipedia/en/c/cb/BUL_Jinja_FC.svg',
+        'kitara': 'https://upload.wikimedia.org/wikipedia/en/6/63/Kitara-FC-logo.png',
+        'kitara fc': 'https://upload.wikimedia.org/wikipedia/en/6/63/Kitara-FC-logo.png',
+        'nec': 'https://upload.wikimedia.org/wikipedia/en/2/2d/National_Enterprises_Corporation_FC_logo.png',
+        'nec fc': 'https://upload.wikimedia.org/wikipedia/en/2/2d/National_Enterprises_Corporation_FC_logo.png',
+        'maroons': 'https://upload.wikimedia.org/wikipedia/en/7/7a/Maroons-white-logo.png',
+        'maroons fc': 'https://upload.wikimedia.org/wikipedia/en/7/7a/Maroons-white-logo.png',
+        'mbarara city': 'https://media.api-sports.io/football/teams/9064.png',
+        'mbarara city fc': 'https://media.api-sports.io/football/teams/9064.png',
+        'updf': 'https://media.api-sports.io/football/teams/9066.png',
+        'updf fc': 'https://media.api-sports.io/football/teams/9066.png',
+        'police': 'https://media.api-sports.io/football/teams/9067.png',
+        'police fc': 'https://media.api-sports.io/football/teams/9067.png',
+        'lugazi': 'https://media.api-sports.io/football/teams/9068.png',
+        'lugazi fc': 'https://media.api-sports.io/football/teams/9068.png',
+        'blacks power': 'https://media.api-sports.io/football/teams/9071.png',
+        'blacks power fc': 'https://media.api-sports.io/football/teams/9071.png',
+        'kigezi homeboyz': 'https://media.api-sports.io/football/teams/9070.png',
+        'ntugasaze': 'https://media.api-sports.io/football/teams/9072.png',
+        'ntugasaze fc': 'https://media.api-sports.io/football/teams/9072.png',
+        'kataka': 'https://media.api-sports.io/football/teams/9073.png',
+        'kataka fc': 'https://media.api-sports.io/football/teams/9073.png',
+        'entebbe uppc': 'https://media.api-sports.io/football/teams/9074.png',
+        'buhimba saints': 'https://media.api-sports.io/football/teams/9075.png',
+        'calvary fc': 'https://media.api-sports.io/football/teams/9076.png'
+    };
+
+    function seedDefaultTeamsToStorage() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY_TEAMS);
+            let existing = raw ? JSON.parse(raw) : [];
+            const defaultTeams = [
+                { name: 'Vipers SC', code: 'VIP', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['vipers sc'] },
+                { name: 'KCCA FC', code: 'KCC', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['kcca fc'] },
+                { name: 'SC Villa', code: 'VIL', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['sc villa'] },
+                { name: 'Express FC', code: 'EXP', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['express fc'] },
+                { name: 'URA FC', code: 'URA', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['ura fc'] },
+                { name: 'BUL FC', code: 'BUL', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['bul fc'] },
+                { name: 'Kitara FC', code: 'KIT', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['kitara fc'] },
+                { name: 'NEC FC', code: 'NEC', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['nec fc'] },
+                { name: 'Maroons FC', code: 'MAR', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['maroons fc'] },
+                { name: 'Mbarara City FC', code: 'MBA', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['mbarara city fc'] },
+                { name: 'UPDF FC', code: 'UPD', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['updf fc'] },
+                { name: 'Police FC', code: 'POL', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['police fc'] },
+                { name: 'Lugazi FC', code: 'LUG', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['lugazi fc'] },
+                { name: 'Blacks Power FC', code: 'BLK', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['blacks power fc'] },
+                { name: 'Kigezi Homeboyz', code: 'KIG', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['kigezi homeboyz'] },
+                { name: 'Ntugasaze FC', code: 'NTU', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['ntugasaze fc'] },
+                { name: 'Kataka FC', code: 'KAT', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['kataka fc'] },
+                { name: 'Entebbe UPPC', code: 'ENT', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['entebbe uppc'] }
+            ];
+
+            defaultTeams.forEach(dt => {
+                const idx = existing.findIndex(t => t.name && t.name.toLowerCase() === dt.name.toLowerCase());
+                if (idx >= 0) {
+                    if (!existing[idx].logo) existing[idx].logo = dt.logo;
+                } else {
+                    existing.push(dt);
+                }
+            });
+            localStorage.setItem(STORAGE_KEY_TEAMS, JSON.stringify(existing));
+        } catch (e) { console.warn('[main] seedDefaultTeams error:', e.message); }
+    }
+
     function getTeams() {
         try { return JSON.parse(localStorage.getItem(STORAGE_KEY_TEAMS) || '[]'); } catch (e) { return []; }
     }
 
     function getTeamLogo(teamName) {
+        if (!teamName) return '';
+        const clean = teamName.toLowerCase().trim();
         const teams = getTeams();
-        const t = teams.find(t => t.name && t.name.toLowerCase() === (teamName || '').toLowerCase());
-        return t && t.logo ? t.logo : '';
+        const t = teams.find(t => t.name && t.name.toLowerCase().trim() === clean);
+        if (t && t.logo) return t.logo;
+        if (UPL_TEAM_LOGOS[clean]) return UPL_TEAM_LOGOS[clean];
+        // Partial match fallback
+        for (const [key, logoUrl] of Object.entries(UPL_TEAM_LOGOS)) {
+            if (clean.includes(key) || key.includes(clean)) return logoUrl;
+        }
+        return '';
     }
 
     // ────────────────────────────────────────────────
@@ -546,6 +630,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function init() {
         seedDefaultUplMatchesToStorage();
         seedDefaultCompetitions();
+        seedDefaultTeamsToStorage();
         state.allMatches = getMatches();
         state.competitions = getCompetitions();
 
