@@ -88,16 +88,50 @@ document.addEventListener('DOMContentLoaded', () => {
                 { id: 1025, competition: 'Uganda Premier League', date: '2026-09-24', kickoffutc: '2026-09-24T13:00:00Z', home: 'Lugazi', away: 'Express', scoreh: 1, scorea: 2, status: 'FT' },
                 { id: 1026, competition: 'Uganda Premier League', date: '2026-09-24', kickoffutc: '2026-09-24T13:00:00Z', home: 'Kataka', away: 'UPDF', scoreh: 0, scorea: 0, status: 'FT' },
                 { id: 1027, competition: 'Uganda Premier League', date: '2026-09-24', kickoffutc: '2026-09-24T16:00:00Z', home: 'Entebbe UPPC', away: 'NEC', scoreh: 1, scorea: 3, status: 'FT' },
-                // Matchday 6 – Upcoming Fixtures (29 Sep - 2 Oct 2026)
-                { id: 1028, competition: 'Uganda Premier League', date: '2026-09-29', kickoffutc: '2026-09-29T13:00:00Z', home: 'Vipers', away: 'Villa', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1029, competition: 'Uganda Premier League', date: '2026-09-29', kickoffutc: '2026-09-29T13:00:00Z', home: 'KCCA FC', away: 'Lugazi', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1030, competition: 'Uganda Premier League', date: '2026-09-30', kickoffutc: '2026-09-30T13:00:00Z', home: 'Mbarara City', away: 'Police', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1031, competition: 'Uganda Premier League', date: '2026-09-30', kickoffutc: '2026-09-30T13:00:00Z', home: 'NEC', away: 'Blacks Power', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1032, competition: 'Uganda Premier League', date: '2026-09-30', kickoffutc: '2026-09-30T16:00:00Z', home: 'Express', away: 'Kataka', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1033, competition: 'Uganda Premier League', date: '2026-10-01', kickoffutc: '2026-10-01T13:00:00Z', home: 'Maroons', away: 'URA', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1034, competition: 'Uganda Premier League', date: '2026-10-01', kickoffutc: '2026-10-01T13:00:00Z', home: 'BUL', away: 'Entebbe UPPC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1035, competition: 'Uganda Premier League', date: '2026-10-02', kickoffutc: '2026-10-02T13:00:00Z', home: 'UPDF', away: 'Kigezi Homeboyz', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1036, competition: 'Uganda Premier League', date: '2026-10-02', kickoffutc: '2026-10-02T16:00:00Z', home: 'Kitara', away: 'Ntugasaze', scoreh: 0, scorea: 0, status: 'Scheduled' }
+                // Matchday 6 – Results (29 Sep - 2 Oct 2026)
+                { id: 1028, competition: 'Uganda Premier League', date: '2026-09-29', kickoffutc: '2026-09-29T13:00:00Z', home: 'Vipers', away: 'Villa', scoreh: 2, scorea: 0, status: 'FT' },
+                { id: 1029, competition: 'Uganda Premier League', date: '2026-09-29', kickoffutc: '2026-09-29T13:00:00Z', home: 'KCCA FC', away: 'Lugazi', scoreh: 3, scorea: 1, status: 'FT' },
+                { id: 1030, competition: 'Uganda Premier League', date: '2026-09-30', kickoffutc: '2026-09-30T13:00:00Z', home: 'Mbarara City', away: 'Police', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 1031, competition: 'Uganda Premier League', date: '2026-09-30', kickoffutc: '2026-09-30T13:00:00Z', home: 'NEC', away: 'Blacks Power', scoreh: 2, scorea: 1, status: 'FT' },
+                { id: 1032, competition: 'Uganda Premier League', date: '2026-09-30', kickoffutc: '2026-09-30T16:00:00Z', home: 'Express', away: 'Kataka', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 1033, competition: 'Uganda Premier League', date: '2026-10-01', kickoffutc: '2026-10-01T13:00:00Z', home: 'Maroons', away: 'URA', scoreh: 0, scorea: 2, status: 'FT' },
+                { id: 1034, competition: 'Uganda Premier League', date: '2026-10-01', kickoffutc: '2026-10-01T13:00:00Z', home: 'BUL', away: 'Entebbe UPPC', scoreh: 2, scorea: 0, status: 'FT' },
+                { id: 1035, competition: 'Uganda Premier League', date: '2026-10-02', kickoffutc: '2026-10-02T13:00:00Z', home: 'UPDF', away: 'Kigezi Homeboyz', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 1036, competition: 'Uganda Premier League', date: '2026-10-02', kickoffutc: '2026-10-02T16:00:00Z', home: 'Kitara', away: 'Ntugasaze', scoreh: 3, scorea: 0, status: 'FT' },
+                // Matchday 7 – Upcoming Fixtures (6-9 Oct 2026)
+                { id: 1037, competition: 'Uganda Premier League', date: '2026-10-06', kickoffutc: '2026-10-06T13:00:00Z', home: 'Villa', away: 'KCCA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1038, competition: 'Uganda Premier League', date: '2026-10-06', kickoffutc: '2026-10-06T13:00:00Z', home: 'Lugazi', away: 'BUL', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1039, competition: 'Uganda Premier League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Police', away: 'Vipers', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1040, competition: 'Uganda Premier League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'URA', away: 'Express', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1041, competition: 'Uganda Premier League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Blacks Power', away: 'Mbarara City', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1042, competition: 'Uganda Premier League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Entebbe UPPC', away: 'Maroons', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1043, competition: 'Uganda Premier League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Kigezi Homeboyz', away: 'Kataka', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1044, competition: 'Uganda Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T13:00:00Z', home: 'Ntugasaze', away: 'NEC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1045, competition: 'Uganda Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T16:00:00Z', home: 'UPDF', away: 'Kitara', scoreh: 0, scorea: 0, status: 'Scheduled' },
+
+                // ── FUFA Big League Matchday 1 – Results ──
+                { id: 2001, competition: 'FUFA Big League', date: '2026-08-25', kickoffutc: '2026-08-25T13:00:00Z', home: 'Paidha Black Angels', away: 'Calvary', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2002, competition: 'FUFA Big League', date: '2026-08-25', kickoffutc: '2026-08-25T13:00:00Z', home: 'Kaaro Karungi', away: 'Amus College', scoreh: 0, scorea: 3, status: 'FT' },
+                { id: 2003, competition: 'FUFA Big League', date: '2026-08-26', kickoffutc: '2026-08-26T13:00:00Z', home: 'Young Elephant Academy', away: 'Buwambo', scoreh: 2, scorea: 1, status: 'FT' },
+                { id: 2004, competition: 'FUFA Big League', date: '2026-08-26', kickoffutc: '2026-08-26T13:00:00Z', home: 'Kiyinda Boys', away: 'Rwenzori Lions', scoreh: 2, scorea: 1, status: 'FT' },
+                { id: 2005, competition: 'FUFA Big League', date: '2026-08-26', kickoffutc: '2026-08-26T13:00:00Z', home: 'Pakwach Young Stars', away: 'Iganga United', scoreh: 2, scorea: 1, status: 'FT' },
+                { id: 2006, competition: 'FUFA Big League', date: '2026-08-26', kickoffutc: '2026-08-26T13:00:00Z', home: 'Catda', away: 'Volcanoes', scoreh: 2, scorea: 1, status: 'FT' },
+
+                // ── FUFA Big League Matchday 2 – Results ──
+                { id: 2007, competition: 'FUFA Big League', date: '2026-09-01', kickoffutc: '2026-09-01T13:00:00Z', home: 'Paidha Black Angels', away: 'Kaaro Karungi', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2008, competition: 'FUFA Big League', date: '2026-09-01', kickoffutc: '2026-09-01T13:00:00Z', home: 'Onduparaka', away: 'Catda', scoreh: 1, scorea: 2, status: 'FT' },
+                { id: 2009, competition: 'FUFA Big League', date: '2026-09-01', kickoffutc: '2026-09-01T13:00:00Z', home: 'Iganga United', away: 'Young Elephant Academy', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 2010, competition: 'FUFA Big League', date: '2026-09-02', kickoffutc: '2026-09-02T13:00:00Z', home: 'Rwenzori Lions', away: 'Pakwach Young Stars', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 2011, competition: 'FUFA Big League', date: '2026-09-02', kickoffutc: '2026-09-02T13:00:00Z', home: 'Buwambo', away: 'Kiyinda Boys', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 2012, competition: 'FUFA Big League', date: '2026-09-02', kickoffutc: '2026-09-02T13:00:00Z', home: 'Volcanoes', away: 'Calvary', scoreh: 1, scorea: 0, status: 'FT' },
+
+                // ── FUFA Big League Matchday 3 – Upcoming Fixtures ──
+                { id: 2031, competition: 'FUFA Big League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Amus College', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2032, competition: 'FUFA Big League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Kiyinda Boys', away: 'Young Elephant Academy', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2033, competition: 'FUFA Big League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Kaaro Karungi', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2034, competition: 'FUFA Big League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Catda', away: 'Iganga United', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2035, competition: 'FUFA Big League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Pakwach Young Stars', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2036, competition: 'FUFA Big League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Rwenzori Lions', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' }
             ];
             uplMatches.forEach(um => {
                 const idx = existing.findIndex(m => String(m.id) === String(um.id));
@@ -111,30 +145,82 @@ document.addEventListener('DOMContentLoaded', () => {
     function seedDefaultCompetitions() {
         try {
             const raw = localStorage.getItem(STORAGE_KEY_COMPS);
+            const defaultComps = [
+                { name: 'Uganda Premier League', country: 'Uganda', season: '2025/2026' },
+                { name: 'FUFA Big League', country: 'Uganda', season: '2025/2026' }
+            ];
             if (!raw || JSON.parse(raw).length === 0) {
-                localStorage.setItem(STORAGE_KEY_COMPS, JSON.stringify([
-                    { name: 'Uganda Premier League', country: 'Uganda', season: '2025/2026' },
-                    { name: 'FUFA Big League', country: 'Uganda', season: '2025/2026' },
-                    { name: 'Ntare League', country: 'Uganda', season: '2025/2026' },
-                    { name: 'Chaapa League', country: 'Uganda', season: '2025/2026' },
-                    { name: 'Kitunga League', country: 'Uganda', season: '2025/2026' }
-                ]));
+                localStorage.setItem(STORAGE_KEY_COMPS, JSON.stringify(defaultComps));
+            } else {
+                // Scrub legacy leagues (Ntare, Chaapa, Kitunga) if present in storage
+                let stored = JSON.parse(raw);
+                const obsolete = ['ntare league', 'chaapa league', 'kitunga league'];
+                const cleaned = stored.filter(c => c && c.name && !obsolete.includes(c.name.toLowerCase().trim()));
+                if (cleaned.length !== stored.length) {
+                    localStorage.setItem(STORAGE_KEY_COMPS, JSON.stringify(cleaned));
+                }
+            }
+            scrubDummyDataFromStorage();
+        } catch (e) { }
+    }
+
+    function scrubDummyDataFromStorage() {
+        try {
+            const dummy = ['omutaji', 'omutaji fc', 'ty sheldon', 'sheldon'];
+            const rawMatches = localStorage.getItem(STORAGE_KEY_MATCHES);
+            if (rawMatches) {
+                const matches = JSON.parse(rawMatches);
+                const cleaned = matches.filter(m => {
+                    if (!m) return false;
+                    const h = (m.home || m.homeTeam || '').toLowerCase().trim();
+                    const a = (m.away || m.awayTeam || '').toLowerCase().trim();
+                    return !dummy.some(d => h.includes(d) || a.includes(d));
+                });
+                if (cleaned.length !== matches.length) {
+                    localStorage.setItem(STORAGE_KEY_MATCHES, JSON.stringify(cleaned));
+                }
+            }
+            const rawTeams = localStorage.getItem(STORAGE_KEY_TEAMS);
+            if (rawTeams) {
+                // Also purge stale FBL teams from the previous season
+                const staleFBL = ['busoga united', 'kyetume', 'ndejje university', 'booma', 'myda', 'gaddafi'];
+                const teams = JSON.parse(rawTeams);
+                const cleaned = teams.filter(t => {
+                    if (!t || !t.name) return false;
+                    const n = t.name.toLowerCase().trim();
+                    if (dummy.some(d => n.includes(d))) return false;
+                    if (t.competition === 'FUFA Big League' && staleFBL.some(s => n.includes(s))) return false;
+                    return true;
+                });
+                if (cleaned.length !== teams.length) {
+                    localStorage.setItem(STORAGE_KEY_TEAMS, JSON.stringify(cleaned));
+                }
             }
         } catch (e) { }
     }
 
     function getMatches() {
-        try { return JSON.parse(localStorage.getItem(STORAGE_KEY_MATCHES) || '[]'); } catch (e) { return []; }
+        try {
+            const raw = JSON.parse(localStorage.getItem(STORAGE_KEY_MATCHES) || '[]');
+            const dummy = ['omutaji', 'omutaji fc', 'ty sheldon', 'sheldon'];
+            return raw.filter(m => {
+                if (!m) return false;
+                const h = (m.home || m.homeTeam || '').toLowerCase().trim();
+                const a = (m.away || m.awayTeam || '').toLowerCase().trim();
+                return !dummy.some(d => h.includes(d) || a.includes(d));
+            });
+        } catch (e) { return []; }
     }
 
     function getCompetitions() {
         try {
             const stored = JSON.parse(localStorage.getItem(STORAGE_KEY_COMPS) || '[]');
-            return stored.length > 0 ? stored : [
-                { name: 'Uganda Premier League' }, { name: 'FUFA Big League' },
-                { name: 'Ntare League' }, { name: 'Chaapa League' }, { name: 'Kitunga League' }
+            const obsolete = ['ntare league', 'chaapa league', 'kitunga league'];
+            const cleaned = stored.filter(c => c && c.name && !obsolete.includes(c.name.toLowerCase().trim()));
+            return cleaned.length > 0 ? cleaned : [
+                { name: 'Uganda Premier League' }, { name: 'FUFA Big League' }
             ];
-        } catch (e) { return [{ name: 'Uganda Premier League' }]; }
+        } catch (e) { return [{ name: 'Uganda Premier League' }, { name: 'FUFA Big League' }]; }
     }
 
     const UPL_TEAM_LOGOS = {
@@ -162,8 +248,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'updf fc': 'https://media.api-sports.io/football/teams/9066.png',
         'police': 'https://media.api-sports.io/football/teams/9067.png',
         'police fc': 'https://media.api-sports.io/football/teams/9067.png',
-        'lugazi': 'https://media.api-sports.io/football/teams/9068.png',
-        'lugazi fc': 'https://media.api-sports.io/football/teams/9068.png',
+        'lugazi': 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e4/Lugazi_FC.png/180px-Lugazi_FC.png',
+        'lugazi fc': 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e4/Lugazi_FC.png/180px-Lugazi_FC.png',
         'blacks power': 'https://media.api-sports.io/football/teams/9071.png',
         'blacks power fc': 'https://media.api-sports.io/football/teams/9071.png',
         'kigezi homeboyz': 'https://media.api-sports.io/football/teams/9070.png',
@@ -175,25 +261,26 @@ document.addEventListener('DOMContentLoaded', () => {
         'buhimba saints': 'https://media.api-sports.io/football/teams/9075.png',
         'calvary fc': 'https://media.api-sports.io/football/teams/9076.png',
 
-        // FUFA Big League Teams
-        'onduparaka': 'https://upload.wikimedia.org/wikipedia/en/f/fb/Onduparaka-logo.png',
-        'onduparaka fc': 'https://upload.wikimedia.org/wikipedia/en/f/fb/Onduparaka-logo.png',
-        'busoga united': 'https://upload.wikimedia.org/wikipedia/en/4/49/Busoga-united-fc.jpg',
-        'busoga united fc': 'https://upload.wikimedia.org/wikipedia/en/4/49/Busoga-united-fc.jpg',
-        'ndejje university': 'https://upload.wikimedia.org/wikipedia/commons/e/e2/Ndejje_University_Logo.jpg',
-        'ndejje university fc': 'https://upload.wikimedia.org/wikipedia/commons/e/e2/Ndejje_University_Logo.jpg',
-        'paidha black angels': 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Paidha_black_angels_logo.webp/250px-Paidha_black_angels_logo.webp',
-        'paidha black angels fc': 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b4/Paidha_black_angels_logo.webp/250px-Paidha_black_angels_logo.webp',
-        'gaddafi fc': 'https://upload.wikimedia.org/wikipedia/en/thumb/7/76/Entebbe_UPPC_logo.png/250px-Entebbe_UPPC_logo.png',
-        'booma fc': 'https://media.api-sports.io/football/teams/9079.png',
+        // FUFA Big League Teams 2026/27
+        'onduparaka': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Onduparaka_FC_badge.png/220px-Onduparaka_FC_badge.png',
+        'onduparaka fc': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Onduparaka_FC_badge.png/220px-Onduparaka_FC_badge.png',
+        'paidha black angels': 'https://upload.wikimedia.org/wikipedia/en/b/b4/Paidha_black_angels_logo.webp',
+        'paidha black angels fc': 'https://upload.wikimedia.org/wikipedia/en/b/b4/Paidha_black_angels_logo.webp',
         'kaaro karungi': 'https://media.api-sports.io/football/teams/9077.png',
         'kaaro karungi fc': 'https://media.api-sports.io/football/teams/9077.png',
         'kiyinda boys': 'https://media.api-sports.io/football/teams/9078.png',
         'kiyinda boys fc': 'https://media.api-sports.io/football/teams/9078.png',
-        'kyetume fc': 'https://media.api-sports.io/football/teams/9080.png',
         'amus college': 'https://media.api-sports.io/football/teams/9081.png',
         'amus college fc': 'https://media.api-sports.io/football/teams/9081.png',
-        'myda fc': 'https://media.api-sports.io/football/teams/9082.png'
+        'young elephant academy': 'https://media.api-sports.io/football/teams/9084.png',
+        'pakwach young stars': 'https://media.api-sports.io/football/teams/9085.png',
+        'catda': 'https://media.api-sports.io/football/teams/9086.png',
+        'volcanoes': 'https://media.api-sports.io/football/teams/9087.png',
+        'iganga united': 'https://media.api-sports.io/football/teams/9088.png',
+        'rwenzori lions': 'https://media.api-sports.io/football/teams/9089.png',
+        'buwambo': 'https://media.api-sports.io/football/teams/9090.png',
+        'calvary': 'https://media.api-sports.io/football/teams/9091.png',
+        'calvary fc': 'https://media.api-sports.io/football/teams/9091.png'
     };
 
     function seedDefaultTeamsToStorage() {
@@ -221,17 +308,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 { name: 'Kataka FC', code: 'KAT', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['kataka fc'] },
                 { name: 'Entebbe UPPC', code: 'ENT', competition: 'Uganda Premier League', logo: UPL_TEAM_LOGOS['entebbe uppc'] },
 
-                // FUFA Big League
-                { name: 'Onduparaka FC', code: 'OND', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['onduparaka fc'] },
-                { name: 'Busoga United FC', code: 'BUS', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['busoga united fc'] },
-                { name: 'Ndejje University FC', code: 'NDJ', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['ndejje university fc'] },
-                { name: 'Paidha Black Angels FC', code: 'PBA', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['paidha black angels fc'] },
-                { name: 'Booma FC', code: 'BOO', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['booma fc'] },
-                { name: 'Kaaro Karungi FC', code: 'KAA', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['kaaro karungi fc'] },
-                { name: 'Kiyinda Boys FC', code: 'KIY', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['kiyinda boys fc'] },
-                { name: 'Kyetume FC', code: 'KYE', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['kyetume fc'] },
-                { name: 'Amus College FC', code: 'AMU', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['amus college fc'] },
-                { name: 'Myda FC', code: 'MYD', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['myda fc'] }
+                // FUFA Big League 2026/27
+                { name: 'Paidha Black Angels', code: 'PBA', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['paidha black angels'] },
+                { name: 'Young Elephant Academy', code: 'YEA', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['young elephant academy'] },
+                { name: 'Amus College', code: 'AMU', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['amus college'] },
+                { name: 'Pakwach Young Stars', code: 'PKW', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['pakwach young stars'] },
+                { name: 'Kiyinda Boys', code: 'KIY', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['kiyinda boys'] },
+                { name: 'Catda', code: 'CAT', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['catda'] },
+                { name: 'Volcanoes', code: 'VOL', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['volcanoes'] },
+                { name: 'Iganga United', code: 'IGU', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['iganga united'] },
+                { name: 'Rwenzori Lions', code: 'RWL', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['rwenzori lions'] },
+                { name: 'Buwambo', code: 'BUW', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['buwambo'] },
+                { name: 'Onduparaka', code: 'OND', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['onduparaka'] },
+                { name: 'Calvary', code: 'CAL', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['calvary'] },
+                { name: 'Kaaro Karungi', code: 'KAA', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['kaaro karungi'] }
             ];
 
             defaultTeams.forEach(dt => {
@@ -263,6 +353,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return '';
     }
+
+    window.MASSAVU_GET_TEAM_LOGO = getTeamLogo;
 
     // ────────────────────────────────────────────────
     //  DATE HELPERS
@@ -548,7 +640,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const rows = standings.map(row => {
                 const gdClass = row.gd > 0 ? 'lt-positive' : (row.gd < 0 ? 'lt-negative' : '');
                 const gdText = row.gd > 0 ? `+${row.gd}` : row.gd;
-                const logoHtml = row.team && row.team.logo ? `<img class="lt-team-logo" src="${row.team.logo}" alt="${row.team.name}" onerror="this.style.display='none'">` : `<div class="lt-team-logo-placeholder">${(row.team.name || '?').substring(0, 3).toUpperCase()}</div>`;
+                const teamName = row.team ? row.team.name : '';
+                const logoUrl = (row.team && row.team.logo) || getTeamLogo(teamName);
+                const logoHtml = logoUrl ? `<img class="lt-team-logo" src="${logoUrl}" alt="${teamName}" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Onduparaka_FC_badge.png/220px-Onduparaka_FC_badge.png';">` : `<div class="lt-team-logo-placeholder">${(teamName || '?').substring(0, 3).toUpperCase()}</div>`;
                 return `<tr>
                     <td class="lt-pos">${row.pos}</td>
                     <td><div class="lt-team-cell">${logoHtml}<span class="lt-team-name">${row.team.name}</span></div></td>

@@ -732,9 +732,7 @@
 
         const DEFAULT_COMPS = [
             { name: 'Uganda Premier League', country: 'Uganda', season: '2025/2026' },
-            { name: 'Kitunga League', country: 'Uganda', season: '2025/2026' },
-            { name: 'Ntare League', country: 'Uganda', season: '2025/2026' },
-            { name: 'Chaapa League', country: 'Uganda', season: '2025/2026' }
+            { name: 'FUFA Big League', country: 'Uganda', season: '2025/2026' }
         ];
 
         function switchTab(tabId) {
@@ -806,7 +804,14 @@
                 return [];
             }
         }
-        function getStoredCompetitions() { try { const s = JSON.parse(localStorage.getItem(STORAGE_KEYS.COMPS) || '[]'); return s.length > 0 ? s : DEFAULT_COMPS; } catch (e) { return DEFAULT_COMPS; } }
+        function getStoredCompetitions() {
+            try {
+                const s = JSON.parse(localStorage.getItem(STORAGE_KEYS.COMPS) || '[]');
+                const obsolete = ['ntare league', 'chaapa league', 'kitunga league'];
+                const cleaned = s.filter(c => c && c.name && !obsolete.includes(c.name.toLowerCase().trim()));
+                return cleaned.length > 0 ? cleaned : DEFAULT_COMPS;
+            } catch (e) { return DEFAULT_COMPS; }
+        }
         function getStoredTeams() { try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.TEAMS) || '[]'); } catch (e) { return []; } }
         function getStoredPosts() { try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.POSTS) || '[]'); } catch (e) { return []; } }
 

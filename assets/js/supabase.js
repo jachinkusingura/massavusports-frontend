@@ -150,19 +150,32 @@ window.MASSAVU_SUPABASE = (function () {
                 if (!m) return false;
                 const isCompMatch = !compName || compName === 'ALL' || (m.competition && m.competition.toLowerCase().trim() === compName.toLowerCase().trim());
                 const isFT = m.status === 'FT' || m.status === 'Completed';
-                return isCompMatch && isFT;
+                const homeName = (m.home || m.homeTeam || '').toLowerCase().trim();
+                const awayName = (m.away || m.awayTeam || '').toLowerCase().trim();
+                const isDummy = homeName.includes('omutaji') || homeName.includes('sheldon') || awayName.includes('omutaji') || awayName.includes('sheldon');
+                return isCompMatch && isFT && !isDummy;
             });
+
+            const dummy = ['omutaji', 'omutaji fc', 'ty sheldon', 'sheldon'];
 
             ftMatches.forEach(m => {
                 const homeName = (m.home || m.homeTeam || '').trim();
                 const awayName = (m.away || m.awayTeam || '').trim();
                 if (!homeName || !awayName) return;
+                if (dummy.some(d => homeName.toLowerCase().includes(d) || awayName.toLowerCase().includes(d))) return;
+
+                const getLogo = (name, fallback) => {
+                    if (fallback) return fallback;
+                    if (typeof getTeamLogo === 'function') return getTeamLogo(name);
+                    if (window.MASSAVU_GET_TEAM_LOGO && typeof window.MASSAVU_GET_TEAM_LOGO === 'function') return window.MASSAVU_GET_TEAM_LOGO(name);
+                    return '';
+                };
 
                 if (!standingsMap[homeName]) {
-                    standingsMap[homeName] = { name: homeName, logo: m.homeLogo || '', played: 0, won: 0, draw: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
+                    standingsMap[homeName] = { name: homeName, logo: getLogo(homeName, m.homeLogo), played: 0, won: 0, draw: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
                 }
                 if (!standingsMap[awayName]) {
-                    standingsMap[awayName] = { name: awayName, logo: m.awayLogo || '', played: 0, won: 0, draw: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
+                    standingsMap[awayName] = { name: awayName, logo: getLogo(awayName, m.awayLogo), played: 0, won: 0, draw: 0, lost: 0, gf: 0, ga: 0, gd: 0, pts: 0 };
                 }
 
                 const scoreH = Number((m.scoreH !== undefined && m.scoreH !== null) ? m.scoreH : ((m.scoreh !== undefined && m.scoreh !== null) ? m.scoreh : (m.homeScore || 0)));
@@ -194,10 +207,12 @@ window.MASSAVU_SUPABASE = (function () {
                 }
             });
 
-            const resultList = Object.values(standingsMap).map(t => {
-                t.gd = t.gf - t.ga;
-                return t;
-            });
+            const resultList = Object.values(standingsMap)
+                .filter(t => t && t.name && !dummy.some(d => t.name.toLowerCase().includes(d)))
+                .map(t => {
+                    t.gd = t.gf - t.ga;
+                    return t;
+                });
 
             resultList.sort((a, b) => {
                 if (b.pts !== a.pts) return b.pts - a.pts;
