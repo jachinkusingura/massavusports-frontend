@@ -14,99 +14,208 @@
     <script>if (!sessionStorage.getItem('adminToken')) { sessionStorage.setItem('adminToken', 'massavu_admin_token_2026'); }</script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
         * {
             box-sizing: border-box;
         }
 
         body {
             display: flex;
-            background: #0b1329;
+            background: #060c18;
             color: #f8fafc;
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             margin: 0;
             padding: 0;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
+        /* ── SIDEBAR ── */
         .sidebar {
-            width: 250px;
-            background: #060c1c;
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            width: 256px;
+            background: linear-gradient(180deg, #06091a 0%, #060c1c 100%);
+            border-right: 1px solid rgba(250, 204, 21, 0.1);
             height: 100vh;
             position: fixed;
             top: 0;
             left: 0;
-            padding: 1.5rem 1rem;
+            padding: 1.25rem 0.9rem 1.5rem;
             display: flex;
             flex-direction: column;
-            z-index: 100;
+            z-index: 200;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Mobile overlay */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(2px);
+            z-index: 190;
+        }
+
+        .sidebar-overlay.open {
+            display: block;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .admin-main {
+                margin-left: 0 !important;
+                max-width: 100vw !important;
+            }
         }
 
         .sidebar .logo {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 900;
             color: #fff;
             display: flex;
             align-items: center;
             gap: 0.5rem;
             text-decoration: none;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.1rem 0.2rem 1rem;
+            border-bottom: 1px solid rgba(250, 204, 21, 0.15);
+            letter-spacing: -0.01em;
         }
 
         .sidebar .logo span {
             color: #facc15;
         }
 
+        .sidebar-label {
+            font-size: 0.62rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #475569;
+            padding: 0.85rem 0.85rem 0.3rem;
+        }
+
         .sidebar-menu {
-            margin-top: 1rem;
+            margin-top: 0.5rem;
             display: flex;
             flex-direction: column;
-            gap: 0.35rem;
+            gap: 0.2rem;
         }
 
         .sidebar-menu a {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.75rem 0.9rem;
-            border-radius: 8px;
-            color: #94a3b8;
+            padding: 0.7rem 0.9rem;
+            border-radius: 10px;
+            color: #64748b;
             font-weight: 600;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: all 0.18s ease;
             cursor: pointer;
+            border: 1px solid transparent;
         }
 
-        .sidebar-menu a:hover,
+        .sidebar-menu a:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: #cbd5e1;
+        }
+
         .sidebar-menu a.active {
-            background: rgba(250, 204, 21, 0.12);
+            background: rgba(250, 204, 21, 0.1);
             color: #facc15;
+            border-color: rgba(250, 204, 21, 0.2);
+        }
+
+        .sidebar-menu a i {
+            width: 18px;
+            text-align: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
         }
 
         .sidebar-footer {
             margin-top: auto;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        .main-content {
-            margin-left: 250px;
+        /* ── MAIN CONTENT ── */
+        .admin-main {
+            margin-left: 256px;
             flex: 1;
-            padding: 2rem;
-            max-width: calc(100vw - 250px);
+            padding: 1.75rem 1.75rem 3rem;
+            max-width: calc(100vw - 256px);
+            min-height: 100vh;
         }
 
+        /* ── MOBILE TOP BAR ── */
+        .mobile-admin-topbar {
+            display: none;
+            position: sticky;
+            top: 0;
+            z-index: 150;
+            background: #060c18;
+            border-bottom: 1px solid rgba(250, 204, 21, 0.15);
+            padding: 0.75rem 1rem;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .mobile-admin-topbar .hamburger-btn {
+            background: rgba(250, 204, 21, 0.08);
+            border: 1px solid rgba(250, 204, 21, 0.2);
+            border-radius: 8px;
+            color: #facc15;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .mobile-admin-topbar .mobile-logo {
+            font-size: 1rem;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .mobile-admin-topbar .mobile-logo span {
+            color: #facc15;
+        }
+
+        @media (max-width: 900px) {
+            .mobile-admin-topbar {
+                display: flex;
+            }
+
+            .admin-main {
+                padding: 1.25rem 1rem 3rem;
+            }
+        }
+
+        /* ── TOP BAR ── */
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
-            background: #111c38;
+            background: linear-gradient(135deg, #0f1c33 0%, #111c38 100%);
             padding: 1rem 1.25rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            border: 1px solid rgba(250, 204, 21, 0.1);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
         }
 
         .top-bar-title {
@@ -135,49 +244,70 @@
             border: 1px solid rgba(34, 197, 94, 0.3);
         }
 
+        /* ── STATS GRID ── */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.85rem;
             margin-bottom: 1.5rem;
         }
 
         .stat-card {
-            background: #111c38;
-            padding: 1.1rem;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(135deg, #0f1c33 0%, #111c38 100%);
+            padding: 1.1rem 1.1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
             display: flex;
             align-items: center;
-            gap: 0.9rem;
+            gap: 0.85rem;
+            transition: border-color 0.18s;
+            cursor: default;
+        }
+
+        .stat-card:hover {
+            border-color: rgba(250, 204, 21, 0.2);
         }
 
         .stat-icon {
             width: 42px;
             height: 42px;
-            border-radius: 8px;
+            border-radius: 10px;
             background: rgba(250, 204, 21, 0.1);
             color: #facc15;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
+            flex-shrink: 0;
         }
 
         .stat-val {
-            font-size: 1.4rem;
+            font-size: 1.55rem;
             font-weight: 900;
             color: #fff;
             line-height: 1;
         }
 
         .stat-lbl {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            font-weight: 600;
-            margin-top: 2px;
+            font-size: 0.72rem;
+            color: #64748b;
+            font-weight: 700;
+            margin-top: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
+        @media (max-width: 600px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stat-val {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* ── TAB PANELS ── */
         .tab-panel {
             display: none;
         }
@@ -186,66 +316,80 @@
             display: block;
         }
 
+        /* ── EDITOR CARD ── */
         .editor-card {
-            background: #111c38;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(135deg, #0f1c33 0%, #111c38 100%);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
             padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1.25rem;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+        }
+
+        @media (max-width: 600px) {
+            .editor-card {
+                padding: 1.1rem 0.9rem;
+            }
         }
 
         .editor-card h2 {
             margin: 0 0 1.2rem 0;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 800;
-            color: #fff;
+            color: #e2e8f0;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 0.55rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             padding-bottom: 0.75rem;
+            letter-spacing: 0.02em;
         }
 
         .editor-card h2 i {
             color: #facc15;
+            font-size: 0.9rem;
         }
 
+        /* ── FORMS ── */
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.9rem;
+            margin-bottom: 0.9rem;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 0.9rem;
         }
 
         .form-group label {
             display: block;
             margin-bottom: 0.4rem;
-            color: #e2e8f0;
+            color: #94a3b8;
             font-weight: 700;
-            font-size: 0.82rem;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
 
         .form-control {
             width: 100%;
-            padding: 0.7rem 0.85rem;
-            background: #080e1e;
-            border: 1.5px solid #2a3a5c;
+            padding: 0.65rem 0.85rem;
+            background: #080d1c;
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
-            color: #fff;
+            color: #e2e8f0;
             font-family: inherit;
             font-size: 0.88rem;
             font-weight: 600;
+            transition: border-color 0.15s, background 0.15s;
         }
 
         .form-control:focus {
             outline: none;
             border-color: #facc15;
-            background: #0c152d;
+            background: #0a1228;
+            box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.1);
         }
 
         select.form-control option {
@@ -253,39 +397,51 @@
             color: #fff;
         }
 
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ── BUTTONS ── */
         .btn {
-            padding: 0.65rem 1.25rem;
+            padding: 0.6rem 1.15rem;
             border-radius: 8px;
             border: none;
             font-weight: 800;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.2s ease;
+            transition: all 0.18s ease;
+            white-space: nowrap;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, #facc15, #ca8a04);
-            color: #0b1329;
+            color: #0a1020;
         }
 
         .btn-primary:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(250, 204, 21, 0.3);
+            box-shadow: 0 4px 16px rgba(250, 204, 21, 0.35);
         }
 
         .btn-secondary {
-            background: #1e293b;
-            color: #e2e8f0;
-            border: 1px solid #334155;
+            background: rgba(255, 255, 255, 0.06);
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .btn-danger {
-            background: rgba(239, 68, 68, 0.15);
+            background: rgba(239, 68, 68, 0.12);
             color: #fca5a5;
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            border: 1px solid rgba(239, 68, 68, 0.25);
         }
 
         .btn-danger:hover {
@@ -294,9 +450,9 @@
         }
 
         .btn-success {
-            background: rgba(34, 197, 94, 0.15);
+            background: rgba(34, 197, 94, 0.12);
             color: #4ade80;
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            border: 1px solid rgba(34, 197, 94, 0.25);
         }
 
         .btn-success:hover {
@@ -304,87 +460,137 @@
             color: #fff;
         }
 
+        /* ── DATA TABLE ── */
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1rem;
+            margin-top: 0.85rem;
         }
 
         .data-table th,
         .data-table td {
-            padding: 0.75rem 1rem;
+            padding: 0.65rem 0.85rem;
             text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.83rem;
         }
 
         .data-table th {
-            background: #080e1e;
-            color: #94a3b8;
-            font-weight: 700;
+            background: rgba(0, 0, 0, 0.25);
+            color: #64748b;
+            font-weight: 800;
             text-transform: uppercase;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
         }
 
-        .data-table tr:hover {
+        .data-table tr:hover td {
             background: rgba(255, 255, 255, 0.02);
         }
 
+        /* Responsive table wrapper */
+        .table-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        @media (max-width: 600px) {
+
+            .data-table th,
+            .data-table td {
+                padding: 0.55rem 0.6rem;
+                font-size: 0.78rem;
+            }
+        }
+
+        /* ── STATUS PILLS ── */
         .status-pill {
-            padding: 3px 8px;
-            border-radius: 12px;
+            padding: 3px 9px;
+            border-radius: 20px;
             font-weight: 800;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             display: inline-block;
+            white-space: nowrap;
         }
 
         .status-live {
-            background: rgba(239, 68, 68, 0.2);
+            background: rgba(239, 68, 68, 0.15);
             color: #fca5a5;
-            border: 1px solid rgba(239, 68, 68, 0.4);
+            border: 1px solid rgba(239, 68, 68, 0.3);
         }
 
         .status-ft {
-            background: rgba(34, 197, 94, 0.2);
+            background: rgba(34, 197, 94, 0.15);
             color: #86efac;
-            border: 1px solid rgba(34, 197, 94, 0.4);
+            border: 1px solid rgba(34, 197, 94, 0.3);
         }
 
         .status-scheduled {
-            background: rgba(59, 130, 246, 0.2);
+            background: rgba(59, 130, 246, 0.15);
             color: #93c5fd;
-            border: 1px solid rgba(59, 130, 246, 0.4);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .status-postponed {
+            background: rgba(250, 204, 21, 0.1);
+            color: #fde047;
+            border: 1px solid rgba(250, 204, 21, 0.2);
         }
     </style>
 </head>
 
 <body>
 
+    <!-- Mobile Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
     <!-- Sidebar Navigation -->
-    <div class="sidebar">
+    <div class="sidebar" id="adminSidebar">
         <a href="index.html" class="logo">
             <i class="fa-solid fa-trophy" style="color: #facc15;"></i>
             Massavu<span>Studio</span>
         </a>
+
+        <div class="sidebar-label">Match Data</div>
         <div class="sidebar-menu">
-            <a id="nav-matches" class="active" onclick="switchTab('matches')"><i class="fa-solid fa-futbol"></i>
-                Matches</a>
-            <a id="nav-competitions" onclick="switchTab('competitions')"><i class="fa-solid fa-trophy"></i>
-                Competitions</a>
-            <a id="nav-teams" onclick="switchTab('teams')"><i class="fa-solid fa-shield-halved"></i> Teams</a>
-            <a id="nav-standings" onclick="switchTab('standings')"><i class="fa-solid fa-table-list"></i> Standings</a>
-            <a id="nav-lineups" onclick="switchTab('lineups')"><i class="fa-solid fa-users-gear"></i> Lineups</a>
-            <a id="nav-posts" onclick="switchTab('posts')"><i class="fa-solid fa-newspaper"></i> News Posts</a>
-            <a id="nav-settings" onclick="switchTab('settings')"><i class="fa-solid fa-sliders"></i> Sync & Backup</a>
+            <a id="nav-matches" class="active" onclick="switchTab('matches')">
+                <i class="fa-solid fa-futbol"></i> Matches</a>
+            <a id="nav-competitions" onclick="switchTab('competitions')">
+                <i class="fa-solid fa-trophy"></i> Competitions</a>
+            <a id="nav-teams" onclick="switchTab('teams')">
+                <i class="fa-solid fa-shield-halved"></i> Teams</a>
         </div>
+
+        <div class="sidebar-label">Analytics</div>
+        <div class="sidebar-menu">
+            <a id="nav-standings" onclick="switchTab('standings')">
+                <i class="fa-solid fa-table-list"></i> Standings</a>
+        </div>
+
+        <div class="sidebar-label">System</div>
+        <div class="sidebar-menu">
+            <a id="nav-settings" onclick="switchTab('settings')">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Sync &amp; Backup</a>
+        </div>
+
         <div class="sidebar-footer">
-            <a id="logoutBtn" style="color:#f87171; cursor:pointer;"><i class="fa-solid fa-right-from-bracket"></i> Sign
-                Out</a>
+            <a id="logoutBtn"
+                style="display:flex;align-items:center;gap:0.65rem;padding:0.6rem 0.9rem;border-radius:10px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#fca5a5;font-weight:700;font-size:0.85rem;cursor:pointer;">
+                <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+            </a>
         </div>
     </div>
 
+    <!-- Mobile Admin Top Bar -->
+    <div class="mobile-admin-topbar">
+        <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Open menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <span class="mobile-logo">Massavu<span>Studio</span></span>
+    </div>
+
     <!-- Main Content Area -->
-    <div class="main-content">
+    <div class="admin-main">
         <!-- Top Bar -->
         <div class="top-bar">
             <div class="top-bar-title">
@@ -617,65 +823,7 @@
             </div>
         </div>
 
-        <!-- TAB 5: LINEUPS BUILDER -->
-        <div id="tab-lineups" class="tab-panel">
-            <div class="editor-card">
-                <h2><i class="fa-solid fa-users-gear"></i> Match Lineup Builder</h2>
-                <div class="form-group" style="max-width: 400px;">
-                    <label for="lineupMatchSelector">Select Match Fixture</label>
-                    <select id="lineupMatchSelector" class="form-control"
-                        onchange="loadLineupForSelectedMatch()"></select>
-                </div>
-                <div class="form-grid">
-                    <div>
-                        <h3 style="color:#facc15; font-size:0.95rem; margin-bottom:0.75rem;">Home Starting XI</h3>
-                        <div id="homeStartingList"></div>
-                    </div>
-                    <div>
-                        <h3 style="color:#60a5fa; font-size:0.95rem; margin-bottom:0.75rem;">Away Starting XI</h3>
-                        <div id="awayStartingList"></div>
-                    </div>
-                </div>
-                <button class="btn btn-primary" style="margin-top:1rem;" onclick="saveLineup()"><i
-                        class="fa-solid fa-floppy-disk"></i> Save Match Lineup</button>
-            </div>
-        </div>
-
-        <!-- TAB 6: NEWS POSTS CRUD -->
-        <div id="tab-posts" class="tab-panel">
-            <div class="editor-card">
-                <h2><i class="fa-solid fa-pen"></i> Create News Post</h2>
-                <form id="postForm" onsubmit="savePost(event)">
-                    <input type="hidden" id="postId">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="postTitle">Article Title</label>
-                            <input type="text" id="postTitle" class="form-control" placeholder="Enter headline..."
-                                required>
-                        </div>
-                        <div class="form-group">
-                            <label for="postCategory">Category</label>
-                            <input type="text" id="postCategory" class="form-control" value="General News"
-                                placeholder="General, Transfer, Match Report">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="postContent">Post Content</label>
-                        <textarea id="postContent" class="form-control" rows="5"
-                            placeholder="Write news article content here..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Publish
-                        Post</button>
-                </form>
-            </div>
-
-            <div class="editor-card">
-                <h2><i class="fa-solid fa-newspaper"></i> Published Posts</h2>
-                <div id="postsTableWrapper"></div>
-            </div>
-        </div>
-
-        <!-- TAB 7: SETTINGS & BACKUP -->
+        <!-- TAB 5: SETTINGS & BACKUP -->
         <div id="tab-settings" class="tab-panel">
             <div class="editor-card">
                 <h2><i class="fa-solid fa-cloud-arrow-up"></i> Supabase Cloud Connectivity</h2>
@@ -701,8 +849,8 @@
             </div>
 
             <div class="editor-card">
-                <h2><i class="fa-solid fa-database"></i> JSON Backup & Restore</h2>
-                <p style="color: #94a3b8; font-size: 0.88rem; margin-bottom: 1rem;">
+                <h2><i class="fa-solid fa-database"></i> JSON Backup &amp; Restore</h2>
+                <p style="color: #64748b; font-size: 0.88rem; margin-bottom: 1rem;">
                     Export your complete database to a backup JSON file, or restore data from a previous backup.
                 </p>
                 <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
@@ -716,6 +864,8 @@
                 </div>
             </div>
         </div>
+
+    </div><!-- end admin-main -->
     </div>
 
     <!-- Script Container -->
@@ -735,6 +885,17 @@
             { name: 'FUFA Big League', country: 'Uganda', season: '2025/2026' }
         ];
 
+        function toggleSidebar() {
+            const s = document.getElementById('adminSidebar');
+            const o = document.getElementById('sidebarOverlay');
+            s.classList.toggle('open');
+            o.classList.toggle('open');
+        }
+        function closeSidebar() {
+            document.getElementById('adminSidebar').classList.remove('open');
+            document.getElementById('sidebarOverlay').classList.remove('open');
+        }
+
         function switchTab(tabId) {
             document.querySelectorAll('.tab-panel').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.sidebar-menu a').forEach(el => el.classList.remove('active'));
@@ -747,9 +908,10 @@
             if (tabId === 'competitions') renderCompetitionsTable();
             if (tabId === 'teams') renderTeamsTable();
             if (tabId === 'standings') renderStandingsTable();
-            if (tabId === 'lineups') populateLineupMatchSelector();
-            if (tabId === 'posts') renderPostsTable();
             updateStatsCounters();
+
+            // Close mobile sidebar on tab switch
+            closeSidebar();
         }
 
         function seedDefaultUplMatchesToStorage() {
