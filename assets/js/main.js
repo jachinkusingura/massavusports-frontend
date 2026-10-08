@@ -34,7 +34,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const LEAGUE_LOGOS = {
         'Uganda Premier League': 'https://media.api-sports.io/football/leagues/332.png',
-        'FUFA Big League': 'https://media.api-sports.io/football/leagues/333.png'
+        'FUFA Big League': 'https://media.api-sports.io/football/leagues/333.png',
+        'StarTimes Premier League': 'https://upload.wikimedia.org/wikipedia/en/thumb/9/92/FUFA_logo.svg/180px-FUFA_logo.svg.png'
     };
 
     function todayStr() {
@@ -109,6 +110,57 @@ document.addEventListener('DOMContentLoaded', () => {
                 { id: 1044, competition: 'Uganda Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T13:00:00Z', home: 'Ntugasaze', away: 'NEC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1045, competition: 'Uganda Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T16:00:00Z', home: 'UPDF', away: 'Kitara', scoreh: 0, scorea: 0, status: 'Scheduled' },
 
+                // ── StarTimes Premier League Matchday 1 – Results (Aug 2026) ──
+                { id: 3001, competition: 'StarTimes Premier League', date: '2026-09-08', kickoffutc: '2026-09-08T13:00:00Z', home: 'Kigezi Homeboyz', away: 'KCCA FC', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 3002, competition: 'StarTimes Premier League', date: '2026-09-08', kickoffutc: '2026-09-08T13:00:00Z', home: 'Maroons', away: 'Blacks Power', scoreh: 1, scorea: 2, status: 'FT' },
+                { id: 3003, competition: 'StarTimes Premier League', date: '2026-09-09', kickoffutc: '2026-09-09T13:00:00Z', home: 'BUL', away: 'Ntugasaze', scoreh: 4, scorea: 1, status: 'FT' },
+                { id: 3004, competition: 'StarTimes Premier League', date: '2026-09-09', kickoffutc: '2026-09-09T13:00:00Z', home: 'Villa', away: 'Express', scoreh: 2, scorea: 0, status: 'FT' },
+                { id: 3005, competition: 'StarTimes Premier League', date: '2026-09-09', kickoffutc: '2026-09-09T13:00:00Z', home: 'Entebbe UPPC', away: 'Lugazi', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 3006, competition: 'StarTimes Premier League', date: '', kickoffutc: '', home: 'Kitara', away: 'URA', scoreh: 0, scorea: 0, status: 'Postponed' },
+                { id: 3007, competition: 'StarTimes Premier League', date: '', kickoffutc: '', home: 'Kataka', away: 'Vipers', scoreh: 0, scorea: 0, status: 'Postponed' },
+                { id: 3008, competition: 'StarTimes Premier League', date: '2026-09-10', kickoffutc: '2026-09-10T13:00:00Z', home: 'Police', away: 'UPDF', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 3009, competition: 'StarTimes Premier League', date: '2026-09-11', kickoffutc: '2026-09-11T13:00:00Z', home: 'Mbarara City', away: 'NEC', scoreh: 0, scorea: 0, status: 'FT' },
+                // ── StarTimes Premier League Matchday 2 – Results ──
+                { id: 3010, competition: 'StarTimes Premier League', date: '2026-09-15', kickoffutc: '2026-09-15T13:00:00Z', home: 'Villa', away: 'Kigezi Homeboyz', scoreh: 3, scorea: 0, status: 'FT' },
+                { id: 3011, competition: 'StarTimes Premier League', date: '2026-09-15', kickoffutc: '2026-09-15T13:00:00Z', home: 'BUL', away: 'Blacks Power', scoreh: 2, scorea: 1, status: 'FT' },
+                { id: 3012, competition: 'StarTimes Premier League', date: '2026-09-16', kickoffutc: '2026-09-16T13:00:00Z', home: 'NEC', away: 'URA', scoreh: 4, scorea: 1, status: 'FT' },
+                { id: 3013, competition: 'StarTimes Premier League', date: '2026-09-16', kickoffutc: '2026-09-16T13:00:00Z', home: 'Lugazi', away: 'Police', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 3014, competition: 'StarTimes Premier League', date: '2026-09-16', kickoffutc: '2026-09-16T13:00:00Z', home: 'KCCA FC', away: 'Kataka', scoreh: 2, scorea: 0, status: 'FT' },
+                { id: 3015, competition: 'StarTimes Premier League', date: '2026-09-17', kickoffutc: '2026-09-17T13:00:00Z', home: 'Mbarara City', away: 'Entebbe UPPC', scoreh: 0, scorea: 2, status: 'FT' },
+                { id: 3016, competition: 'StarTimes Premier League', date: '2026-09-17', kickoffutc: '2026-09-17T16:00:00Z', home: 'UPDF', away: 'Maroons', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 3017, competition: 'StarTimes Premier League', date: '2026-09-19', kickoffutc: '2026-09-19T17:00:00Z', home: 'Express', away: 'Kitara', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 3018, competition: 'StarTimes Premier League', date: '2026-09-19', kickoffutc: '2026-09-19T17:00:00Z', home: 'Vipers', away: 'Ntugasaze', scoreh: 2, scorea: 0, status: 'FT' },
+                // ── StarTimes Premier League Matchday 3 – Results ──
+                { id: 3019, competition: 'StarTimes Premier League', date: '2026-09-22', kickoffutc: '2026-09-22T13:00:00Z', home: 'Kigezi Homeboyz', away: 'BUL', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 3020, competition: 'StarTimes Premier League', date: '2026-09-22', kickoffutc: '2026-09-22T13:00:00Z', home: 'Blacks Power', away: 'Police', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 3021, competition: 'StarTimes Premier League', date: '2026-09-23', kickoffutc: '2026-09-23T13:00:00Z', home: 'Ntugasaze', away: 'Mbarara City', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 3022, competition: 'StarTimes Premier League', date: '2026-09-23', kickoffutc: '2026-09-23T13:00:00Z', home: 'URA', away: 'KCCA FC', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 3023, competition: 'StarTimes Premier League', date: '2026-09-23', kickoffutc: '2026-09-23T13:00:00Z', home: 'Kitara', away: 'Maroons', scoreh: 2, scorea: 1, status: 'FT' },
+                { id: 3024, competition: 'StarTimes Premier League', date: '2026-09-24', kickoffutc: '2026-09-24T13:00:00Z', home: 'Police', away: 'Villa', scoreh: 0, scorea: 2, status: 'FT' },
+                { id: 3025, competition: 'StarTimes Premier League', date: '2026-09-24', kickoffutc: '2026-09-24T13:00:00Z', home: 'Lugazi', away: 'Express', scoreh: 1, scorea: 2, status: 'FT' },
+                { id: 3026, competition: 'StarTimes Premier League', date: '2026-09-24', kickoffutc: '2026-09-24T13:00:00Z', home: 'Kataka', away: 'UPDF', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 3027, competition: 'StarTimes Premier League', date: '2026-09-24', kickoffutc: '2026-09-24T16:00:00Z', home: 'Entebbe UPPC', away: 'NEC', scoreh: 1, scorea: 3, status: 'FT' },
+                // ── StarTimes Premier League Matchday 4 – Results ──
+                { id: 3028, competition: 'StarTimes Premier League', date: '2026-09-29', kickoffutc: '2026-09-29T13:00:00Z', home: 'Vipers', away: 'Villa', scoreh: 2, scorea: 0, status: 'FT' },
+                { id: 3029, competition: 'StarTimes Premier League', date: '2026-09-29', kickoffutc: '2026-09-29T13:00:00Z', home: 'KCCA FC', away: 'Lugazi', scoreh: 3, scorea: 1, status: 'FT' },
+                { id: 3030, competition: 'StarTimes Premier League', date: '2026-09-30', kickoffutc: '2026-09-30T13:00:00Z', home: 'Mbarara City', away: 'Police', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 3031, competition: 'StarTimes Premier League', date: '2026-09-30', kickoffutc: '2026-09-30T13:00:00Z', home: 'NEC', away: 'Blacks Power', scoreh: 2, scorea: 1, status: 'FT' },
+                { id: 3032, competition: 'StarTimes Premier League', date: '2026-09-30', kickoffutc: '2026-09-30T16:00:00Z', home: 'Express', away: 'Kataka', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 3033, competition: 'StarTimes Premier League', date: '2026-10-01', kickoffutc: '2026-10-01T13:00:00Z', home: 'Maroons', away: 'URA', scoreh: 0, scorea: 2, status: 'FT' },
+                { id: 3034, competition: 'StarTimes Premier League', date: '2026-10-01', kickoffutc: '2026-10-01T13:00:00Z', home: 'BUL', away: 'Entebbe UPPC', scoreh: 2, scorea: 0, status: 'FT' },
+                { id: 3035, competition: 'StarTimes Premier League', date: '2026-10-02', kickoffutc: '2026-10-02T13:00:00Z', home: 'UPDF', away: 'Kigezi Homeboyz', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 3036, competition: 'StarTimes Premier League', date: '2026-10-02', kickoffutc: '2026-10-02T16:00:00Z', home: 'Kitara', away: 'Ntugasaze', scoreh: 3, scorea: 0, status: 'FT' },
+                // ── StarTimes Premier League Matchday 5 – Upcoming Fixtures (6-9 Oct 2026) ──
+                { id: 3037, competition: 'StarTimes Premier League', date: '2026-10-06', kickoffutc: '2026-10-06T13:00:00Z', home: 'Villa', away: 'KCCA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3038, competition: 'StarTimes Premier League', date: '2026-10-06', kickoffutc: '2026-10-06T13:00:00Z', home: 'Lugazi', away: 'BUL', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3039, competition: 'StarTimes Premier League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Police', away: 'Vipers', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3040, competition: 'StarTimes Premier League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'URA', away: 'Express', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3041, competition: 'StarTimes Premier League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Blacks Power', away: 'Mbarara City', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3042, competition: 'StarTimes Premier League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Entebbe UPPC', away: 'Maroons', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3043, competition: 'StarTimes Premier League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Kigezi Homeboyz', away: 'Kataka', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3044, competition: 'StarTimes Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T13:00:00Z', home: 'Ntugasaze', away: 'NEC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3045, competition: 'StarTimes Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T16:00:00Z', home: 'UPDF', away: 'Kitara', scoreh: 0, scorea: 0, status: 'Scheduled' },
+
                 // ── FUFA Big League Matchday 1 – Results ──
                 { id: 2001, competition: 'FUFA Big League', date: '2026-08-25', kickoffutc: '2026-08-25T13:00:00Z', home: 'Paidha Black Angels', away: 'Calvary', scoreh: 1, scorea: 0, status: 'FT' },
                 { id: 2002, competition: 'FUFA Big League', date: '2026-08-25', kickoffutc: '2026-08-25T13:00:00Z', home: 'Kaaro Karungi', away: 'Amus College', scoreh: 0, scorea: 3, status: 'FT' },
@@ -146,8 +198,9 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const raw = localStorage.getItem(STORAGE_KEY_COMPS);
             const defaultComps = [
-                { name: 'Uganda Premier League', country: 'Uganda', season: '2025/2026' },
-                { name: 'FUFA Big League', country: 'Uganda', season: '2025/2026' }
+                { name: 'Uganda Premier League', country: 'Uganda', season: '2026/2027' },
+                { name: 'FUFA Big League', country: 'Uganda', season: '2026/2027' },
+                { name: 'StarTimes Premier League', country: 'Uganda', season: '2026/2027' }
             ];
             if (!raw || JSON.parse(raw).length === 0) {
                 localStorage.setItem(STORAGE_KEY_COMPS, JSON.stringify(defaultComps));
@@ -156,9 +209,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 let stored = JSON.parse(raw);
                 const obsolete = ['ntare league', 'chaapa league', 'kitunga league'];
                 const cleaned = stored.filter(c => c && c.name && !obsolete.includes(c.name.toLowerCase().trim()));
-                if (cleaned.length !== stored.length) {
-                    localStorage.setItem(STORAGE_KEY_COMPS, JSON.stringify(cleaned));
+                // Ensure StarTimes Premier League is present
+                if (!cleaned.find(c => c.name === 'StarTimes Premier League')) {
+                    cleaned.push({ name: 'StarTimes Premier League', country: 'Uganda', season: '2026/2027' });
                 }
+                localStorage.setItem(STORAGE_KEY_COMPS, JSON.stringify(cleaned));
             }
             scrubDummyDataFromStorage();
         } catch (e) { }
@@ -218,9 +273,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const obsolete = ['ntare league', 'chaapa league', 'kitunga league'];
             const cleaned = stored.filter(c => c && c.name && !obsolete.includes(c.name.toLowerCase().trim()));
             return cleaned.length > 0 ? cleaned : [
-                { name: 'Uganda Premier League' }, { name: 'FUFA Big League' }
+                { name: 'Uganda Premier League' }, { name: 'FUFA Big League' }, { name: 'StarTimes Premier League' }
             ];
-        } catch (e) { return [{ name: 'Uganda Premier League' }, { name: 'FUFA Big League' }]; }
+        } catch (e) { return [{ name: 'Uganda Premier League' }, { name: 'FUFA Big League' }, { name: 'StarTimes Premier League' }]; }
     }
 
     const UPL_TEAM_LOGOS = {
@@ -321,7 +376,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 { name: 'Buwambo', code: 'BUW', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['buwambo'] },
                 { name: 'Onduparaka', code: 'OND', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['onduparaka'] },
                 { name: 'Calvary', code: 'CAL', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['calvary'] },
-                { name: 'Kaaro Karungi', code: 'KAA', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['kaaro karungi'] }
+                { name: 'Kaaro Karungi', code: 'KAA', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['kaaro karungi'] },
+
+                // StarTimes Premier League 2026/27 (same 18 UPL clubs under sponsor branding)
+                { name: 'BUL FC', code: 'BUL', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['bul fc'] },
+                { name: 'SC Villa', code: 'VIL', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['sc villa'] },
+                { name: 'NEC FC', code: 'NEC', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['nec fc'] },
+                { name: 'Blacks Power FC', code: 'BLK', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['blacks power fc'] },
+                { name: 'Police FC', code: 'POL', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['police fc'] },
+                { name: 'Entebbe UPPC', code: 'UPP', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['entebbe uppc'] },
+                { name: 'Maroons FC', code: 'MRN', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['maroons fc'] },
+                { name: 'Lugazi FC', code: 'LUG', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['lugazi fc'] },
+                { name: 'Kitara FC', code: 'KIT', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['kitara fc'] },
+                { name: 'UPDF FC', code: 'UPD', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['updf fc'] },
+                { name: 'Express FC', code: 'EXP', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['express fc'] },
+                { name: 'KCCA FC', code: 'KCC', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['kcca fc'] },
+                { name: 'Vipers SC', code: 'VIP', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['vipers sc'] },
+                { name: 'URA FC', code: 'URA', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['ura fc'] },
+                { name: 'Mbarara City FC', code: 'MBA', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['mbarara city fc'] },
+                { name: 'Kigezi Homeboyz', code: 'KIG', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['kigezi homeboyz'] },
+                { name: 'Ntugasaze FC', code: 'NTU', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['ntugasaze fc'] },
+                { name: 'Kataka FC', code: 'KAT', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['kataka fc'] }
             ];
 
             defaultTeams.forEach(dt => {
