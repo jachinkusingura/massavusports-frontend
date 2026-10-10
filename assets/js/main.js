@@ -208,28 +208,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function seedDefaultCompetitions() {
+        const defaultComps = [
+            { name: 'Uganda Premier League', country: 'Uganda', season: '2026/2027' },
+            { name: 'FUFA Big League', country: 'Uganda', season: '2026/2027' },
+            { name: 'StarTimes Premier League', country: 'Uganda', season: '2026/2027' }
+        ];
         try {
             const raw = localStorage.getItem(STORAGE_KEY_COMPS);
-            const defaultComps = [
-                { name: 'Uganda Premier League', country: 'Uganda', season: '2026/2027' },
-                { name: 'FUFA Big League', country: 'Uganda', season: '2026/2027' },
-                { name: 'StarTimes Premier League', country: 'Uganda', season: '2026/2027' }
-            ];
-            if (!raw || JSON.parse(raw).length === 0) {
+            if (!raw) {
                 localStorage.setItem(STORAGE_KEY_COMPS, JSON.stringify(defaultComps));
-            } else {
-                // Scrub legacy leagues (Ntare, Chaapa, Kitunga) if present in storage
-                let stored = JSON.parse(raw);
-                const obsolete = ['ntare league', 'chaapa league', 'kitunga league'];
-                const cleaned = stored.filter(c => c && c.name && !obsolete.includes(c.name.toLowerCase().trim()));
-                // Ensure StarTimes Premier League is present
-                if (!cleaned.find(c => c.name === 'StarTimes Premier League')) {
-                    cleaned.push({ name: 'StarTimes Premier League', country: 'Uganda', season: '2026/2027' });
-                }
-                localStorage.setItem(STORAGE_KEY_COMPS, JSON.stringify(cleaned));
+                scrubDummyDataFromStorage();
+                return;
             }
+            let stored = JSON.parse(raw);
+            if (!Array.isArray(stored)) stored = [];
+
+            // Normalize stored entries (support strings and objects safely)
+            let normalized = stored.map(c => {
+                if (!c) return null;
+                if (typeof c === 'string') return { name: c.trim(), country: 'Uganda', season: '2026/2027' };
+                if (typeof c === 'object' && c.name) return { name: String(c.name).trim(), country: c.country || 'Uganda', season: c.season || '2026/2027' };
+                return null;
+            }).filter(Boolean);
+
+            const obsolete = ['ntare league', 'chaapa league', 'kitunga league'];
+            let cleaned = normalized.filter(c => c && c.name && !obsolete.includes(c.name.toLowerCase()));
+
+            // Ensure all 3 default competitions exist
+            defaultComps.forEach(dc => {
+                if (!cleaned.some(c => c.name.toLowerCase() === dc.name.toLowerCase())) {
+                    cleaned.push(dc);
+                }
+            });
+
+            localStorage.setItem(STORAGE_KEY_COMPS, JSON.stringify(cleaned));
             scrubDummyDataFromStorage();
-        } catch (e) { }
+        } catch (e) {
+            console.warn('[main] seedDefaultCompetitions error:', e.message);
+            localStorage.setItem(STORAGE_KEY_COMPS, JSON.stringify(defaultComps));
+            scrubDummyDataFromStorage();
+        }
     }
 
     function scrubDummyDataFromStorage() {
@@ -281,14 +299,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getCompetitions() {
+        const defaultComps = [
+            { name: 'Uganda Premier League', country: 'Uganda', season: '2026/2027' },
+            { name: 'FUFA Big League', country: 'Uganda', season: '2026/2027' },
+            { name: 'StarTimes Premier League', country: 'Uganda', season: '2026/2027' }
+        ];
         try {
-            const stored = JSON.parse(localStorage.getItem(STORAGE_KEY_COMPS) || '[]');
+            const raw = localStorage.getItem(STORAGE_KEY_COMPS);
+            if (!raw) return defaultComps;
+            let stored = JSON.parse(raw);
+            if (!Array.isArray(stored) || stored.length === 0) return defaultComps;
+
+            const normalized = stored.map(c => {
+                if (!c) return null;
+                if (typeof c === 'string') return { name: c.trim(), country: 'Uganda', season: '2026/2027' };
+                if (typeof c === 'object' && c.name) return { name: String(c.name).trim(), country: c.country || 'Uganda', season: c.season || '2026/2027' };
+                return null;
+            }).filter(Boolean);
+
             const obsolete = ['ntare league', 'chaapa league', 'kitunga league'];
-            const cleaned = stored.filter(c => c && c.name && !obsolete.includes(c.name.toLowerCase().trim()));
-            return cleaned.length > 0 ? cleaned : [
-                { name: 'Uganda Premier League' }, { name: 'FUFA Big League' }, { name: 'StarTimes Premier League' }
-            ];
-        } catch (e) { return [{ name: 'Uganda Premier League' }, { name: 'FUFA Big League' }, { name: 'StarTimes Premier League' }]; }
+            const cleaned = normalized.filter(c => c && c.name && !obsolete.includes(c.name.toLowerCase()));
+
+            // If StarTimes Premier League is missing, append it
+            if (!cleaned.some(c => c.name.toLowerCase() === 'startimes premier league')) {
+                cleaned.push({ name: 'StarTimes Premier League', country: 'Uganda', season: '2026/2027' });
+            }
+            return cleaned.length > 0 ? cleaned : defaultComps;
+        } catch (e) {
+            return defaultComps;
+        }
     }
 
     const UPL_TEAM_LOGOS = {
@@ -843,6 +882,14 @@ document.addEventListener('DOMContentLoaded', () => {
     //  INIT
     // ────────────────────────────────────────────────
     function init() {
+        // Migration check for existing users: force re-seed to include StarTimes Premier League
+        if (localStorage.getItem('massavu_v72_seeded') !== 'true') {
+            try {
+                localStorage.removeItem(STORAGE_KEY_COMPS);
+                localStorage.setItem('massavu_v72_seeded', 'true');
+            } catch (e) { }
+        }
+
         seedDefaultUplMatchesToStorage();
         seedDefaultCompetitions();
         seedDefaultTeamsToStorage();
