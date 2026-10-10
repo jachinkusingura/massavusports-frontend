@@ -1,5 +1,5 @@
 /**
- * MassavuSports — Main JS v7.3.0
+ * MassavuSports — Main JS v7.4.0
  * Date-driven Football Fixtures, Results & Standings System
  * Powered by Supabase + localStorage sync
  */
@@ -56,8 +56,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // ────────────────────────────────────────────────
     function seedDefaultUplMatchesToStorage() {
         try {
+            const FBL_MIGRATION_KEY = 'massavu_fbl_flashscore_v74';
             const raw = localStorage.getItem(STORAGE_KEY_MATCHES);
             let existing = raw ? JSON.parse(raw) : [];
+
+            // Reset legacy FBL matches to sync with verified Flashscore data
+            if (!localStorage.getItem(FBL_MIGRATION_KEY)) {
+                existing = existing.filter(m => m && m.competition !== 'FUFA Big League');
+                localStorage.setItem(FBL_MIGRATION_KEY, 'true');
+            }
             const uplMatches = [
                 // ── Uganda Premier League Matchdays 1–17 Schedule (2026/2027 Season) ──
                 // ── Matchday 1 ──
@@ -411,28 +418,110 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
                 // ── FUFA Big League Matchday 1 – Results ──
-                { id: 2001, competition: 'FUFA Big League', date: '2026-08-25', kickoffutc: '2026-08-25T13:00:00Z', home: 'Paidha Black Angels', away: 'Calvary', scoreh: 1, scorea: 0, status: 'FT' },
-                { id: 2002, competition: 'FUFA Big League', date: '2026-08-25', kickoffutc: '2026-08-25T13:00:00Z', home: 'Kaaro Karungi', away: 'Amus College', scoreh: 0, scorea: 3, status: 'FT' },
-                { id: 2003, competition: 'FUFA Big League', date: '2026-08-26', kickoffutc: '2026-08-26T13:00:00Z', home: 'Young Elephant Academy', away: 'Buwambo', scoreh: 2, scorea: 1, status: 'FT' },
-                { id: 2004, competition: 'FUFA Big League', date: '2026-08-26', kickoffutc: '2026-08-26T13:00:00Z', home: 'Kiyinda Boys', away: 'Rwenzori Lions', scoreh: 2, scorea: 1, status: 'FT' },
-                { id: 2005, competition: 'FUFA Big League', date: '2026-08-26', kickoffutc: '2026-08-26T13:00:00Z', home: 'Pakwach Young Stars', away: 'Iganga United', scoreh: 2, scorea: 1, status: 'FT' },
-                { id: 2006, competition: 'FUFA Big League', date: '2026-08-26', kickoffutc: '2026-08-26T13:00:00Z', home: 'Catda', away: 'Volcanoes', scoreh: 2, scorea: 1, status: 'FT' },
+                { id: 2001, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Buwambo', away: 'Young Elephant Academy', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 2002, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Catda', away: 'Rwenzori Lions', scoreh: 2, scorea: 0, status: 'FT' },
+                { id: 2003, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Iganga United', away: 'Pakwach Young Stars', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2004, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Kaaro Karungi', away: 'Amus College', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 2005, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Kiyinda Boys', away: 'Calvary', scoreh: 1, scorea: 2, status: 'FT' },
+                { id: 2006, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Ntinda United', away: 'Paidha Black Angels', scoreh: 0, scorea: 2, status: 'FT' },
 
                 // ── FUFA Big League Matchday 2 – Results ──
-                { id: 2007, competition: 'FUFA Big League', date: '2026-09-01', kickoffutc: '2026-09-01T13:00:00Z', home: 'Paidha Black Angels', away: 'Kaaro Karungi', scoreh: 1, scorea: 0, status: 'FT' },
-                { id: 2008, competition: 'FUFA Big League', date: '2026-09-01', kickoffutc: '2026-09-01T13:00:00Z', home: 'Onduparaka', away: 'Catda', scoreh: 1, scorea: 2, status: 'FT' },
-                { id: 2009, competition: 'FUFA Big League', date: '2026-09-01', kickoffutc: '2026-09-01T13:00:00Z', home: 'Iganga United', away: 'Young Elephant Academy', scoreh: 0, scorea: 1, status: 'FT' },
-                { id: 2010, competition: 'FUFA Big League', date: '2026-09-02', kickoffutc: '2026-09-02T13:00:00Z', home: 'Rwenzori Lions', away: 'Pakwach Young Stars', scoreh: 1, scorea: 1, status: 'FT' },
-                { id: 2011, competition: 'FUFA Big League', date: '2026-09-02', kickoffutc: '2026-09-02T13:00:00Z', home: 'Buwambo', away: 'Kiyinda Boys', scoreh: 0, scorea: 1, status: 'FT' },
-                { id: 2012, competition: 'FUFA Big League', date: '2026-09-02', kickoffutc: '2026-09-02T13:00:00Z', home: 'Volcanoes', away: 'Calvary', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2007, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Amus College', away: 'Buwambo', scoreh: 3, scorea: 0, status: 'FT' },
+                { id: 2008, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Paidha Black Angels', away: 'Kiyinda Boys', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2009, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Pakwach Young Stars', away: 'Kaaro Karungi', scoreh: 3, scorea: 0, status: 'FT' },
+                { id: 2010, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Rwenzori Lions', away: 'Iganga United', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2011, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Volcanoes', away: 'Catda', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2012, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Young Elephant Academy', away: 'Calvary', scoreh: 2, scorea: 0, status: 'FT' },
 
-                // ── FUFA Big League Matchday 3 – Upcoming Fixtures ──
-                { id: 2031, competition: 'FUFA Big League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Amus College', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2032, competition: 'FUFA Big League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Kiyinda Boys', away: 'Young Elephant Academy', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2033, competition: 'FUFA Big League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Kaaro Karungi', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2034, competition: 'FUFA Big League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Catda', away: 'Iganga United', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2035, competition: 'FUFA Big League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Pakwach Young Stars', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2036, competition: 'FUFA Big League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Rwenzori Lions', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' }
+                // ── FUFA Big League Matchday 3 – Results (partial) ──
+                { id: 2013, competition: 'FUFA Big League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Calvary', away: 'Kaaro Karungi', scoreh: 2, scorea: 0, status: 'FT' },
+
+                // ── FUFA Big League Matchday 3 – Remaining Fixtures ──
+                { id: 2014, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Calvary', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2015, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Catda', away: 'Young Elephant Academy', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2016, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Iganga United', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2017, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Kaaro Karungi', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2018, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Kiyinda Boys', away: 'Pakwach Young Stars', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2019, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Onduparaka', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
+
+                // ── FUFA Big League Matchday 4 ──
+                { id: 2020, competition: 'FUFA Big League', date: '2026-10-15', kickoffutc: '2026-10-15T13:00:00Z', home: 'Paidha Black Angels', away: 'Iganga United', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2021, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Amus College', away: 'Catda', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2022, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Buwambo', away: 'Calvary', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2023, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Pakwach Young Stars', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2024, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Rwenzori Lions', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2025, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Volcanoes', away: 'Kaaro Karungi', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2026, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Young Elephant Academy', away: 'Iganga United', scoreh: 0, scorea: 0, status: 'Scheduled' },
+
+                // ── FUFA Big League Matchday 5 ──
+                { id: 2027, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Catda', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2028, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Iganga United', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2029, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Kaaro Karungi', away: 'Young Elephant Academy', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2030, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Kiyinda Boys', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2031, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Onduparaka', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2032, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Paidha Black Angels', away: 'Pakwach Young Stars', scoreh: 0, scorea: 0, status: 'Scheduled' },
+
+                // ── FUFA Big League Matchday 6 ──
+                { id: 2033, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Amus College', away: 'Kaaro Karungi', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2034, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Buwambo', away: 'Iganga United', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2035, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Calvary', away: 'Catda', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2036, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Rwenzori Lions', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2037, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Volcanoes', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2038, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Young Elephant Academy', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2039, competition: 'FUFA Big League', date: '2026-11-05', kickoffutc: '2026-11-05T13:00:00Z', home: 'Calvary', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2040, competition: 'FUFA Big League', date: '2026-11-05', kickoffutc: '2026-11-05T13:00:00Z', home: 'Young Elephant Academy', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'Scheduled' },
+
+                // ── FUFA Big League Matchday 7 ──
+                { id: 2041, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Kaaro Karungi', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2042, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Kiyinda Boys', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2043, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Onduparaka', away: 'Young Elephant Academy', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2044, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Paidha Black Angels', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2045, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Pakwach Young Stars', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2046, competition: 'FUFA Big League', date: '2026-11-11', kickoffutc: '2026-11-11T13:00:00Z', home: 'Iganga United', away: 'Calvary', scoreh: 0, scorea: 0, status: 'Scheduled' },
+
+                // ── FUFA Big League Matchday 8 ──
+                { id: 2047, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Amus College', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2048, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Buwambo', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2049, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Catda', away: 'Iganga United', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2050, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Volcanoes', away: 'Pakwach Young Stars', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2051, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Young Elephant Academy', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
+
+                // ── FUFA Big League Matchday 9 ──
+                { id: 2052, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Kaaro Karungi', away: 'Catda', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2053, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Kiyinda Boys', away: 'Calvary', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2054, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Onduparaka', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2055, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Paidha Black Angels', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2056, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Pakwach Young Stars', away: 'Young Elephant Academy', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2057, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Rwenzori Lions', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
+
+                // ── FUFA Big League Matchday 10 ──
+                { id: 2058, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Amus College', away: 'Pakwach Young Stars', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2059, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Buwambo', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2060, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Calvary', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2061, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Catda', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2062, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Iganga United', away: 'Kaaro Karungi', scoreh: 0, scorea: 0, status: 'Scheduled' },
+
+                // ── FUFA Big League Matchday 11 ──
+                { id: 2063, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Kiyinda Boys', away: 'Iganga United', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2064, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Onduparaka', away: 'Catda', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2065, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Paidha Black Angels', away: 'Calvary', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2066, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Pakwach Young Stars', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
+
+                // ── FUFA Big League Matchday 12 ──
+                { id: 2067, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Amus College', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2068, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Buwambo', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2069, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Calvary', away: 'Pakwach Young Stars', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2070, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Catda', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2071, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Iganga United', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2072, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Kaaro Karungi', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2073, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Young Elephant Academy', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' },
+
+                // ── FUFA Big League Matchday 13 ──
+                { id: 2074, competition: 'FUFA Big League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'Onduparaka', away: 'Kaaro Karungi', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2075, competition: 'FUFA Big League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'Pakwach Young Stars', away: 'Catda', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2076, competition: 'FUFA Big League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'Rwenzori Lions', away: 'Calvary', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2077, competition: 'FUFA Big League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'Volcanoes', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2078, competition: 'FUFA Big League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'Young Elephant Academy', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' }
             ];
             uplMatches.forEach(um => {
                 const idx = existing.findIndex(m => String(m.id) === String(um.id));
@@ -623,7 +712,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'rwenzori lions': 'https://media.api-sports.io/football/teams/9089.png',
         'buwambo': 'https://media.api-sports.io/football/teams/9090.png',
         'calvary': 'https://media.api-sports.io/football/teams/9091.png',
-        'calvary fc': 'https://media.api-sports.io/football/teams/9091.png'
+        'calvary fc': 'https://media.api-sports.io/football/teams/9091.png',
+        'ntinda united': 'https://media.api-sports.io/football/teams/9092.png',
+        'ntinda united fc': 'https://media.api-sports.io/football/teams/9092.png'
     };
 
     function seedDefaultTeamsToStorage() {
@@ -664,7 +755,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 { name: 'Buwambo', code: 'BUW', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['buwambo'] },
                 { name: 'Onduparaka', code: 'OND', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['onduparaka'] },
                 { name: 'Calvary', code: 'CAL', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['calvary'] },
-                { name: 'Kaaro Karungi', code: 'KAA', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['kaaro karungi'] },
+                { name: 'Kaaro Karungi', code: 'KAA', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['kaaro Karungi'] || UPL_TEAM_LOGOS['kaaro karungi'] },
+                { name: 'Ntinda United', code: 'NTI', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['ntinda united'] },
 
                 // StarTimes Premier League 2026/27 (same 18 UPL clubs under sponsor branding)
                 { name: 'BUL FC', code: 'BUL', competition: 'StarTimes Premier League', logo: UPL_TEAM_LOGOS['bul fc'] },
