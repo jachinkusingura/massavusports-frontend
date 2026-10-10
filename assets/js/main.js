@@ -161,6 +161,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 { id: 3044, competition: 'StarTimes Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T13:00:00Z', home: 'Ntugasaze', away: 'NEC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 3045, competition: 'StarTimes Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T16:00:00Z', home: 'UPDF', away: 'Kitara', scoreh: 0, scorea: 0, status: 'Scheduled' },
 
+                // ── StarTimes Premier League Matchday 6 & 7 – Upcoming Fixtures (10-18 Oct 2026) ──
+                { id: 3046, competition: 'StarTimes Premier League', date: '2026-10-10', kickoffutc: '2026-10-10T13:00:00Z', home: 'Kataka FC', away: 'Kitara FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3047, competition: 'StarTimes Premier League', date: '2026-10-10', kickoffutc: '2026-10-10T16:00:00Z', home: 'Vipers SC', away: 'Maroons', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3048, competition: 'StarTimes Premier League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Mbarara City', away: 'Blacks Power', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3049, competition: 'StarTimes Premier League', date: '2026-10-13', kickoffutc: '2026-10-13T13:00:00Z', home: 'Ntugasaze FC', away: 'KCCA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3050, competition: 'StarTimes Premier League', date: '2026-10-13', kickoffutc: '2026-10-13T13:00:00Z', home: 'Lugazi FC', away: 'BUL FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3051, competition: 'StarTimes Premier League', date: '2026-10-14', kickoffutc: '2026-10-14T13:00:00Z', home: 'Kigezi Homeboyz', away: 'NEC FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3052, competition: 'StarTimes Premier League', date: '2026-10-14', kickoffutc: '2026-10-14T16:00:00Z', home: 'SC Villa', away: 'Police FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3053, competition: 'StarTimes Premier League', date: '2026-10-17', kickoffutc: '2026-10-17T13:00:00Z', home: 'Express FC', away: 'UPDF FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3054, competition: 'StarTimes Premier League', date: '2026-10-17', kickoffutc: '2026-10-17T16:00:00Z', home: 'URA FC', away: 'Entebbe UPPC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3055, competition: 'StarTimes Premier League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'BUL FC', away: 'Vipers SC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 3056, competition: 'StarTimes Premier League', date: '2026-10-18', kickoffutc: '2026-10-18T16:00:00Z', home: 'KCCA FC', away: 'Mbarara City', scoreh: 0, scorea: 0, status: 'Scheduled' },
+
                 // ── FUFA Big League Matchday 1 – Results ──
                 { id: 2001, competition: 'FUFA Big League', date: '2026-08-25', kickoffutc: '2026-08-25T13:00:00Z', home: 'Paidha Black Angels', away: 'Calvary', scoreh: 1, scorea: 0, status: 'FT' },
                 { id: 2002, competition: 'FUFA Big League', date: '2026-08-25', kickoffutc: '2026-08-25T13:00:00Z', home: 'Kaaro Karungi', away: 'Amus College', scoreh: 0, scorea: 3, status: 'FT' },
