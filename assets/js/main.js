@@ -1001,17 +1001,6 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (state.activeView === 'tables') renderTables();
     }
 
-    // ────────────────────────────────────────────────
-    //  DATA FRESHNESS BAR
-    // ────────────────────────────────────────────────
-    function renderLastUpdated() {
-        const bar = document.getElementById('last-updated-bar');
-        if (!bar) return;
-        const d = new Date();
-        const label = `${d.getDate()} ${MON_NAMES[d.getMonth()]} ${d.getFullYear()}`;
-        bar.innerHTML = `<i class="fa-solid fa-bolt" style="color:#facc15;font-size:0.75rem;"></i><span>Data last updated: <strong style="color:#e2e8f0;">${label}</strong></span>`;
-        bar.style.display = 'flex';
-    }
 
     // ────────────────────────────────────────────────
     //  SEARCH (LIVE FILTER ON RESULTS/FIXTURES)
