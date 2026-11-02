@@ -1477,12 +1477,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function init() {
-        if (localStorage.getItem('massavu_v80_seeded') !== 'true') {
+        // Migration check for existing users: force re-seed to load 153 Matchday 1-17 fixtures
+        // (original v7.3 one-time migration — no new reset added, so locally-saved data is preserved)
+        if (localStorage.getItem('massavu_v73_seeded') !== 'true') {
             try {
                 localStorage.removeItem(STORAGE_KEY_COMPS);
                 localStorage.removeItem(STORAGE_KEY_MATCHES);
-                localStorage.removeItem(STORAGE_KEY_TEAMS);
-                localStorage.setItem('massavu_v80_seeded', 'true');
+                localStorage.setItem('massavu_v73_seeded', 'true');
             } catch (e) { }
         }
 
