@@ -45,7 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let state = {
         selectedDate: todayStr(),  // 'YYYY-MM-DD'
         selectedComp: 'ALL',
-        activeView: 'fixtures',     // 'fixtures' | 'results' | 'tables'
+        activeView: 'fixtures',    // 'fixtures' | 'results' | 'tables' | 'clubs'
+        dateScope: 'date',         // 'date' | 'all'
         allMatches: [],
         competitions: []
     };
@@ -533,8 +534,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'updf fc': 'https://media.api-sports.io/football/teams/9066.png',
         'police': 'https://media.api-sports.io/football/teams/9067.png',
         'police fc': 'https://media.api-sports.io/football/teams/9067.png',
-        'lugazi': 'https://lugazifc.com/wp-content/uploads/2022/10/lugazifclogo.jpg',
-        'lugazi fc': 'https://lugazifc.com/wp-content/uploads/2022/10/lugazifclogo.jpg',
+        'lugazi': 'assets/images/lugazi_logo.png',
+        'lugazi fc': 'assets/images/lugazi_logo.png',
         'blacks power': 'https://media.api-sports.io/football/teams/9071.png',
         'blacks power fc': 'https://media.api-sports.io/football/teams/9071.png',
         'kigezi homeboyz': 'https://media.api-sports.io/football/teams/9070.png',
@@ -547,8 +548,10 @@ document.addEventListener('DOMContentLoaded', () => {
         'calvary fc': 'https://media.api-sports.io/football/teams/9076.png',
 
         // FUFA Big League Teams 2026/27
-        'onduparaka': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Onduparaka_FC_badge.png/220px-Onduparaka_FC_badge.png',
-        'onduparaka fc': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Onduparaka_FC_badge.png/220px-Onduparaka_FC_badge.png',
+        'onduparaka': 'assets/images/onduparaka_logo.png',
+        'onduparaka fc': 'assets/images/onduparaka_logo.png',
+        'oduparaka': 'assets/images/onduparaka_logo.png',
+        'oduparaka fc': 'assets/images/onduparaka_logo.png',
         'paidha black angels': 'https://upload.wikimedia.org/wikipedia/en/b/b4/Paidha_black_angels_logo.webp',
         'paidha black angels fc': 'https://upload.wikimedia.org/wikipedia/en/b/b4/Paidha_black_angels_logo.webp',
         'kaaro karungi': 'https://media.api-sports.io/football/teams/9077.png',
@@ -616,7 +619,7 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultTeams.forEach(dt => {
                 const idx = existing.findIndex(t => t.name && t.name.toLowerCase() === dt.name.toLowerCase());
                 if (idx >= 0) {
-                    if (!existing[idx].logo) existing[idx].logo = dt.logo;
+                    existing[idx].logo = dt.logo;
                 } else {
                     existing.push(dt);
                 }
@@ -632,11 +635,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function getTeamLogo(teamName) {
         if (!teamName) return '';
         const clean = teamName.toLowerCase().trim();
+        if (UPL_TEAM_LOGOS[clean]) return UPL_TEAM_LOGOS[clean];
         const teams = getTeams();
         const t = teams.find(t => t.name && t.name.toLowerCase().trim() === clean);
         if (t && t.logo) return t.logo;
-        if (UPL_TEAM_LOGOS[clean]) return UPL_TEAM_LOGOS[clean];
-        // Partial match fallback
         for (const [key, logoUrl] of Object.entries(UPL_TEAM_LOGOS)) {
             if (clean.includes(key) || key.includes(clean)) return logoUrl;
         }
@@ -646,13 +648,70 @@ document.addEventListener('DOMContentLoaded', () => {
     window.MASSAVU_GET_TEAM_LOGO = getTeamLogo;
 
     // ────────────────────────────────────────────────
-    //  DATE HELPERS
+    //  DATE HELPERS & FAVORITES
     // ────────────────────────────────────────────────
+    const STORAGE_KEY_FAVS = 'massavu_fav_teams';
+    const STORAGE_KEY_FAV_MATCHES = 'massavu_fav_matches';
+
+    function getFavTeams() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY_FAVS) || '[]'); } catch (e) { return []; }
+    }
+
+    function toggleFavTeam(teamName, ev) {
+        if (ev) ev.stopPropagation();
+        let favs = getFavTeams();
+        const clean = teamName.trim();
+        if (favs.includes(clean)) {
+            favs = favs.filter(f => f !== clean);
+        } else {
+            favs.push(clean);
+        }
+        localStorage.setItem(STORAGE_KEY_FAVS, JSON.stringify(favs));
+        renderFavSidebar();
+        renderCurrentView();
+    }
+
+    function getFavMatches() {
+        try { return JSON.parse(localStorage.getItem(STORAGE_KEY_FAV_MATCHES) || '[]'); } catch (e) { return []; }
+    }
+
+    function toggleFavMatch(matchId, ev) {
+        if (ev) ev.stopPropagation();
+        let favs = getFavMatches();
+        const idStr = String(matchId);
+        if (favs.includes(idStr)) {
+            favs = favs.filter(f => f !== idStr);
+        } else {
+            favs.push(idStr);
+        }
+        localStorage.setItem(STORAGE_KEY_FAV_MATCHES, JSON.stringify(favs));
+        renderCurrentView();
+    }
+
+    window.massavuToggleFavMatch = toggleFavMatch;
+    window.massavuToggleFavTeam = toggleFavTeam;
+
+    function renderFavSidebar() {
+        const listEl = document.getElementById('favTeamsList');
+        if (!listEl) return;
+        const favs = getFavTeams();
+        if (favs.length === 0) {
+            listEl.innerHTML = '<li style="font-size:0.78rem;color:#64748b;padding:0.35rem 0.4rem;">Star any club in Standings or Clubs to pin it here.</li>';
+            return;
+        }
+        listEl.innerHTML = favs.map(name => {
+            const logo = getTeamLogo(name);
+            const imgHtml = logo ? `<img src="${logo}" alt="${name}" style="width:20px;height:20px;border-radius:50%;object-fit:contain;background:rgba(255,255,255,0.08);padding:1px;">` : '<i class="fa-solid fa-shield-halved" style="color:#facc15;"></i>';
+            return `<li><a href="#" onclick="window.massavuOpenClubModal('${name.replace(/'/g, "\\'")}');return false;">${imgHtml} <span style="flex:1;">${name}</span> <i class="fa-solid fa-star" style="color:#facc15;font-size:0.72rem;" onclick="window.massavuToggleFavTeam('${name.replace(/'/g, "\\'")}', event)"></i></a></li>`;
+        }).join('');
+    }
+
     function dateToStr(d) {
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
     }
 
     function strToDate(s) {
+        if (!s || !s.includes('-')) return new Date();
         const [y, m, d] = s.split('-').map(Number);
         return new Date(y, m - 1, d);
     }
@@ -684,27 +743,69 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ────────────────────────────────────────────────
-    //  DATE STRIP
+    //  SEASON KPI OVERVIEW
+    // ────────────────────────────────────────────────
+    function renderSeasonKpis() {
+        const all = getMatches();
+        const ftMatches = all.filter(m => m.status === 'FT' || m.status === 'Completed');
+        const totalGoals = ftMatches.reduce((sum, m) => {
+            const sh = Number(m.scoreh !== undefined ? m.scoreh : (m.scoreH || 0));
+            const sa = Number(m.scorea !== undefined ? m.scorea : (m.scoreA || 0));
+            return sum + sh + sa;
+        }, 0);
+
+        const elMatches = document.getElementById('kpiTotalMatches');
+        const elGoals = document.getElementById('kpiTotalGoals');
+        const elUpl = document.getElementById('kpiUplLeader');
+        const elFbl = document.getElementById('kpiFblLeader');
+
+        if (elMatches) elMatches.textContent = `${ftMatches.length} / ${all.length}`;
+        if (elGoals) elGoals.textContent = `${totalGoals} (${ftMatches.length ? (totalGoals / ftMatches.length).toFixed(1) : '0.0'}/g)`;
+
+        const supa = window.MASSAVU_SUPABASE;
+        if (supa) {
+            const uplTable = supa.calculateStandings('Uganda Premier League', all);
+            const fblTable = supa.calculateStandings('FUFA Big League', all);
+            if (elUpl && uplTable.length > 0) elUpl.textContent = `${uplTable[0].team.name} (${uplTable[0].pts}pt)`;
+            if (elFbl && fblTable.length > 0) elFbl.textContent = `${fblTable[0].team.name} (${fblTable[0].pts}pt)`;
+        }
+    }
+
+    // ────────────────────────────────────────────────
+    //  DATE STRIP (WITH ACTIVE MATCH DOTS)
     // ────────────────────────────────────────────────
     function buildDateStrip() {
         const strip = document.getElementById('dateStrip');
         if (!strip) return;
         strip.innerHTML = '';
 
+        const all = getMatches();
+        const matchDatesSet = new Set(
+            all.filter(m => state.selectedComp === 'ALL' || m.competition === state.selectedComp)
+               .map(m => m.date)
+               .filter(Boolean)
+        );
+
         const today = todayStr();
-        // Show 5 days before and 7 days ahead centred on selected
-        for (let i = -5; i <= 7; i++) {
+        for (let i = -6; i <= 8; i++) {
             const ds = offsetDate(state.selectedDate, i);
             const { day, date } = formatDateLabel(ds);
+            const hasM = matchDatesSet.has(ds);
             const pill = document.createElement('button');
-            pill.className = 'date-pill' + (ds === state.selectedDate ? ' active' : '') + (ds === today ? ' today-pill' : '');
+            pill.className = 'date-pill'
+                + (ds === state.selectedDate ? ' active' : '')
+                + (ds === today ? ' today-pill' : '')
+                + (hasM ? ' has-matches' : '');
             pill.dataset.date = ds;
-            pill.innerHTML = `<span class="dp-day">${ds === today ? 'Today' : day}</span><span class="dp-date">${date}</span>`;
-            pill.addEventListener('click', () => selectDate(ds));
+            pill.innerHTML = `<span class="dp-day">${ds === today ? 'Today' : day}</span><span class="dp-date">${date}</span><span class="dp-dot" title="Matches on this day"></span>`;
+            pill.addEventListener('click', () => {
+                state.dateScope = 'date';
+                syncScopeButtons();
+                selectDate(ds);
+            });
             strip.appendChild(pill);
         }
 
-        // Scroll active pill into view
         const active = strip.querySelector('.active');
         if (active) {
             setTimeout(() => active.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' }), 50);
@@ -717,14 +818,46 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCurrentView();
     }
 
-    document.getElementById('datePrev')?.addEventListener('click', () => selectDate(offsetDate(state.selectedDate, -1)));
-    document.getElementById('dateNext')?.addEventListener('click', () => selectDate(offsetDate(state.selectedDate, 1)));
+    document.getElementById('datePrev')?.addEventListener('click', () => {
+        state.dateScope = 'date';
+        syncScopeButtons();
+        selectDate(offsetDate(state.selectedDate, -1));
+    });
+    document.getElementById('dateNext')?.addEventListener('click', () => {
+        state.dateScope = 'date';
+        syncScopeButtons();
+        selectDate(offsetDate(state.selectedDate, 1));
+    });
+    document.getElementById('todayJumpBtn')?.addEventListener('click', () => {
+        state.dateScope = 'date';
+        syncScopeButtons();
+        selectDate(todayStr());
+    });
     document.getElementById('datePickerBtn')?.addEventListener('click', () => {
         const picker = document.getElementById('datePicker');
         if (picker) { picker.value = state.selectedDate; picker.showPicker?.(); picker.click(); }
     });
     document.getElementById('datePicker')?.addEventListener('change', (e) => {
-        if (e.target.value) selectDate(e.target.value);
+        if (e.target.value) {
+            state.dateScope = 'date';
+            syncScopeButtons();
+            selectDate(e.target.value);
+        }
+    });
+
+    // Scope toggle (By Date vs All Season)
+    function syncScopeButtons() {
+        document.querySelectorAll('#dateScopeToggle .scope-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.scope === state.dateScope);
+        });
+    }
+
+    document.querySelectorAll('#dateScopeToggle .scope-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            state.dateScope = btn.dataset.scope;
+            syncScopeButtons();
+            renderCurrentView();
+        });
     });
 
     // ────────────────────────────────────────────────
@@ -737,7 +870,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const comps = getCompetitions();
         const all = document.createElement('button');
         all.className = 'comp-filter-btn' + (state.selectedComp === 'ALL' ? ' active' : '');
-        all.textContent = 'All';
+        all.innerHTML = '<i class="fa-solid fa-layer-group"></i> All Leagues';
         all.dataset.comp = 'ALL';
         all.addEventListener('click', () => selectComp('ALL'));
         bar.appendChild(all);
@@ -745,7 +878,8 @@ document.addEventListener('DOMContentLoaded', () => {
         comps.forEach(c => {
             const btn = document.createElement('button');
             btn.className = 'comp-filter-btn' + (state.selectedComp === c.name ? ' active' : '');
-            btn.textContent = c.name;
+            const logo = LEAGUE_LOGOS[c.name] ? `<img src="${LEAGUE_LOGOS[c.name]}" alt="${c.name}">` : '';
+            btn.innerHTML = `${logo} ${c.name}`;
             btn.dataset.comp = c.name;
             btn.addEventListener('click', () => selectComp(c.name));
             bar.appendChild(btn);
@@ -755,6 +889,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function selectComp(compName) {
         state.selectedComp = compName;
         buildCompFilter();
+        buildDateStrip();
         renderCurrentView();
     }
 
@@ -769,16 +904,23 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.view-panel').forEach(p => p.style.display = 'none');
             const panel = document.getElementById('panel-' + state.activeView);
             if (panel) panel.style.display = 'block';
+
+            const scopeToggle = document.getElementById('dateScopeToggle');
+            if (scopeToggle) {
+                scopeToggle.style.display = (state.activeView === 'fixtures' || state.activeView === 'results') ? 'inline-flex' : 'none';
+            }
+
             renderCurrentView();
         });
     });
 
-    // Sync old navbar tabs (Fixtures/Results/Standings links in header)
     document.querySelectorAll('.nav-links a[href^="#"]').forEach(link => {
         link.addEventListener('click', e => {
             e.preventDefault();
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            e.currentTarget.classList.add('active');
             const view = e.currentTarget.getAttribute('href').substring(1);
-            const map = { fixtures: 'fixtures', results: 'results', standings: 'tables' };
+            const map = { fixtures: 'fixtures', results: 'results', standings: 'tables', clubs: 'clubs' };
             const targetView = map[view] || view;
             const tabBtn = document.querySelector(`.view-tab[data-view="${targetView}"]`);
             if (tabBtn) tabBtn.click();
@@ -806,8 +948,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function teamLogoHtml(name, cssClass) {
         const logo = getTeamLogo(name);
-        if (logo) return `<img class="${cssClass}" src="${logo}" alt="${name}" onerror="this.style.display='none'">`;
         const initials = (name || '?').split(' ').map(w => w[0]).join('').substring(0, 3).toUpperCase();
+        if (logo) {
+            return `<img class="${cssClass}" src="${logo}" alt="${name}" loading="lazy" onerror="this.outerHTML='<div class=\'${cssClass}-placeholder\'>${initials}</div>'">`;
+        }
         return `<div class="${cssClass}-placeholder">${initials}</div>`;
     }
 
@@ -816,39 +960,83 @@ document.addEventListener('DOMContentLoaded', () => {
         const isScheduled = (m.status === 'Scheduled' || m.status === 'scheduled');
         const home = m.home || m.homeTeam || '';
         const away = m.away || m.awayTeam || '';
-        const scoreh = m.scoreh !== undefined ? m.scoreh : (m.scoreH !== undefined ? m.scoreH : 0);
-        const scorea = m.scorea !== undefined ? m.scorea : (m.scoreA !== undefined ? m.scoreA : 0);
+        const scoreh = Number(m.scoreh !== undefined ? m.scoreh : (m.scoreH !== undefined ? m.scoreH : 0));
+        const scorea = Number(m.scorea !== undefined ? m.scorea : (m.scoreA !== undefined ? m.scoreA : 0));
         const kickoff = formatKickoff(m.kickoffutc || m.kickoffUtc || '');
+        const dateSub = (state.dateScope === 'all' && m.date) ? `<div class="mc-date-sub">${formatDateLabel(m.date).date}</div>` : '';
+
+        const homeWinner = isFT && scoreh > scorea ? ' winner' : '';
+        const awayWinner = isFT && scorea > scoreh ? ' winner' : '';
+        const isFav = getFavMatches().includes(String(m.id));
 
         const centreHtml = isFT
-            ? `<div class="mc-score">${scoreh} &ndash; ${scorea}</div><span class="mc-status status-ft">FT</span>`
+            ? `<div class="mc-score">${scoreh} &ndash; ${scorea}</div><span class="mc-status status-ft">FT</span>${dateSub}`
             : isScheduled && kickoff
-                ? `<div class="mc-kickoff">${kickoff}</div><span class="mc-status status-scheduled">Scheduled</span>`
-                : `<span class="mc-status ${statusClass(m.status)}">${statusLabel(m.status)}</span>`;
+                ? `<div class="mc-kickoff">${kickoff}</div><span class="mc-status status-scheduled">EAT</span>${dateSub}`
+                : `<span class="mc-status ${statusClass(m.status)}">${statusLabel(m.status)}</span>${dateSub}`;
 
         return `
-        <div class="match-card" data-id="${m.id}">
-            <div class="mc-team home">
+        <div class="match-card" data-id="${m.id}" onclick="window.massavuOpenMatchModal('${m.id}')">
+            <div class="mc-team home${homeWinner}">
                 ${teamLogoHtml(home, 'mc-team-logo')}
                 <span class="mc-team-name">${home}</span>
             </div>
             <div class="mc-centre">${centreHtml}</div>
-            <div class="mc-team away">
+            <div class="mc-team away${awayWinner}">
                 <span class="mc-team-name">${away}</span>
                 ${teamLogoHtml(away, 'mc-team-logo')}
             </div>
+            <button class="mc-fav-btn ${isFav ? 'active' : ''}" title="Pin Match" onclick="window.massavuToggleFavMatch('${m.id}', event)">
+                <i class="fa-${isFav ? 'solid' : 'regular'} fa-star"></i>
+            </button>
         </div>`;
     }
 
     function buildGroupHtml(compName, matches) {
         const logo = LEAGUE_LOGOS[compName] ? `<img class="mgh-logo" src="${LEAGUE_LOGOS[compName]}" alt="${compName}">` : '';
         const cards = matches.map(buildMatchCard).join('');
-        return `<div class="match-group-header">${logo}<span class="mgh-name">${compName}</span></div>${cards}`;
+        return `
+        <div class="match-group-header">
+            <div class="mgh-left">${logo}<span class="mgh-name">${compName}</span></div>
+            <span class="mgh-count">${matches.length} ${matches.length === 1 ? 'match' : 'matches'}</span>
+        </div>${cards}`;
     }
 
-    function emptyState(icon, msg) {
-        return `<div class="empty-state"><i class="${icon}"></i><p>${msg}</p></div>`;
+    function findNearestMatchDate(isResult) {
+        const all = getMatches().filter(m => {
+            if (!m.date || m.date === '' || m.date === 'TBD') return false;
+            const isFT = (m.status === 'FT' || m.status === 'Completed');
+            if (isResult !== isFT) return false;
+            return state.selectedComp === 'ALL' || m.competition === state.selectedComp;
+        });
+        if (all.length === 0) return null;
+        const targetMs = strToDate(state.selectedDate).getTime();
+        let bestDate = all[0].date;
+        let bestDiff = Math.abs(strToDate(bestDate).getTime() - targetMs);
+        all.forEach(m => {
+            const diff = Math.abs(strToDate(m.date).getTime() - targetMs);
+            if (diff < bestDiff) {
+                bestDiff = diff;
+                bestDate = m.date;
+            }
+        });
+        return bestDate;
     }
+
+    function emptyState(icon, msg, nearestDate, isResult) {
+        let actionsHtml = `<button class="empty-jump-btn" onclick="window.massavuSetAllSeason()"><i class="fa-solid fa-list"></i> View All Season ${isResult ? 'Results' : 'Fixtures'}</button>`;
+        if (nearestDate) {
+            actionsHtml = `<button class="empty-jump-btn" onclick="window.massavuSelectDate('${nearestDate}')"><i class="fa-solid fa-calendar-check"></i> Jump to ${humanDate(nearestDate)}</button>` + actionsHtml;
+        }
+        return `<div class="empty-state"><i class="${icon}"></i><p>${msg}</p><div>${actionsHtml}</div></div>`;
+    }
+
+    window.massavuSelectDate = selectDate;
+    window.massavuSetAllSeason = function () {
+        state.dateScope = 'all';
+        syncScopeButtons();
+        renderCurrentView();
+    };
 
     // ────────────────────────────────────────────────
     //  FIXTURES VIEW
@@ -858,15 +1046,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!container) return;
         const all = getMatches();
         const filtered = all.filter(m => {
-            if (!m.date || m.date === '' || m.date === 'TBD') return false;
+            if (!m.date || m.date === '' || m.date === 'TBD') return state.dateScope === 'all' && m.status !== 'FT' && m.status !== 'Completed';
             if (m.status === 'FT' || m.status === 'Completed') return false;
-            const dateMatch = m.date === state.selectedDate;
+            const dateMatch = state.dateScope === 'all' || m.date === state.selectedDate;
             const compMatch = state.selectedComp === 'ALL' || (m.competition && m.competition === state.selectedComp);
             return dateMatch && compMatch;
         });
 
+        const badge = document.getElementById('badgeFixtures');
+        if (badge) badge.textContent = filtered.length;
+
         if (filtered.length === 0) {
-            container.innerHTML = emptyState('fa-solid fa-calendar-xmark', `No fixtures scheduled for ${humanDate(state.selectedDate)}.`);
+            const nearest = findNearestMatchDate(false);
+            container.innerHTML = emptyState('fa-solid fa-calendar-day', `No fixtures scheduled on ${humanDate(state.selectedDate)}.`, nearest, false);
             return;
         }
 
@@ -885,13 +1077,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!m.date || m.date === '') return false;
             const isFT = (m.status === 'FT' || m.status === 'Completed');
             if (!isFT) return false;
-            const dateMatch = m.date === state.selectedDate;
+            const dateMatch = state.dateScope === 'all' || m.date === state.selectedDate;
             const compMatch = state.selectedComp === 'ALL' || (m.competition && m.competition === state.selectedComp);
             return dateMatch && compMatch;
-        });
+        }).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+
+        const badge = document.getElementById('badgeResults');
+        if (badge) badge.textContent = filtered.length;
 
         if (filtered.length === 0) {
-            container.innerHTML = emptyState('fa-solid fa-flag-checkered', `No results recorded for ${humanDate(state.selectedDate)}.`);
+            const nearest = findNearestMatchDate(true);
+            container.innerHTML = emptyState('fa-solid fa-flag-checkered', `No match results recorded on ${humanDate(state.selectedDate)}.`, nearest, true);
             return;
         }
 
@@ -900,41 +1096,79 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ────────────────────────────────────────────────
-    //  TABLES (STANDINGS) VIEW
+    //  TEAM FORM HELPER (LAST 5 MATCHES)
+    // ────────────────────────────────────────────────
+    function getTeamForm(teamName, allMatches) {
+        const clean = teamName.toLowerCase().trim();
+        const teamFT = allMatches.filter(m => {
+            if (m.status !== 'FT' && m.status !== 'Completed') return false;
+            const h = (m.home || m.homeTeam || '').toLowerCase().trim();
+            const a = (m.away || m.awayTeam || '').toLowerCase().trim();
+            return h === clean || a === clean;
+        }).sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+        return teamFT.slice(-5).map(m => {
+            const isHome = (m.home || m.homeTeam || '').toLowerCase().trim() === clean;
+            const sh = Number(m.scoreh !== undefined ? m.scoreh : (m.scoreH || 0));
+            const sa = Number(m.scorea !== undefined ? m.scorea : (m.scoreA || 0));
+            const myScore = isHome ? sh : sa;
+            const oppScore = isHome ? sa : sh;
+            if (myScore > oppScore) return 'W';
+            if (myScore < oppScore) return 'L';
+            return 'D';
+        });
+    }
+
+    // ────────────────────────────────────────────────
+    //  TABLES (STANDINGS) VIEW WITH FORM & ZONES
     // ────────────────────────────────────────────────
     function renderTables() {
         const container = document.getElementById('tables-container');
         if (!container) return;
 
         const all = getMatches();
-
-        // Get competitions to show
         const compsToShow = state.selectedComp === 'ALL'
             ? [...new Set(all.filter(m => m.status === 'FT' || m.status === 'Completed').map(m => m.competition).filter(Boolean))]
             : [state.selectedComp];
 
         if (compsToShow.length === 0) {
-            container.innerHTML = emptyState('fa-solid fa-table-list', 'No completed matches to calculate standings yet.');
+            container.innerHTML = '<div class="empty-state"><i class="fa-solid fa-table-list"></i><p>No completed matches to calculate standings yet.</p></div>';
             return;
         }
 
         const supa = window.MASSAVU_SUPABASE;
+        const favTeams = getFavTeams();
         let html = '';
 
         compsToShow.forEach(comp => {
             const standings = supa ? supa.calculateStandings(comp, all) : [];
             if (standings.length === 0) return;
 
+            const isUPL = comp === 'Uganda Premier League';
+            const promoSpots = isUPL ? 2 : 3;
+            const relegStart = Math.max(standings.length - 2, 10);
+
             const logo = LEAGUE_LOGOS[comp] ? `<img class="mgh-logo" src="${LEAGUE_LOGOS[comp]}" alt="${comp}">` : '';
             const rows = standings.map(row => {
                 const gdClass = row.gd > 0 ? 'lt-positive' : (row.gd < 0 ? 'lt-negative' : '');
                 const gdText = row.gd > 0 ? `+${row.gd}` : row.gd;
                 const teamName = row.team ? row.team.name : '';
-                const logoUrl = (row.team && row.team.logo) || getTeamLogo(teamName);
-                const logoHtml = logoUrl ? `<img class="lt-team-logo" src="${logoUrl}" alt="${teamName}" referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Onduparaka_FC_badge.png/220px-Onduparaka_FC_badge.png';">` : `<div class="lt-team-logo-placeholder">${(teamName || '?').substring(0, 3).toUpperCase()}</div>`;
-                return `<tr>
-                    <td class="lt-pos">${row.pos}</td>
-                    <td><div class="lt-team-cell">${logoHtml}<span class="lt-team-name">${row.team.name}</span></div></td>
+                const isFav = favTeams.includes(teamName);
+                const zoneClass = row.pos <= promoSpots ? 'zone-promo' : (row.pos >= relegStart ? 'zone-releg' : '');
+                const formArr = getTeamForm(teamName, all);
+                const formHtml = formArr.map(r => `<span class="form-pill ${r}">${r}</span>`).join('');
+
+                return `<tr onclick="window.massavuOpenClubModal('${teamName.replace(/'/g, "\\'")}')">
+                    <td><span class="lt-pos-badge ${zoneClass}">${row.pos}</span></td>
+                    <td>
+                        <div class="lt-team-cell">
+                            ${teamLogoHtml(teamName, 'lt-team-logo')}
+                            <span class="lt-team-name">${teamName}</span>
+                            <button class="mc-fav-btn ${isFav ? 'active' : ''}" onclick="window.massavuToggleFavTeam('${teamName.replace(/'/g, "\\'")}', event)" title="Pin Club">
+                                <i class="fa-${isFav ? 'solid' : 'regular'} fa-star" style="font-size:0.75rem;"></i>
+                            </button>
+                        </div>
+                    </td>
                     <td>${row.played}</td>
                     <td>${row.won}</td>
                     <td>${row.draw}</td>
@@ -943,18 +1177,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${row.ga}</td>
                     <td class="${gdClass}">${gdText}</td>
                     <td class="lt-pts">${row.pts}</td>
+                    <td><div class="lt-form-wrap">${formHtml}</div></td>
                 </tr>`;
             }).join('');
 
             html += `
             <div style="margin-bottom:1.5rem;">
-                <div class="match-group-header">${logo}<span class="mgh-name">${comp}</span></div>
+                <div class="match-group-header">
+                    <div class="mgh-left">${logo}<span class="mgh-name">${comp} Standings</span></div>
+                    <span class="mgh-count">${standings.length} Clubs</span>
+                </div>
                 <div class="league-table-wrapper">
                     <table class="league-table">
                         <thead>
                             <tr>
-                                <th style="width:28px;">#</th>
-                                <th class="th-team">Team</th>
+                                <th style="width:36px;">#</th>
+                                <th class="th-team">Club</th>
                                 <th title="Played">P</th>
                                 <th title="Won">W</th>
                                 <th title="Drawn">D</th>
@@ -963,19 +1201,193 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <th title="Goals Against">GA</th>
                                 <th title="Goal Difference">GD</th>
                                 <th title="Points">Pts</th>
+                                <th title="Last 5 Form">Form</th>
                             </tr>
                         </thead>
                         <tbody>${rows}</tbody>
                     </table>
+                    <div class="table-legend">
+                        <div class="legend-item"><span class="legend-dot" style="background:#4ade80;"></span> ${isUPL ? 'CAF Champions League / Confederation Cup' : 'UPL Promotion Zone'}</div>
+                        <div class="legend-item"><span class="legend-dot" style="background:#f87171;"></span> Relegation Zone</div>
+                        <div class="legend-item" style="margin-left:auto;"><i class="fa-regular fa-hand-pointer" style="color:#facc15;"></i> Click any club to view profile &amp; fixtures</div>
+                    </div>
                 </div>
             </div>`;
         });
 
-        container.innerHTML = html || emptyState('fa-solid fa-table-list', 'No standings data available for the selected competition.');
+        container.innerHTML = html;
     }
 
     // ────────────────────────────────────────────────
-    //  HELPERS
+    //  CLUBS DIRECTORY VIEW
+    // ────────────────────────────────────────────────
+    function renderClubs() {
+        const container = document.getElementById('clubs-container');
+        if (!container) return;
+
+        const teams = getTeams().filter(t => state.selectedComp === 'ALL' || t.competition === state.selectedComp);
+        const all = getMatches();
+        const favTeams = getFavTeams();
+
+        const cards = teams.map(t => {
+            const isFav = favTeams.includes(t.name);
+            const form = getTeamForm(t.name, all);
+            const formHtml = form.length
+                ? `<div class="lt-form-wrap" style="margin-top:4px;">${form.map(r => `<span class="form-pill ${r}">${r}</span>`).join('')}</div>`
+                : '<span style="font-size:0.7rem;color:#64748b;">No completed matches</span>';
+
+            return `
+            <div class="club-card" onclick="window.massavuOpenClubModal('${t.name.replace(/'/g, "\\'")}')">
+                <button class="mc-fav-btn ${isFav ? 'active' : ''}" style="position:absolute;top:8px;right:8px;" onclick="window.massavuToggleFavTeam('${t.name.replace(/'/g, "\\'")}', event)">
+                    <i class="fa-${isFav ? 'solid' : 'regular'} fa-star"></i>
+                </button>
+                ${teamLogoHtml(t.name, 'club-card-logo')}
+                <div class="club-card-name">${t.name}</div>
+                <div class="club-card-comp">${t.competition}</div>
+                ${formHtml}
+            </div>`;
+        }).join('');
+
+        container.innerHTML = `<div class="clubs-grid">${cards}</div>`;
+    }
+
+    // ────────────────────────────────────────────────
+    //  INTERACTIVE MATCH CENTRE & CLUB PROFILE MODAL
+    // ────────────────────────────────────────────────
+    const modalBackdrop = document.getElementById('matchCentreModal');
+    const modalContent = document.getElementById('matchCentreContent');
+
+    if (modalBackdrop) {
+        modalBackdrop.addEventListener('click', (e) => {
+            if (e.target === modalBackdrop) modalBackdrop.classList.remove('open');
+        });
+    }
+
+    window.massavuCloseModal = function () {
+        if (modalBackdrop) modalBackdrop.classList.remove('open');
+    };
+
+    window.massavuOpenMatchModal = function (matchId) {
+        const all = getMatches();
+        const m = all.find(x => String(x.id) === String(matchId));
+        if (!m || !modalBackdrop || !modalContent) return;
+
+        const home = m.home || m.homeTeam || '';
+        const away = m.away || m.awayTeam || '';
+        const isFT = (m.status === 'FT' || m.status === 'Completed');
+        const scoreh = Number(m.scoreh !== undefined ? m.scoreh : (m.scoreH || 0));
+        const scorea = Number(m.scorea !== undefined ? m.scorea : (m.scoreA || 0));
+        const kickoff = formatKickoff(m.kickoffutc || m.kickoffUtc || '');
+
+        const homeForm = getTeamForm(home, all);
+        const awayForm = getTeamForm(away, all);
+
+        // H2H matches
+        const h2h = all.filter(x => {
+            const xh = (x.home || x.homeTeam || '').toLowerCase();
+            const xa = (x.away || x.awayTeam || '').toLowerCase();
+            const hL = home.toLowerCase();
+            const aL = away.toLowerCase();
+            return (xh === hL && xa === aL) || (xh === aL && xa === hL);
+        });
+
+        // Form-based Win Probability calculation
+        const calcStrength = (formArr, isH) => {
+            let pts = isH ? 4 : 2;
+            formArr.forEach(r => { if (r === 'W') pts += 3; else if (r === 'D') pts += 1; });
+            return pts;
+        };
+        const hStr = calcStrength(homeForm, true);
+        const aStr = calcStrength(awayForm, false);
+        const dStr = 4;
+        const tot = hStr + aStr + dStr;
+        const pHome = Math.round((hStr / tot) * 100);
+        const pAway = Math.round((aStr / tot) * 100);
+        const pDraw = 100 - pHome - pAway;
+
+        modalContent.innerHTML = `
+            <div class="mc-modal-header">
+                <button class="mc-modal-close" onclick="window.massavuCloseModal()"><i class="fa-solid fa-xmark"></i></button>
+                <div class="mc-modal-comp">${m.competition} &bull; ${m.date ? humanDate(m.date) : 'Date TBD'}</div>
+                <div class="mc-modal-scoreboard">
+                    <div class="mc-modal-team" onclick="window.massavuOpenClubModal('${home.replace(/'/g, "\\'")}')">
+                        ${teamLogoHtml(home, 'mc-team-logo')}
+                        <div class="mc-modal-team-name">${home}</div>
+                        <div class="lt-form-wrap">${homeForm.map(r => `<span class="form-pill ${r}">${r}</span>`).join('')}</div>
+                    </div>
+                    <div class="mc-modal-score-box">
+                        <div class="mc-modal-score">${isFT ? `${scoreh} - ${scorea}` : (kickoff || 'VS')}</div>
+                        <span class="mc-status ${statusClass(m.status)}">${isFT ? 'Full Time' : (kickoff ? kickoff + ' EAT' : m.status)}</span>
+                    </div>
+                    <div class="mc-modal-team" onclick="window.massavuOpenClubModal('${away.replace(/'/g, "\\'")}')">
+                        ${teamLogoHtml(away, 'mc-team-logo')}
+                        <div class="mc-modal-team-name">${away}</div>
+                        <div class="lt-form-wrap">${awayForm.map(r => `<span class="form-pill ${r}">${r}</span>`).join('')}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="mc-modal-body">
+                <div class="mc-modal-section">
+                    <h4><i class="fa-solid fa-chart-pie" style="color:#facc15;margin-right:5px;"></i> Form Momentum &amp; Win Probability</h4>
+                    <div class="prob-labels">
+                        <span>${home} (${pHome}%)</span>
+                        <span>Draw (${pDraw}%)</span>
+                        <span>${away} (${pAway}%)</span>
+                    </div>
+                    <div class="prob-bar-wrap">
+                        <div style="width:${pHome}%;background:#22c55e;"></div>
+                        <div style="width:${pDraw}%;background:#64748b;"></div>
+                        <div style="width:${pAway}%;background:#facc15;"></div>
+                    </div>
+                </div>
+                <div class="mc-modal-section">
+                    <h4><i class="fa-solid fa-code-compare" style="color:#facc15;margin-right:5px;"></i> Season Meetings (${h2h.length})</h4>
+                    ${h2h.map(buildMatchCard).join('')}
+                </div>
+            </div>
+        `;
+        modalBackdrop.classList.add('open');
+    };
+
+    window.massavuOpenClubModal = function (teamName) {
+        if (!modalBackdrop || !modalContent) return;
+        const all = getMatches();
+        const clean = teamName.toLowerCase().trim();
+        const teamMatches = all.filter(m => {
+            const h = (m.home || m.homeTeam || '').toLowerCase().trim();
+            const a = (m.away || m.awayTeam || '').toLowerCase().trim();
+            return h === clean || a === clean;
+        });
+
+        const completed = teamMatches.filter(m => m.status === 'FT' || m.status === 'Completed').sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+        const upcoming = teamMatches.filter(m => m.status !== 'FT' && m.status !== 'Completed').sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
+        const form = getTeamForm(teamName, all);
+
+        modalContent.innerHTML = `
+            <div class="mc-modal-header">
+                <button class="mc-modal-close" onclick="window.massavuCloseModal()"><i class="fa-solid fa-xmark"></i></button>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;">
+                    ${teamLogoHtml(teamName, 'club-card-logo')}
+                    <h2 style="font-size:1.35rem;color:#fff;margin:0;">${teamName}</h2>
+                    <div class="lt-form-wrap">${form.map(r => `<span class="form-pill ${r}">${r}</span>`).join('')}</div>
+                </div>
+            </div>
+            <div class="mc-modal-body">
+                <div class="mc-modal-section">
+                    <h4><i class="fa-solid fa-calendar-days" style="color:#facc15;margin-right:5px;"></i> Upcoming Fixtures (${upcoming.length})</h4>
+                    ${upcoming.length ? upcoming.slice(0, 5).map(buildMatchCard).join('') : '<p style="font-size:0.82rem;color:#64748b;">No upcoming fixtures scheduled.</p>'}
+                </div>
+                <div class="mc-modal-section">
+                    <h4><i class="fa-solid fa-flag-checkered" style="color:#22c55e;margin-right:5px;"></i> Recent Results (${completed.length})</h4>
+                    ${completed.length ? completed.slice(0, 6).map(buildMatchCard).join('') : '<p style="font-size:0.82rem;color:#64748b;">No completed matches yet.</p>'}
+                </div>
+            </div>
+        `;
+        modalBackdrop.classList.add('open');
+    };
+
+    // ────────────────────────────────────────────────
+    //  HELPERS & RENDER DISPATCH
     // ────────────────────────────────────────────────
     function groupByComp(matches) {
         return matches.reduce((acc, m) => {
@@ -991,34 +1403,69 @@ document.addEventListener('DOMContentLoaded', () => {
         return `${d.getDate()} ${MON_NAMES[d.getMonth()]} ${d.getFullYear()}`;
     }
 
-    // ────────────────────────────────────────────────
-    //  RENDER DISPATCH
-    // ────────────────────────────────────────────────
     function renderCurrentView() {
+        renderSeasonKpis();
+        // Keep badges updated
+        const all = getMatches();
+        const fixCount = all.filter(m => m.status !== 'FT' && m.status !== 'Completed' && (state.dateScope === 'all' || m.date === state.selectedDate) && (state.selectedComp === 'ALL' || m.competition === state.selectedComp)).length;
+        const resCount = all.filter(m => (m.status === 'FT' || m.status === 'Completed') && (state.dateScope === 'all' || m.date === state.selectedDate) && (state.selectedComp === 'ALL' || m.competition === state.selectedComp)).length;
+        const bFix = document.getElementById('badgeFixtures');
+        const bRes = document.getElementById('badgeResults');
+        if (bFix) bFix.textContent = fixCount;
+        if (bRes) bRes.textContent = resCount;
+
         if (state.activeView === 'fixtures') renderFixtures();
         else if (state.activeView === 'results') renderResults();
         else if (state.activeView === 'tables') renderTables();
+        else if (state.activeView === 'clubs') renderClubs();
     }
 
-
     // ────────────────────────────────────────────────
-    //  SEARCH (LIVE FILTER ON RESULTS/FIXTURES)
+    //  INSTANT GLOBAL SEARCH DROPDOWN + LIVE FILTER
     // ────────────────────────────────────────────────
     function initSearch() {
-        const searchInput = document.querySelector('.search-container input');
+        const searchInput = document.getElementById('globalSearchInput') || document.querySelector('.search-container input');
+        const dropdown = document.getElementById('globalSearchDropdown');
         if (!searchInput) return;
+
         searchInput.addEventListener('input', () => {
             const q = searchInput.value.trim().toLowerCase();
-            document.querySelectorAll('.match-card').forEach(card => {
+            document.querySelectorAll('.match-card, .club-card').forEach(card => {
                 const text = card.textContent.toLowerCase();
                 card.style.display = !q || text.includes(q) ? '' : 'none';
             });
+
+            if (!dropdown) return;
+            if (!q) {
+                dropdown.style.display = 'none';
+                return;
+            }
+
+            const teams = getTeams().filter(t => t.name.toLowerCase().includes(q)).slice(0, 6);
+            if (teams.length === 0) {
+                dropdown.style.display = 'none';
+                return;
+            }
+
+            dropdown.innerHTML = teams.map(t => `
+                <div class="search-item" onclick="window.massavuOpenClubModal('${t.name.replace(/'/g, "\\'")}')">
+                    ${teamLogoHtml(t.name, 'lt-team-logo')}
+                    <div style="display:flex;flex-direction:column;">
+                        <span style="font-weight:700;color:#fff;font-size:0.84rem;">${t.name}</span>
+                        <span style="font-size:0.7rem;color:#94a3b8;">${t.competition}</span>
+                    </div>
+                </div>
+            `).join('');
+            dropdown.style.display = 'flex';
+        });
+
+        document.addEventListener('click', (e) => {
+            if (dropdown && !e.target.closest('#globalSearchBox')) {
+                dropdown.style.display = 'none';
+            }
         });
     }
 
-    // ────────────────────────────────────────────────
-    //  SUPABASE CLOUD SYNC (non-blocking)
-    // ────────────────────────────────────────────────
     async function syncFromCloud() {
         if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.loadMatchesFromCloud === 'function') {
             try {
@@ -1029,16 +1476,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ────────────────────────────────────────────────
-    //  INIT
-    // ────────────────────────────────────────────────
     function init() {
-        // Migration check for existing users: force re-seed to load 153 Matchday 1-17 fixtures
-        if (localStorage.getItem('massavu_v73_seeded') !== 'true') {
+        if (localStorage.getItem('massavu_v80_seeded') !== 'true') {
             try {
                 localStorage.removeItem(STORAGE_KEY_COMPS);
                 localStorage.removeItem(STORAGE_KEY_MATCHES);
-                localStorage.setItem('massavu_v73_seeded', 'true');
+                localStorage.removeItem(STORAGE_KEY_TEAMS);
+                localStorage.setItem('massavu_v80_seeded', 'true');
             } catch (e) { }
         }
 
@@ -1048,29 +1492,24 @@ document.addEventListener('DOMContentLoaded', () => {
         state.allMatches = getMatches();
         state.competitions = getCompetitions();
 
-        renderLastUpdated();
+        renderFavSidebar();
         buildDateStrip();
         buildCompFilter();
         renderCurrentView();
         initSearch();
 
-        // Non-blocking cloud sync — refresh view if cloud has newer data
         syncFromCloud();
     }
 
     init();
 
-    // Expose for mobile bottom nav
     window.massavuSwitchView = function (view) {
         const tabBtn = document.querySelector(`.view-tab[data-view="${view}"]`);
         if (tabBtn) tabBtn.click();
     };
 
-    // Expose for sidebar competition clicks
     window.openCompetition = function (compName) {
         selectComp(compName);
-        const tabBtn = document.querySelector('.view-tab[data-view="fixtures"]');
-        if (tabBtn) tabBtn.click();
     };
 
 });

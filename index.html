@@ -21,8 +21,8 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7077047821404742"
         crossorigin="anonymous"></script>
-    <meta name="last-modified" content="2026-09-29">
-    <!-- Push Notification + Analytics CSS -->
+    <meta name="last-modified" content="2026-11-02">
+    <!-- Push Notification + Analytics + Enhanced UI CSS -->
     <style>
         /* NOTIFICATION BANNER */
         #massavu-notif-banner {
@@ -143,6 +143,73 @@
             }
         }
 
+        /* ─── HERO MATCH SPOTLIGHT & KPI BAR ─── */
+        .season-kpi-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.65rem;
+            margin-bottom: 1rem;
+        }
+
+        .kpi-card {
+            background: linear-gradient(135deg, rgba(17, 28, 56, 0.95), rgba(11, 19, 41, 0.92));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 0.7rem 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .kpi-card:hover {
+            border-color: rgba(250, 204, 21, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .kpi-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            background: rgba(250, 204, 21, 0.12);
+            color: #facc15;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .kpi-info {
+            min-width: 0;
+        }
+
+        .kpi-val {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.15;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .kpi-lbl {
+            font-size: 0.68rem;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        @media (max-width: 640px) {
+            .season-kpi-bar {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+        }
+
         /* ─── DATE NAVIGATION STRIP ─── */
         .date-nav-wrapper {
             display: flex;
@@ -154,7 +221,7 @@
 
         .date-strip {
             display: flex;
-            gap: 0.25rem;
+            gap: 0.28rem;
             overflow-x: auto;
             flex: 1;
             scrollbar-width: none;
@@ -168,46 +235,65 @@
 
         .date-pill {
             flex-shrink: 0;
-            padding: 0.45rem 0.85rem;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1.5px solid transparent;
+            padding: 0.42rem 0.78rem;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1.5px solid rgba(255, 255, 255, 0.06);
             cursor: pointer;
             text-align: center;
             transition: all 0.2s ease;
             min-width: 64px;
             font-size: 0.8rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
         }
 
         .date-pill .dp-day {
             color: #94a3b8;
             font-weight: 600;
             display: block;
-            font-size: 0.72rem;
+            font-size: 0.68rem;
             text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
 
         .date-pill .dp-date {
             color: #e2e8f0;
             font-weight: 800;
             display: block;
-            font-size: 0.9rem;
+            font-size: 0.86rem;
+        }
+
+        .date-pill .dp-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #22c55e;
+            margin-top: 2px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .date-pill.has-matches .dp-dot {
+            opacity: 1;
         }
 
         .date-pill:hover {
             background: rgba(250, 204, 21, 0.08);
-            border-color: rgba(250, 204, 21, 0.2);
+            border-color: rgba(250, 204, 21, 0.25);
+            transform: translateY(-1px);
         }
 
         .date-pill.active {
-            background: rgba(250, 204, 21, 0.12);
+            background: rgba(250, 204, 21, 0.14);
             border-color: #facc15;
+            box-shadow: 0 0 15px rgba(250, 204, 21, 0.18);
         }
 
-        .date-pill.active .dp-day {
-            color: #facc15;
-        }
-
+        .date-pill.active .dp-day,
         .date-pill.active .dp-date {
             color: #facc15;
         }
@@ -222,8 +308,8 @@
             border: 1.5px solid rgba(255, 255, 255, 0.1);
             color: #e2e8f0;
             border-radius: 8px;
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -232,6 +318,7 @@
             flex-shrink: 0;
             transition: all 0.15s ease;
             padding: 0;
+            min-height: unset;
         }
 
         .date-nav-arrow:hover {
@@ -245,8 +332,8 @@
             border: 1.5px solid rgba(255, 255, 255, 0.1);
             color: #94a3b8;
             border-radius: 8px;
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -254,11 +341,34 @@
             font-size: 0.9rem;
             flex-shrink: 0;
             transition: all 0.15s ease;
+            min-height: unset;
         }
 
         .date-picker-btn:hover {
             color: #facc15;
             border-color: #facc15;
+        }
+
+        .today-jump-btn {
+            background: rgba(250, 204, 21, 0.1);
+            border: 1.5px solid rgba(250, 204, 21, 0.3);
+            color: #facc15;
+            border-radius: 8px;
+            padding: 0 0.65rem;
+            height: 32px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+            min-height: unset;
+        }
+
+        .today-jump-btn:hover {
+            background: #facc15;
+            color: #0b1329;
         }
 
         /* ─── COMPETITION FILTER ─── */
@@ -269,6 +379,7 @@
             scrollbar-width: none;
             margin-bottom: 0.85rem;
             padding-bottom: 2px;
+            align-items: center;
         }
 
         .comp-filter-bar::-webkit-scrollbar {
@@ -280,13 +391,22 @@
             padding: 0.35rem 0.9rem;
             border-radius: 20px;
             border: 1.5px solid rgba(255, 255, 255, 0.1);
-            background: transparent;
+            background: rgba(255, 255, 255, 0.03);
             color: #94a3b8;
             font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.18s ease;
             white-space: nowrap;
+            min-height: 34px;
+            gap: 0.4rem;
+        }
+
+        .comp-filter-btn img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            border-radius: 3px;
         }
 
         .comp-filter-btn:hover {
@@ -298,14 +418,29 @@
             background: #facc15;
             border-color: #facc15;
             color: #0b1329;
+            box-shadow: 0 2px 12px rgba(250, 204, 21, 0.25);
         }
 
-        /* ─── VIEW TABS ─── */
+        /* ─── VIEW TABS & SUB-CONTROLS ─── */
+        .view-controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 1.1rem;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
         .view-tabs {
             display: flex;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            margin-bottom: 1.25rem;
             gap: 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .view-tabs::-webkit-scrollbar {
+            display: none;
         }
 
         .view-tab {
@@ -313,15 +448,17 @@
             border: none;
             border-bottom: 3px solid transparent;
             color: #64748b;
-            padding: 0.65rem 1.25rem;
+            padding: 0.65rem 1.05rem;
             font-weight: 700;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.18s ease;
             display: flex;
             align-items: center;
             gap: 0.4rem;
             margin-bottom: -1px;
+            min-height: 42px;
+            white-space: nowrap;
         }
 
         .view-tab:hover {
@@ -333,63 +470,120 @@
             border-bottom-color: #facc15;
         }
 
+        .view-tab .tab-badge {
+            background: rgba(250, 204, 21, 0.15);
+            color: #facc15;
+            font-size: 0.66rem;
+            padding: 1px 6px;
+            border-radius: 10px;
+            font-weight: 800;
+        }
+
+        .scope-toggle {
+            display: inline-flex;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 2px;
+            margin-bottom: 4px;
+        }
+
+        .scope-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.26rem 0.65rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            min-height: 28px;
+        }
+
+        .scope-btn.active {
+            background: #facc15;
+            color: #0b1329;
+        }
+
         /* ─── MATCH CARD ─── */
         .match-group-header {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 0.6rem;
-            padding: 0.55rem 0.9rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px 8px 0 0;
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 0.6rem 0.95rem;
+            background: linear-gradient(90deg, rgba(250, 204, 21, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+            border-radius: 10px 10px 0 0;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-bottom: none;
-            margin-top: 1.1rem;
+            margin-top: 1.15rem;
         }
 
         .match-group-header:first-child {
             margin-top: 0;
         }
 
+        .mgh-left {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
         .mgh-logo {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             object-fit: contain;
-            border-radius: 3px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 2px;
         }
 
         .mgh-name {
             font-size: 0.78rem;
             font-weight: 800;
-            color: #94a3b8;
+            color: #e2e8f0;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
+            letter-spacing: 0.05em;
+        }
+
+        .mgh-count {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 700;
         }
 
         .match-card {
             background: #111c38;
             border: 1px solid rgba(255, 255, 255, 0.07);
             border-top: none;
-            padding: 0.75rem 1rem;
+            padding: 0.8rem 1rem;
             display: grid;
-            grid-template-columns: 1fr auto 1fr;
+            grid-template-columns: 1fr auto 1fr auto;
             align-items: center;
             gap: 0.75rem;
-            transition: background 0.15s ease;
-            cursor: default;
+            transition: all 0.18s ease;
+            cursor: pointer;
+            position: relative;
         }
 
         .match-card:last-child {
-            border-radius: 0 0 8px 8px;
+            border-radius: 0 0 10px 10px;
         }
 
         .match-card:hover {
-            background: rgba(250, 204, 21, 0.035);
+            background: #162447;
+            border-color: rgba(250, 204, 21, 0.22);
         }
 
         .mc-team {
             display: flex;
             align-items: center;
-            gap: 0.55rem;
+            gap: 0.65rem;
+            min-width: 0;
         }
 
         .mc-team.away {
@@ -398,22 +592,30 @@
         }
 
         .mc-team-logo {
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             object-fit: contain;
-            border-radius: 4px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.07);
+            padding: 2px;
             flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+
+        .match-card:hover .mc-team-logo {
+            transform: scale(1.08);
         }
 
         .mc-team-logo-placeholder {
-            width: 28px;
-            height: 28px;
-            background: rgba(250, 204, 21, 0.1);
-            border-radius: 4px;
+            width: 30px;
+            height: 30px;
+            background: rgba(250, 204, 21, 0.12);
+            border: 1px solid rgba(250, 204, 21, 0.25);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 900;
             color: #facc15;
             flex-shrink: 0;
@@ -423,15 +625,27 @@
             font-size: 0.88rem;
             font-weight: 700;
             color: #e2e8f0;
-            line-height: 1.2;
+            line-height: 1.25;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mc-team.winner .mc-team-name {
+            color: #facc15;
+            font-weight: 800;
         }
 
         .mc-centre {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.2rem;
-            min-width: 68px;
+            gap: 0.18rem;
+            min-width: 82px;
+            background: rgba(6, 12, 24, 0.55);
+            padding: 0.35rem 0.65rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .mc-score {
@@ -439,18 +653,26 @@
             font-weight: 900;
             color: #fff;
             letter-spacing: 0.05em;
+            line-height: 1.1;
         }
 
         .mc-kickoff {
             font-size: 0.85rem;
-            font-weight: 700;
+            font-weight: 800;
             color: #facc15;
+            line-height: 1.1;
+        }
+
+        .mc-date-sub {
+            font-size: 0.62rem;
+            color: #94a3b8;
+            font-weight: 600;
         }
 
         .mc-status {
-            font-size: 0.68rem;
+            font-size: 0.62rem;
             font-weight: 800;
-            padding: 2px 7px;
+            padding: 1px 6px;
             border-radius: 10px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -476,9 +698,34 @@
             color: #fca5a5;
         }
 
+        .mc-fav-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.92rem;
+            cursor: pointer;
+            padding: 0.25rem;
+            min-height: unset;
+            transition: all 0.18s ease;
+        }
+
+        .mc-fav-btn:hover {
+            color: #facc15;
+            transform: scale(1.15);
+        }
+
+        .mc-fav-btn.active {
+            color: #facc15;
+            filter: drop-shadow(0 0 6px rgba(250, 204, 21, 0.5));
+        }
+
         /* ─── LEAGUE TABLE ─── */
         .league-table-wrapper {
             overflow-x: auto;
+            background: #111c38;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-top: none;
+            border-radius: 0 0 10px 10px;
         }
 
         .league-table {
@@ -488,20 +735,21 @@
         }
 
         .league-table th {
-            padding: 0.55rem 0.7rem;
+            padding: 0.65rem 0.65rem;
             text-align: center;
             color: #64748b;
             font-weight: 700;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(6, 12, 24, 0.4);
             white-space: nowrap;
         }
 
         .league-table th:first-child,
         .league-table td:first-child {
-            text-align: left;
-            padding-left: 0.5rem;
+            text-align: center;
+            padding-left: 0.6rem;
         }
 
         .league-table th.th-team {
@@ -509,9 +757,9 @@
         }
 
         .league-table td {
-            padding: 0.6rem 0.7rem;
+            padding: 0.62rem 0.65rem;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.045);
             color: #cbd5e1;
             white-space: nowrap;
         }
@@ -520,37 +768,63 @@
             border-bottom: none;
         }
 
-        .league-table tr:hover td {
-            background: rgba(250, 204, 21, 0.03);
+        .league-table tbody tr {
+            transition: background 0.15s ease;
+            cursor: pointer;
         }
 
-        .lt-pos {
-            color: #64748b;
-            font-weight: 700;
-            font-size: 0.78rem;
-            width: 28px;
+        .league-table tbody tr:hover td {
+            background: rgba(250, 204, 21, 0.05);
+        }
+
+        .lt-pos-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 0.74rem;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .lt-pos-badge.zone-promo {
+            background: rgba(34, 197, 94, 0.18);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.35);
+        }
+
+        .lt-pos-badge.zone-releg {
+            background: rgba(239, 68, 68, 0.16);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
         }
 
         .lt-team-cell {
             display: flex;
             align-items: center;
-            gap: 0.55rem;
-            min-width: 140px;
+            gap: 0.6rem;
+            min-width: 145px;
+            text-align: left;
         }
 
         .lt-team-logo {
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             object-fit: contain;
-            border-radius: 3px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.07);
+            padding: 2px;
             flex-shrink: 0;
         }
 
         .lt-team-logo-placeholder {
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             background: rgba(250, 204, 21, 0.1);
-            border-radius: 3px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -569,32 +843,319 @@
         .lt-pts {
             font-weight: 900;
             color: #facc15;
+            font-size: 0.9rem;
         }
 
         .lt-positive {
             color: #86efac;
+            font-weight: 700;
         }
 
         .lt-negative {
             color: #fca5a5;
+            font-weight: 700;
+        }
+
+        /* Form Badges (W/D/L) */
+        .lt-form-wrap {
+            display: inline-flex;
+            gap: 3px;
+            align-items: center;
+        }
+
+        .form-pill {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            font-size: 0.62rem;
+            font-weight: 900;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .form-pill.W { background: #16a34a; }
+        .form-pill.D { background: #64748b; }
+        .form-pill.L { background: #dc2626; }
+
+        .table-legend {
+            display: flex;
+            gap: 1.2rem;
+            padding: 0.65rem 0.9rem;
+            background: rgba(6, 12, 24, 0.45);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.72rem;
+            color: #94a3b8;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        /* ─── CLUBS DIRECTORY GRID ─── */
+        .clubs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+            gap: 0.85rem;
+        }
+
+        .club-card {
+            background: #111c38;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 12px;
+            padding: 1.1rem 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .club-card:hover {
+            border-color: rgba(250, 204, 21, 0.45);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .club-card-logo {
+            width: 56px;
+            height: 56px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 5px;
+        }
+
+        .club-card-name {
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        .club-card-comp {
+            font-size: 0.68rem;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .club-card-stats {
+            display: flex;
+            gap: 0.65rem;
+            font-size: 0.72rem;
+            color: #cbd5e1;
+            margin-top: 0.2rem;
+        }
+
+        /* ─── MATCH CENTRE MODAL ─── */
+        .mc-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(3, 8, 17, 0.82);
+            backdrop-filter: blur(6px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .mc-modal-backdrop.open {
+            display: flex;
+        }
+
+        .mc-modal {
+            background: #0f1c33;
+            border: 1px solid rgba(250, 204, 21, 0.3);
+            border-radius: 16px;
+            width: min(580px, 96vw);
+            max-height: 88vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75);
+            position: relative;
+        }
+
+        .mc-modal-header {
+            background: linear-gradient(135deg, #162447 0%, #0b1329 100%);
+            padding: 1.25rem 1.25rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+            position: relative;
+        }
+
+        .mc-modal-close {
+            position: absolute;
+            top: 0.85rem;
+            right: 0.85rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: #cbd5e1;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: unset;
+        }
+
+        .mc-modal-close:hover {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .mc-modal-comp {
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #facc15;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.75rem;
+        }
+
+        .mc-modal-scoreboard {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .mc-modal-team {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.45rem;
+            cursor: pointer;
+        }
+
+        .mc-modal-team img {
+            width: 58px;
+            height: 58px;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            padding: 5px;
+        }
+
+        .mc-modal-team-name {
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .mc-modal-score-box {
+            text-align: center;
+        }
+
+        .mc-modal-score {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fff;
+            font-family: var(--font-heading);
+            letter-spacing: 0.05em;
+        }
+
+        .mc-modal-body {
+            padding: 1.25rem;
+        }
+
+        .mc-modal-section {
+            margin-bottom: 1.25rem;
+        }
+
+        .mc-modal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .mc-modal-section h4 {
+            font-size: 0.76rem;
+            color: #94a3b8;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.65rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 0.35rem;
+        }
+
+        .prob-bar-wrap {
+            display: flex;
+            height: 10px;
+            border-radius: 99px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 0.45rem 0;
+        }
+
+        .prob-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: #cbd5e1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         /* ─── EMPTY STATE ─── */
         .empty-state {
             text-align: center;
-            padding: 3rem 1rem;
-            color: #475569;
+            padding: 2.5rem 1rem;
+            color: #64748b;
+            background: rgba(17, 28, 56, 0.5);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
         }
 
         .empty-state i {
-            font-size: 2.5rem;
-            margin-bottom: 0.75rem;
+            font-size: 2.2rem;
+            margin-bottom: 0.65rem;
             display: block;
+            color: #facc15;
+            opacity: 0.85;
         }
 
         .empty-state p {
-            font-size: 0.95rem;
-            margin: 0;
+            font-size: 0.92rem;
+            margin: 0 0 1rem;
+            color: #94a3b8;
+        }
+
+        .empty-jump-btn {
+            background: rgba(250, 204, 21, 0.14);
+            border: 1px solid rgba(250, 204, 21, 0.4);
+            color: #facc15;
+            padding: 0.45rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            min-height: unset;
+            transition: all 0.18s ease;
+            margin: 0 0.25rem;
+        }
+
+        .empty-jump-btn:hover {
+            background: #facc15;
+            color: #0b1329;
         }
     </style>
 </head>
@@ -623,6 +1184,11 @@
         <button onclick="acknowledgePrivacy()">Got it</button>
     </div>
 
+    <!-- ═══ INTERACTIVE MATCH CENTRE & CLUB MODAL ═══ -->
+    <div id="matchCentreModal" class="mc-modal-backdrop" role="dialog" aria-modal="true" aria-label="Match Details">
+        <div class="mc-modal" id="matchCentreContent"></div>
+    </div>
+
 
     <!-- ═══════════════════════ NAVBAR ═══════════════════════ -->
     <header class="navbar">
@@ -632,9 +1198,10 @@
                 Massavu<span>Sports</span>
             </a>
 
-            <div class="search-container">
+            <div class="search-container" id="globalSearchBox">
                 <i class="fa-solid fa-magnifying-glass text-muted"></i>
-                <input type="text" placeholder="Search teams, leagues...">
+                <input type="text" id="globalSearchInput" placeholder="Search teams, leagues, matches..." autocomplete="off">
+                <div class="search-dropdown" id="globalSearchDropdown"></div>
             </div>
 
             <nav class="nav-links" id="nav-links" aria-label="Main navigation">
@@ -644,6 +1211,10 @@
                         style="margin-right:5px;font-size:0.85rem;"></i>Results</a>
                 <a href="#standings"><i class="fa-solid fa-table-list"
                         style="margin-right:5px;font-size:0.85rem;"></i>Standings</a>
+                <a href="#clubs"><i class="fa-solid fa-shield-halved"
+                        style="margin-right:5px;font-size:0.85rem;"></i>Clubs</a>
+                <a href="about.html"><i class="fa-solid fa-circle-info"
+                        style="margin-right:5px;font-size:0.85rem;"></i>About</a>
             </nav>
 
             <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
@@ -661,6 +1232,10 @@
             <div class="sidebar-widget">
                 <h3><i class="fa-solid fa-trophy"></i> Competitions</h3>
                 <ul class="sidebar-list">
+                    <li><a href="#" onclick="openCompetition('ALL');return false;">
+                            <i class="fa-solid fa-earth-africa" style="width:20px;text-align:center;color:#facc15;"></i>
+                            All Competitions
+                        </a></li>
                     <li><a href="#" onclick="openCompetition('Uganda Premier League');return false;">
                             <img src="https://media.api-sports.io/football/leagues/332.png" alt="Uganda Premier League">
                             Uganda Premier League
@@ -671,17 +1246,57 @@
                         </a></li>
                 </ul>
             </div>
+
+            <div class="sidebar-widget" id="favTeamsWidget">
+                <h3><i class="fa-solid fa-star"></i> Pinned Clubs</h3>
+                <ul class="sidebar-list" id="favTeamsList">
+                    <li style="font-size:0.78rem;color:#64748b;padding:0.35rem 0.4rem;">Star any club to pin it here for quick access.</li>
+                </ul>
+            </div>
         </aside>
 
         <!-- MAIN CONTENT -->
         <main class="main-content">
+
+            <!-- ═══ SEASON OVERVIEW KPI STRIP ═══ -->
+            <div class="season-kpi-bar" id="seasonKpiBar">
+                <div class="kpi-card">
+                    <div class="kpi-icon"><i class="fa-solid fa-futbol"></i></div>
+                    <div class="kpi-info">
+                        <div class="kpi-val" id="kpiTotalMatches">—</div>
+                        <div class="kpi-lbl">Season Matches</div>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon"><i class="fa-solid fa-fire"></i></div>
+                    <div class="kpi-info">
+                        <div class="kpi-val" id="kpiTotalGoals">—</div>
+                        <div class="kpi-lbl">Goals Scored</div>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon"><i class="fa-solid fa-crown"></i></div>
+                    <div class="kpi-info">
+                        <div class="kpi-val" id="kpiUplLeader">—</div>
+                        <div class="kpi-lbl">UPL Leader</div>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon"><i class="fa-solid fa-medal"></i></div>
+                    <div class="kpi-info">
+                        <div class="kpi-val" id="kpiFblLeader">—</div>
+                        <div class="kpi-lbl">Big League Leader</div>
+                    </div>
+                </div>
+            </div>
 
             <!-- ═══ DATE NAVIGATION STRIP ═══ -->
             <div class="date-nav-wrapper">
                 <button class="date-nav-arrow" id="datePrev" aria-label="Previous day">&#8249;</button>
                 <div class="date-strip" id="dateStrip"></div>
                 <button class="date-nav-arrow" id="dateNext" aria-label="Next day">&#8250;</button>
-                <button class="date-picker-btn" id="datePickerBtn" aria-label="Pick a date">
+                <button class="today-jump-btn" id="todayJumpBtn" title="Jump to Today">Today</button>
+                <button class="date-picker-btn" id="datePickerBtn" aria-label="Pick a date" title="Choose Date">
                     <i class="fa-regular fa-calendar"></i>
                 </button>
                 <input type="date" id="datePicker"
@@ -691,20 +1306,29 @@
             <!-- ═══ COMPETITION FILTER ═══ -->
             <div class="comp-filter-bar" id="compFilterBar">
                 <button class="comp-filter-btn active" data-comp="ALL">All</button>
-                <!-- populated dynamically from localStorage / Supabase competitions -->
             </div>
 
-            <!-- ═══ VIEW TABS (FIXTURES / RESULTS / TABLES) ═══ -->
-            <div class="view-tabs" id="viewTabs">
-                <button class="view-tab active" data-view="fixtures">
-                    <i class="fa-solid fa-calendar-days"></i> Fixtures
-                </button>
-                <button class="view-tab" data-view="results">
-                    <i class="fa-solid fa-flag-checkered"></i> Results
-                </button>
-                <button class="view-tab" data-view="tables">
-                    <i class="fa-solid fa-table-list"></i> Tables
-                </button>
+            <!-- ═══ VIEW TABS & SCOPE TOGGLE ═══ -->
+            <div class="view-controls-row">
+                <div class="view-tabs" id="viewTabs">
+                    <button class="view-tab active" data-view="fixtures">
+                        <i class="fa-solid fa-calendar-days"></i> Fixtures <span class="tab-badge" id="badgeFixtures"></span>
+                    </button>
+                    <button class="view-tab" data-view="results">
+                        <i class="fa-solid fa-flag-checkered"></i> Results <span class="tab-badge" id="badgeResults"></span>
+                    </button>
+                    <button class="view-tab" data-view="tables">
+                        <i class="fa-solid fa-table-list"></i> Standings
+                    </button>
+                    <button class="view-tab" data-view="clubs">
+                        <i class="fa-solid fa-shield-halved"></i> Clubs
+                    </button>
+                </div>
+
+                <div class="scope-toggle" id="dateScopeToggle" title="Switch between Selected Date or All Season">
+                    <button class="scope-btn active" data-scope="date">By Date</button>
+                    <button class="scope-btn" data-scope="all">All Season</button>
+                </div>
             </div>
 
             <!-- ═══ CONTENT PANELS ═══ -->
@@ -716,6 +1340,9 @@
             </div>
             <div id="panel-tables" class="view-panel" style="display:none;">
                 <div id="tables-container"></div>
+            </div>
+            <div id="panel-clubs" class="view-panel" style="display:none;">
+                <div id="clubs-container"></div>
             </div>
 
         </main>
@@ -729,7 +1356,7 @@
                     <img src="assets/images/logo.png" alt="MassavuSports Logo">
                     Massavu<span>Sports</span>
                 </a>
-                <p>The premier platform for Ugandan football scores &amp; event updates.</p>
+                <p>The premier platform for Ugandan football scores, fixtures, club profiles &amp; live standings.</p>
                 <nav class="footer-links" aria-label="Footer navigation">
                     <a href="index.html">Home</a>
                     <a href="about.html">About Us</a>
@@ -746,21 +1373,27 @@
     <nav class="mobile-bottom-nav" aria-label="Mobile bottom navigation">
         <ul>
             <li>
-                <a href="#fixtures" id="bnav-fixtures" class="active" onclick="mobileNavClick(this,'fixtures')">
+                <a href="#fixtures" id="bnav-fixtures" class="active" onclick="mobileNavClick(this,'fixtures');return false;">
                     <i class="fa-solid fa-calendar-days"></i>
                     <span>Fixtures</span>
                 </a>
             </li>
             <li>
-                <a href="#results" id="bnav-results" onclick="mobileNavClick(this,'results')">
+                <a href="#results" id="bnav-results" onclick="mobileNavClick(this,'results');return false;">
                     <i class="fa-solid fa-flag-checkered"></i>
                     <span>Results</span>
                 </a>
             </li>
             <li>
-                <a href="#standings" id="bnav-standings" onclick="mobileNavClick(this,'standings')">
+                <a href="#standings" id="bnav-standings" onclick="mobileNavClick(this,'standings');return false;">
                     <i class="fa-solid fa-table-list"></i>
                     <span>Standings</span>
+                </a>
+            </li>
+            <li>
+                <a href="#clubs" id="bnav-clubs" onclick="mobileNavClick(this,'clubs');return false;">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Clubs</span>
                 </a>
             </li>
         </ul>
@@ -771,15 +1404,14 @@
         function mobileNavClick(el, view) {
             document.querySelectorAll('.mobile-bottom-nav a').forEach(a => a.classList.remove('active'));
             el.classList.add('active');
-            // Also trigger the main nav tab click
             const mainTab = document.querySelector('.nav-links a[href="#' + view + '"]');
             if (mainTab) mainTab.click();
         }
     </script>
     <script src="assets/js/analytics.js"></script>
     <script src="assets/js/notifications.js"></script>
-    <script src="assets/js/supabase.js?v=4.0.0"></script>
-    <script src="assets/js/main.js?v=7.4.0"></script>
+    <script src="assets/js/supabase.js?v=4.1.0"></script>
+    <script src="assets/js/main.js?v=8.0.0"></script>
 </body>
 
 </html>
