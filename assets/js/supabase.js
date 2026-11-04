@@ -339,6 +339,76 @@ window.MASSAVU_SUPABASE = (function () {
             } catch (err) { return false; }
         },
 
+
+        /** Save a contact form message to Supabase cloud (stored in massavu_lineups with msg_ prefix) + localStorage */
+        saveContactMessage: async function (msgObj) {
+            const id = msgObj.id || ('msg_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6));
+            const record = {
+                id: id,
+                name: (msgObj.name || '').trim(),
+                email: (msgObj.email || '').trim(),
+                subject: (msgObj.subject || 'General Inquiry').trim(),
+                message: (msgObj.message || '').trim(),
+                status: msgObj.status || 'Unread',
+                createdAt: msgObj.createdAt || new Date().toISOString()
+            };
+            const list = JSON.parse(localStorage.getItem('massavu_contact_messages') || '[]');
+            const idx = list.findIndex(x => String(x.id) === String(id));
+            if (idx >= 0) list[idx] = record;
+            else list.unshift(record);
+            localStorage.setItem('massavu_contact_messages', JSON.stringify(list));
+
+            return await request('massavu_lineups', { match_id: String(id), lineup: record });
+        },
+
+        /** Load all contact messages from Supabase cloud into localStorage */
+        loadContactMessagesFromCloud: async function () {
+            const { url, key } = getCreds();
+            if (!url || !key || key.length < 20) return [];
+            try {
+                const res = await fetch(`${url}/rest/v1/massavu_lineups?match_id=like.msg_*&select=*`, {
+                    headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+                });
+                if (!res.ok) return JSON.parse(localStorage.getItem('massavu_contact_messages') || '[]');
+                const rows = await res.json();
+                const cloudMsgs = [];
+                if (Array.isArray(rows)) {
+                    rows.forEach(r => {
+                        if (r && r.lineup && typeof r.lineup === 'object') {
+                            cloudMsgs.push({ ...r.lineup, id: r.match_id });
+                        }
+                    });
+                }
+                const localMsgs = JSON.parse(localStorage.getItem('massavu_contact_messages') || '[]');
+                const merged = [...cloudMsgs];
+                localMsgs.forEach(lm => {
+                    if (lm && lm.id && !merged.some(m => String(m.id) === String(lm.id))) {
+                        merged.push(lm);
+                    }
+                });
+                merged.sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+                localStorage.setItem('massavu_contact_messages', JSON.stringify(merged));
+                return merged;
+            } catch (e) {
+                return JSON.parse(localStorage.getItem('massavu_contact_messages') || '[]');
+            }
+        },
+
+        /** Delete a contact message from Supabase cloud and localStorage */
+        deleteContactMessage: async function (msgId) {
+            const list = JSON.parse(localStorage.getItem('massavu_contact_messages') || '[]').filter(m => String(m.id) !== String(msgId));
+            localStorage.setItem('massavu_contact_messages', JSON.stringify(list));
+            const { url, key } = getCreds();
+            if (!url || !key || key.length < 20) return false;
+            try {
+                const res = await fetch(`${url}/rest/v1/massavu_lineups?match_id=eq.${encodeURIComponent(msgId)}`, {
+                    method: 'DELETE',
+                    headers: { 'apikey': key, 'Authorization': `Bearer ${key}` }
+                });
+                return res.ok;
+            } catch (e) { return false; }
+        },
+
         /** Save (upsert) team lineup for a match */
         saveLineup: async function (matchId, lineupData) {
             const lineups = JSON.parse(localStorage.getItem(STORAGE_KEYS.LINEUPS) || '{}');

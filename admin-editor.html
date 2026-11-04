@@ -659,6 +659,8 @@
         <div class="sidebar-menu">
             <a id="nav-standings" onclick="switchTab('standings')">
                 <i class="fa-solid fa-table-list"></i> Standings</a>
+            <a id="nav-messages" onclick="switchTab('messages')">
+                <i class="fa-solid fa-envelope"></i> Messages Inbox <span id="inboxBadge" style="margin-left:auto;background:#facc15;color:#0b1329;font-size:0.68rem;font-weight:900;padding:1px 7px;border-radius:99px;">0</span></a>
         </div>
 
         <div class="sidebar-label">System</div>
@@ -962,6 +964,21 @@
         </div>
 
 
+        
+        <!-- TAB: MESSAGES INBOX -->
+        <div id="tab-messages" class="tab-panel">
+            <div class="editor-card">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-bottom:1rem;">
+                    <div>
+                        <h2 style="margin-bottom:0.25rem;"><i class="fa-solid fa-inbox"></i> Visitor Messages Inbox</h2>
+                        <p style="color:#94a3b8;font-size:0.84rem;margin:0;">Every message submitted on <code>contact.html</code> is saved directly to your Supabase cloud database and appears here in real time.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="refreshMessagesInbox()"><i class="fa-solid fa-rotate"></i> Refresh Inbox</button>
+                </div>
+                <div id="messagesInboxWrapper"></div>
+            </div>
+        </div>
+
         <!-- QUICK SCORE EDITOR MODAL -->
         <div class="qs-backdrop" id="quickScoreModal">
             <div class="qs-modal">
@@ -1016,7 +1033,7 @@
     </div>
 
     <!-- Script Container -->
-    <script src="assets/js/supabase.js?v=5.0.0"></script>
+    <script src="assets/js/supabase.js?v=5.1.0"></script>
     <script>
         const STORAGE_KEYS = {
             MATCHES: 'massavu_match_results',
@@ -1055,6 +1072,7 @@
             if (tabId === 'competitions') renderCompetitionsTable();
             if (tabId === 'teams') renderTeamsTable();
             if (tabId === 'standings') renderStandingsTable();
+            if (tabId === 'messages') renderMessagesInbox();
             if (tabId === 'posts') renderPostsTable();
             updateStatsCounters();
 
@@ -1632,6 +1650,90 @@
             showAdminToast(`Saved: ${updated.home || updated.homeTeam} ${sh} - ${sa} ${updated.away || updated.awayTeam} (${st})`);
         }
 
+        
+        function getStoredContactMessages() {
+            try { return JSON.parse(localStorage.getItem('massavu_contact_messages') || '[]'); } catch (e) { return []; }
+        }
+
+        function updateInboxBadge() {
+            const msgs = getStoredContactMessages();
+            const unread = msgs.filter(m => m.status !== 'Read').length;
+            const badge = document.getElementById('inboxBadge');
+            if (badge) {
+                badge.textContent = unread > 0 ? unread : msgs.length;
+                badge.style.background = unread > 0 ? '#facc15' : 'rgba(255,255,255,0.12)';
+                badge.style.color = unread > 0 ? '#0b1329' : '#cbd5e1';
+            }
+        }
+
+        async function refreshMessagesInbox() {
+            if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.loadContactMessagesFromCloud) {
+                await window.MASSAVU_SUPABASE.loadContactMessagesFromCloud();
+            }
+            renderMessagesInbox();
+            updateInboxBadge();
+            showAdminToast('Inbox synced with Supabase Cloud!');
+        }
+
+        async function toggleMessageRead(id) {
+            const msgs = getStoredContactMessages();
+            const target = msgs.find(m => String(m.id) === String(id));
+            if (!target) return;
+            target.status = target.status === 'Read' ? 'Unread' : 'Read';
+            if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.saveContactMessage) {
+                await window.MASSAVU_SUPABASE.saveContactMessage(target);
+            } else {
+                localStorage.setItem('massavu_contact_messages', JSON.stringify(msgs));
+            }
+            renderMessagesInbox();
+            updateInboxBadge();
+        }
+
+        async function deleteAdminMessage(id) {
+            if (!confirm('Delete this message permanently?')) return;
+            if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.deleteContactMessage) {
+                await window.MASSAVU_SUPABASE.deleteContactMessage(id);
+            }
+            renderMessagesInbox();
+            updateInboxBadge();
+            showAdminToast('Message deleted.');
+        }
+
+        function renderMessagesInbox() {
+            const wrapper = document.getElementById('messagesInboxWrapper');
+            if (!wrapper) return;
+            const msgs = getStoredContactMessages();
+            updateInboxBadge();
+            if (msgs.length === 0) {
+                wrapper.innerHTML = '<div style="text-align:center;padding:2.5rem 1rem;color:#94a3b8;background:rgba(0,0,0,0.2);border-radius:12px;border:1px dashed rgba(255,255,255,0.1);"><i class="fa-regular fa-envelope-open" style="font-size:2rem;color:#facc15;margin-bottom:0.65rem;display:block;"></i>No messages in your inbox yet. When visitors submit the Contact Us form on your site, their messages will appear here automatically.</div>';
+                return;
+            }
+            wrapper.innerHTML = msgs.map(m => {
+                const isUnread = m.status !== 'Read';
+                const dateLabel = m.createdAt ? new Date(m.createdAt).toLocaleString() : 'Just now';
+                const replyHref = `mailto:${encodeURIComponent(m.email || '')}?subject=${encodeURIComponent('Re: ' + (m.subject || 'Your MassavuSports Inquiry'))}`;
+                return `
+                <div style="background:${isUnread ? 'rgba(250,204,21,0.05)' : 'rgba(6,12,24,0.45)'};border:1px solid ${isUnread ? 'rgba(250,204,21,0.3)' : 'rgba(255,255,255,0.07)'};border-radius:12px;padding:1.15rem 1.25rem;margin-bottom:0.85rem;">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.6rem;">
+                        <div>
+                            <span style="background:${isUnread ? '#facc15' : 'rgba(255,255,255,0.1)'};color:${isUnread ? '#0b1329' : '#94a3b8'};font-size:0.68rem;font-weight:900;padding:2px 8px;border-radius:99px;margin-right:0.5rem;text-transform:uppercase;">${isUnread ? 'Unread' : 'Read'}</span>
+                            <strong style="color:#fff;font-size:0.95rem;">${m.subject || 'General Inquiry'}</strong>
+                        </div>
+                        <span style="font-size:0.76rem;color:#64748b;"><i class="fa-regular fa-clock"></i> ${dateLabel}</span>
+                    </div>
+                    <div style="font-size:0.83rem;color:#94a3b8;margin-bottom:0.75rem;">
+                        From: <strong style="color:#e2e8f0;">${m.name || 'Anonymous'}</strong> &lt;<a href="${replyHref}" style="color:#facc15;">${m.email || 'No email'}</a>&gt;
+                    </div>
+                    <div style="background:#080e1e;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:0.85rem 1rem;color:#f1f5f9;font-size:0.9rem;line-height:1.65;white-space:pre-wrap;margin-bottom:0.85rem;">${m.message || ''}</div>
+                    <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                        <a href="${replyHref}" class="btn btn-primary" style="text-decoration:none;font-size:0.76rem;padding:0.4rem 0.8rem;"><i class="fa-solid fa-reply"></i> Reply via Email</a>
+                        <button class="btn btn-secondary" style="font-size:0.76rem;padding:0.4rem 0.8rem;" onclick="toggleMessageRead('${m.id}')"><i class="fa-solid fa-check"></i> Mark as ${isUnread ? 'Read' : 'Unread'}</button>
+                        <button class="btn btn-danger" style="font-size:0.76rem;padding:0.4rem 0.8rem;margin-left:auto;" onclick="deleteAdminMessage('${m.id}')"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
         function renderMatchesTable() {
             const wrapper = document.getElementById('matchesTableWrapper');
             if (!wrapper) return;
@@ -2012,6 +2114,8 @@
                 const text = document.getElementById('cloudStatusText');
                 if (window.MASSAVU_SUPABASE.loadMatchesFromCloud) {
                     const ok = await window.MASSAVU_SUPABASE.loadMatchesFromCloud();
+                    if (window.MASSAVU_SUPABASE.loadContactMessagesFromCloud) await window.MASSAVU_SUPABASE.loadContactMessagesFromCloud();
+                    renderMessagesInbox();
                     if (text) text.textContent = ok ? 'Supabase Connected' : 'Local Standalone';
                     recalculateStandingsEngine();
                     renderMatchesTable();

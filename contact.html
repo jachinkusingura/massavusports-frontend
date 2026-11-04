@@ -182,6 +182,7 @@
                 reserved.</p>
         </div>
     </footer>
+    <script src="assets/js/supabase.js?v=5.1.0"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const btn = document.getElementById('mobile-menu-btn');
@@ -190,10 +191,57 @@
 
             const form = document.getElementById('contactForm');
             if (form) {
-                form.addEventListener('submit', (e) => {
+                form.addEventListener('submit', async (e) => {
                     e.preventDefault();
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    const origText = submitBtn ? submitBtn.textContent : 'Send Message';
+                    if (submitBtn) {
+                        submitBtn.textContent = 'Sending Message...';
+                        submitBtn.disabled = true;
+                    }
+
+                    const name = (document.getElementById('contactName').value || '').trim();
+                    const email = (document.getElementById('contactEmail').value || '').trim();
+                    const subject = (document.getElementById('contactTopic').value || 'General Inquiry').trim();
+                    const message = (document.getElementById('contactMsg').value || '').trim();
+
+                    const msgPayload = {
+                        id: 'msg_' + Date.now(),
+                        name,
+                        email,
+                        subject,
+                        message,
+                        status: 'Unread',
+                        createdAt: new Date().toISOString()
+                    };
+
+                    // 1. Save directly to Supabase Cloud Database (readable in Admin Studio -> Messages Inbox)
+                    try {
+                        if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.saveContactMessage) {
+                            await window.MASSAVU_SUPABASE.saveContactMessage(msgPayload);
+                        }
+                    } catch (err) {
+                        console.warn('Cloud message save fallback:', err);
+                    }
+
+                    // 2. Also forward to email via FormSubmit AJAX (non-blocking)
+                    try {
+                        fetch('https://formsubmit.co/ajax/jachinkusingura60@gmail.com', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                            body: JSON.stringify({ name, email, _subject: '[MassavuSports] ' + subject, message })
+                        }).catch(() => {});
+                    } catch (err) {}
+
                     const okBox = document.getElementById('contactSuccess');
-                    if (okBox) okBox.style.display = 'block';
+                    if (okBox) {
+                        okBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Message sent! Delivered to the MassavuSports Admin Inbox.';
+                        okBox.style.display = 'block';
+                    }
+                    if (submitBtn) {
+                        submitBtn.textContent = origText;
+                        submitBtn.disabled = false;
+                    }
                     form.reset();
                 });
             }
