@@ -918,7 +918,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const scoreh = Number(m.scoreh !== undefined ? m.scoreh : (m.scoreH !== undefined ? m.scoreH : 0));
         const scorea = Number(m.scorea !== undefined ? m.scorea : (m.scoreA !== undefined ? m.scoreA : 0));
         const kickoff = formatKickoff(m.kickoffutc || m.kickoffUtc || '');
-        const dateSub = (state.dateScope === 'all' && m.date) ? `<div class="mc-date-sub">${formatDateLabel(m.date).date}</div>` : '';
+        const dateSub = (m.date && m.date !== 'TBD') ? `<div class="mc-date-sub">${formatDateLabel(m.date).date}</div>` : '';
 
         const homeWinner = isFT && scoreh > scorea ? ' winner' : '';
         const awayWinner = isFT && scorea > scoreh ? ' winner' : '';
@@ -994,12 +994,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // ────────────────────────────────────────────────
-    //  FIXTURES VIEW
+    //  FIXTURES VIEW (Smart fallback: never shows an empty page)
     // ────────────────────────────────────────────────
     function renderFixtures() {
         const container = document.getElementById('fixtures-container');
         if (!container) return;
         const all = getMatches();
+
+        // All upcoming (non-FT) matches for the selected competition
+        const allUpcoming = all.filter(m => {
+            if (m.status === 'FT' || m.status === 'Completed') return false;
+            return state.selectedComp === 'ALL' || (m.competition && m.competition === state.selectedComp);
+        }).sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
+
+        // Matches strictly matching the current date scope
         const filtered = all.filter(m => {
             if (!m.date || m.date === '' || m.date === 'TBD') return state.dateScope === 'all' && m.status !== 'FT' && m.status !== 'Completed';
             if (state.dateScope === 'all' && (m.status === 'FT' || m.status === 'Completed')) return false;
@@ -1009,9 +1017,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const badge = document.getElementById('badgeFixtures');
-        if (badge) badge.textContent = filtered.length;
+        if (badge) badge.textContent = filtered.length > 0 ? filtered.length : allUpcoming.length;
 
         if (filtered.length === 0) {
+            if (allUpcoming.length > 0) {
+                const nearest = findNearestMatchDate(false);
+                const jumpBtn = nearest ? `<button class="scope-btn active" onclick="window.massavuSelectDate('${nearest}')">Jump to ${humanDate(nearest)}</button>` : '';
+                const banner = `<div style="background:rgba(250,204,21,0.08);border:1px solid rgba(250,204,21,0.22);border-radius:10px;padding:0.65rem 0.9rem;margin-bottom:0.75rem;font-size:0.8rem;color:#cbd5e1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;">
+                    <span><i class="fa-regular fa-calendar-days" style="color:#facc15;margin-right:6px;"></i> No fixtures on <strong>${humanDate(state.selectedDate)}</strong> &mdash; showing upcoming scheduled fixtures (${allUpcoming.length}):</span>
+                    <div style="display:flex;gap:0.4rem;">${jumpBtn}<button class="scope-btn" onclick="window.massavuSetAllSeason()">All Season</button></div>
+                </div>`;
+                const byComp = groupByComp(allUpcoming);
+                container.innerHTML = banner + Object.entries(byComp).map(([comp, ms]) => buildGroupHtml(comp, ms)).join('');
+                return;
+            }
             const nearest = findNearestMatchDate(false);
             container.innerHTML = emptyState('fa-solid fa-calendar-day', `No fixtures scheduled on ${humanDate(state.selectedDate)}.`, nearest, false);
             return;
@@ -1022,25 +1041,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ────────────────────────────────────────────────
-    //  RESULTS VIEW
+    //  RESULTS VIEW (Smart fallback: never shows an empty page)
     // ────────────────────────────────────────────────
     function renderResults() {
         const container = document.getElementById('results-container');
         if (!container) return;
         const all = getMatches();
-        const filtered = all.filter(m => {
+
+        // All completed (FT) matches for the selected competition, newest first
+        const allCompleted = all.filter(m => {
             if (!m.date || m.date === '') return false;
             const isFT = (m.status === 'FT' || m.status === 'Completed');
             if (!isFT) return false;
-            const dateMatch = state.dateScope === 'all' || m.date === state.selectedDate;
-            const compMatch = state.selectedComp === 'ALL' || (m.competition && m.competition === state.selectedComp);
-            return dateMatch && compMatch;
+            return state.selectedComp === 'ALL' || (m.competition && m.competition === state.selectedComp);
         }).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
+        const filtered = allCompleted.filter(m => state.dateScope === 'all' || m.date === state.selectedDate);
+
         const badge = document.getElementById('badgeResults');
-        if (badge) badge.textContent = filtered.length;
+        if (badge) badge.textContent = filtered.length > 0 ? filtered.length : allCompleted.length;
 
         if (filtered.length === 0) {
+            if (allCompleted.length > 0) {
+                const nearest = findNearestMatchDate(true);
+                const jumpBtn = nearest ? `<button class="scope-btn active" onclick="window.massavuSelectDate('${nearest}')">Jump to ${humanDate(nearest)}</button>` : '';
+                const banner = `<div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:10px;padding:0.65rem 0.9rem;margin-bottom:0.75rem;font-size:0.8rem;color:#cbd5e1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;">
+                    <span><i class="fa-solid fa-flag-checkered" style="color:#4ade80;margin-right:6px;"></i> No results on <strong>${humanDate(state.selectedDate)}</strong> &mdash; showing all completed season results (${allCompleted.length} FT):</span>
+                    <div style="display:flex;gap:0.4rem;">${jumpBtn}<button class="scope-btn" onclick="window.massavuSetAllSeason()">All Season</button></div>
+                </div>`;
+                const byComp = groupByComp(allCompleted);
+                container.innerHTML = banner + Object.entries(byComp).map(([comp, ms]) => buildGroupHtml(comp, ms)).join('');
+                return;
+            }
             const nearest = findNearestMatchDate(true);
             container.innerHTML = emptyState('fa-solid fa-flag-checkered', `No match results recorded on ${humanDate(state.selectedDate)}.`, nearest, true);
             return;
@@ -1362,8 +1394,12 @@ document.addEventListener('DOMContentLoaded', () => {
         renderSeasonKpis();
         // Keep badges updated
         const all = getMatches();
-        const fixCount = all.filter(m => (state.dateScope === 'date' || (m.status !== 'FT' && m.status !== 'Completed')) && m.date !== '' && (state.dateScope === 'all' || m.date === state.selectedDate) && (state.selectedComp === 'ALL' || m.competition === state.selectedComp)).length;
-        const resCount = all.filter(m => (m.status === 'FT' || m.status === 'Completed') && (state.dateScope === 'all' || m.date === state.selectedDate) && (state.selectedComp === 'ALL' || m.competition === state.selectedComp)).length;
+        const fixByDate = all.filter(m => (state.dateScope === 'date' || (m.status !== 'FT' && m.status !== 'Completed')) && m.date !== '' && (state.dateScope === 'all' || m.date === state.selectedDate) && (state.selectedComp === 'ALL' || m.competition === state.selectedComp)).length;
+        const fixAllUpcoming = all.filter(m => m.status !== 'FT' && m.status !== 'Completed' && (state.selectedComp === 'ALL' || m.competition === state.selectedComp)).length;
+        const fixCount = fixByDate > 0 ? fixByDate : fixAllUpcoming;
+        const resByDate = all.filter(m => (m.status === 'FT' || m.status === 'Completed') && (state.dateScope === 'all' || m.date === state.selectedDate) && (state.selectedComp === 'ALL' || m.competition === state.selectedComp)).length;
+        const resAllFT = all.filter(m => (m.status === 'FT' || m.status === 'Completed') && (state.selectedComp === 'ALL' || m.competition === state.selectedComp)).length;
+        const resCount = resByDate > 0 ? resByDate : resAllFT;
         const bFix = document.getElementById('badgeFixtures');
         const bRes = document.getElementById('badgeResults');
         if (bFix) bFix.textContent = fixCount;

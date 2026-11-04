@@ -659,8 +659,6 @@
         <div class="sidebar-menu">
             <a id="nav-standings" onclick="switchTab('standings')">
                 <i class="fa-solid fa-table-list"></i> Standings</a>
-            <a id="nav-posts" onclick="switchTab('posts')">
-                <i class="fa-solid fa-newspaper"></i> News &amp; Reports</a>
         </div>
 
         <div class="sidebar-label">System</div>
@@ -964,44 +962,6 @@
         </div>
 
 
-        <!-- TAB 6: EDITORIAL NEWS & MATCH REPORTS -->
-        <div id="tab-posts" class="tab-panel">
-            <div class="editor-card">
-                <h2 id="postFormTitle"><i class="fa-solid fa-newspaper"></i> Publish / Edit Matchday Report or News Article</h2>
-                <form id="postForm" onsubmit="savePost(event)">
-                    <input type="hidden" id="postId">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="postTitle">Article Headline</label>
-                            <input type="text" id="postTitle" class="form-control" placeholder="e.g. UPL Matchday 11 Preview: Vipers SC Host BUL FC" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="postCategory">Category</label>
-                            <select id="postCategory" class="form-control">
-                                <option value="Uganda Premier League">Uganda Premier League</option>
-                                <option value="FUFA Big League">FUFA Big League</option>
-                                <option value="Match Reports">Match Reports</option>
-                                <option value="Club Features">Club Features</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="postContent">Full Article Content (Separate paragraphs with a blank line)</label>
-                        <textarea id="postContent" class="form-control" rows="6" placeholder="Write your matchday report or analysis here..." required></textarea>
-                    </div>
-                    <div style="display:flex; gap:0.5rem;">
-                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Publish Article</button>
-                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('postForm').reset();document.getElementById('postId').value='';"><i class="fa-solid fa-xmark"></i> Clear</button>
-                    </div>
-                </form>
-            </div>
-
-            <div class="editor-card">
-                <h2><i class="fa-solid fa-book-open"></i> Published Editorial Articles</h2>
-                <div id="postsTableWrapper"></div>
-            </div>
-        </div>
-
         <!-- QUICK SCORE EDITOR MODAL -->
         <div class="qs-backdrop" id="quickScoreModal">
             <div class="qs-modal">
@@ -1056,7 +1016,6 @@
     </div>
 
     <!-- Script Container -->
-    <script src="assets/js/articles.js?v=1.0.0"></script>
     <script src="assets/js/supabase.js?v=5.0.0"></script>
     <script>
         const STORAGE_KEYS = {

@@ -3,5 +3,7 @@ Allow: /
 Disallow: /admin.html
 Disallow: /admin-editor.html
 Disallow: /admin-login.html
+Disallow: /category.html
+Disallow: /event.html
 
 Sitemap: https://massavusports.com/sitemap.xml

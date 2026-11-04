@@ -39,6 +39,7 @@ function initNotifications() {
 
 // ── SOFT PROMPT TRIGGER ───────────────────────────────────────────────────────
 function shouldShowPrompt() {
+    if (!MASSAVU_ONESIGNAL_APP_ID || MASSAVU_ONESIGNAL_APP_ID === 'YOUR_ONESIGNAL_APP_ID') return false;
     if (typeof Notification === 'undefined') return false;
     if (Notification.permission === 'granted' || Notification.permission === 'denied') return false;
     const dismissed = localStorage.getItem(NOTIF_DISMISS_KEY);

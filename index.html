@@ -21,7 +21,7 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7077047821404742"
         crossorigin="anonymous"></script>
-    <meta name="last-modified" content="2026-11-02">
+    <meta name="last-modified" content="2026-11-04">
     <!-- Push Notification + Analytics + Enhanced UI CSS -->
     <style>
         /* NOTIFICATION BANNER */
@@ -1421,8 +1421,6 @@
                         style="margin-right:5px;font-size:0.85rem;"></i>Standings</a>
                 <a href="#clubs"><i class="fa-solid fa-shield-halved"
                         style="margin-right:5px;font-size:0.85rem;"></i>Clubs</a>
-                <a href="category.html"><i class="fa-solid fa-newspaper"
-                        style="margin-right:5px;font-size:0.85rem;"></i>News</a>
                 <a href="about.html"><i class="fa-solid fa-circle-info"
                         style="margin-right:5px;font-size:0.85rem;"></i>About</a>
             </nav>
@@ -1473,28 +1471,28 @@
                 <div class="kpi-card">
                     <div class="kpi-icon"><i class="fa-solid fa-futbol"></i></div>
                     <div class="kpi-info">
-                        <div class="kpi-val" id="kpiTotalMatches">—</div>
+                        <div class="kpi-val" id="kpiTotalMatches">231</div>
                         <div class="kpi-lbl">Season Matches</div>
                     </div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-icon"><i class="fa-solid fa-fire"></i></div>
                     <div class="kpi-info">
-                        <div class="kpi-val" id="kpiTotalGoals">—</div>
+                        <div class="kpi-val" id="kpiTotalGoals">157</div>
                         <div class="kpi-lbl">Goals Scored</div>
                     </div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-icon"><i class="fa-solid fa-crown"></i></div>
                     <div class="kpi-info">
-                        <div class="kpi-val" id="kpiUplLeader">—</div>
+                        <div class="kpi-val" id="kpiUplLeader">BUL FC</div>
                         <div class="kpi-lbl">UPL Leader</div>
                     </div>
                 </div>
                 <div class="kpi-card">
                     <div class="kpi-icon"><i class="fa-solid fa-medal"></i></div>
                     <div class="kpi-info">
-                        <div class="kpi-val" id="kpiFblLeader">—</div>
+                        <div class="kpi-val" id="kpiFblLeader">Paidha Black Angels</div>
                         <div class="kpi-lbl">Big League Leader</div>
                     </div>
                 </div>
@@ -1543,7 +1541,37 @@
 
             <!-- ═══ CONTENT PANELS ═══ -->
             <div id="panel-fixtures" class="view-panel">
-                <div id="fixtures-container"></div>
+                <div id="fixtures-container">
+                    <div class="match-group-header">
+                        <div class="mgh-left"><span class="mgh-name">Uganda Premier League — Matchday 10 Fixtures &amp; Results</span></div>
+                        <span class="mgh-count">153 season matches</span>
+                    </div>
+                    <div class="match-card">
+                        <div class="mc-team home"><span class="mc-team-name">Kataka FC</span></div>
+                        <div class="mc-centre"><div class="mc-kickoff">16:00</div><span class="mc-status status-scheduled">EAT</span><div class="mc-date-sub">4 Nov</div></div>
+                        <div class="mc-team away"><span class="mc-team-name">URA FC</span></div>
+                    </div>
+                    <div class="match-card">
+                        <div class="mc-team home"><span class="mc-team-name">KCCA FC</span></div>
+                        <div class="mc-centre"><div class="mc-kickoff">16:00</div><span class="mc-status status-scheduled">EAT</span><div class="mc-date-sub">4 Nov</div></div>
+                        <div class="mc-team away"><span class="mc-team-name">Maroons FC</span></div>
+                    </div>
+                    <div class="match-card">
+                        <div class="mc-team home"><span class="mc-team-name">Vipers SC</span></div>
+                        <div class="mc-centre"><div class="mc-kickoff">20:00</div><span class="mc-status status-scheduled">EAT</span><div class="mc-date-sub">5 Nov</div></div>
+                        <div class="mc-team away"><span class="mc-team-name">Lugazi FC</span></div>
+                    </div>
+                    <div class="match-card">
+                        <div class="mc-team home winner"><span class="mc-team-name">BUL FC</span></div>
+                        <div class="mc-centre"><div class="mc-score">2 &ndash; 1</div><span class="mc-status status-ft">FT</span><div class="mc-date-sub">3 Nov</div></div>
+                        <div class="mc-team away"><span class="mc-team-name">SC Villa</span></div>
+                    </div>
+                    <div class="match-card">
+                        <div class="mc-team home winner"><span class="mc-team-name">NEC FC</span></div>
+                        <div class="mc-centre"><div class="mc-score">1 &ndash; 0</div><span class="mc-status status-ft">FT</span><div class="mc-date-sub">3 Nov</div></div>
+                        <div class="mc-team away"><span class="mc-team-name">UPDF FC</span></div>
+                    </div>
+                </div>
             </div>
             <div id="panel-results" class="view-panel" style="display:none;">
                 <div id="results-container"></div>
@@ -1555,58 +1583,12 @@
                 <div id="clubs-container"></div>
             </div>
 
-            <!-- ═══ FEATURED EDITORIAL NEWS & MATCHDAY ANALYSIS ═══ -->
-            <section class="home-editorial-section" aria-label="Featured Ugandan Football News and Analysis">
-                <div class="home-sec-header">
-                    <h2 class="home-sec-title"><i class="fa-solid fa-newspaper"></i> Latest Matchday Reports &amp; Tactical Analysis</h2>
-                    <a href="category.html" class="home-sec-link">All News &amp; Reports &rarr;</a>
-                </div>
-
-                <div class="home-editorial-grid" id="homeEditorialGrid">
-                    <article class="home-art-card">
-                        <img class="home-art-img" src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80" alt="UPL Matchday 10 Roundup" loading="lazy">
-                        <div class="home-art-body">
-                            <span class="home-art-tag">Uganda Premier League</span>
-                            <h3 class="home-art-title"><a href="event.html?id=501">UPL Matchday 10 Roundup: BUL FC &amp; NEC FC Tighten Grip at the Summit</a></h3>
-                            <p class="home-art-desc">NEC FC edged UPDF FC 1-0 while BUL FC defeated SC Villa 2-1 in Jinja to keep the 2026/27 Uganda Premier League title race on a knife-edge.</p>
-                            <div class="home-art-foot">
-                                <span><i class="fa-regular fa-calendar"></i> Nov 4, 2026</span>
-                                <a href="event.html?id=501" style="color:#facc15;font-weight:700;text-decoration:none;">Read &rarr;</a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="home-art-card">
-                        <img class="home-art-img" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80" alt="FUFA Big League Promotion Race" loading="lazy">
-                        <div class="home-art-body">
-                            <span class="home-art-tag">FUFA Big League</span>
-                            <h3 class="home-art-title"><a href="event.html?id=502">FUFA Big League Promotion Watch: Amus College, Paidha Black Angels &amp; Kiyinda Boys Lead</a></h3>
-                            <p class="home-art-desc">Six rounds into the 2026/27 FUFA Big League campaign, Paidha Black Angels, Kiyinda Boys, Amus College, and Catda battle for UPL promotion.</p>
-                            <div class="home-art-foot">
-                                <span><i class="fa-regular fa-calendar"></i> Nov 3, 2026</span>
-                                <a href="event.html?id=502" style="color:#facc15;font-weight:700;text-decoration:none;">Read &rarr;</a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="home-art-card">
-                        <img class="home-art-img" src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=800&q=80" alt="Lugazi FC and Entebbe UPPC Tactical Feature" loading="lazy">
-                        <div class="home-art-body">
-                            <span class="home-art-tag">Club Features</span>
-                            <h3 class="home-art-title"><a href="event.html?id=503">Club Spotlight: How Lugazi FC &amp; Entebbe UPPC Adapted to the Uganda Premier League</a></h3>
-                            <p class="home-art-desc">Tactical organization and fearless away displays have enabled Entebbe UPPC and Lugazi FC to go toe-to-toe with Uganda's traditional giants.</p>
-                            <div class="home-art-foot">
-                                <span><i class="fa-regular fa-calendar"></i> Nov 2, 2026</span>
-                                <a href="event.html?id=503" style="color:#facc15;font-weight:700;text-decoration:none;">Read &rarr;</a>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-
+            <!-- ═══ COMPETITION OVERVIEW & STANDINGS KEY ═══ -->
+            <section class="home-editorial-section" aria-label="Uganda Premier League and FUFA Big League Season Overview">
                 <div class="league-guide-box">
-                    <h3><i class="fa-solid fa-circle-info"></i> About MassavuSports — Ugandan Football Match Centre &amp; Editorial Hub</h3>
-                    <p><strong>MassavuSports</strong> provides comprehensive, verified coverage of Ugandan domestic club football across the <strong>Uganda Premier League (UPL)</strong> and the <strong>FUFA Big League</strong>. Every fixture, kickoff time (East Africa Time, UTC+3), full-time scoreline, and league table movement across all 17 first-round matchdays is tracked and verified by our editorial team.</p>
-                    <p>Use the interactive <strong>Date Strip</strong> above to browse daily fixtures or switch to <strong>All Season</strong> to inspect the complete 2026/27 calendar. Click any match card to open the <strong>Interactive Match Centre</strong> featuring head-to-head season meetings and form momentum probabilities, or select any club in the <strong>Standings</strong> or <strong>Clubs</strong> tabs to view its recent results and upcoming schedule.</p>
+                    <h3><i class="fa-solid fa-trophy"></i> 2026/27 Uganda Premier League &amp; FUFA Big League — Official Match Centre</h3>
+                    <p><strong>MassavuSports</strong> tracks all <strong>231 first-round fixtures, live scores, matchday results, and standings</strong> across Uganda's top two domestic football divisions: the <strong>Uganda Premier League (18 clubs, 17 matchdays)</strong> and the <strong>FUFA Big League (13 clubs)</strong>. All kickoff times are displayed in <strong>East Africa Time (EAT, UTC+3)</strong>.</p>
+                    <p>Select any date on the calendar strip or switch to <strong>All Season</strong> to view the full fixture list and historical results. Click any fixture or result card to inspect head-to-head season meetings and last-5 form ratings (<code>W</code> / <code>D</code> / <code>L</code>), or open the <strong>Standings</strong> and <strong>Clubs</strong> tabs to view live points, goal difference (GD), CAF qualification spots, and promotion/relegation zones.</p>
                 </div>
             </section>
 
@@ -1624,7 +1606,6 @@
                 <p>The premier platform for Ugandan football scores, fixtures, club profiles &amp; live standings.</p>
                 <nav class="footer-links" aria-label="Footer navigation">
                     <a href="index.html">Match Centre</a>
-                    <a href="category.html">News &amp; Analysis</a>
                     <a href="about.html">About Us</a>
                     <a href="contact.html">Contact</a>
                     <a href="privacy.html">Privacy Policy</a>
@@ -1677,9 +1658,8 @@
     </script>
     <script src="assets/js/analytics.js"></script>
     <script src="assets/js/notifications.js"></script>
-    <script src="assets/js/articles.js?v=1.0.0"></script>
     <script src="assets/js/supabase.js?v=4.2.0"></script>
-    <script src="assets/js/main.js?v=8.1.0"></script>
+    <script src="assets/js/main.js?v=8.3.0"></script>
 </body>
 
 </html>
