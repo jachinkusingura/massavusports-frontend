@@ -536,6 +536,100 @@
             color: #fde047;
             border: 1px solid rgba(250, 204, 21, 0.2);
         }
+
+        /* ── QUICK SCORE MODAL & TOAST NOTIFICATION ── */
+        .qs-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 9, 20, 0.82);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .qs-backdrop.open { display: flex; }
+        .qs-modal {
+            background: #111c38;
+            border: 1px solid rgba(250, 204, 21, 0.35);
+            border-radius: 16px;
+            width: min(440px, 95vw);
+            padding: 1.5rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+        }
+        .qs-teams-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 0.75rem;
+            align-items: center;
+            margin: 1.15rem 0;
+            text-align: center;
+        }
+        .qs-team-box {
+            background: rgba(6, 12, 24, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 0.85rem 0.6rem;
+        }
+        .qs-team-name {
+            font-weight: 800;
+            color: #fff;
+            font-size: 0.86rem;
+            margin-bottom: 0.6rem;
+            min-height: 2.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qs-stepper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+        }
+        .qs-step-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: #1e293b;
+            color: #fff;
+            font-weight: 900;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .qs-step-btn:hover { background: #facc15; color: #0b1329; border-color: #facc15; }
+        .qs-score-input {
+            width: 52px;
+            height: 42px;
+            text-align: center;
+            font-size: 1.35rem;
+            font-weight: 900;
+            background: #080e1e;
+            border: 1px solid rgba(250, 204, 21, 0.4);
+            border-radius: 8px;
+            color: #facc15;
+        }
+        .admin-toast {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: #0f1c33;
+            border: 1px solid #22c55e;
+            color: #fff;
+            padding: 0.85rem 1.2rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: none;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+            z-index: 10000;
+        }
+        .admin-toast.show { display: inline-flex; }
+
     </style>
 </head>
 
@@ -565,6 +659,8 @@
         <div class="sidebar-menu">
             <a id="nav-standings" onclick="switchTab('standings')">
                 <i class="fa-solid fa-table-list"></i> Standings</a>
+            <a id="nav-posts" onclick="switchTab('posts')">
+                <i class="fa-solid fa-newspaper"></i> News &amp; Reports</a>
         </div>
 
         <div class="sidebar-label">System</div>
@@ -614,7 +710,7 @@
                 <div class="stat-icon"><i class="fa-solid fa-tower-broadcast" style="color:#ef4444;"></i></div>
                 <div>
                     <div class="stat-val" id="statLive">0</div>
-                    <div class="stat-lbl">Live Matches</div>
+                    <div class="stat-lbl">Completed (FT)</div>
                 </div>
             </div>
             <div class="stat-card">
@@ -867,10 +963,100 @@
             </div>
         </div>
 
+
+        <!-- TAB 6: EDITORIAL NEWS & MATCH REPORTS -->
+        <div id="tab-posts" class="tab-panel">
+            <div class="editor-card">
+                <h2 id="postFormTitle"><i class="fa-solid fa-newspaper"></i> Publish / Edit Matchday Report or News Article</h2>
+                <form id="postForm" onsubmit="savePost(event)">
+                    <input type="hidden" id="postId">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="postTitle">Article Headline</label>
+                            <input type="text" id="postTitle" class="form-control" placeholder="e.g. UPL Matchday 11 Preview: Vipers SC Host BUL FC" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="postCategory">Category</label>
+                            <select id="postCategory" class="form-control">
+                                <option value="Uganda Premier League">Uganda Premier League</option>
+                                <option value="FUFA Big League">FUFA Big League</option>
+                                <option value="Match Reports">Match Reports</option>
+                                <option value="Club Features">Club Features</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="postContent">Full Article Content (Separate paragraphs with a blank line)</label>
+                        <textarea id="postContent" class="form-control" rows="6" placeholder="Write your matchday report or analysis here..." required></textarea>
+                    </div>
+                    <div style="display:flex; gap:0.5rem;">
+                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Publish Article</button>
+                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('postForm').reset();document.getElementById('postId').value='';"><i class="fa-solid fa-xmark"></i> Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="editor-card">
+                <h2><i class="fa-solid fa-book-open"></i> Published Editorial Articles</h2>
+                <div id="postsTableWrapper"></div>
+            </div>
+        </div>
+
+        <!-- QUICK SCORE EDITOR MODAL -->
+        <div class="qs-backdrop" id="quickScoreModal">
+            <div class="qs-modal">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+                    <h3 style="margin:0;font-size:1rem;color:#facc15;"><i class="fa-solid fa-futbol"></i> Quick Score &amp; Result Update</h3>
+                    <button type="button" class="btn btn-secondary" style="padding:0.25rem 0.55rem;" onclick="closeQuickScoreModal()"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div id="qsCompDate" style="font-size:0.76rem;color:#94a3b8;margin-bottom:0.5rem;"></div>
+                <input type="hidden" id="qsMatchId">
+                <div class="qs-teams-row">
+                    <div class="qs-team-box">
+                        <div class="qs-team-name" id="qsHomeName">Home</div>
+                        <div class="qs-stepper">
+                            <button type="button" class="qs-step-btn" onclick="stepQuickScore('qsScoreH', -1)">-</button>
+                            <input type="number" id="qsScoreH" class="qs-score-input" value="0" min="0">
+                            <button type="button" class="qs-step-btn" onclick="stepQuickScore('qsScoreH', 1)">+</button>
+                        </div>
+                    </div>
+                    <div style="font-weight:900;color:#64748b;font-size:0.9rem;">VS</div>
+                    <div class="qs-team-box">
+                        <div class="qs-team-name" id="qsAwayName">Away</div>
+                        <div class="qs-stepper">
+                            <button type="button" class="qs-step-btn" onclick="stepQuickScore('qsScoreA', -1)">-</button>
+                            <input type="number" id="qsScoreA" class="qs-score-input" value="0" min="0">
+                            <button type="button" class="qs-step-btn" onclick="stepQuickScore('qsScoreA', 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom:1rem;">
+                    <label for="qsStatus">Match Status</label>
+                    <select id="qsStatus" class="form-control">
+                        <option value="FT">Full Time (FT) — Count in Standings</option>
+                        <option value="Live">Live (In Progress)</option>
+                        <option value="Scheduled">Scheduled (Upcoming)</option>
+                        <option value="Postponed">Postponed</option>
+                    </select>
+                </div>
+                <div style="display:flex;gap:0.6rem;">
+                    <button type="button" class="btn btn-primary" style="flex:1;justify-content:center;" onclick="confirmQuickScoreSave()"><i class="fa-solid fa-check"></i> Save Result &amp; Sync</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeQuickScoreModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FLOATING TOAST -->
+        <div class="admin-toast" id="adminToast">
+            <i class="fa-solid fa-circle-check" style="color:#4ade80;"></i>
+            <span id="adminToastMsg">Saved successfully!</span>
+        </div>
+
     </div><!-- end admin-main -->
     </div>
 
     <!-- Script Container -->
+    <script src="assets/js/articles.js?v=1.0.0"></script>
     <script src="assets/js/supabase.js?v=5.0.0"></script>
     <script>
         const STORAGE_KEYS = {
@@ -910,6 +1096,7 @@
             if (tabId === 'competitions') renderCompetitionsTable();
             if (tabId === 'teams') renderTeamsTable();
             if (tabId === 'standings') renderStandingsTable();
+            if (tabId === 'posts') renderPostsTable();
             updateStatsCounters();
 
             // Close mobile sidebar on tab switch
@@ -1200,7 +1387,10 @@
             } catch (e) { return DEFAULT_COMPS; }
         }
         function getStoredTeams() { try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.TEAMS) || '[]'); } catch (e) { return []; } }
-        function getStoredPosts() { try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.POSTS) || '[]'); } catch (e) { return []; } }
+        function getStoredPosts() {
+            if (window.MASSAVU_ARTICLES && window.MASSAVU_ARTICLES.getAllArticles) return window.MASSAVU_ARTICLES.getAllArticles();
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.POSTS) || '[]'); } catch (e) { return []; }
+        }
 
         function populateCompSelects() {
             const comps = getStoredCompetitions();
@@ -1231,7 +1421,7 @@
             const matches = getStoredMatches();
             const comps = getStoredCompetitions();
             const teams = getStoredTeams();
-            const live = matches.filter(m => m.status === 'Live');
+            const live = matches.filter(m => m.status === 'FT' || m.status === 'Completed');
             if (document.getElementById('statMatches')) document.getElementById('statMatches').textContent = matches.length;
             if (document.getElementById('statLive')) document.getElementById('statLive').textContent = live.length;
             if (document.getElementById('statComps')) document.getElementById('statComps').textContent = comps.length;
@@ -1384,25 +1574,103 @@
             renderMatchesTable();
         }
 
+        function showAdminToast(msg) {
+            const t = document.getElementById('adminToast');
+            const m = document.getElementById('adminToastMsg');
+            if (!t || !m) return;
+            m.textContent = msg;
+            t.classList.add('show');
+            clearTimeout(window._adminToastTimer);
+            window._adminToastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+        }
+
+        function seedDefaultTeamsToAdmin() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEYS.TEAMS);
+                let existing = raw ? JSON.parse(raw) : [];
+                const defaultTeams = [
+                    { name: 'Vipers SC', code: 'VIP', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9067.png' },
+                    { name: 'KCCA FC', code: 'KCC', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/4250.png' },
+                    { name: 'SC Villa', code: 'VIL', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9072.png' },
+                    { name: 'Express FC', code: 'EXP', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9069.png' },
+                    { name: 'URA FC', code: 'URA', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9068.png' },
+                    { name: 'BUL FC', code: 'BUL', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9070.png' },
+                    { name: 'Kitara FC', code: 'KIT', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9079.png' },
+                    { name: 'NEC FC', code: 'NEC', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9080.png' },
+                    { name: 'Maroons FC', code: 'MAR', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9075.png' },
+                    { name: 'Mbarara City FC', code: 'MBA', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9071.png' },
+                    { name: 'UPDF FC', code: 'UPD', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9073.png' },
+                    { name: 'Police FC', code: 'POL', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9076.png' },
+                    { name: 'Lugazi FC', code: 'LUG', competition: 'Uganda Premier League', logo: 'assets/images/lugazi_logo.png' },
+                    { name: 'Blacks Power FC', code: 'BLK', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9082.png' },
+                    { name: 'Kigezi Homeboyz', code: 'KIG', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9083.png' },
+                    { name: 'Ntugasaze FC', code: 'NTU', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9093.png' },
+                    { name: 'Kataka FC', code: 'KAT', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9079.png' },
+                    { name: 'Entebbe UPPC', code: 'ENT', competition: 'Uganda Premier League', logo: 'https://media.api-sports.io/football/teams/9094.png' },
+                    { name: 'Onduparaka', code: 'OND', competition: 'FUFA Big League', logo: 'assets/images/onduparaka_logo.png' },
+                    { name: 'Paidha Black Angels', code: 'PBA', competition: 'FUFA Big League', logo: 'https://upload.wikimedia.org/wikipedia/en/b/b4/Paidha_black_angels_logo.webp' },
+                    { name: 'Amus College', code: 'AMU', competition: 'FUFA Big League', logo: 'https://media.api-sports.io/football/teams/9081.png' },
+                    { name: 'Kiyinda Boys', code: 'KIY', competition: 'FUFA Big League', logo: 'https://media.api-sports.io/football/teams/9078.png' },
+                    { name: 'Catda', code: 'CAT', competition: 'FUFA Big League', logo: 'https://media.api-sports.io/football/teams/9086.png' },
+                    { name: 'Calvary', code: 'CAL', competition: 'FUFA Big League', logo: 'https://media.api-sports.io/football/teams/9091.png' },
+                    { name: 'Volcanoes', code: 'VOL', competition: 'FUFA Big League', logo: 'https://media.api-sports.io/football/teams/9087.png' },
+                    { name: 'Pakwach Young Stars', code: 'PKW', competition: 'FUFA Big League', logo: 'https://media.api-sports.io/football/teams/9085.png' },
+                    { name: 'Young Elephant Academy', code: 'YEA', competition: 'FUFA Big League', logo: 'https://media.api-sports.io/football/teams/9084.png' },
+                    { name: 'Rwenzori Lions', code: 'RWL', competition: 'FUFA Big League', logo: 'https://media.api-sports.io/football/teams/9089.png' },
+                    { name: 'Iganga United', code: 'IGU', competition: 'FUFA Big League', logo: 'https://media.api-sports.io/football/teams/9088.png' },
+                    { name: 'Buwambo', code: 'BUW', competition: 'FUFA Big League', logo: 'https://media.api-sports.io/football/teams/9090.png' },
+                    { name: 'Kaaro Karungi', code: 'KAA', competition: 'FUFA Big League', logo: 'https://media.api-sports.io/football/teams/9077.png' }
+                ];
+                defaultTeams.forEach(dt => {
+                    const idx = existing.findIndex(t => t.name && t.name.toLowerCase() === dt.name.toLowerCase());
+                    if (idx >= 0) existing[idx].logo = dt.logo;
+                    else existing.push(dt);
+                });
+                localStorage.setItem(STORAGE_KEYS.TEAMS, JSON.stringify(existing));
+            } catch (e) {}
+        }
+
+        function stepQuickScore(inputId, delta) {
+            const el = document.getElementById(inputId);
+            if (!el) return;
+            const next = Math.max(0, (parseInt(el.value, 10) || 0) + delta);
+            el.value = next;
+        }
+
+        function closeQuickScoreModal() {
+            const modal = document.getElementById('quickScoreModal');
+            if (modal) modal.classList.remove('open');
+        }
+
         function quickUpdateResult(id) {
             const m = getStoredMatches().find(x => String(x.id) === String(id));
             if (!m) return;
-            const curH = m.scoreH ?? m.scoreh ?? 0;
-            const curA = m.scoreA ?? m.scorea ?? 0;
-            const scoreH = prompt(`Enter Home Score for ${m.home || m.homeTeam}:`, curH);
-            if (scoreH === null) return;
-            const scoreA = prompt(`Enter Away Score for ${m.away || m.awayTeam}:`, curA);
-            if (scoreA === null) return;
-            const sh = parseInt(scoreH, 10) || 0;
-            const sa = parseInt(scoreA, 10) || 0;
-            const updated = { ...m, scoreh: sh, scorea: sa, scoreH: sh, scoreA: sa, status: 'FT' };
-            let matches = getStoredMatches();
-            matches = matches.map(x => String(x.id) === String(id) ? updated : x);
+            document.getElementById('qsMatchId').value = m.id;
+            document.getElementById('qsCompDate').textContent = `${m.competition || 'Uganda Premier League'} • ${m.date || 'Date TBD'}`;
+            document.getElementById('qsHomeName').textContent = m.home || m.homeTeam || 'Home';
+            document.getElementById('qsAwayName').textContent = m.away || m.awayTeam || 'Away';
+            document.getElementById('qsScoreH').value = m.scoreH ?? m.scoreh ?? 0;
+            document.getElementById('qsScoreA').value = m.scoreA ?? m.scorea ?? 0;
+            document.getElementById('qsStatus').value = (m.status === 'Scheduled' || !m.status) ? 'FT' : m.status;
+            document.getElementById('quickScoreModal').classList.add('open');
+        }
+
+        function confirmQuickScoreSave() {
+            const id = document.getElementById('qsMatchId').value;
+            const m = getStoredMatches().find(x => String(x.id) === String(id));
+            if (!m) return;
+            const sh = Math.max(0, parseInt(document.getElementById('qsScoreH').value, 10) || 0);
+            const sa = Math.max(0, parseInt(document.getElementById('qsScoreA').value, 10) || 0);
+            const st = document.getElementById('qsStatus').value || 'FT';
+            const updated = { ...m, scoreh: sh, scorea: sa, scoreH: sh, scoreA: sa, status: st };
+            let matches = getStoredMatches().map(x => String(x.id) === String(id) ? updated : x);
             localStorage.setItem(STORAGE_KEYS.MATCHES, JSON.stringify(matches));
             if (window.MASSAVU_SUPABASE && window.MASSAVU_SUPABASE.saveMatch) window.MASSAVU_SUPABASE.saveMatch(updated);
+            closeQuickScoreModal();
             recalculateStandingsEngine();
             renderMatchesTable();
             updateStatsCounters();
+            showAdminToast(`Saved: ${updated.home || updated.homeTeam} ${sh} - ${sa} ${updated.away || updated.awayTeam} (${st})`);
         }
 
         function renderMatchesTable() {
@@ -1772,6 +2040,7 @@
         });
 
         seedDefaultUplMatchesToStorage();
+        seedDefaultTeamsToAdmin();
         populateCompSelects();
         populateTeamSelects();
         recalculateStandingsEngine();

@@ -4,16 +4,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Category News | MassavuSports</title>
+    <meta name="description"
+        content="Read the latest Uganda Premier League (UPL) and FUFA Big League match reports, tactical analysis, club features, and football news on MassavuSports.">
+    <title>News &amp; Match Reports | MassavuSports</title>
     <link rel="canonical" href="https://massavusports.com/category.html">
-    <!-- Performance: pre-establish connections -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="dns-prefetch" href="https://massavusports-backend-api.onrender.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7077047821404742"
+        crossorigin="anonymous"></script>
+    <style>
+        .news-hero {
+            background: linear-gradient(135deg, #0b1329 0%, #111c38 60%, #0f2140 100%);
+            border-bottom: 1px solid rgba(250, 204, 21, 0.16);
+            padding: 3rem 1.5rem 2.25rem;
+            text-align: center;
+        }
+
+        .news-hero h1 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 0.65rem;
+        }
+
+        .news-hero h1 span {
+            color: #facc15;
+        }
+
+        .news-hero p {
+            max-width: 640px;
+            margin: 0 auto;
+            color: #94a3b8;
+            font-size: 1rem;
+            line-height: 1.65;
+        }
+
+        .cat-filter-bar {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 1.75rem 0 2rem;
+        }
+
+        .cat-chip {
+            background: #111c38;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            padding: 0.5rem 1rem;
+            border-radius: 99px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cat-chip:hover,
+        .cat-chip.active {
+            background: #facc15;
+            color: #0b1329;
+            border-color: #facc15;
+        }
+
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .article-card {
+            background: #111c38;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .article-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(250, 204, 21, 0.4);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+        }
+
+        .article-thumb {
+            height: 195px;
+            width: 100%;
+            object-fit: cover;
+            background: #0d172a;
+        }
+
+        .article-body {
+            padding: 1.35rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .article-tag {
+            display: inline-block;
+            align-self: flex-start;
+            background: rgba(250, 204, 21, 0.12);
+            color: #facc15;
+            border: 1px solid rgba(250, 204, 21, 0.28);
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 3px 9px;
+            border-radius: 99px;
+            margin-bottom: 0.7rem;
+            letter-spacing: 0.04em;
+        }
+
+        .article-title {
+            font-size: 1.12rem;
+            font-weight: 800;
+            line-height: 1.38;
+            margin-bottom: 0.65rem;
+            color: #fff;
+        }
+
+        .article-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .article-title a:hover {
+            color: #facc15;
+        }
+
+        .article-excerpt {
+            color: #94a3b8;
+            font-size: 0.88rem;
+            line-height: 1.65;
+            margin-bottom: 1.1rem;
+            flex: 1;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 0.76rem;
+            color: #64748b;
+        }
+
+        .read-more-link {
+            color: #facc15;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        @media (max-width: 640px) {
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -21,89 +175,173 @@
     <header class="navbar">
         <div class="container">
             <a href="index.html" class="logo">
-                <img src="assets/images/logo.png" alt="Logo"
+                <img src="assets/images/logo.png" alt="MassavuSports Logo"
                     style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;">
                 Massavu<span>Sports</span>
             </a>
-            <nav class="nav-links" id="nav-links">
-                <a href="index.html">Home</a>
+            <nav class="nav-links" id="nav-links" aria-label="Main navigation">
+                <a href="index.html">Match Centre</a>
+                <a href="category.html" class="active">News &amp; Analysis</a>
                 <a href="about.html">About</a>
                 <a href="contact.html">Contact</a>
             </nav>
-            <button class="mobile-menu-btn" id="mobile-menu-btn">
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
     </header>
 
     <main>
-        <section
-            style="background: var(--bg-hover); padding: 4rem 0; text-align: center; border-bottom: 1px solid var(--border-color);">
+        <section class="news-hero">
             <div class="container">
-                <h1 style="font-size: 3rem; margin-bottom: 1rem;"><span class="text-accent">Uganda Premier League</span>
-                </h1>
-                <p class="text-muted" style="max-width: 600px; margin: 0 auto;">All the latest updates, match analysis,
-                    and highlights from the nation's top flight football.</p>
+                <h1>Ugandan Football <span>News &amp; Match Reports</span></h1>
+                <p>Original editorial coverage, matchday roundups, tactical breakdowns, and club features across the
+                    Uganda Premier League and FUFA Big League.</p>
             </div>
         </section>
 
-        <section class="container" style="padding: 4rem 1.5rem;">
-            <div class="news-grid">
-                <!-- Data will be populated dynamically from database here -->
+        <section class="container" style="padding: 1.5rem 1.25rem 4rem; max-width: 1140px;">
+            <div class="cat-filter-bar" id="catFilterBar">
+                <button class="cat-chip active" data-cat="ALL">All Coverage</button>
+                <button class="cat-chip" data-cat="Uganda Premier League">Uganda Premier League</button>
+                <button class="cat-chip" data-cat="FUFA Big League">FUFA Big League</button>
+                <button class="cat-chip" data-cat="Match Reports">Match Reports</button>
+                <button class="cat-chip" data-cat="Club Features">Club Features</button>
+            </div>
 
-                <!-- Template Structure Example:
-                <article class="news-card">
-                    <div class="card-img" style="height: 200px; background: var(--bg-dark); border-radius: var(--radius-md) var(--radius-md) 0 0; display:flex; align-items:center; justify-content:center; color: var(--text-muted);"><i class="fa-solid fa-image fa-2x"></i></div>
-                    <div class="card-content">
-                        <span class="tag">Category</span>
-                        <h3><a href="article.html">Post Title</a></h3>
-                        <p class="text-muted" style="margin-top: 0.5rem; font-size: 0.9rem;">Description here...</p>
-                        <div class="card-footer">
-                            <span class="date"><i class="fa-regular fa-clock"></i> Date</span>
+            <!-- Pre-rendered semantic articles for instant SEO & AdSense indexing, enhanced dynamically -->
+            <div class="articles-grid" id="articlesGrid">
+                <article class="article-card">
+                    <img class="article-thumb"
+                        src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1000&q=80"
+                        alt="UPL Matchday 10 Roundup">
+                    <div class="article-body">
+                        <span class="article-tag">Uganda Premier League</span>
+                        <h2 class="article-title"><a href="event.html?id=501">UPL Matchday 10 Roundup: BUL FC &amp; NEC
+                                FC Tighten Grip at the Summit as Title Race Heats Up</a></h2>
+                        <p class="article-excerpt">NEC FC edged UPDF FC 1-0 while BUL FC defeated SC Villa 2-1 in Jinja
+                            to keep the 2026/27 Uganda Premier League title race on a knife-edge heading into midweek
+                            clashes.</p>
+                        <div class="article-meta">
+                            <span><i class="fa-regular fa-calendar"></i> 2026-11-04 &bull; 5 min read</span>
+                            <a class="read-more-link" href="event.html?id=501">Read Report &rarr;</a>
                         </div>
                     </div>
                 </article>
-                -->
-            </div>
 
-            <div style="text-align: center; margin-top: 3rem;">
-                <button class="btn"
-                    style="background: rgba(255,255,255,0.05); color: var(--text-primary); border: 1px solid var(--border-color);">Load
-                    More Articles <i class="fa-solid fa-chevron-down" style="margin-left: 0.5rem;"></i></button>
+                <article class="article-card">
+                    <img class="article-thumb"
+                        src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1000&q=80"
+                        alt="FUFA Big League Promotion Watch">
+                    <div class="article-body">
+                        <span class="article-tag">FUFA Big League</span>
+                        <h2 class="article-title"><a href="event.html?id=502">FUFA Big League Promotion Watch: Amus
+                                College, Paidha Black Angels &amp; Kiyinda Boys Set Early Pace</a></h2>
+                        <p class="article-excerpt">With six matchdays completed in the 2026/27 FUFA Big League, Paidha
+                            Black Angels, Kiyinda Boys, Amus College, and Catda are locked in a fierce battle for
+                            promotion.</p>
+                        <div class="article-meta">
+                            <span><i class="fa-regular fa-calendar"></i> 2026-11-03 &bull; 6 min read</span>
+                            <a class="read-more-link" href="event.html?id=502">Read Report &rarr;</a>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <img class="article-thumb"
+                        src="https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1000&q=80"
+                        alt="Lugazi FC and Entebbe UPPC Tactical Feature">
+                    <div class="article-body">
+                        <span class="article-tag">Club Features</span>
+                        <h2 class="article-title"><a href="event.html?id=503">Club Spotlight: How Lugazi FC &amp;
+                                Entebbe UPPC Adapted to Life in the Uganda Premier League</a></h2>
+                        <p class="article-excerpt">Tactical discipline and fearless away performances have enabled
+                            Entebbe UPPC and Lugazi FC to compete toe-to-toe with Uganda's traditional giants.</p>
+                        <div class="article-meta">
+                            <span><i class="fa-regular fa-calendar"></i> 2026-11-02 &bull; 5 min read</span>
+                            <a class="read-more-link" href="event.html?id=503">Read Report &rarr;</a>
+                        </div>
+                    </div>
+                </article>
             </div>
         </section>
     </main>
 
     <footer
-        style="background-color: var(--bg-card); padding: 3rem 0; margin-top: 4rem; border-top: 1px solid var(--border-color);">
+        style="background-color: var(--bg-card, #0b1329); padding: 2.5rem 0; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.08);">
         <div class="container" style="text-align: center;">
-            <div class="logo" style="justify-content: center; margin-bottom: 1rem;">
-                <img src="assets/images/logo.png" alt="Logo"
-                    style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;">
+            <div class="logo" style="justify-content: center; margin-bottom: 0.75rem;">
+                <img src="assets/images/logo.png" alt="MassavuSports Logo"
+                    style="height: 32px; width: auto; object-fit: contain; margin-right: 8px;">
                 Massavu<span>Sports</span>
             </div>
-            <p class="text-muted">Your premier source for Ugandan local football news, updates, and highlights.</p>
-            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-                <a href="index.html" class="text-secondary">Home</a>
+            <p class="text-muted" style="font-size:0.88rem;">Uganda's dedicated football platform for verified fixtures,
+                live scores, standings, and original matchday journalism.</p>
+            <div style="margin-top: 1.25rem; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; font-size:0.86rem;">
+                <a href="index.html" class="text-secondary">Match Centre</a>
+                <a href="category.html" class="text-secondary">News &amp; Analysis</a>
                 <a href="about.html" class="text-secondary">About Us</a>
                 <a href="contact.html" class="text-secondary">Contact Us</a>
-                <a href="disclaimer.html" class="text-secondary">Disclaimer</a>
                 <a href="privacy.html" class="text-secondary">Privacy Policy</a>
+                <a href="disclaimer.html" class="text-secondary">Disclaimer</a>
             </div>
-            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem;">
-                <a href="#" style="color: var(--text-muted); font-size: 1.5rem;"><i
-                        class="fa-brands fa-facebook"></i></a>
-                <a href="#" style="color: var(--text-muted); font-size: 1.5rem;"><i
-                        class="fa-brands fa-twitter"></i></a>
-                <a href="#" style="color: var(--text-muted); font-size: 1.5rem;"><i
-                        class="fa-brands fa-instagram"></i></a>
-            </div>
-            <p class="text-muted" style="margin-top: 2rem; font-size: 0.9rem;">&copy; 2026 MassavuSports. All rights
+            <p class="text-muted" style="margin-top: 1.5rem; font-size: 0.8rem;">&copy; 2026 MassavuSports. All rights
                 reserved.</p>
         </div>
     </footer>
 
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/articles.js?v=1.0.0"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const navLinks = document.getElementById('nav-links');
+            if (mobileBtn && navLinks) {
+                mobileBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+            }
+
+            const grid = document.getElementById('articlesGrid');
+            const chips = document.querySelectorAll('.cat-chip');
+            let currentCat = 'ALL';
+
+            function renderArticles() {
+                if (!window.MASSAVU_ARTICLES || !grid) return;
+                const all = window.MASSAVU_ARTICLES.getAllArticles();
+                const list = currentCat === 'ALL'
+                    ? all
+                    : all.filter(a => (a.category || '').toLowerCase() === currentCat.toLowerCase());
+
+                grid.innerHTML = list.map(a => {
+                    const img = a.image || 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1000&q=80';
+                    const summary = a.summary || (Array.isArray(a.content) ? a.content[0] : String(a.content || '').substring(0, 180) + '...');
+                    const dateStr = a.date || (a.createdAt ? a.createdAt.slice(0, 10) : '2026-11-04');
+                    return `
+                    <article class="article-card">
+                        <img class="article-thumb" src="${img}" alt="${a.title}" loading="lazy">
+                        <div class="article-body">
+                            <span class="article-tag">${a.category || 'Uganda Premier League'}</span>
+                            <h2 class="article-title"><a href="event.html?id=${a.id}">${a.title}</a></h2>
+                            <p class="article-excerpt">${summary}</p>
+                            <div class="article-meta">
+                                <span><i class="fa-regular fa-calendar"></i> ${dateStr} &bull; ${a.readTime || '5 min read'}</span>
+                                <a class="read-more-link" href="event.html?id=${a.id}">Read Report &rarr;</a>
+                            </div>
+                        </div>
+                    </article>`;
+                }).join('');
+            }
+
+            chips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    chips.forEach(c => c.classList.remove('active'));
+                    chip.classList.add('active');
+                    currentCat = chip.dataset.cat || 'ALL';
+                    renderArticles();
+                });
+            });
+
+            renderArticles();
+        });
+    </script>
 </body>
 
 </html>

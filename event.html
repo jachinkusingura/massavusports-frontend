@@ -4,252 +4,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MassavuSports | Article</title>
+    <meta name="description"
+        content="In-depth Ugandan football matchday reports, tactical breakdowns, and club analysis covering the Uganda Premier League and FUFA Big League on MassavuSports.">
+    <title>Matchday Editorial &amp; Analysis | MassavuSports</title>
     <link rel="canonical" href="https://massavusports.com/event.html">
-    <!-- Performance: pre-establish connections -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="dns-prefetch" href="https://massavusports-backend-api.onrender.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7077047821404742"
+        crossorigin="anonymous"></script>
     <style>
-        .event-header {
-            margin-bottom: 2rem;
+        .article-wrap {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 2.25rem 1.25rem 4rem;
         }
 
-        .event-meta {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            color: var(--text-muted);
-            margin: 1rem 0;
-            font-size: 0.95rem;
-            font-weight: 500;
-        }
-
-        .event-meta span {
+        .breadcrumb {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-        }
-
-        .event-hero {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: var(--radius-lg);
-            margin-bottom: 2rem;
-            border: 1px solid var(--border-color);
-            background: #e5e7eb;
-            transition: opacity 0.4s ease;
-        }
-
-        .event-content {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 3rem;
-            background: var(--bg-card);
-            padding: 3rem;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-        }
-
-        .event-content p {
-            margin-bottom: 1.5rem;
-        }
-
-        .tags-container {
-            margin-bottom: 2rem;
-            display: flex;
-            gap: 0.5rem;
+            font-size: 0.82rem;
+            color: #94a3b8;
+            margin-bottom: 1.25rem;
             flex-wrap: wrap;
-            align-items: center;
         }
 
-        .comments-section {
-            background: var(--bg-card);
-            padding: 3rem;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            margin-bottom: 4rem;
+        .breadcrumb a {
+            color: #facc15;
+            text-decoration: none;
+            font-weight: 700;
         }
 
-        .comment-form textarea {
-            width: 100%;
-            padding: 1rem;
-            background: var(--bg-main);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
+        .article-badge {
+            display: inline-block;
+            background: rgba(250, 204, 21, 0.14);
+            color: #facc15;
+            border: 1px solid rgba(250, 204, 21, 0.3);
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 0.74rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.85rem;
+        }
+
+        .article-h1 {
+            font-size: clamp(1.55rem, 3.6vw, 2.35rem);
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.25;
             margin-bottom: 1rem;
-            font-family: inherit;
-            resize: vertical;
         }
 
-        .comment-form input {
-            padding: 0.8rem;
-            background: var(--bg-main);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            flex: 1;
-        }
-
-        .comment {
-            padding: 1.5rem 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .comment:last-child {
-            border-bottom: none;
-        }
-
-        .comment-author {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+        .article-meta-bar {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .comment-date {
-            color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            color: #94a3b8;
             font-size: 0.85rem;
-            font-weight: normal;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* ── Skeleton shimmer ── */
-        @keyframes shimmer {
-            0% {
-                background-position: -600px 0;
-            }
-
-            100% {
-                background-position: 600px 0;
-            }
+        .article-meta-bar span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
         }
 
-        .skeleton {
-            background: linear-gradient(90deg, #1e2535 25%, #2a3248 50%, #1e2535 75%);
-            background-size: 600px 100%;
-            animation: shimmer 1.4s infinite linear;
-            border-radius: 6px;
-            display: block;
+        .article-meta-bar i {
+            color: #facc15;
         }
 
-        .sk-title {
-            height: 42px;
-            width: 85%;
-            margin-bottom: 1.2rem;
-        }
-
-        .sk-title-sm {
-            height: 32px;
-            width: 55%;
-            margin-bottom: 0.8rem;
-        }
-
-        .sk-meta {
-            height: 18px;
-            width: 60%;
-            margin-bottom: 0.6rem;
-        }
-
-        .sk-hero {
+        .article-hero-img {
             width: 100%;
-            height: 400px;
-            border-radius: var(--radius-lg);
+            max-height: 420px;
+            object-fit: cover;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1.75rem;
+        }
+
+        .article-content-card {
+            background: #111c38;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 2rem 1.75rem;
+            color: #e2e8f0;
+            font-size: 1.03rem;
+            line-height: 1.85;
             margin-bottom: 2rem;
         }
 
-        .sk-line {
-            height: 16px;
-            width: 100%;
-            margin-bottom: 0.9rem;
+        .article-content-card p {
+            margin-bottom: 1.35rem;
         }
 
-        .sk-line-sm {
-            height: 16px;
-            width: 70%;
-            margin-bottom: 0.9rem;
+        .article-content-card p:last-child {
+            margin-bottom: 0;
         }
 
-        .sk-tag {
-            height: 26px;
-            width: 80px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-right: 0.4rem;
+        .tags-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2.25rem;
         }
 
-        /* ── Circular progress overlay ── */
-        #loadingOverlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(7, 10, 18, 0.55);
-            backdrop-filter: blur(3px);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
+        .tag-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            padding: 4px 11px;
+            border-radius: 99px;
+            font-size: 0.76rem;
+            font-weight: 600;
+        }
+
+        .related-section {
+            background: #111c38;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .related-section h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #facc15;
+            margin-bottom: 1rem;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
             gap: 1rem;
         }
 
-        #loadingOverlay.visible {
-            display: flex;
-        }
-
-        .circular-spinner {
-            width: 60px;
-            height: 60px;
-        }
-
-        .circular-spinner circle {
-            fill: none;
-            stroke-width: 5;
-            stroke-linecap: round;
-            transform-origin: 50% 50%;
-        }
-
-        .spinner-track {
-            stroke: rgba(255, 255, 255, 0.12);
-        }
-
-        .spinner-arc {
-            stroke: #e53e3e;
-            stroke-dasharray: 110;
-            stroke-dashoffset: 110;
-            animation: spin-arc 1s ease-in-out infinite;
-        }
-
-        @keyframes spin-arc {
-            0% {
-                stroke-dashoffset: 110;
-                transform: rotate(0deg);
-            }
-
-            50% {
-                stroke-dashoffset: 30;
-                transform: rotate(180deg);
-            }
-
-            100% {
-                stroke-dashoffset: 110;
-                transform: rotate(360deg);
-            }
-        }
-
-        .loading-label {
+        .related-item {
+            background: rgba(6, 12, 24, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 10px;
+            padding: 0.9rem;
+            text-decoration: none;
             color: #fff;
-            font-size: 0.9rem;
-            letter-spacing: 0.06em;
-            opacity: 0.85;
+            transition: border-color 0.2s ease;
+        }
+
+        .related-item:hover {
+            border-color: #facc15;
+        }
+
+        .related-item h4 {
+            font-size: 0.88rem;
+            line-height: 1.4;
+            margin: 0.35rem 0 0;
+            color: #f8fafc;
+        }
+
+        @media (max-width: 640px) {
+            .article-content-card {
+                padding: 1.35rem 1.1rem;
+                font-size: 0.96rem;
+            }
         }
     </style>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">`n
 </head>
 
 <body>
@@ -257,99 +183,170 @@
     <header class="navbar">
         <div class="container">
             <a href="index.html" class="logo">
-                <img src="assets/images/logo.png" alt="Logo"
+                <img src="assets/images/logo.png" alt="MassavuSports Logo"
                     style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;">
                 Massavu<span>Sports</span>
             </a>
-            <div class="search-container">
-                <i class="fa-solid fa-magnifying-glass text-muted"></i>
-                <input type="text" placeholder="Search events...">
-            </div>
-            <nav class="nav-links" id="nav-links">
-                <a href="index.html">Home</a>
+            <nav class="nav-links" id="nav-links" aria-label="Main navigation">
+                <a href="index.html">Match Centre</a>
+                <a href="category.html" class="active">News &amp; Analysis</a>
                 <a href="about.html">About</a>
                 <a href="contact.html">Contact</a>
             </nav>
-            <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu"><i
+                    class="fa-solid fa-bars"></i></button>
         </div>
     </header>
 
-    <!-- Circular progress overlay (shown only while network request is in-flight) -->
-    <div id="loadingOverlay">
-        <svg class="circular-spinner" viewBox="0 0 60 60">
-            <circle class="spinner-track" cx="30" cy="30" r="24" />
-            <circle class="spinner-arc" cx="30" cy="30" r="24" />
-        </svg>
-        <span class="loading-label">Loading post&hellip;</span>
-    </div>
+    <main class="article-wrap">
+        <div class="breadcrumb">
+            <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+            <span>/</span>
+            <a href="category.html">News &amp; Match Reports</a>
+            <span>/</span>
+            <span id="bcCurrent">Editorial Report</span>
+        </div>
 
-    <main class="container" style="padding: 3rem 1.5rem; max-width: 1000px;">
-        <article id="eventDetail">
-            <div class="event-header">
-                <!-- Skeleton title -->
-                <span class="skeleton sk-title" id="skTitle"></span>
-                <span class="skeleton sk-title-sm" id="skTitleSm"></span>
-                <div class="event-meta" id="skMeta" style="gap: 1rem;">
-                    <span class="skeleton sk-meta" style="width:180px;"></span>
-                    <span class="skeleton sk-meta" style="width:140px;"></span>
-                    <span class="skeleton sk-meta" style="width:100px;"></span>
-                </div>
-                <!-- Real title / meta (hidden until data arrives) -->
-                <h1 id="eventTitle" style="font-size: 3rem; margin: 1rem 0; line-height: 1.2; display:none;"></h1>
-                <div class="event-meta" id="eventMetaReal" style="display:none;">
-                    <span id="eventDate"><i class="fa-regular fa-calendar text-accent"></i> Date</span>
-                    <span id="eventLocation"><i class="fa-solid fa-location-dot text-accent"></i> Location</span>
-                    <span id="eventViews"><i class="fa-solid fa-eye text-muted"></i> 0 Views</span>
-                </div>
+        <article id="articleContainer">
+            <span class="article-badge" id="artCategory">Uganda Premier League</span>
+            <h1 class="article-h1" id="artTitle">UPL Matchday 10 Roundup: BUL FC &amp; NEC FC Tighten Grip at the Summit
+                as Title Race Heats Up</h1>
+
+            <div class="article-meta-bar">
+                <span><i class="fa-regular fa-user"></i> <strong id="artAuthor">MassavuSports Editorial
+                        Desk</strong></span>
+                <span><i class="fa-regular fa-calendar"></i> <span id="artDate">2026-11-04</span></span>
+                <span><i class="fa-regular fa-clock"></i> <span id="artReadTime">5 min read</span></span>
             </div>
 
-            <!-- Skeleton hero -->
-            <span class="skeleton sk-hero" id="skHero"></span>
-            <img id="eventHero" src="" alt="Event Banner" class="event-hero" style="display:none; opacity:0;">
+            <img class="article-hero-img" id="artHero"
+                src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1000&q=80"
+                alt="Ugandan Football Matchday Action">
 
-            <div class="event-content">
-                <div class="tags-container" id="eventTags">
-                    <!-- skeleton tags -->
-                    <span class="skeleton sk-tag"></span>
-                    <span class="skeleton sk-tag"></span>
-                    <span class="skeleton sk-tag" style="width:60px;"></span>
-                </div>
+            <div class="article-content-card" id="artBody">
+                <p>The 2026/27 Uganda Premier League campaign has reached a thrilling inflection point at Matchday 10,
+                    with perennial contenders and ambitious challengers trading blows at the top of the table. Tuesday's
+                    opening fixtures delivered high drama across three venues as BUL FC, NEC FC, and Police FC all took
+                    to the pitch in crucial first-round encounters.</p>
+                <p>In Jinja, BUL FC delivered a statement performance by edging record champions SC Villa 2-1 in front
+                    of a packed crowd. Abbey Kikomeko's side combined disciplined midfield pressing with clinical
+                    transition play, neutralizing Villa's wide attackers early in the first half. Despite a late surge
+                    from the Jogoos—who had entered the fixture in buoyant scoring form following victories over Mbarara
+                    City and Lugazi FC—BUL held firm in stoppage time to claim all three points and cement their status
+                    as genuine title favourites.</p>
+                <p>Simultaneously in Lugogo, NEC FC continued their remarkable consistency with a hard-fought 1-0
+                    victory over UPDF FC. Having already dismantled Ntugasaze FC 5-1 on Matchday 8 and edging Blacks
+                    Power 1-0 away on Matchday 9, NEC showcased the defensive resilience that has defined their
+                    campaign. Their backline has now kept five clean sheets in ten outings, making them one of the
+                    toughest sides to break down in Ugandan top-flight football.</p>
+                <p>At the Kavumba Recreation Ground, Police FC and Kitara FC shared the spoils in an entertaining 1-1
+                    draw. Both sides created clear-cut opportunities in the second period, with Kitara looking to build
+                    on their recent 1-0 victory over UPDF FC while Police sought back-to-back wins after overcoming
+                    Kataka FC 2-1 last Friday.</p>
+                <p>Attention now shifts to Wednesday and Thursday's blockbuster fixtures: KCCA FC host Maroons FC in a
+                    classic Kampala-area showdown, Kataka FC welcome URA FC in Mbale, and defending heavyweights Vipers
+                    SC prepare to host a resilient Lugazi FC side under the floodlights at St. Mary's Stadium, Kitende.
+                </p>
+            </div>
 
-                <div id="eventBody" style="margin-top: 2rem;">
-                    <!-- skeleton lines -->
-                    <span class="skeleton sk-line"></span>
-                    <span class="skeleton sk-line"></span>
-                    <span class="skeleton sk-line"></span>
-                    <span class="skeleton sk-line-sm"></span>
-                    <span class="skeleton sk-line" style="margin-top:1.4rem;"></span>
-                    <span class="skeleton sk-line"></span>
-                    <span class="skeleton sk-line-sm"></span>
-                </div>
+            <div class="tags-row" id="artTags">
+                <span class="tag-pill">#UgandaPremierLeague</span>
+                <span class="tag-pill">#BULFC</span>
+                <span class="tag-pill">#NECFC</span>
+                <span class="tag-pill">#SCVilla</span>
+                <span class="tag-pill">#Matchday10</span>
             </div>
         </article>
+
+        <section class="related-section">
+            <h3><i class="fa-solid fa-newspaper"></i> More Ugandan Football Coverage</h3>
+            <div class="related-grid" id="relatedGrid">
+                <a class="related-item" href="event.html?id=502">
+                    <span style="font-size:0.7rem;color:#facc15;font-weight:800;">FUFA BIG LEAGUE</span>
+                    <h4>FUFA Big League Promotion Watch: Amus College, Paidha Black Angels &amp; Kiyinda Boys Set Early
+                        Pace</h4>
+                </a>
+                <a class="related-item" href="event.html?id=503">
+                    <span style="font-size:0.7rem;color:#facc15;font-weight:800;">CLUB FEATURES</span>
+                    <h4>Club Spotlight: How Lugazi FC &amp; Entebbe UPPC Adapted to Life in the Uganda Premier League
+                    </h4>
+                </a>
+                <a class="related-item" href="event.html?id=504">
+                    <span style="font-size:0.7rem;color:#facc15;font-weight:800;">MATCH REPORTS</span>
+                    <h4>SC Villa's Attacking Evolution: Inside the Jogoos' High-Scoring 2026/27 Campaign</h4>
+                </a>
+            </div>
+        </section>
     </main>
 
-    <footer style="background-color: var(--bg-dark); color: white; padding: 3rem 0;">
+    <footer
+        style="background-color: var(--bg-card, #0b1329); padding: 2.5rem 0; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08);">
         <div class="container" style="text-align: center;">
-            <div class="logo" style="justify-content: center; margin-bottom: 1rem; color: white;">
-                <img src="assets/images/logo.png" alt="Logo"
-                    style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;">
+            <div class="logo" style="justify-content: center; margin-bottom: 0.75rem;">
+                <img src="assets/images/logo.png" alt="MassavuSports Logo"
+                    style="height: 32px; width: auto; object-fit: contain; margin-right: 8px;">
                 Massavu<span>Sports</span>
             </div>
-            <p style="color: #9ca3af;">The premier platform for Ugandan local football events.</p>
-            <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-                <a href="index.html" style="color: #d1d5db;">Home</a>
-                <a href="about.html" style="color: #d1d5db;">About Us</a>
-                <a href="contact.html" style="color: #d1d5db;">Contact Us</a>
-                <a href="disclaimer.html" style="color: #d1d5db;">Disclaimer</a>
-                <a href="privacy.html" style="color: #d1d5db;">Privacy Policy</a>
+            <p class="text-muted" style="font-size:0.88rem;">Uganda's dedicated football platform for verified fixtures,
+                live scores, standings, and original matchday journalism.</p>
+            <div style="margin-top: 1.25rem; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; font-size:0.86rem;">
+                <a href="index.html" class="text-secondary">Match Centre</a>
+                <a href="category.html" class="text-secondary">News &amp; Analysis</a>
+                <a href="about.html" class="text-secondary">About Us</a>
+                <a href="contact.html" class="text-secondary">Contact Us</a>
+                <a href="privacy.html" class="text-secondary">Privacy Policy</a>
+                <a href="disclaimer.html" class="text-secondary">Disclaimer</a>
             </div>
-            <p style="color: #6b7280; margin-top: 2rem; font-size: 0.9rem;">&copy; 2026 MassavuSports. All rights
+            <p class="text-muted" style="margin-top: 1.5rem; font-size: 0.8rem;">&copy; 2026 MassavuSports. All rights
                 reserved.</p>
         </div>
     </footer>
 
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/articles.js?v=1.0.0"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const navLinks = document.getElementById('nav-links');
+            if (mobileBtn && navLinks) {
+                mobileBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+            }
+
+            if (!window.MASSAVU_ARTICLES) return;
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const art = window.MASSAVU_ARTICLES.getArticleById(id);
+            if (!art) return;
+
+            document.title = `${art.title} | MassavuSports`;
+            document.getElementById('bcCurrent').textContent = art.category || 'Editorial Report';
+            document.getElementById('artCategory').textContent = art.category || 'Uganda Premier League';
+            document.getElementById('artTitle').textContent = art.title;
+            document.getElementById('artAuthor').textContent = art.author || 'MassavuSports Editorial Desk';
+            document.getElementById('artDate').textContent = art.date || (art.createdAt ? art.createdAt.slice(0, 10) : '2026-11-04');
+            document.getElementById('artReadTime').textContent = art.readTime || '5 min read';
+            if (art.image) document.getElementById('artHero').src = art.image;
+
+            const paragraphs = Array.isArray(art.content)
+                ? art.content
+                : String(art.content || '').split(/\n\n+/).filter(Boolean);
+            document.getElementById('artBody').innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
+
+            if (Array.isArray(art.tags) && art.tags.length) {
+                document.getElementById('artTags').innerHTML = art.tags.map(t => `<span class="tag-pill">#${t}</span>`).join('');
+            }
+
+            const others = window.MASSAVU_ARTICLES.getAllArticles().filter(a => String(a.id) !== String(art.id)).slice(0, 3);
+            const relGrid = document.getElementById('relatedGrid');
+            if (relGrid && others.length) {
+                relGrid.innerHTML = others.map(o => `
+                    <a class="related-item" href="event.html?id=${o.id}">
+                        <span style="font-size:0.7rem;color:#facc15;font-weight:800;text-transform:uppercase;">${o.category || 'UPL'}</span>
+                        <h4>${o.title}</h4>
+                    </a>
+                `).join('');
+            }
+        });
+    </script>
 </body>
 
 </html>
