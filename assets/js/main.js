@@ -301,6 +301,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 { id: 2077, competition: 'FUFA Big League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'Volcanoes', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 2078, competition: 'FUFA Big League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'Young Elephant Academy', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' }
             ];
+            const FULL_SYNC_KEY = 'massavu_v82_full_sync';
+            const isFirstSync = localStorage.getItem(FULL_SYNC_KEY) !== 'true';
             // Drop stale seeded matches (ids no longer in the verified list)
             const seededIds = new Set(uplMatches.map(m => String(m.id)));
             existing = existing.filter(m => {
@@ -311,9 +313,21 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             uplMatches.forEach(um => {
                 const idx = existing.findIndex(m => String(m.id) === String(um.id));
-                if (idx >= 0) existing[idx] = { ...existing[idx], ...um };
-                else existing.push(um);
+                if (idx >= 0) {
+                    if (isFirstSync) {
+                        existing[idx] = { ...existing[idx], ...um };
+                    } else {
+                        // Preserve any admin or cloud edits to status/scores, only fill missing date/competition metadata
+                        if (!existing[idx].date && um.date) existing[idx].date = um.date;
+                        if (!existing[idx].competition && um.competition) existing[idx].competition = um.competition;
+                        if (!existing[idx].home && um.home) existing[idx].home = um.home;
+                        if (!existing[idx].away && um.away) existing[idx].away = um.away;
+                    }
+                } else {
+                    existing.push(um);
+                }
             });
+            localStorage.setItem(FULL_SYNC_KEY, 'true');
             localStorage.setItem(STORAGE_KEY_MATCHES, JSON.stringify(existing));
         } catch (e) { console.warn('[main] seedDefault error:', e.message); }
     }

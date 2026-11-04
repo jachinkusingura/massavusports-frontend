@@ -94,8 +94,8 @@ window.MASSAVU_SUPABASE = (function () {
         const awayName = m.away || m.awayTeam || '';
         const scoreHVal = (m.scoreh !== undefined && m.scoreh !== null) ? Number(m.scoreh) : ((m.scoreH !== undefined && m.scoreH !== null) ? Number(m.scoreH) : (Number(m.homeScore) || 0));
         const scoreAVal = (m.scorea !== undefined && m.scorea !== null) ? Number(m.scorea) : ((m.scoreA !== undefined && m.scoreA !== null) ? Number(m.scoreA) : (Number(m.awayScore) || 0));
-        const kickoff = m.kickoffutc || m.kickoffUtc || new Date().toISOString();
-        const dateVal = m.date || (kickoff ? kickoff.split('T')[0] : '');
+        const kickoff = (m.kickoffutc !== undefined && m.kickoffutc !== null) ? m.kickoffutc : ((m.kickoffUtc !== undefined && m.kickoffUtc !== null) ? m.kickoffUtc : '');
+        const dateVal = m.date || (kickoff && kickoff.includes('T') ? kickoff.split('T')[0] : (kickoff && kickoff.length >= 10 ? kickoff.substring(0, 10) : ''));
 
         return {
             id: String(m.id),
@@ -123,7 +123,7 @@ window.MASSAVU_SUPABASE = (function () {
         const awayName = matchObj.away || matchObj.awayTeam || '';
         const scoreHVal = (matchObj.scoreH !== undefined && matchObj.scoreH !== null) ? Number(matchObj.scoreH) : ((matchObj.scoreh !== undefined && matchObj.scoreh !== null) ? Number(matchObj.scoreh) : (Number(matchObj.homeScore) || 0));
         const scoreAVal = (matchObj.scoreA !== undefined && matchObj.scoreA !== null) ? Number(matchObj.scoreA) : ((matchObj.scorea !== undefined && matchObj.scorea !== null) ? Number(matchObj.scorea) : (Number(matchObj.awayScore) || 0));
-        const kickoff = matchObj.kickoffUtc || matchObj.kickoffutc || new Date().toISOString();
+        const kickoff = (matchObj.kickoffUtc || matchObj.kickoffutc) || (matchObj.date && matchObj.date !== 'TBD' ? `${matchObj.date}T13:00:00Z` : '');
 
         return {
             id: String(matchObj.id),
@@ -365,8 +365,15 @@ window.MASSAVU_SUPABASE = (function () {
                 }
                 const data = await res.json();
                 if (Array.isArray(data)) {
-                    const normalizedList = data.map(normalizeMatch);
                     const local = JSON.parse(localStorage.getItem(STORAGE_KEYS.MATCHES) || '[]');
+                    const localById = {};
+                    local.forEach(lm => { if (lm && lm.id !== undefined) localById[String(lm.id)] = lm; });
+                    const normalizedList = data.map(row => {
+                        const norm = normalizeMatch(row);
+                        const loc = localById[String(norm.id)];
+                        if (!norm.date && loc && loc.date) norm.date = loc.date;
+                        return norm;
+                    });
                     const merged = [...normalizedList];
                     local.forEach(lm => {
                         if (!merged.find(m => String(m.id) === String(lm.id))) merged.push(normalizeMatch(lm));
