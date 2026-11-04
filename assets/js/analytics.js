@@ -97,11 +97,7 @@ async function trackVisit() {
 }
 
 // ── PRIVACY NOTICE ────────────────────────────────────────────────────────────
-function showPrivacyBanner() {
-    if (localStorage.getItem(PRIVACY_ACK_KEY)) return;
-    const banner = document.getElementById('massavu-privacy-banner');
-    if (banner) banner.style.display = 'flex';
-}
+function showPrivacyBanner() { return; }
 
 window.acknowledgePrivacy = function () {
     localStorage.setItem(PRIVACY_ACK_KEY, '1');
