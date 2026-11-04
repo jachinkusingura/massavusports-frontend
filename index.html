@@ -1157,6 +1157,99 @@
             background: #facc15;
             color: #0b1329;
         }
+
+        /* ═══════════════════════════════════════════════════════════════
+           MOBILE / TABLET RESPONSIVE FIXES
+           (kept last in this file so they win over the base rules above)
+           ═══════════════════════════════════════════════════════════════ */
+        html, body { overflow-x: hidden; max-width: 100%; }
+        .layout-wrapper { align-items: stretch; }
+        .main-content { min-width: 0; width: 100%; }
+        .date-strip { min-width: 0; }
+        .view-panel, #fixtures-container, #results-container, #tables-container, #clubs-container { min-width: 0; max-width: 100%; }
+
+        @media (max-width: 900px) {
+            .layout-wrapper { flex-direction: column; gap: 0.5rem; }
+            /* league filter chips below already cover competitions on small screens */
+            .sidebar-left { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            /* Navbar: logo + menu on row 1, full-width search on row 2 */
+            .navbar .container { height: auto; flex-wrap: wrap; row-gap: 0.45rem; padding-top: 0.45rem; padding-bottom: 0.5rem; }
+            .logo { order: 1; }
+            .mobile-menu-btn { order: 2; margin-left: auto; }
+            .search-container { display: flex; order: 3; width: 100%; flex: 1 1 100%; }
+            .nav-links { top: 100%; max-height: 70vh; overflow-y: auto; }
+
+            .season-kpi-bar { gap: 0.5rem; }
+            .kpi-card { padding: 0.55rem 0.65rem; gap: 0.5rem; }
+            .kpi-icon { width: 30px; height: 30px; font-size: 0.8rem; }
+            .kpi-val { font-size: 0.9rem; }
+
+            .date-pill { min-width: 54px; padding: 0.38rem 0.55rem; }
+            .today-jump-btn { padding: 0 0.5rem; }
+
+            .view-tab { padding: 0.55rem 0.75rem; font-size: 0.78rem; }
+            .view-controls-row { gap: 0.35rem; }
+
+            /* Banners must not sit on top of the bottom navigation */
+            #massavu-privacy-banner { bottom: calc(var(--bottom-nav-h, 60px) + env(safe-area-inset-bottom, 0px)); padding: 0.65rem 0.9rem; }
+
+            /* Modals become bottom sheets */
+            .mc-modal-backdrop { padding: 0; align-items: flex-end; }
+            .mc-modal { width: 100%; max-height: 90vh; max-height: 90dvh; border-radius: 16px 16px 0 0; padding-bottom: env(safe-area-inset-bottom, 0px); }
+            .mc-modal-header { padding: 1rem 0.85rem 0.85rem; }
+            .mc-modal-body { padding: 0.9rem 0.75rem; }
+            .mc-modal-scoreboard { gap: 0.5rem; }
+            .mc-modal-team img { width: 46px; height: 46px; }
+            .mc-modal-team-name { font-size: 0.82rem; text-align: center; }
+            .mc-modal-score { font-size: 1.6rem; }
+
+            .clubs-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+            .club-card { padding: 0.9rem 0.5rem; }
+            .club-card-logo { width: 46px; height: 46px; }
+        }
+
+        @media (max-width: 640px) {
+            /* Match card: teams stacked on the left, score/time on the right (Flashscore-style) */
+            .match-card {
+                grid-template-columns: minmax(0, 1fr) auto auto;
+                grid-template-areas: "home centre fav" "away centre fav";
+                gap: 0.4rem 0.6rem;
+                padding: 0.6rem 0.7rem;
+            }
+            .match-card > .mc-team.home { grid-area: home; }
+            .match-card > .mc-team.away { grid-area: away; flex-direction: row-reverse; justify-content: flex-end; text-align: left; }
+            .match-card > .mc-centre { grid-area: centre; min-width: 62px; align-self: center; padding: 0.3rem 0.5rem; }
+            .match-card > .mc-fav-btn { grid-area: fav; align-self: center; }
+            .mc-team { gap: 0.5rem; }
+            .mc-team-logo, .mc-team-logo-placeholder { width: 26px; height: 26px; }
+            .mc-team-name { font-size: 0.84rem; }
+            .mc-score { font-size: 1.05rem; }
+            .mgh-name { font-size: 0.72rem; }
+
+            /* Standings: keep the essentials, pin the club column */
+            .league-table { font-size: 0.78rem; }
+            .league-table th, .league-table td { padding: 0.5rem 0.4rem; }
+            .league-table th:nth-child(7), .league-table td:nth-child(7),
+            .league-table th:nth-child(8), .league-table td:nth-child(8) { display: none; }
+            .league-table th:nth-child(2), .league-table td:nth-child(2) { position: sticky; left: 0; z-index: 1; background: #111c38; }
+            .league-table th:nth-child(2) { background: #0d1730; }
+            .lt-team-cell { min-width: 105px; gap: 0.4rem; }
+            .lt-team-cell .mc-fav-btn { display: none; }
+            .lt-team-name { font-size: 0.78rem; }
+            .table-legend { gap: 0.6rem; font-size: 0.68rem; }
+        }
+
+        @media (max-width: 480px) {
+            .league-table th:nth-child(11), .league-table td:nth-child(11) { display: none; }
+            .view-tab i { display: none; }
+            .view-tab { padding: 0.55rem 0.6rem; }
+            .scope-btn { padding: 0.26rem 0.5rem; font-size: 0.68rem; }
+            .empty-jump-btn { display: block; width: 100%; margin: 0.35rem 0; }
+            .kpi-lbl { font-size: 0.62rem; }
+        }
     </style>
 </head>
 
