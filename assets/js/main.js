@@ -66,8 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem(FBL_MIGRATION_KEY, 'true');
             }
             const uplMatches = [
-                // ── Uganda Premier League Matchdays 1–17 Schedule (2026/2027 Season) ──
-                // ── Matchday 1 ──
+                // ── Uganda Premier League 2026/27 — synced 2026-11-04 ──
                 { id: 1001, competition: 'Uganda Premier League', date: '2026-08-28', kickoffutc: '2026-08-28T13:00:00Z', home: 'Vipers SC', away: 'Entebbe UPPC', scoreh: 0, scorea: 1, status: 'FT' },
                 { id: 1002, competition: 'Uganda Premier League', date: '2026-08-29', kickoffutc: '2026-08-29T13:00:00Z', home: 'KCCA FC', away: 'NEC FC', scoreh: 0, scorea: 2, status: 'FT' },
                 { id: 1003, competition: 'Uganda Premier League', date: '2026-08-29', kickoffutc: '2026-08-29T13:00:00Z', home: 'Police FC', away: 'Mbarara City FC', scoreh: 1, scorea: 0, status: 'FT' },
@@ -77,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 { id: 1007, competition: 'Uganda Premier League', date: '2026-08-29', kickoffutc: '2026-08-29T13:00:00Z', home: 'UPDF FC', away: 'Kataka FC', scoreh: 0, scorea: 0, status: 'FT' },
                 { id: 1008, competition: 'Uganda Premier League', date: '2026-08-30', kickoffutc: '2026-08-30T13:00:00Z', home: 'Maroons FC', away: 'URA FC', scoreh: 1, scorea: 2, status: 'FT' },
                 { id: 1009, competition: 'Uganda Premier League', date: '2026-08-30', kickoffutc: '2026-08-30T13:00:00Z', home: 'BUL FC', away: 'Express FC', scoreh: 1, scorea: 0, status: 'FT' },
-                // ── Matchday 2 ──
                 { id: 1010, competition: 'Uganda Premier League', date: '2026-09-01', kickoffutc: '2026-09-01T13:00:00Z', home: 'Entebbe UPPC', away: 'UPDF FC', scoreh: 2, scorea: 1, status: 'FT' },
                 { id: 1011, competition: 'Uganda Premier League', date: '2026-09-01', kickoffutc: '2026-09-01T13:00:00Z', home: 'NEC FC', away: 'Lugazi FC', scoreh: 3, scorea: 1, status: 'FT' },
                 { id: 1012, competition: 'Uganda Premier League', date: '2026-09-02', kickoffutc: '2026-09-02T13:00:00Z', home: 'Ntugasaze FC', away: 'Maroons FC', scoreh: 1, scorea: 3, status: 'FT' },
@@ -87,16 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 { id: 1016, competition: 'Uganda Premier League', date: '2026-09-03', kickoffutc: '2026-09-03T13:00:00Z', home: 'Express FC', away: 'KCCA FC', scoreh: 2, scorea: 0, status: 'FT' },
                 { id: 1017, competition: 'Uganda Premier League', date: '', kickoffutc: '', home: 'Kigezi Homeboyz', away: 'Vipers SC', scoreh: 0, scorea: 0, status: 'Postponed' },
                 { id: 1018, competition: 'Uganda Premier League', date: '2026-09-04', kickoffutc: '2026-09-04T13:00:00Z', home: 'URA FC', away: 'SC Villa', scoreh: 0, scorea: 1, status: 'FT' },
-                // ── Matchday 3 ──
                 { id: 1019, competition: 'Uganda Premier League', date: '2026-09-08', kickoffutc: '2026-09-08T13:00:00Z', home: 'Kigezi Homeboyz', away: 'KCCA FC', scoreh: 0, scorea: 0, status: 'FT' },
                 { id: 1020, competition: 'Uganda Premier League', date: '2026-09-08', kickoffutc: '2026-09-08T13:00:00Z', home: 'Maroons FC', away: 'Blacks Power FC', scoreh: 1, scorea: 2, status: 'FT' },
                 { id: 1021, competition: 'Uganda Premier League', date: '2026-09-08', kickoffutc: '2026-09-08T13:00:00Z', home: 'BUL FC', away: 'Ntugasaze FC', scoreh: 4, scorea: 1, status: 'FT' },
                 { id: 1022, competition: 'Uganda Premier League', date: '2026-09-09', kickoffutc: '2026-09-09T13:00:00Z', home: 'SC Villa', away: 'Express FC', scoreh: 2, scorea: 0, status: 'FT' },
                 { id: 1023, competition: 'Uganda Premier League', date: '2026-09-09', kickoffutc: '2026-09-09T13:00:00Z', home: 'Entebbe UPPC', away: 'Lugazi FC', scoreh: 0, scorea: 1, status: 'FT' },
-                { id: 1024, competition: 'Uganda Premier League', date: '', kickoffutc: '', home: 'Kitara FC', away: 'URA FC', scoreh: 0, scorea: 0, status: 'Postponed' },
                 { id: 1025, competition: 'Uganda Premier League', date: '2026-09-10', kickoffutc: '2026-09-10T13:00:00Z', home: 'Police FC', away: 'UPDF FC', scoreh: 0, scorea: 0, status: 'FT' },
                 { id: 1026, competition: 'Uganda Premier League', date: '2026-09-11', kickoffutc: '2026-09-11T13:00:00Z', home: 'Mbarara City FC', away: 'NEC FC', scoreh: 0, scorea: 0, status: 'FT' },
-                // ── Matchday 4 ──
                 { id: 1027, competition: 'Uganda Premier League', date: '2026-09-15', kickoffutc: '2026-09-15T13:00:00Z', home: 'SC Villa', away: 'Kigezi Homeboyz', scoreh: 3, scorea: 0, status: 'FT' },
                 { id: 1028, competition: 'Uganda Premier League', date: '2026-09-15', kickoffutc: '2026-09-15T13:00:00Z', home: 'BUL FC', away: 'Blacks Power FC', scoreh: 2, scorea: 1, status: 'FT' },
                 { id: 1029, competition: 'Uganda Premier League', date: '2026-09-15', kickoffutc: '2026-09-15T13:00:00Z', home: 'NEC FC', away: 'URA FC', scoreh: 4, scorea: 1, status: 'FT' },
@@ -106,121 +101,108 @@ document.addEventListener('DOMContentLoaded', () => {
                 { id: 1033, competition: 'Uganda Premier League', date: '2026-09-17', kickoffutc: '2026-09-17T13:00:00Z', home: 'UPDF FC', away: 'Maroons FC', scoreh: 1, scorea: 0, status: 'FT' },
                 { id: 1034, competition: 'Uganda Premier League', date: '2026-09-17', kickoffutc: '2026-09-17T13:00:00Z', home: 'Express FC', away: 'Kitara FC', scoreh: 1, scorea: 1, status: 'FT' },
                 { id: 1035, competition: 'Uganda Premier League', date: '2026-09-19', kickoffutc: '2026-09-19T13:00:00Z', home: 'Vipers SC', away: 'Ntugasaze FC', scoreh: 3, scorea: 0, status: 'FT' },
-                // ── Matchday 5 ──
-                { id: 1036, competition: 'Uganda Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T13:00:00Z', home: 'Ntugasaze FC', away: 'Mbarara City FC', scoreh: 1, scorea: 0, status: 'FT' },
-                { id: 1037, competition: 'Uganda Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T13:00:00Z', home: 'Kataka FC', away: 'SC Villa', scoreh: 1, scorea: 1, status: 'FT' },
-                { id: 1038, competition: 'Uganda Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T13:00:00Z', home: 'Maroons FC', away: 'Lugazi FC', scoreh: 3, scorea: 0, status: 'FT' },
-                { id: 1039, competition: 'Uganda Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T13:00:00Z', home: 'Kitara FC', away: 'Kigezi Homeboyz', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 1036, competition: 'Uganda Premier League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Ntugasaze FC', away: 'Mbarara City FC', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 1037, competition: 'Uganda Premier League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Kataka FC', away: 'SC Villa', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 1038, competition: 'Uganda Premier League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Maroons FC', away: 'Lugazi FC', scoreh: 3, scorea: 0, status: 'FT' },
+                { id: 1039, competition: 'Uganda Premier League', date: '2026-10-07', kickoffutc: '2026-10-07T13:00:00Z', home: 'Kitara FC', away: 'Kigezi Homeboyz', scoreh: 1, scorea: 0, status: 'FT' },
                 { id: 1040, competition: 'Uganda Premier League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Blacks Power FC', away: 'Vipers SC', scoreh: 0, scorea: 4, status: 'FT' },
-                { id: 1041, competition: 'Uganda Premier League', date: '2026-10-08', kickoffutc: '2026-10-08T16:00:00Z', home: 'NEC FC', away: 'Express FC', scoreh: 0, scorea: 0, status: 'FT' },
-                { id: 1042, competition: 'Uganda Premier League', date: '2026-10-08', kickoffutc: '2026-10-08T14:00:00Z', home: 'Entebbe UPPC', away: 'Police FC', scoreh: 1, scorea: 1, status: 'FT' },
-                { id: 1043, competition: 'Uganda Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T17:00:00Z', home: 'URA FC', away: 'KCCA FC', scoreh: 0, scorea: 1, status: 'FT' },
-                // ── Matchday 6 ──
-                { id: 1044, competition: 'Uganda Premier League', date: '2026-10-10', kickoffutc: '2026-10-10T13:00:00Z', home: 'Kataka FC', away: 'Kitara FC', scoreh: 0, scorea: 0, status: 'FT' },
-                { id: 1045, competition: 'Uganda Premier League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Mbarara City FC', away: 'Blacks Power FC', scoreh: 0, scorea: 0, status: 'FT' },
-                { id: 1046, competition: 'Uganda Premier League', date: '2026-10-11', kickoffutc: '2026-10-11T17:00:00Z', home: 'Vipers SC', away: 'Maroons FC', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 1041, competition: 'Uganda Premier League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'NEC FC', away: 'Express FC', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 1042, competition: 'Uganda Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T13:00:00Z', home: 'Entebbe UPPC', away: 'Police FC', scoreh: 3, scorea: 0, status: 'FT' },
+                { id: 1043, competition: 'Uganda Premier League', date: '2026-10-09', kickoffutc: '2026-10-09T13:00:00Z', home: 'URA FC', away: 'KCCA FC', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 1044, competition: 'Uganda Premier League', date: '2026-10-10', kickoffutc: '2026-10-10T13:00:00Z', home: 'Kataka FC', away: 'Kitara FC', scoreh: 1, scorea: 2, status: 'FT' },
+                { id: 1045, competition: 'Uganda Premier League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Mbarara City FC', away: 'Blacks Power FC', scoreh: 2, scorea: 1, status: 'FT' },
+                { id: 1046, competition: 'Uganda Premier League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Vipers SC', away: 'Maroons FC', scoreh: 1, scorea: 1, status: 'FT' },
                 { id: 1047, competition: 'Uganda Premier League', date: '2026-10-13', kickoffutc: '2026-10-13T13:00:00Z', home: 'Lugazi FC', away: 'BUL FC', scoreh: 0, scorea: 0, status: 'FT' },
                 { id: 1048, competition: 'Uganda Premier League', date: '2026-10-13', kickoffutc: '2026-10-13T13:00:00Z', home: 'Ntugasaze FC', away: 'KCCA FC', scoreh: 0, scorea: 2, status: 'FT' },
                 { id: 1049, competition: 'Uganda Premier League', date: '2026-10-14', kickoffutc: '2026-10-14T13:00:00Z', home: 'Police FC', away: 'SC Villa', scoreh: 1, scorea: 6, status: 'FT' },
                 { id: 1050, competition: 'Uganda Premier League', date: '2026-10-14', kickoffutc: '2026-10-14T13:00:00Z', home: 'Kigezi Homeboyz', away: 'NEC FC', scoreh: 0, scorea: 2, status: 'FT' },
-                // ── Matchday 6 (continued) ──
                 { id: 1051, competition: 'Uganda Premier League', date: '2026-10-15', kickoffutc: '2026-10-15T13:00:00Z', home: 'Kataka FC', away: 'Vipers SC', scoreh: 0, scorea: 5, status: 'FT' },
                 { id: 1052, competition: 'Uganda Premier League', date: '2026-10-15', kickoffutc: '2026-10-15T13:00:00Z', home: 'Express FC', away: 'UPDF FC', scoreh: 1, scorea: 2, status: 'FT' },
-                { id: 1053, competition: 'Uganda Premier League', date: '2026-10-15', kickoffutc: '2026-10-15T16:00:00Z', home: 'URA FC', away: 'Entebbe UPPC', scoreh: 0, scorea: 0, status: 'FT' },
-                // ── Matchday 5 ──
-                { id: 1054, competition: 'Uganda Premier League', date: '2026-10-17', kickoffutc: '2026-10-17T13:00:00Z', home: 'UPDF FC', away: 'BUL FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                // ── Matchday 7 ──
-                { id: 1055, competition: 'Uganda Premier League', date: '2026-10-20', kickoffutc: '2026-10-20T13:00:00Z', home: 'Maroons FC', away: 'Kataka FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1056, competition: 'Uganda Premier League', date: '2026-10-20', kickoffutc: '2026-10-20T13:00:00Z', home: 'Kitara FC', away: 'Ntugasaze FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1057, competition: 'Uganda Premier League', date: '2026-10-20', kickoffutc: '2026-10-20T13:00:00Z', home: 'Blacks Power FC', away: 'URA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1058, competition: 'Uganda Premier League', date: '2026-10-20', kickoffutc: '2026-10-20T13:00:00Z', home: 'Vipers SC', away: 'Police FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1059, competition: 'Uganda Premier League', date: '2026-10-21', kickoffutc: '2026-10-21T13:00:00Z', home: 'Lugazi FC', away: 'Express FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1060, competition: 'Uganda Premier League', date: '2026-10-21', kickoffutc: '2026-10-21T13:00:00Z', home: 'BUL FC', away: 'NEC FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1061, competition: 'Uganda Premier League', date: '2026-10-22', kickoffutc: '2026-10-22T13:00:00Z', home: 'Kigezi Homeboyz', away: 'Entebbe UPPC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1062, competition: 'Uganda Premier League', date: '2026-10-22', kickoffutc: '2026-10-22T13:00:00Z', home: 'SC Villa', away: 'Mbarara City FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1063, competition: 'Uganda Premier League', date: '2026-10-22', kickoffutc: '2026-10-22T16:00:00Z', home: 'KCCA FC', away: 'UPDF FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                // ── Matchday 8 ──
-                { id: 1064, competition: 'Uganda Premier League', date: '2026-10-27', kickoffutc: '2026-10-27T13:00:00Z', home: 'NEC FC', away: 'Ntugasaze FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1065, competition: 'Uganda Premier League', date: '2026-10-27', kickoffutc: '2026-10-27T13:00:00Z', home: 'Kitara FC', away: 'BUL FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1066, competition: 'Uganda Premier League', date: '2026-10-27', kickoffutc: '2026-10-27T13:00:00Z', home: 'SC Villa', away: 'Blacks Power FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1067, competition: 'Uganda Premier League', date: '2026-10-27', kickoffutc: '2026-10-27T13:00:00Z', home: 'Police FC', away: 'Kigezi Homeboyz', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1068, competition: 'Uganda Premier League', date: '2026-10-27', kickoffutc: '2026-10-27T13:00:00Z', home: 'UPDF FC', away: 'URA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1069, competition: 'Uganda Premier League', date: '2026-10-27', kickoffutc: '2026-10-27T13:00:00Z', home: 'Mbarara City FC', away: 'Vipers SC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1070, competition: 'Uganda Premier League', date: '2026-10-27', kickoffutc: '2026-10-27T16:00:00Z', home: 'Express FC', away: 'Kataka FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1071, competition: 'Uganda Premier League', date: '2026-10-28', kickoffutc: '2026-10-28T13:00:00Z', home: 'Entebbe UPPC', away: 'Maroons FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1072, competition: 'Uganda Premier League', date: '2026-10-28', kickoffutc: '2026-10-28T17:00:00Z', home: 'KCCA FC', away: 'Lugazi FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                // ── Matchday 9 ──
-                { id: 1073, competition: 'Uganda Premier League', date: '2026-10-30', kickoffutc: '2026-10-30T13:00:00Z', home: 'Blacks Power FC', away: 'NEC FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1074, competition: 'Uganda Premier League', date: '2026-10-30', kickoffutc: '2026-10-30T13:00:00Z', home: 'Kataka FC', away: 'Police FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1075, competition: 'Uganda Premier League', date: '2026-10-31', kickoffutc: '2026-10-31T13:00:00Z', home: 'BUL FC', away: 'Entebbe UPPC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1076, competition: 'Uganda Premier League', date: '2026-10-31', kickoffutc: '2026-10-31T13:00:00Z', home: 'Maroons FC', away: 'Kigezi Homeboyz', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1077, competition: 'Uganda Premier League', date: '2026-10-31', kickoffutc: '2026-10-31T13:00:00Z', home: 'Lugazi FC', away: 'SC Villa', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1078, competition: 'Uganda Premier League', date: '2026-10-31', kickoffutc: '2026-10-31T13:00:00Z', home: 'UPDF FC', away: 'Kitara FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1079, competition: 'Uganda Premier League', date: '2026-10-31', kickoffutc: '2026-10-31T13:00:00Z', home: 'Mbarara City FC', away: 'KCCA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1080, competition: 'Uganda Premier League', date: '2026-10-31', kickoffutc: '2026-10-31T16:00:00Z', home: 'URA FC', away: 'Vipers SC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1081, competition: 'Uganda Premier League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Ntugasaze FC', away: 'Express FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                // ── Matchday 10 ──
-                { id: 1082, competition: 'Uganda Premier League', date: '2026-11-03', kickoffutc: '2026-11-03T13:00:00Z', home: 'BUL FC', away: 'SC Villa', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1083, competition: 'Uganda Premier League', date: '2026-11-03', kickoffutc: '2026-11-03T13:00:00Z', home: 'Police FC', away: 'Kitara FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1084, competition: 'Uganda Premier League', date: '2026-11-03', kickoffutc: '2026-11-03T13:00:00Z', home: 'NEC FC', away: 'UPDF FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1053, competition: 'Uganda Premier League', date: '2026-10-15', kickoffutc: '2026-10-15T13:00:00Z', home: 'URA FC', away: 'Entebbe UPPC', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 1054, competition: 'Uganda Premier League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'UPDF FC', away: 'BUL FC', scoreh: 0, scorea: 2, status: 'FT' },
+                { id: 1055, competition: 'Uganda Premier League', date: '2026-10-20', kickoffutc: '2026-10-20T13:00:00Z', home: 'Maroons FC', away: 'Kataka FC', scoreh: 4, scorea: 1, status: 'FT' },
+                { id: 1059, competition: 'Uganda Premier League', date: '2026-10-21', kickoffutc: '2026-10-21T13:00:00Z', home: 'Lugazi FC', away: 'Express FC', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 1060, competition: 'Uganda Premier League', date: '2026-10-21', kickoffutc: '2026-10-21T13:00:00Z', home: 'BUL FC', away: 'NEC FC', scoreh: 2, scorea: 1, status: 'FT' },
+                { id: 1061, competition: 'Uganda Premier League', date: '2026-10-22', kickoffutc: '2026-10-22T13:00:00Z', home: 'Kigezi Homeboyz', away: 'Entebbe UPPC', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 1062, competition: 'Uganda Premier League', date: '2026-10-22', kickoffutc: '2026-10-22T13:00:00Z', home: 'SC Villa', away: 'Mbarara City FC', scoreh: 2, scorea: 0, status: 'FT' },
+                { id: 1063, competition: 'Uganda Premier League', date: '2026-10-22', kickoffutc: '2026-10-22T13:00:00Z', home: 'KCCA FC', away: 'UPDF FC', scoreh: 0, scorea: 0, status: 'Vacated' },
+                { id: 1056, competition: 'Uganda Premier League', date: '', kickoffutc: '', home: 'Kitara FC', away: 'Ntugasaze FC', scoreh: 0, scorea: 0, status: 'Postponed' },
+                { id: 1058, competition: 'Uganda Premier League', date: '2026-10-23', kickoffutc: '2026-10-23T13:00:00Z', home: 'Vipers SC', away: 'Police FC', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 1057, competition: 'Uganda Premier League', date: '2026-10-24', kickoffutc: '2026-10-24T13:00:00Z', home: 'Blacks Power FC', away: 'URA FC', scoreh: 3, scorea: 2, status: 'FT' },
+                { id: 1064, competition: 'Uganda Premier League', date: '2026-10-27', kickoffutc: '2026-10-27T13:00:00Z', home: 'NEC FC', away: 'Ntugasaze FC', scoreh: 5, scorea: 1, status: 'FT' },
+                { id: 1066, competition: 'Uganda Premier League', date: '2026-10-27', kickoffutc: '2026-10-27T13:00:00Z', home: 'SC Villa', away: 'Blacks Power FC', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 1067, competition: 'Uganda Premier League', date: '2026-10-27', kickoffutc: '2026-10-27T13:00:00Z', home: 'Police FC', away: 'Kigezi Homeboyz', scoreh: 3, scorea: 1, status: 'FT' },
+                { id: 1068, competition: 'Uganda Premier League', date: '2026-10-27', kickoffutc: '2026-10-27T13:00:00Z', home: 'UPDF FC', away: 'URA FC', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 1070, competition: 'Uganda Premier League', date: '2026-10-27', kickoffutc: '2026-10-27T13:00:00Z', home: 'Express FC', away: 'Kataka FC', scoreh: 2, scorea: 2, status: 'FT' },
+                { id: 1072, competition: 'Uganda Premier League', date: '2026-10-28', kickoffutc: '2026-10-28T13:00:00Z', home: 'KCCA FC', away: 'Lugazi FC', scoreh: 2, scorea: 1, status: 'FT' },
+                { id: 1071, competition: 'Uganda Premier League', date: '2026-10-28', kickoffutc: '2026-10-28T13:00:00Z', home: 'Entebbe UPPC', away: 'Maroons FC', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 1065, competition: 'Uganda Premier League', date: '', kickoffutc: '', home: 'Kitara FC', away: 'BUL FC', scoreh: 0, scorea: 0, status: 'Postponed' },
+                { id: 1069, competition: 'Uganda Premier League', date: '2026-10-28', kickoffutc: '2026-10-28T13:00:00Z', home: 'Mbarara City FC', away: 'Vipers SC', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 1074, competition: 'Uganda Premier League', date: '2026-10-30', kickoffutc: '2026-10-30T13:00:00Z', home: 'Kataka FC', away: 'Police FC', scoreh: 1, scorea: 2, status: 'FT' },
+                { id: 1075, competition: 'Uganda Premier League', date: '2026-10-31', kickoffutc: '2026-10-31T13:00:00Z', home: 'BUL FC', away: 'Entebbe UPPC', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 1076, competition: 'Uganda Premier League', date: '', kickoffutc: '', home: 'Maroons FC', away: 'Kigezi Homeboyz', scoreh: 0, scorea: 0, status: 'Postponed' },
+                { id: 1073, competition: 'Uganda Premier League', date: '2026-10-31', kickoffutc: '2026-10-31T13:00:00Z', home: 'Blacks Power FC', away: 'NEC FC', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 1077, competition: 'Uganda Premier League', date: '2026-10-31', kickoffutc: '2026-10-31T13:00:00Z', home: 'Lugazi FC', away: 'SC Villa', scoreh: 1, scorea: 2, status: 'FT' },
+                { id: 1079, competition: 'Uganda Premier League', date: '2026-10-31', kickoffutc: '2026-10-31T13:00:00Z', home: 'Mbarara City FC', away: 'KCCA FC', scoreh: 1, scorea: 3, status: 'FT' },
+                { id: 1078, competition: 'Uganda Premier League', date: '2026-10-31', kickoffutc: '2026-10-31T13:00:00Z', home: 'UPDF FC', away: 'Kitara FC', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 1080, competition: 'Uganda Premier League', date: '2026-10-31', kickoffutc: '2026-10-31T13:00:00Z', home: 'URA FC', away: 'Vipers SC', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 1081, competition: 'Uganda Premier League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Ntugasaze FC', away: 'Express FC', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 1082, competition: 'Uganda Premier League', date: '2026-11-03', kickoffutc: '2026-11-03T13:00:00Z', home: 'BUL FC', away: 'SC Villa', scoreh: 2, scorea: 1, status: 'FT' },
+                { id: 1083, competition: 'Uganda Premier League', date: '2026-11-03', kickoffutc: '2026-11-03T13:00:00Z', home: 'Police FC', away: 'Kitara FC', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 1084, competition: 'Uganda Premier League', date: '2026-11-03', kickoffutc: '2026-11-03T13:00:00Z', home: 'NEC FC', away: 'UPDF FC', scoreh: 1, scorea: 0, status: 'FT' },
                 { id: 1085, competition: 'Uganda Premier League', date: '2026-11-04', kickoffutc: '2026-11-04T13:00:00Z', home: 'Kataka FC', away: 'URA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1086, competition: 'Uganda Premier League', date: '2026-11-04', kickoffutc: '2026-11-04T13:00:00Z', home: 'KCCA FC', away: 'Maroons FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1087, competition: 'Uganda Premier League', date: '2026-11-04', kickoffutc: '2026-11-04T16:00:00Z', home: 'Vipers SC', away: 'Lugazi FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1088, competition: 'Uganda Premier League', date: '2026-11-05', kickoffutc: '2026-11-05T13:00:00Z', home: 'Ntugasaze FC', away: 'Entebbe UPPC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1089, competition: 'Uganda Premier League', date: '2026-11-05', kickoffutc: '2026-11-05T13:00:00Z', home: 'Express FC', away: 'Blacks Power FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1090, competition: 'Uganda Premier League', date: '2026-11-05', kickoffutc: '2026-11-05T13:00:00Z', home: 'Kigezi Homeboyz', away: 'Mbarara City FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                // ── Matchday 11 ──
+                { id: 1087, competition: 'Uganda Premier League', date: '2026-11-05', kickoffutc: '2026-11-05T17:00:00Z', home: 'Vipers SC', away: 'Lugazi FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1090, competition: 'Uganda Premier League', date: '2026-11-06', kickoffutc: '2026-11-06T13:00:00Z', home: 'Kigezi Homeboyz', away: 'Mbarara City FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1024, competition: 'Uganda Premier League', date: '2026-11-07', kickoffutc: '2026-11-07T13:00:00Z', home: 'Kitara FC', away: 'URA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1092, competition: 'Uganda Premier League', date: '2026-11-17', kickoffutc: '2026-11-17T13:00:00Z', home: 'Kitara FC', away: 'Blacks Power FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1091, competition: 'Uganda Premier League', date: '2026-11-18', kickoffutc: '2026-11-18T13:00:00Z', home: 'Mbarara City FC', away: 'Lugazi FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1092, competition: 'Uganda Premier League', date: '2026-11-18', kickoffutc: '2026-11-18T13:00:00Z', home: 'Kitara FC', away: 'Blacks Power FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1093, competition: 'Uganda Premier League', date: '2026-11-18', kickoffutc: '2026-11-18T16:00:00Z', home: 'Vipers SC', away: 'BUL FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1093, competition: 'Uganda Premier League', date: '2026-11-18', kickoffutc: '2026-11-18T17:00:00Z', home: 'Vipers SC', away: 'BUL FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1094, competition: 'Uganda Premier League', date: '2026-11-19', kickoffutc: '2026-11-19T13:00:00Z', home: 'Kigezi Homeboyz', away: 'Express FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1095, competition: 'Uganda Premier League', date: '2026-11-19', kickoffutc: '2026-11-19T13:00:00Z', home: 'Maroons FC', away: 'NEC FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1096, competition: 'Uganda Premier League', date: '2026-11-19', kickoffutc: '2026-11-19T13:00:00Z', home: 'Entebbe UPPC', away: 'Kataka FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1097, competition: 'Uganda Premier League', date: '2026-11-20', kickoffutc: '2026-11-20T13:00:00Z', home: 'Police FC', away: 'KCCA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1098, competition: 'Uganda Premier League', date: '2026-11-20', kickoffutc: '2026-11-20T13:00:00Z', home: 'URA FC', away: 'Ntugasaze FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1099, competition: 'Uganda Premier League', date: '2026-11-20', kickoffutc: '2026-11-20T13:00:00Z', home: 'SC Villa', away: 'UPDF FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                // ── Matchday 12 ──
                 { id: 1100, competition: 'Uganda Premier League', date: '2026-11-21', kickoffutc: '2026-11-21T13:00:00Z', home: 'Lugazi FC', away: 'Kitara FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1101, competition: 'Uganda Premier League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Express FC', away: 'Vipers SC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1102, competition: 'Uganda Premier League', date: '2026-11-24', kickoffutc: '2026-11-24T13:00:00Z', home: 'Blacks Power FC', away: 'Entebbe UPPC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1103, competition: 'Uganda Premier League', date: '2026-11-24', kickoffutc: '2026-11-24T13:00:00Z', home: 'UPDF FC', away: 'Mbarara City FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1104, competition: 'Uganda Premier League', date: '2026-11-25', kickoffutc: '2026-11-25T13:00:00Z', home: 'NEC FC', away: 'Kataka FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1107, competition: 'Uganda Premier League', date: '2026-11-25', kickoffutc: '2026-11-25T13:00:00Z', home: 'Maroons FC', away: 'SC Villa', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1105, competition: 'Uganda Premier League', date: '2026-11-25', kickoffutc: '2026-11-25T13:00:00Z', home: 'Ntugasaze FC', away: 'Police FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1106, competition: 'Uganda Premier League', date: '2026-11-26', kickoffutc: '2026-11-26T13:00:00Z', home: 'KCCA FC', away: 'BUL FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1107, competition: 'Uganda Premier League', date: '2026-11-26', kickoffutc: '2026-11-26T13:00:00Z', home: 'Maroons FC', away: 'SC Villa', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1104, competition: 'Uganda Premier League', date: '2026-11-25', kickoffutc: '2026-11-25T16:00:00Z', home: 'NEC FC', away: 'Kataka FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1108, competition: 'Uganda Premier League', date: '2026-11-26', kickoffutc: '2026-11-26T16:00:00Z', home: 'URA FC', away: 'Kigezi Homeboyz', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                // ── Matchday 13 ──
+                { id: 1106, competition: 'Uganda Premier League', date: '2026-11-26', kickoffutc: '2026-11-26T17:00:00Z', home: 'KCCA FC', away: 'BUL FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1109, competition: 'Uganda Premier League', date: '2026-12-01', kickoffutc: '2026-12-01T13:00:00Z', home: 'Lugazi FC', away: 'URA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1110, competition: 'Uganda Premier League', date: '2026-12-01', kickoffutc: '2026-12-01T13:00:00Z', home: 'Kitara FC', away: 'Maroons FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1110, competition: 'Uganda Premier League', date: '2026-12-01', kickoffutc: '', home: 'Kitara FC', away: 'Maroons FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1111, competition: 'Uganda Premier League', date: '2026-12-01', kickoffutc: '2026-12-01T13:00:00Z', home: 'BUL FC', away: 'Kigezi Homeboyz', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1112, competition: 'Uganda Premier League', date: '2026-12-01', kickoffutc: '2026-12-01T13:00:00Z', home: 'UPDF FC', away: 'Vipers SC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1112, competition: 'Uganda Premier League', date: '2026-12-01', kickoffutc: '', home: 'UPDF FC', away: 'Vipers SC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1113, competition: 'Uganda Premier League', date: '2026-12-02', kickoffutc: '2026-12-02T13:00:00Z', home: 'Kataka FC', away: 'Mbarara City FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1114, competition: 'Uganda Premier League', date: '2026-12-02', kickoffutc: '2026-12-02T13:00:00Z', home: 'NEC FC', away: 'Police FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1115, competition: 'Uganda Premier League', date: '2026-12-02', kickoffutc: '2026-12-02T13:00:00Z', home: 'Ntugasaze FC', away: 'SC Villa', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1116, competition: 'Uganda Premier League', date: '2026-12-03', kickoffutc: '2026-12-03T13:00:00Z', home: 'KCCA FC', away: 'Blacks Power FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1117, competition: 'Uganda Premier League', date: '2026-12-03', kickoffutc: '2026-12-03T13:00:00Z', home: 'Entebbe UPPC', away: 'Express FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                // ── Matchday 14 ──
                 { id: 1118, competition: 'Uganda Premier League', date: '2026-12-08', kickoffutc: '2026-12-08T13:00:00Z', home: 'Kigezi Homeboyz', away: 'Ntugasaze FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1119, competition: 'Uganda Premier League', date: '2026-12-08', kickoffutc: '2026-12-08T13:00:00Z', home: 'SC Villa', away: 'NEC FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1120, competition: 'Uganda Premier League', date: '2026-12-08', kickoffutc: '2026-12-08T13:00:00Z', home: 'Entebbe UPPC', away: 'Kitara FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1121, competition: 'Uganda Premier League', date: '2026-12-08', kickoffutc: '2026-12-08T13:00:00Z', home: 'Vipers SC', away: 'KCCA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1120, competition: 'Uganda Premier League', date: '2026-12-08', kickoffutc: '', home: 'Entebbe UPPC', away: 'Kitara FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1121, competition: 'Uganda Premier League', date: '2026-12-08', kickoffutc: '', home: 'Vipers SC', away: 'KCCA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1122, competition: 'Uganda Premier League', date: '2026-12-09', kickoffutc: '2026-12-09T13:00:00Z', home: 'URA FC', away: 'BUL FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1123, competition: 'Uganda Premier League', date: '2026-12-09', kickoffutc: '2026-12-09T13:00:00Z', home: 'Police FC', away: 'Maroons FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1124, competition: 'Uganda Premier League', date: '2026-12-10', kickoffutc: '2026-12-10T13:00:00Z', home: 'Lugazi FC', away: 'UPDF FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1125, competition: 'Uganda Premier League', date: '2026-12-10', kickoffutc: '2026-12-10T13:00:00Z', home: 'Blacks Power FC', away: 'Kataka FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1126, competition: 'Uganda Premier League', date: '2026-12-10', kickoffutc: '2026-12-10T13:00:00Z', home: 'Mbarara City FC', away: 'Express FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                // ── Matchday 15 ──
                 { id: 1127, competition: 'Uganda Premier League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Blacks Power FC', away: 'Lugazi FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1128, competition: 'Uganda Premier League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Kitara FC', away: 'NEC FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1128, competition: 'Uganda Premier League', date: '2026-12-13', kickoffutc: '', home: 'Kitara FC', away: 'NEC FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1129, competition: 'Uganda Premier League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Maroons FC', away: 'Mbarara City FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 1130, competition: 'Uganda Premier League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Vipers SC', away: 'SC Villa', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1130, competition: 'Uganda Premier League', date: '2026-12-13', kickoffutc: '', home: 'Vipers SC', away: 'SC Villa', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1131, competition: 'Uganda Premier League', date: '2026-12-14', kickoffutc: '2026-12-14T13:00:00Z', home: 'Kataka FC', away: 'Ntugasaze FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1132, competition: 'Uganda Premier League', date: '2026-12-14', kickoffutc: '2026-12-14T13:00:00Z', home: 'KCCA FC', away: 'Entebbe UPPC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1133, competition: 'Uganda Premier League', date: '2026-12-14', kickoffutc: '2026-12-14T13:00:00Z', home: 'Police FC', away: 'BUL FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1134, competition: 'Uganda Premier League', date: '2026-12-15', kickoffutc: '2026-12-15T13:00:00Z', home: 'UPDF FC', away: 'Kigezi Homeboyz', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1135, competition: 'Uganda Premier League', date: '2026-12-15', kickoffutc: '2026-12-15T16:00:00Z', home: 'Express FC', away: 'URA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                // ── Matchday 16 ──
-                { id: 1136, competition: 'Uganda Premier League', date: '2026-12-17', kickoffutc: '2026-12-17T13:00:00Z', home: 'Kitara FC', away: 'Vipers SC', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 1136, competition: 'Uganda Premier League', date: '2026-12-17', kickoffutc: '', home: 'Kitara FC', away: 'Vipers SC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1137, competition: 'Uganda Premier League', date: '2026-12-17', kickoffutc: '2026-12-17T13:00:00Z', home: 'Ntugasaze FC', away: 'Lugazi FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1138, competition: 'Uganda Premier League', date: '2026-12-17', kickoffutc: '2026-12-17T13:00:00Z', home: 'BUL FC', away: 'Maroons FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1139, competition: 'Uganda Premier League', date: '2026-12-18', kickoffutc: '2026-12-18T13:00:00Z', home: 'NEC FC', away: 'Entebbe UPPC', scoreh: 0, scorea: 0, status: 'Scheduled' },
@@ -229,7 +211,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 { id: 1142, competition: 'Uganda Premier League', date: '2026-12-18', kickoffutc: '2026-12-18T16:00:00Z', home: 'URA FC', away: 'Mbarara City FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1143, competition: 'Uganda Premier League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'SC Villa', away: 'KCCA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1144, competition: 'Uganda Premier League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'UPDF FC', away: 'Blacks Power FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                // ── Matchday 17 ──
                 { id: 1145, competition: 'Uganda Premier League', date: '2026-12-22', kickoffutc: '2026-12-22T13:00:00Z', home: 'Maroons FC', away: 'Express FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1146, competition: 'Uganda Premier League', date: '2026-12-22', kickoffutc: '2026-12-22T13:00:00Z', home: 'Mbarara City FC', away: 'BUL FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1147, competition: 'Uganda Premier League', date: '2026-12-22', kickoffutc: '2026-12-22T13:00:00Z', home: 'Police FC', away: 'URA FC', scoreh: 0, scorea: 0, status: 'Scheduled' },
@@ -240,134 +221,94 @@ document.addEventListener('DOMContentLoaded', () => {
                 { id: 1152, competition: 'Uganda Premier League', date: '2026-12-24', kickoffutc: '2026-12-24T13:00:00Z', home: 'NEC FC', away: 'Vipers SC', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 1153, competition: 'Uganda Premier League', date: '2026-12-30', kickoffutc: '2026-12-30T13:00:00Z', home: 'Entebbe UPPC', away: 'SC Villa', scoreh: 0, scorea: 0, status: 'Scheduled' },
 
-                // ── FUFA Big League Matchday 1
-                // ── Matchday 2 ──
-                // ── Matchday 3 ──
-                // ── Matchday 4 ──
-                // ── Matchday 5 ──
-                // ── Matchday 6 ──
-                // ── Matchday 3 ──
-                // ── Matchday 6 ──
-                // ── Matchday 5 ──
-                // ── Matchday 7 ──
-                // ── Matchday 8 ──
-                // ── Matchday 9 ──
-                // ── Matchday 10 ──
-                // ── Matchday 11 ──
-                // ── Matchday 12 ──
-                // ── Matchday 13 ──
-                // ── Matchday 14 ──
-                // ── Matchday 15 ──
-                // ── Matchday 16 ──
-                // ── Matchday 17 ──
-
-
-                // ── FUFA Big League Matchday 1 – Results ──
+                // ── FUFA Big League 2026/27 — synced from Flashscore 2026-11-04 ──
                 { id: 2001, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Buwambo', away: 'Young Elephant Academy', scoreh: 1, scorea: 1, status: 'FT' },
                 { id: 2002, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Catda', away: 'Rwenzori Lions', scoreh: 2, scorea: 0, status: 'FT' },
                 { id: 2003, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Iganga United', away: 'Pakwach Young Stars', scoreh: 1, scorea: 0, status: 'FT' },
-                { id: 2004, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Kaaro Karungi', away: 'Amus College', scoreh: 0, scorea: 1, status: 'FT' },
-                { id: 2005, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Kiyinda Boys', away: 'Calvary', scoreh: 1, scorea: 2, status: 'FT' },
-                { id: 2006, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Ntinda United', away: 'Paidha Black Angels', scoreh: 0, scorea: 2, status: 'FT' },
-
-                // ── FUFA Big League Matchday 2 – Results ──
-                { id: 2007, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Amus College', away: 'Buwambo', scoreh: 3, scorea: 0, status: 'FT' },
-                { id: 2008, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Paidha Black Angels', away: 'Kiyinda Boys', scoreh: 1, scorea: 0, status: 'FT' },
-                { id: 2009, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Pakwach Young Stars', away: 'Kaaro Karungi', scoreh: 3, scorea: 0, status: 'FT' },
-                { id: 2010, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Rwenzori Lions', away: 'Iganga United', scoreh: 1, scorea: 0, status: 'FT' },
-                { id: 2011, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Volcanoes', away: 'Catda', scoreh: 1, scorea: 0, status: 'FT' },
-                { id: 2012, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Young Elephant Academy', away: 'Calvary', scoreh: 2, scorea: 0, status: 'FT' },
-
-                // ── FUFA Big League Matchday 3 – Results (partial) ──
-                { id: 2013, competition: 'FUFA Big League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Calvary', away: 'Kaaro Karungi', scoreh: 2, scorea: 0, status: 'FT' },
-
-                // ── FUFA Big League Matchday 3 – Results ──
-                { id: 2014, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Calvary', away: 'Amus College', scoreh: 0, scorea: 0, status: 'FT' },
-                { id: 2015, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Catda', away: 'Young Elephant Academy', scoreh: 1, scorea: 0, status: 'FT' },
-                { id: 2016, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Iganga United', away: 'Volcanoes', scoreh: 0, scorea: 1, status: 'FT' },
-                { id: 2017, competition: 'FUFA Big League', date: '2026-10-13', kickoffutc: '2026-10-13T13:00:00Z', home: 'Kaaro Karungi', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'FT' },
-                { id: 2018, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Kiyinda Boys', away: 'Pakwach Young Stars', scoreh: 2, scorea: 0, status: 'FT' },
-                { id: 2019, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Onduparaka', away: 'Paidha Black Angels', scoreh: 1, scorea: 2, status: 'FT' },
-
-                // ── FUFA Big League Matchday 4 ──
-                { id: 2020, competition: 'FUFA Big League', date: '2026-10-15', kickoffutc: '2026-10-15T13:00:00Z', home: 'Paidha Black Angels', away: 'Iganga United', scoreh: 1, scorea: 0, status: 'FT' },
-                { id: 2021, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Amus College', away: 'Catda', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2022, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Buwambo', away: 'Calvary', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2023, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Pakwach Young Stars', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2024, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Rwenzori Lions', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2025, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Volcanoes', away: 'Kaaro Karungi', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2026, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Young Elephant Academy', away: 'Iganga United', scoreh: 0, scorea: 0, status: 'Scheduled' },
-
-                // ── FUFA Big League Matchday 5 ──
-                { id: 2027, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Catda', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2028, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Iganga United', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2029, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Kaaro Karungi', away: 'Young Elephant Academy', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2030, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Kiyinda Boys', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2031, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Onduparaka', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2032, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Paidha Black Angels', away: 'Pakwach Young Stars', scoreh: 0, scorea: 0, status: 'Scheduled' },
-
-                // ── FUFA Big League Matchday 6 ──
-                { id: 2033, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Amus College', away: 'Kaaro Karungi', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2034, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Buwambo', away: 'Iganga United', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2035, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Calvary', away: 'Catda', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2036, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Rwenzori Lions', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2037, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Volcanoes', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2038, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Young Elephant Academy', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2039, competition: 'FUFA Big League', date: '2026-11-05', kickoffutc: '2026-11-05T13:00:00Z', home: 'Calvary', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2040, competition: 'FUFA Big League', date: '2026-11-05', kickoffutc: '2026-11-05T13:00:00Z', home: 'Young Elephant Academy', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'Scheduled' },
-
-                // ── FUFA Big League Matchday 7 ──
-                { id: 2041, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Kaaro Karungi', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2042, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Kiyinda Boys', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2043, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Onduparaka', away: 'Young Elephant Academy', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2044, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Paidha Black Angels', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2045, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Pakwach Young Stars', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2046, competition: 'FUFA Big League', date: '2026-11-11', kickoffutc: '2026-11-11T13:00:00Z', home: 'Iganga United', away: 'Calvary', scoreh: 0, scorea: 0, status: 'Scheduled' },
-
-                // ── FUFA Big League Matchday 8 ──
-                { id: 2047, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Amus College', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2048, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Buwambo', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2049, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Catda', away: 'Iganga United', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2050, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Volcanoes', away: 'Pakwach Young Stars', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2051, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Young Elephant Academy', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
-
-                // ── FUFA Big League Matchday 9 ──
-                { id: 2052, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Kaaro Karungi', away: 'Catda', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2053, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Kiyinda Boys', away: 'Calvary', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2054, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Onduparaka', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2055, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Paidha Black Angels', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2056, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Pakwach Young Stars', away: 'Young Elephant Academy', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2057, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Rwenzori Lions', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
-
-                // ── FUFA Big League Matchday 10 ──
-                { id: 2058, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Amus College', away: 'Pakwach Young Stars', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2059, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Buwambo', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2060, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Calvary', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2061, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Catda', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2062, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Iganga United', away: 'Kaaro Karungi', scoreh: 0, scorea: 0, status: 'Scheduled' },
-
-                // ── FUFA Big League Matchday 11 ──
-                { id: 2063, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Kiyinda Boys', away: 'Iganga United', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2064, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Onduparaka', away: 'Catda', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2065, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Paidha Black Angels', away: 'Calvary', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2066, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Pakwach Young Stars', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
-
-                // ── FUFA Big League Matchday 12 ──
-                { id: 2067, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Amus College', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2068, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Buwambo', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2069, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Calvary', away: 'Pakwach Young Stars', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2070, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Catda', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2071, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Iganga United', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2072, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Kaaro Karungi', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'Scheduled' },
-                { id: 2073, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Young Elephant Academy', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' },
-
-                // ── FUFA Big League Matchday 13 ──
+                { id: 2004, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Kaaro Karungi', away: 'Paidha Black Angels', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 2005, competition: 'FUFA Big League', date: '2026-09-27', kickoffutc: '2026-09-27T13:00:00Z', home: 'Kiyinda Boys', away: 'Onduparaka', scoreh: 3, scorea: 1, status: 'FT' },
+                { id: 2006, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Amus College', away: 'Buwambo', scoreh: 3, scorea: 0, status: 'FT' },
+                { id: 2007, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Paidha Black Angels', away: 'Kiyinda Boys', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2008, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Pakwach Young Stars', away: 'Kaaro Karungi', scoreh: 3, scorea: 0, status: 'FT' },
+                { id: 2009, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Rwenzori Lions', away: 'Iganga United', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2010, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Volcanoes', away: 'Catda', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2011, competition: 'FUFA Big League', date: '2026-10-04', kickoffutc: '2026-10-04T13:00:00Z', home: 'Young Elephant Academy', away: 'Calvary', scoreh: 2, scorea: 0, status: 'FT' },
+                { id: 2012, competition: 'FUFA Big League', date: '2026-10-08', kickoffutc: '2026-10-08T13:00:00Z', home: 'Calvary', away: 'Kaaro Karungi', scoreh: 2, scorea: 0, status: 'FT' },
+                { id: 2013, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Calvary', away: 'Amus College', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 2014, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Catda', away: 'Young Elephant Academy', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2015, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Iganga United', away: 'Volcanoes', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 2016, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Kiyinda Boys', away: 'Pakwach Young Stars', scoreh: 2, scorea: 0, status: 'FT' },
+                { id: 2017, competition: 'FUFA Big League', date: '2026-10-11', kickoffutc: '2026-10-11T13:00:00Z', home: 'Onduparaka', away: 'Paidha Black Angels', scoreh: 1, scorea: 2, status: 'FT' },
+                { id: 2018, competition: 'FUFA Big League', date: '2026-10-13', kickoffutc: '2026-10-13T13:00:00Z', home: 'Kaaro Karungi', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 2019, competition: 'FUFA Big League', date: '2026-10-15', kickoffutc: '2026-10-15T13:00:00Z', home: 'Paidha Black Angels', away: 'Iganga United', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2020, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Amus College', away: 'Catda', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 2021, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Buwambo', away: 'Calvary', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 2022, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Pakwach Young Stars', away: 'Onduparaka', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 2023, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Rwenzori Lions', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 2024, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Volcanoes', away: 'Kaaro Karungi', scoreh: 0, scorea: 0, status: 'FT' },
+                { id: 2025, competition: 'FUFA Big League', date: '2026-10-18', kickoffutc: '2026-10-18T13:00:00Z', home: 'Young Elephant Academy', away: 'Iganga United', scoreh: 2, scorea: 1, status: 'FT' },
+                { id: 2026, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Catda', away: 'Buwambo', scoreh: 4, scorea: 0, status: 'FT' },
+                { id: 2027, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Kaaro Karungi', away: 'Young Elephant Academy', scoreh: 2, scorea: 2, status: 'FT' },
+                { id: 2028, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Kiyinda Boys', away: 'Volcanoes', scoreh: 2, scorea: 0, status: 'FT' },
+                { id: 2029, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Onduparaka', away: 'Rwenzori Lions', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2030, competition: 'FUFA Big League', date: '2026-10-25', kickoffutc: '2026-10-25T13:00:00Z', home: 'Paidha Black Angels', away: 'Pakwach Young Stars', scoreh: 2, scorea: 0, status: 'FT' },
+                { id: 2031, competition: 'FUFA Big League', date: '2026-10-26', kickoffutc: '2026-10-26T07:00:00Z', home: 'Iganga United', away: 'Amus College', scoreh: 0, scorea: 1, status: 'FT' },
+                { id: 2032, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Amus College', away: 'Kaaro Karungi', scoreh: 5, scorea: 0, status: 'FT' },
+                { id: 2033, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Buwambo', away: 'Iganga United', scoreh: 1, scorea: 1, status: 'FT' },
+                { id: 2034, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Calvary', away: 'Catda', scoreh: 1, scorea: 0, status: 'FT' },
+                { id: 2035, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Rwenzori Lions', away: 'Paidha Black Angels', scoreh: 4, scorea: 1, status: 'FT' },
+                { id: 2036, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Volcanoes', away: 'Onduparaka', scoreh: 4, scorea: 0, status: 'FT' },
+                { id: 2037, competition: 'FUFA Big League', date: '2026-11-01', kickoffutc: '2026-11-01T13:00:00Z', home: 'Young Elephant Academy', away: 'Kiyinda Boys', scoreh: 1, scorea: 2, status: 'FT' },
+                { id: 2038, competition: 'FUFA Big League', date: '2026-11-05', kickoffutc: '2026-11-05T13:00:00Z', home: 'Calvary', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2039, competition: 'FUFA Big League', date: '2026-11-05', kickoffutc: '2026-11-05T13:00:00Z', home: 'Young Elephant Academy', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2040, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Kaaro Karungi', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2041, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Kiyinda Boys', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2042, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Onduparaka', away: 'Young Elephant Academy', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2043, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Paidha Black Angels', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2044, competition: 'FUFA Big League', date: '2026-11-08', kickoffutc: '2026-11-08T13:00:00Z', home: 'Pakwach Young Stars', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2045, competition: 'FUFA Big League', date: '2026-11-11', kickoffutc: '2026-11-11T13:00:00Z', home: 'Iganga United', away: 'Calvary', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2046, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Amus College', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2047, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Buwambo', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2048, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Catda', away: 'Iganga United', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2049, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Volcanoes', away: 'Pakwach Young Stars', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2050, competition: 'FUFA Big League', date: '2026-11-15', kickoffutc: '2026-11-15T13:00:00Z', home: 'Young Elephant Academy', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2051, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Kaaro Karungi', away: 'Catda', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2052, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Kiyinda Boys', away: 'Calvary', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2053, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Onduparaka', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2054, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Paidha Black Angels', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2055, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Pakwach Young Stars', away: 'Young Elephant Academy', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2056, competition: 'FUFA Big League', date: '2026-11-22', kickoffutc: '2026-11-22T13:00:00Z', home: 'Rwenzori Lions', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2057, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Amus College', away: 'Pakwach Young Stars', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2058, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Buwambo', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2059, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Calvary', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2060, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Catda', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2061, competition: 'FUFA Big League', date: '2026-11-29', kickoffutc: '2026-11-29T13:00:00Z', home: 'Iganga United', away: 'Kaaro Karungi', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2062, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Kiyinda Boys', away: 'Iganga United', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2063, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Onduparaka', away: 'Catda', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2064, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Paidha Black Angels', away: 'Calvary', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2065, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Pakwach Young Stars', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2066, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Rwenzori Lions', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2067, competition: 'FUFA Big League', date: '2026-12-06', kickoffutc: '2026-12-06T13:00:00Z', home: 'Volcanoes', away: 'Young Elephant Academy', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2068, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Amus College', away: 'Volcanoes', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2069, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Buwambo', away: 'Rwenzori Lions', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2070, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Calvary', away: 'Pakwach Young Stars', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2071, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Catda', away: 'Paidha Black Angels', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2072, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Iganga United', away: 'Onduparaka', scoreh: 0, scorea: 0, status: 'Scheduled' },
+                { id: 2073, competition: 'FUFA Big League', date: '2026-12-13', kickoffutc: '2026-12-13T13:00:00Z', home: 'Kaaro Karungi', away: 'Kiyinda Boys', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 2074, competition: 'FUFA Big League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'Onduparaka', away: 'Kaaro Karungi', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 2075, competition: 'FUFA Big League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'Pakwach Young Stars', away: 'Catda', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 2076, competition: 'FUFA Big League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'Rwenzori Lions', away: 'Calvary', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 2077, competition: 'FUFA Big League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'Volcanoes', away: 'Buwambo', scoreh: 0, scorea: 0, status: 'Scheduled' },
                 { id: 2078, competition: 'FUFA Big League', date: '2026-12-20', kickoffutc: '2026-12-20T13:00:00Z', home: 'Young Elephant Academy', away: 'Amus College', scoreh: 0, scorea: 0, status: 'Scheduled' }
             ];
+            // Drop stale seeded matches (ids no longer in the verified list)
+            const seededIds = new Set(uplMatches.map(m => String(m.id)));
+            existing = existing.filter(m => {
+                if (!m) return false;
+                const n = Number(m.id);
+                const inSeedRange = (n >= 1001 && n <= 1999) || (n >= 2001 && n <= 2999);
+                return !inSeedRange || seededIds.has(String(m.id));
+            });
             uplMatches.forEach(um => {
                 const idx = existing.findIndex(m => String(m.id) === String(um.id));
                 if (idx >= 0) existing[idx] = { ...existing[idx], ...um };
@@ -439,7 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const rawTeams = localStorage.getItem(STORAGE_KEY_TEAMS);
             if (rawTeams) {
                 // Also purge stale FBL teams from the previous season
-                const staleFBL = ['busoga united', 'kyetume', 'ndejje university', 'booma', 'myda', 'gaddafi'];
+                const staleFBL = ['busoga united', 'kyetume', 'ndejje university', 'booma', 'myda', 'gaddafi', 'ntinda'];
                 const teams = JSON.parse(rawTeams);
                 const cleaned = teams.filter(t => {
                     if (!t || !t.name) return false;
@@ -612,7 +553,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 { name: 'Onduparaka', code: 'OND', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['onduparaka'] },
                 { name: 'Calvary', code: 'CAL', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['calvary'] },
                 { name: 'Kaaro Karungi', code: 'KAA', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['kaaro Karungi'] || UPL_TEAM_LOGOS['kaaro karungi'] },
-                { name: 'Ntinda United', code: 'NTI', competition: 'FUFA Big League', logo: UPL_TEAM_LOGOS['ntinda united'] },
 
             ];
 
@@ -934,7 +874,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const s = (status || '').toLowerCase();
         if (s === 'ft' || s === 'completed') return 'status-ft';
         if (s === 'postponed') return 'status-postponed';
-        if (s === 'cancelled') return 'status-cancelled';
+        if (s === 'cancelled' || s === 'vacated') return 'status-cancelled';
         return 'status-scheduled';
     }
 
@@ -943,6 +883,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (s === 'FT' || s === 'COMPLETED') return 'FT';
         if (s === 'POSTPONED') return 'Postponed';
         if (s === 'CANCELLED') return 'Cancelled';
+        if (s === 'VACATED') return 'Vacated';
         return 'Scheduled';
     }
 
@@ -1047,7 +988,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const all = getMatches();
         const filtered = all.filter(m => {
             if (!m.date || m.date === '' || m.date === 'TBD') return state.dateScope === 'all' && m.status !== 'FT' && m.status !== 'Completed';
-            if (m.status === 'FT' || m.status === 'Completed') return false;
+            if (state.dateScope === 'all' && (m.status === 'FT' || m.status === 'Completed')) return false;
             const dateMatch = state.dateScope === 'all' || m.date === state.selectedDate;
             const compMatch = state.selectedComp === 'ALL' || (m.competition && m.competition === state.selectedComp);
             return dateMatch && compMatch;
@@ -1407,7 +1348,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderSeasonKpis();
         // Keep badges updated
         const all = getMatches();
-        const fixCount = all.filter(m => m.status !== 'FT' && m.status !== 'Completed' && (state.dateScope === 'all' || m.date === state.selectedDate) && (state.selectedComp === 'ALL' || m.competition === state.selectedComp)).length;
+        const fixCount = all.filter(m => (state.dateScope === 'date' || (m.status !== 'FT' && m.status !== 'Completed')) && m.date !== '' && (state.dateScope === 'all' || m.date === state.selectedDate) && (state.selectedComp === 'ALL' || m.competition === state.selectedComp)).length;
         const resCount = all.filter(m => (m.status === 'FT' || m.status === 'Completed') && (state.dateScope === 'all' || m.date === state.selectedDate) && (state.selectedComp === 'ALL' || m.competition === state.selectedComp)).length;
         const bFix = document.getElementById('badgeFixtures');
         const bRes = document.getElementById('badgeResults');
@@ -1470,6 +1411,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.MASSAVU_SUPABASE && typeof window.MASSAVU_SUPABASE.loadMatchesFromCloud === 'function') {
             try {
                 await window.MASSAVU_SUPABASE.loadMatchesFromCloud();
+                seedDefaultUplMatchesToStorage();
                 state.allMatches = getMatches();
                 renderCurrentView();
             } catch (e) { console.warn('[main] Cloud sync failed, using local data.'); }
