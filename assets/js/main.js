@@ -498,7 +498,10 @@ document.addEventListener('DOMContentLoaded', () => {
         'ntugasaze fc': 'https://media.api-sports.io/football/teams/9072.png',
         'kataka': 'https://media.api-sports.io/football/teams/9073.png',
         'kataka fc': 'https://media.api-sports.io/football/teams/9073.png',
-        'entebbe uppc': 'https://media.api-sports.io/football/teams/9074.png',
+        'entebbe uppc': 'assets/images/entebbe_uppc_logo.png',
+        'entebbe uppc fc': 'assets/images/entebbe_uppc_logo.png',
+        'entebbe fc': 'assets/images/entebbe_uppc_logo.png',
+        'entebbe': 'assets/images/entebbe_uppc_logo.png',
         'buhimba saints': 'https://media.api-sports.io/football/teams/9075.png',
         'calvary fc': 'https://media.api-sports.io/football/teams/9076.png',
 
