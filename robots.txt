@@ -7,4 +7,4 @@ Disallow: /admin.html
 Disallow: /admin-editor.html
 Disallow: /admin-login.html
 
-Sitemap: https://massavusports.com/sitemap.xml
+Sitemap: https://www.massavusports.com/sitemap.xml
