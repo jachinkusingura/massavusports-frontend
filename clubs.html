@@ -4,137 +4,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Directory of the 31 clubs covered by MassavuSports: 18 Uganda Premier League clubs and 13 FUFA Big League clubs, with a guide to following each side's fixtures and results.">
+    <meta name="description" content="Profiles of all 31 clubs in the Uganda Premier League and FUFA Big League with this season's record, recent form and next fixture, updated from verified results.">
     <meta name="robots" content="index, follow">
     <title>Ugandan Football Clubs Directory: UPL &amp; FUFA Big League | MassavuSports</title>
     <link rel="canonical" href="https://www.massavusports.com/clubs.html">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <!-- Google AdSense -->
     <meta name="google-adsense-account" content="ca-pub-7077047821404742">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7077047821404742"
         crossorigin="anonymous"></script>
     <style>
         .guide-wrap { max-width: 980px; padding: 3rem 1.25rem 4rem; }
-        .guide-card { background:#111c38; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:1.9rem 1.75rem; margin-bottom:1.5rem; color:#cbd5e1; line-height:1.8; font-size:0.95rem; }
-        .guide-card h2 { color:#facc15; font-size:1.2rem; margin-bottom:0.9rem; }
-        .guide-card p { margin-bottom:0.85rem; }
-        .club-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:0.9rem; margin-top:1rem; }
-        .club-item { background:#080e1e; border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:0.9rem 1rem; display:flex; align-items:center; gap:0.7rem; color:#fff; font-weight:700; font-size:0.92rem; }
-        .club-item img { width:28px; height:28px; object-fit:contain; }
-        .club-item i { color:#facc15; width:28px; text-align:center; }
+        .guide-card { background:#111c38; border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:1.7rem 1.6rem; margin-bottom:1.4rem; color:#cbd5e1; line-height:1.75; font-size:0.94rem; }
+        .guide-card h2 { color:#facc15; font-size:1.15rem; margin-bottom:0.8rem; }
+        .guide-card h3 { color:#fff; font-size:1.02rem; margin-bottom:0.4rem; display:flex; align-items:center; gap:0.55rem; }
+        .guide-card h3 img { width:26px; height:26px; object-fit:contain; }
+        .guide-card p { margin-bottom:0.8rem; }
+        .guide-table { width:100%; border-collapse:collapse; margin:0.6rem 0 0.9rem; font-size:0.88rem; }
+        .guide-table th, .guide-table td { text-align:left; padding:0.5rem 0.6rem; border-bottom:1px solid rgba(255,255,255,0.08); }
+        .guide-table th { color:#facc15; }
+        .club-card { background:#080e1e; border:1px solid rgba(255,255,255,0.07); border-radius:12px; padding:1.2rem 1.25rem; margin-bottom:1rem; }
+        .club-meta { font-size:0.78rem; color:#94a3b8; margin-bottom:0.6rem; }
+        .jump a { display:inline-block; margin:0 0.5rem 0.4rem 0; color:#facc15; font-size:0.85rem; }
+        a.gold { color:#facc15; }
     </style>
 </head>
 
 <body>
     <header class="navbar">
         <div class="container">
-            <a href="index.html" class="logo">
-                <img src="assets/images/logo.png" alt="MassavuSports Logo"
-                    style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;">
+            <a href="/index.html" class="logo">
+                <img src="/assets/images/logo.png" alt="MassavuSports Logo" style="height: 35px; width: auto; object-fit: contain; margin-right: 8px;">
                 Massavu<span>Sports</span>
             </a>
             <nav class="nav-links" id="nav-links" aria-label="Main navigation">
-                <a href="index.html">Match Centre</a>
-                <a href="leagues.html">Leagues Guide</a>
-                <a href="clubs.html" class="active">Clubs</a>
-                <a href="about.html">About</a>
-                <a href="contact.html">Contact</a>
+                <a href="/index.html">Match Centre</a>
+                <a href="/recaps.html">Weekly Recaps</a>
+                <a href="/leagues.html">Leagues Guide</a>
+                <a href="/clubs.html" class="active">Clubs</a>
+                <a href="/about.html">About</a>
+                <a href="/contact.html">Contact</a>
             </nav>
-            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu"><i
-                    class="fa-solid fa-bars"></i></button>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
         </div>
     </header>
 
     <main class="container guide-wrap">
         <h1 class="section-title">Ugandan Football Clubs Directory</h1>
-        <p style="color:#94a3b8; max-width:720px; margin-bottom:1.5rem;">MassavuSports covers 31 clubs across two
-            divisions. Use this directory to see who competes where, then head to the
-            <a href="index.html" style="color:#facc15;">Match Centre</a> for each club's latest fixtures, results and
-            league position. New to the competitions? Start with our
-            <a href="leagues.html" style="color:#facc15;">Leagues Guide</a>.</p>
-
+        <p style="color:#94a3b8; max-width:760px; margin-bottom:1.4rem;">Profiles for all 31 clubs we cover. Every number below is generated from the results we have verified this season, so the profiles update as matches are played. For how points and tables work, read the <a class="gold" href="/leagues.html">Leagues Guide</a>; for week-by-week analysis see the <a class="gold" href="/recaps.html">Weekly Recaps</a>.</p>
+        
         <section class="guide-card">
             <h2>Uganda Premier League (18 clubs)</h2>
-            <p>The top division of Ugandan football. These clubs compete for the national title, places in continental
-                competition, and survival at the bottom of the table.</p>
-            <div class="club-grid">
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Blacks Power FC</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> BUL FC</div>
-                <div class="club-item"><img src="assets/images/entebbe_uppc_logo.png" alt="Entebbe UPPC crest"> Entebbe UPPC</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Express FC</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Kataka FC</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> KCCA FC</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Kigezi Homeboyz</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Kitara FC</div>
-                <div class="club-item"><img src="assets/images/lugazi_logo.png" alt="Lugazi FC crest"> Lugazi FC</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Maroons FC</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Mbarara City FC</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> NEC FC</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Ntugasaze FC</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Police FC</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> SC Villa</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> UPDF FC</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> URA FC</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Vipers SC</div>
-            </div>
+            <p class="jump"><a href="#blacks-power-fc">Blacks Power FC</a> <a href="#bul-fc">BUL FC</a> <a href="#entebbe-uppc">Entebbe UPPC</a> <a href="#express-fc">Express FC</a> <a href="#kataka-fc">Kataka FC</a> <a href="#kcca-fc">KCCA FC</a> <a href="#kigezi-homeboyz">Kigezi Homeboyz</a> <a href="#kitara-fc">Kitara FC</a> <a href="#lugazi-fc">Lugazi FC</a> <a href="#maroons-fc">Maroons FC</a> <a href="#mbarara-city-fc">Mbarara City FC</a> <a href="#nec-fc">NEC FC</a> <a href="#ntugasaze-fc">Ntugasaze FC</a> <a href="#police-fc">Police FC</a> <a href="#sc-villa">SC Villa</a> <a href="#updf-fc">UPDF FC</a> <a href="#ura-fc">URA FC</a> <a href="#vipers-sc">Vipers SC</a></p>
+            
+            <article class="club-card" id="blacks-power-fc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Blacks Power FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P9 W4 D1 L4 &middot; GF 9 GA 12 &middot; 13 pts</div>
+                <p>Blacks Power FC compete in the Uganda Premier League. From 9 completed matches on our verified records they have 4 wins, 1 draw and 4 defeats, scoring 9 and conceding 12 for 13 points. That places them 7th of 18 in our Premier League table. Their most recent result was a 0-1 defeat at home to NEC FC on 31 Oct, and their recent form reads L L W D L. Next up: a trip to Express FC on 5 Nov.</p>
+            </article>
+
+            <article class="club-card" id="bul-fc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> BUL FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P9 W7 D2 L0 &middot; GF 18 GA 6 &middot; 23 pts</div>
+                <p>BUL FC compete in the Uganda Premier League. From 9 completed matches on our verified records they have 7 wins, 2 draws and 0 defeats, scoring 18 and conceding 6 for 23 points. That places them 2nd of 18 in our Premier League table. Their most recent result was a 2-1 win at home to SC Villa on 3 Nov, and their recent form reads D W W D W. Next up: a trip to Vipers SC on 18 Nov.</p>
+            </article>
+
+            <article class="club-card" id="entebbe-uppc">
+                <h3><img src="/assets/images/entebbe_uppc_logo.png" alt="Entebbe UPPC crest" width="26" height="26"> Entebbe UPPC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P9 W4 D4 L1 &middot; GF 8 GA 3 &middot; 16 pts</div>
+                <p>Entebbe UPPC compete in the Uganda Premier League. From 9 completed matches on our verified records they have 4 wins, 4 draws and 1 defeat, scoring 8 and conceding 3 for 16 points. That places them 4th of 18 in our Premier League table. Their most recent result was a 1-1 draw away at BUL FC on 31 Oct, and their recent form reads W D W D D. Next up: a trip to Ntugasaze FC on 5 Nov.</p>
+            </article>
+
+            <article class="club-card" id="express-fc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Express FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P9 W1 D5 L3 &middot; GF 7 GA 9 &middot; 8 pts</div>
+                <p>Express FC compete in the Uganda Premier League. From 9 completed matches on our verified records they have 1 win, 5 draws and 3 defeats, scoring 7 and conceding 9 for 8 points. That places them 12th of 18 in our Premier League table. Their most recent result was a 1-1 draw away at Ntugasaze FC on 1 Nov, and their recent form reads D L D D D. Next up: a home game against Blacks Power FC on 5 Nov.</p>
+            </article>
+
+            <article class="club-card" id="kataka-fc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Kataka FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P9 W0 D3 L6 &middot; GF 7 GA 21 &middot; 3 pts</div>
+                <p>Kataka FC compete in the Uganda Premier League. From 9 completed matches on our verified records they have 0 wins, 3 draws and 6 defeats, scoring 7 and conceding 21 for 3 points. That places them 17th of 18 in our Premier League table. Their most recent result was a 1-2 defeat at home to Police FC on 30 Oct, and their recent form reads L L L D L. Next up: a home game against URA FC on 4 Nov.</p>
+            </article>
+
+            <article class="club-card" id="kcca-fc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> KCCA FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P8 W5 D1 L2 &middot; GF 9 GA 6 &middot; 16 pts</div>
+                <p>KCCA FC compete in the Uganda Premier League. From 8 completed matches on our verified records they have 5 wins, 1 draw and 2 defeats, scoring 9 and conceding 6 for 16 points. That places them 5th of 18 in our Premier League table. Their most recent result was a 3-1 win away at Mbarara City FC on 31 Oct, and their recent form reads W W W W W. Next up: a home game against Maroons FC on 4 Nov.</p>
+            </article>
+
+            <article class="club-card" id="kigezi-homeboyz">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Kigezi Homeboyz</h3>
+                <div class="club-meta">Uganda Premier League &middot; P7 W0 D1 L6 &middot; GF 2 GA 12 &middot; 1 pts</div>
+                <p>Kigezi Homeboyz compete in the Uganda Premier League. From 7 completed matches on our verified records they have 0 wins, 1 draw and 6 defeats, scoring 2 and conceding 12 for 1 point. That places them 18th of 18 in our Premier League table. Their most recent result was a 1-3 defeat away at Police FC on 27 Oct, and their recent form reads L L L L L. Next up: a home game against Mbarara City FC on 6 Nov.</p>
+            </article>
+
+            <article class="club-card" id="kitara-fc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Kitara FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P6 W3 D3 L0 &middot; GF 7 GA 4 &middot; 12 pts</div>
+                <p>Kitara FC compete in the Uganda Premier League. From 6 completed matches on our verified records they have 3 wins, 3 draws and 0 defeats, scoring 7 and conceding 4 for 12 points. That places them 8th of 18 in our Premier League table. Their most recent result was a 1-1 draw away at Police FC on 3 Nov, and their recent form reads D W W W D. Next up: a home game against URA FC on 7 Nov.</p>
+            </article>
+
+            <article class="club-card" id="lugazi-fc">
+                <h3><img src="/assets/images/lugazi_logo.png" alt="Lugazi FC crest" width="26" height="26"> Lugazi FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P9 W2 D2 L5 &middot; GF 6 GA 13 &middot; 8 pts</div>
+                <p>Lugazi FC compete in the Uganda Premier League. From 9 completed matches on our verified records they have 2 wins, 2 draws and 5 defeats, scoring 6 and conceding 13 for 8 points. That places them 15th of 18 in our Premier League table. Their most recent result was a 1-2 defeat at home to SC Villa on 31 Oct, and their recent form reads L D D L L. Next up: a trip to Vipers SC on 5 Nov.</p>
+            </article>
+
+            <article class="club-card" id="maroons-fc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Maroons FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P8 W3 D2 L3 &middot; GF 13 GA 8 &middot; 11 pts</div>
+                <p>Maroons FC compete in the Uganda Premier League. From 8 completed matches on our verified records they have 3 wins, 2 draws and 3 defeats, scoring 13 and conceding 8 for 11 points. That places them 10th of 18 in our Premier League table. Their most recent result was a 0-0 draw away at Entebbe UPPC on 28 Oct, and their recent form reads L W D W D. Next up: a trip to KCCA FC on 4 Nov.</p>
+            </article>
+
+            <article class="club-card" id="mbarara-city-fc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Mbarara City FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P8 W2 D2 L4 &middot; GF 4 GA 8 &middot; 8 pts</div>
+                <p>Mbarara City FC compete in the Uganda Premier League. From 8 completed matches on our verified records they have 2 wins, 2 draws and 4 defeats, scoring 4 and conceding 8 for 8 points. That places them 13th of 18 in our Premier League table. Their most recent result was a 1-3 defeat at home to KCCA FC on 31 Oct, and their recent form reads L W L W L. Next up: a trip to Kigezi Homeboyz on 6 Nov.</p>
+            </article>
+
+            <article class="club-card" id="nec-fc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> NEC FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P10 W7 D2 L1 &middot; GF 19 GA 5 &middot; 23 pts</div>
+                <p>NEC FC compete in the Uganda Premier League. From 10 completed matches on our verified records they have 7 wins, 2 draws and 1 defeat, scoring 19 and conceding 5 for 23 points. That places them 1st of 18 in our Premier League table. Their most recent result was a 1-0 win at home to UPDF FC on 3 Nov, and their recent form reads W L W W W. Next up: a trip to Maroons FC on 19 Nov.</p>
+            </article>
+
+            <article class="club-card" id="ntugasaze-fc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Ntugasaze FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P8 W1 D1 L6 &middot; GF 5 GA 19 &middot; 4 pts</div>
+                <p>Ntugasaze FC compete in the Uganda Premier League. From 8 completed matches on our verified records they have 1 win, 1 draw and 6 defeats, scoring 5 and conceding 19 for 4 points. That places them 16th of 18 in our Premier League table. Their most recent result was a 1-1 draw at home to Express FC on 1 Nov, and their recent form reads L W L L D. Next up: a home game against Entebbe UPPC on 5 Nov.</p>
+            </article>
+
+            <article class="club-card" id="police-fc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Police FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P10 W4 D3 L3 &middot; GF 10 GA 13 &middot; 15 pts</div>
+                <p>Police FC compete in the Uganda Premier League. From 10 completed matches on our verified records they have 4 wins, 3 draws and 3 defeats, scoring 10 and conceding 13 for 15 points. That places them 6th of 18 in our Premier League table. Their most recent result was a 1-1 draw at home to Kitara FC on 3 Nov, and their recent form reads L D W W D. Next up: a home game against KCCA FC on 20 Nov.</p>
+            </article>
+
+            <article class="club-card" id="sc-villa">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> SC Villa</h3>
+                <div class="club-meta">Uganda Premier League &middot; P10 W6 D3 L1 &middot; GF 19 GA 6 &middot; 21 pts</div>
+                <p>SC Villa compete in the Uganda Premier League. From 10 completed matches on our verified records they have 6 wins, 3 draws and 1 defeat, scoring 19 and conceding 6 for 21 points. That places them 3rd of 18 in our Premier League table. Their most recent result was a 1-2 defeat away at BUL FC on 3 Nov, and their recent form reads W W D W L. Next up: a home game against UPDF FC on 20 Nov.</p>
+            </article>
+
+            <article class="club-card" id="updf-fc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> UPDF FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P9 W2 D2 L5 &middot; GF 4 GA 8 &middot; 8 pts</div>
+                <p>UPDF FC compete in the Uganda Premier League. From 9 completed matches on our verified records they have 2 wins, 2 draws and 5 defeats, scoring 4 and conceding 8 for 8 points. That places them 14th of 18 in our Premier League table. Their most recent result was a 0-1 defeat away at NEC FC on 3 Nov, and their recent form reads W L L L L. Next up: a trip to SC Villa on 20 Nov.</p>
+            </article>
+
+            <article class="club-card" id="ura-fc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> URA FC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P8 W3 D1 L4 &middot; GF 7 GA 10 &middot; 10 pts</div>
+                <p>URA FC compete in the Uganda Premier League. From 8 completed matches on our verified records they have 3 wins, 1 draw and 4 defeats, scoring 7 and conceding 10 for 10 points. That places them 11th of 18 in our Premier League table. Their most recent result was a 1-0 win at home to Vipers SC on 31 Oct, and their recent form reads L D L W W. Next up: a trip to Kataka FC on 4 Nov.</p>
+            </article>
+
+            <article class="club-card" id="vipers-sc">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Vipers SC</h3>
+                <div class="club-meta">Uganda Premier League &middot; P8 W3 D2 L3 &middot; GF 13 GA 4 &middot; 11 pts</div>
+                <p>Vipers SC compete in the Uganda Premier League. From 8 completed matches on our verified records they have 3 wins, 2 draws and 3 defeats, scoring 13 and conceding 4 for 11 points. That places them 9th of 18 in our Premier League table. Their most recent result was a 0-1 defeat away at URA FC on 31 Oct, and their recent form reads D W D L L. Next up: a home game against Lugazi FC on 5 Nov.</p>
+            </article>
         </section>
 
         <section class="guide-card">
             <h2>FUFA Big League (13 clubs)</h2>
-            <p>The second division, which feeds the Premier League. Clubs here come from towns and regions across
-                Uganda and compete for promotion.</p>
-            <div class="club-grid">
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Amus College</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Buwambo</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Calvary</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Catda</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Iganga United</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Kaaro Karungi</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Kiyinda Boys</div>
-                <div class="club-item"><img src="assets/images/onduparaka_logo.png" alt="Onduparaka crest"> Onduparaka</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Paidha Black Angels</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Pakwach Young Stars</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Rwenzori Lions</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Volcanoes</div>
-                <div class="club-item"><i class="fa-solid fa-shield"></i> Young Elephant Academy</div>
-            </div>
-        </section>
+            <p class="jump"><a href="#amus-college">Amus College</a> <a href="#buwambo">Buwambo</a> <a href="#calvary">Calvary</a> <a href="#catda">Catda</a> <a href="#iganga-united">Iganga United</a> <a href="#kaaro-karungi">Kaaro Karungi</a> <a href="#kiyinda-boys">Kiyinda Boys</a> <a href="#onduparaka">Onduparaka</a> <a href="#paidha-black-angels">Paidha Black Angels</a> <a href="#pakwach-young-stars">Pakwach Young Stars</a> <a href="#rwenzori-lions">Rwenzori Lions</a> <a href="#volcanoes">Volcanoes</a> <a href="#young-elephant-academy">Young Elephant Academy</a></p>
+            
+            <article class="club-card" id="amus-college">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Amus College</h3>
+                <div class="club-meta">FUFA Big League &middot; P5 W3 D1 L1 &middot; GF 9 GA 1 &middot; 10 pts</div>
+                <p>Amus College compete in the FUFA Big League. From 5 completed matches on our verified records they have 3 wins, 1 draw and 1 defeat, scoring 9 and conceding 1 for 10 points. Their most recent result was a 5-0 win at home to Kaaro Karungi on 1 Nov, and their recent form reads W D L W W. Next up: a trip to Kiyinda Boys on 8 Nov.</p>
+            </article>
 
+            <article class="club-card" id="buwambo">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Buwambo</h3>
+                <div class="club-meta">FUFA Big League &middot; P5 W0 D2 L3 &middot; GF 2 GA 10 &middot; 2 pts</div>
+                <p>Buwambo compete in the FUFA Big League. From 5 completed matches on our verified records they have 0 wins, 2 draws and 3 defeats, scoring 2 and conceding 10 for 2 points. Their most recent result was a 1-1 draw at home to Iganga United on 1 Nov, and their recent form reads D L L L D. Next up: a trip to Kaaro Karungi on 8 Nov.</p>
+            </article>
+
+            <article class="club-card" id="calvary">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Calvary</h3>
+                <div class="club-meta">FUFA Big League &middot; P5 W3 D1 L1 &middot; GF 4 GA 2 &middot; 10 pts</div>
+                <p>Calvary compete in the FUFA Big League. From 5 completed matches on our verified records they have 3 wins, 1 draw and 1 defeat, scoring 4 and conceding 2 for 10 points. Their most recent result was a 1-0 win at home to Catda on 1 Nov, and their recent form reads L W D W W. Next up: a home game against Volcanoes on 5 Nov.</p>
+            </article>
+
+            <article class="club-card" id="catda">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Catda</h3>
+                <div class="club-meta">FUFA Big League &middot; P6 W4 D0 L2 &middot; GF 8 GA 2 &middot; 12 pts</div>
+                <p>Catda compete in the FUFA Big League. From 6 completed matches on our verified records they have 4 wins, 0 draws and 2 defeats, scoring 8 and conceding 2 for 12 points. Their most recent result was a 0-1 defeat away at Calvary on 1 Nov, and their recent form reads L W W W L. Next up: a home game against Iganga United on 15 Nov.</p>
+            </article>
+
+            <article class="club-card" id="iganga-united">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Iganga United</h3>
+                <div class="club-meta">FUFA Big League &middot; P7 W1 D1 L5 &middot; GF 3 GA 7 &middot; 4 pts</div>
+                <p>Iganga United compete in the FUFA Big League. From 7 completed matches on our verified records they have 1 win, 1 draw and 5 defeats, scoring 3 and conceding 7 for 4 points. Their most recent result was a 1-1 draw away at Buwambo on 1 Nov, and their recent form reads L L L L D. Next up: a home game against Calvary on 11 Nov.</p>
+            </article>
+
+            <article class="club-card" id="kaaro-karungi">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Kaaro Karungi</h3>
+                <div class="club-meta">FUFA Big League &middot; P7 W0 D3 L4 &middot; GF 2 GA 13 &middot; 3 pts</div>
+                <p>Kaaro Karungi compete in the FUFA Big League. From 7 completed matches on our verified records they have 0 wins, 3 draws and 4 defeats, scoring 2 and conceding 13 for 3 points. Their most recent result was a 0-5 defeat away at Amus College on 1 Nov, and their recent form reads L D D D L. Next up: a home game against Buwambo on 8 Nov.</p>
+            </article>
+
+            <article class="club-card" id="kiyinda-boys">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Kiyinda Boys</h3>
+                <div class="club-meta">FUFA Big League &middot; P6 W4 D1 L1 &middot; GF 9 GA 3 &middot; 13 pts</div>
+                <p>Kiyinda Boys compete in the FUFA Big League. From 6 completed matches on our verified records they have 4 wins, 1 draw and 1 defeat, scoring 9 and conceding 3 for 13 points. Their most recent result was a 2-1 win away at Young Elephant Academy on 1 Nov, and their recent form reads L W D W W. Next up: a home game against Amus College on 8 Nov.</p>
+            </article>
+
+            <article class="club-card" id="onduparaka">
+                <h3><img src="/assets/images/onduparaka_logo.png" alt="Onduparaka crest" width="26" height="26"> Onduparaka</h3>
+                <div class="club-meta">FUFA Big League &middot; P5 W1 D1 L3 &middot; GF 4 GA 10 &middot; 4 pts</div>
+                <p>Onduparaka compete in the FUFA Big League. From 5 completed matches on our verified records they have 1 win, 1 draw and 3 defeats, scoring 4 and conceding 10 for 4 points. Their most recent result was a 0-4 defeat away at Volcanoes on 1 Nov, and their recent form reads L L D W L. Next up: a home game against Young Elephant Academy on 8 Nov.</p>
+            </article>
+
+            <article class="club-card" id="paidha-black-angels">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Paidha Black Angels</h3>
+                <div class="club-meta">FUFA Big League &middot; P6 W5 D0 L1 &middot; GF 8 GA 5 &middot; 15 pts</div>
+                <p>Paidha Black Angels compete in the FUFA Big League. From 6 completed matches on our verified records they have 5 wins, 0 draws and 1 defeat, scoring 8 and conceding 5 for 15 points. Their most recent result was a 1-4 defeat away at Rwenzori Lions on 1 Nov, and their recent form reads W W W W L. Next up: a home game against Volcanoes on 8 Nov.</p>
+            </article>
+
+            <article class="club-card" id="pakwach-young-stars">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Pakwach Young Stars</h3>
+                <div class="club-meta">FUFA Big League &middot; P5 W1 D1 L3 &middot; GF 4 GA 6 &middot; 4 pts</div>
+                <p>Pakwach Young Stars compete in the FUFA Big League. From 5 completed matches on our verified records they have 1 win, 1 draw and 3 defeats, scoring 4 and conceding 6 for 4 points. Their most recent result was a 0-2 defeat away at Paidha Black Angels on 25 Oct, and their recent form reads L W L D L. Next up: a home game against Rwenzori Lions on 8 Nov.</p>
+            </article>
+
+            <article class="club-card" id="rwenzori-lions">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Rwenzori Lions</h3>
+                <div class="club-meta">FUFA Big League &middot; P6 W2 D2 L2 &middot; GF 5 GA 4 &middot; 8 pts</div>
+                <p>Rwenzori Lions compete in the FUFA Big League. From 6 completed matches on our verified records they have 2 wins, 2 draws and 2 defeats, scoring 5 and conceding 4 for 8 points. Their most recent result was a 4-1 win at home to Paidha Black Angels on 1 Nov, and their recent form reads W D D L W. Next up: a trip to Young Elephant Academy on 5 Nov.</p>
+            </article>
+
+            <article class="club-card" id="volcanoes">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Volcanoes</h3>
+                <div class="club-meta">FUFA Big League &middot; P5 W3 D1 L1 &middot; GF 6 GA 2 &middot; 10 pts</div>
+                <p>Volcanoes compete in the FUFA Big League. From 5 completed matches on our verified records they have 3 wins, 1 draw and 1 defeat, scoring 6 and conceding 2 for 10 points. Their most recent result was a 4-0 win at home to Onduparaka on 1 Nov, and their recent form reads W W D L W. Next up: a trip to Calvary on 5 Nov.</p>
+            </article>
+
+            <article class="club-card" id="young-elephant-academy">
+                <h3><i class="fa-solid fa-shield" style="color:#facc15"></i> Young Elephant Academy</h3>
+                <div class="club-meta">FUFA Big League &middot; P6 W2 D2 L2 &middot; GF 8 GA 7 &middot; 8 pts</div>
+                <p>Young Elephant Academy compete in the FUFA Big League. From 6 completed matches on our verified records they have 2 wins, 2 draws and 2 defeats, scoring 8 and conceding 7 for 8 points. Their most recent result was a 1-2 defeat at home to Kiyinda Boys on 1 Nov, and their recent form reads W L W D L. Next up: a home game against Rwenzori Lions on 5 Nov.</p>
+            </article>
+        </section>
         <section class="guide-card">
-            <h2>How we keep club information accurate</h2>
-            <p>Club names, crests and fixtures are reviewed by our Kampala data desk against official competition
-                information and club announcements. Clubs sometimes rebrand, move stadiums or change sponsors during a
-                season, so if you represent a club and want your details or crest updated, send us a message on the
-                <a href="contact.html" style="color:#facc15;">Contact page</a>.</p>
-            <p>Club names are used here only to identify teams in the fixtures and results we publish. MassavuSports is an
-                independent information site and is not affiliated with any club, FUFA, or any league body. See our
-                <a href="disclaimer.html" style="color:#facc15;">Disclaimer</a>.</p>
+            <h2>About these profiles</h2>
+            <p>Records are built from completed (full-time) matches only; postponed or vacated fixtures are not counted. If you spot a wrong score, or you represent a club and want to add an official description or updated crest, use the <a class="gold" href="/contact.html">Contact page</a>. MassavuSports is independent and not affiliated with FUFA or any club (see our <a class="gold" href="/disclaimer.html">Disclaimer</a>).</p>
         </section>
     </main>
 
-    <footer
-        style="background-color: var(--bg-card, #0b1329); padding: 2.5rem 0; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08);">
+    <footer style="background-color: var(--bg-card, #0b1329); padding: 2.5rem 0; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08);">
         <div class="container" style="text-align: center;">
             <div style="margin-top: 0.5rem; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; font-size:0.86rem;">
-                <a href="index.html" class="text-secondary">Match Centre</a>
-                <a href="leagues.html" class="text-secondary">Leagues Guide</a>
-                <a href="clubs.html" class="text-secondary">Clubs</a>
-                <a href="about.html" class="text-secondary">About Us</a>
-                <a href="contact.html" class="text-secondary">Contact Us</a>
-                <a href="privacy.html" class="text-secondary">Privacy Policy</a>
-                <a href="disclaimer.html" class="text-secondary">Disclaimer</a>
+                <a href="/index.html" class="text-secondary">Match Centre</a>
+                <a href="/recaps.html" class="text-secondary">Weekly Recaps</a>
+                <a href="/leagues.html" class="text-secondary">Leagues Guide</a>
+                <a href="/clubs.html" class="text-secondary">Clubs</a>
+                <a href="/about.html" class="text-secondary">About Us</a>
+                <a href="/contact.html" class="text-secondary">Contact Us</a>
+                <a href="/privacy.html" class="text-secondary">Privacy Policy</a>
+                <a href="/disclaimer.html" class="text-secondary">Disclaimer</a>
             </div>
             <p class="text-muted" style="margin-top: 1.5rem; font-size: 0.8rem;">&copy; 2026 MassavuSports. All rights reserved.</p>
         </div>
     </footer>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const btn = document.getElementById('mobile-menu-btn');
-            const nav = document.getElementById('nav-links');
-            if (btn && nav) btn.addEventListener('click', () => nav.classList.toggle('open'));
+        document.addEventListener('DOMContentLoaded', function () {
+            var b = document.getElementById('mobile-menu-btn'), n = document.getElementById('nav-links');
+            if (b && n) b.addEventListener('click', function () { n.classList.toggle('open'); });
         });
     </script>
 </body>
